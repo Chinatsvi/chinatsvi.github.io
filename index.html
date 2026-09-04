@@ -1,0 +1,187 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="theme-color" content="#1F4D2C">
+
+  <meta name="description"
+      content="Root site for chinatsvi.github.io — home of Farmer Community and AgriBased, mobile apps helping farmers across Africa with record keeping, crop and animal management, AI farming assistance, weather info, soil sensors, and a connected marketplace. Built by Enock Chinatsvi, agronomist and Flutter developer based in Zimbabwe.">
+
+  <title>chinatsvi.github.io | Agronomist Chinatsvi Enock</title>
+
+  <meta name="google-site-verification" content="IewTHYknA9B0kshedGe22PYxUSzYDRk_whciXj_RzP4" />
+
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,400;0,9..144,600;0,9..144,700;0,9..144,900;1,9..144,500;1,9..144,600&family=Karla:wght@400;500;600;700;800&family=JetBrains+Mono:wght@500;600&display=swap" rel="stylesheet">
+
+  <style>
+    :root {
+      --soil: #A63A1F;
+      --field: #1F4D2C;
+      --field-dark: #163A20;
+      --field-mid: #2E6B3E;
+      --gold: #E3A72E;
+      --gold-dark: #C4881B;
+      --cream: #FBF3E6;
+      --paper: #F3E7D2;
+      --ink: #2A2620;
+      --muted: #6E6152;
+      --border: #E4D3B8;
+      --shadow: 0 18px 46px rgba(42,38,32,.16);
+      --shadow-sm: 0 8px 22px rgba(42,38,32,.10);
+      --font-display: "Fraunces", Georgia, serif;
+      --font-body: "Karla", -apple-system, BlinkMacSystemFont, "Segoe UI", Arial, sans-serif;
+      --font-mono: "JetBrains Mono", ui-monospace, Menlo, monospace;
+    }
+
+    * { box-sizing: border-box; }
+
+    body {
+      margin: 0;
+      font-family: var(--font-body);
+      color: var(--ink);
+      background:
+        repeating-linear-gradient(115deg, rgba(255,255,255,.05) 0 2px, transparent 2px 26px),
+        linear-gradient(160deg, var(--field-dark) 0%, var(--field) 55%, var(--field-mid) 100%);
+      min-height: 100vh;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      padding: 40px 20px;
+      line-height: 1.6;
+    }
+
+    .card {
+      width: min(620px, 100%);
+      background: var(--cream);
+      border-radius: 24px;
+      padding: 46px 40px;
+      box-shadow: var(--shadow);
+      text-align: center;
+    }
+
+    .eyebrow {
+      font-family: var(--font-mono);
+      text-transform: uppercase;
+      letter-spacing: .14em;
+      font-size: 12px;
+      font-weight: 600;
+      color: var(--soil);
+      display: block;
+      margin-bottom: 14px;
+    }
+
+    h1 {
+      margin: 0 0 10px;
+      font-family: var(--font-display);
+      font-weight: 700;
+      font-size: clamp(26px, 4vw, 32px);
+      color: var(--field);
+      letter-spacing: -.5px;
+    }
+
+    .subtitle {
+      margin: 0 0 26px;
+      color: var(--muted);
+      font-size: 15px;
+    }
+
+    p.desc {
+      color: var(--ink);
+      font-size: 15px;
+      margin: 0 0 32px;
+    }
+
+    .actions {
+      display: flex;
+      flex-direction: column;
+      gap: 12px;
+      margin-bottom: 30px;
+    }
+
+    .button {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 8px;
+      padding: 16px 24px;
+      border-radius: 12px;
+      text-decoration: none;
+      font-weight: 800;
+      font-size: 15.5px;
+      background: var(--gold);
+      color: var(--ink);
+      box-shadow: var(--shadow-sm);
+      transition: transform .2s ease, box-shadow .2s ease, background .2s ease;
+    }
+
+    .button:hover { background: var(--gold-dark); transform: translateY(-2px); box-shadow: var(--shadow); }
+
+    .button.outline {
+      background: transparent;
+      color: var(--field);
+      border: 1.5px solid var(--field);
+      box-shadow: none;
+    }
+
+    .button.outline:hover { background: var(--field); color: var(--cream); transform: translateY(-2px); }
+
+    .links {
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: center;
+      gap: 16px;
+      padding-top: 22px;
+      border-top: 1px dashed var(--border);
+      font-size: 13.5px;
+    }
+
+    .links a { color: var(--muted); text-decoration: none; }
+    .links a:hover { color: var(--field); text-decoration: underline; }
+
+    .footer-note {
+      margin-top: 24px;
+      font-family: var(--font-mono);
+      font-size: 11.5px;
+      color: var(--muted);
+      opacity: .8;
+    }
+  </style>
+</head>
+<body>
+
+  <div class="card">
+    <span class="eyebrow">Agronomist &amp; Flutter Developer</span>
+    <h1>Enock Chinatsvi</h1>
+    <p class="subtitle">Zimbabwe — building tools for African farmers</p>
+
+    <p class="desc">
+      This is the home of <strong>Farmer Community</strong> and
+      <strong>AgriBased</strong> — mobile apps helping farmers across Africa
+      with record keeping, crop and animal management, AI farming
+      assistance, weather info, soil sensors and a connected marketplace.
+    </p>
+
+    <div class="actions">
+      <a class="button" href="https://chinatsvi.github.io/farmers-community/">
+        🌾 Visit Farmer Community
+      </a>
+      <a class="button outline" href="https://www.mediafire.com/file/mg78viqjikkerc1/farmers.v1.0.1.apk/file" target="_blank" rel="noopener noreferrer">
+        📲 Download the App
+      </a>
+    </div>
+
+    <div class="links">
+      <a href="https://chinatsvi.github.io/farmers-community/#features">Farming Guides</a>
+      <a href="https://chinatsvi.github.io/farmer-community-Help-FAQ/">Help &amp; FAQ</a>
+      <a href="https://chinatsvi.github.io/farmer-community-contact-us/">Contact</a>
+      <a href="https://github.com/Chinatsvi">GitHub</a>
+    </div>
+
+    <div class="footer-note">© 2026 Enock Chinatsvi</div>
+  </div>
+
+</body>
+</html>
