@@ -1,74 +1,44 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
-
-  <url>
-    <loc>https://chinatsvi.github.io/</loc>
-    <lastmod>2026-09-04</lastmod>
-    <changefreq>monthly</changefreq>
-    <priority>0.6</priority>
-  </url>
-
-  <url>
-    <loc>https://chinatsvi.github.io/farmers-community/</loc>
-    <lastmod>2026-09-04</lastmod>
-    <changefreq>weekly</changefreq>
-    <priority>1.0</priority>
-  </url>
-
-  <url>
-    <loc>https://chinatsvi.github.io/crop-farming/</loc>
-    <lastmod>2026-09-04</lastmod>
-    <changefreq>monthly</changefreq>
-    <priority>0.9</priority>
-  </url>
-
-  <url>
-    <loc>https://chinatsvi.github.io/livestock/</loc>
-    <lastmod>2026-09-04</lastmod>
-    <changefreq>monthly</changefreq>
-    <priority>0.9</priority>
-  </url>
-
-  <url>
-    <loc>https://chinatsvi.github.io/Agribusiness/</loc>
-    <lastmod>2026-09-04</lastmod>
-    <changefreq>monthly</changefreq>
-    <priority>0.9</priority>
-  </url>
-
-  <url>
-    <loc>https://chinatsvi.github.io/digital-farming/</loc>
-    <lastmod>2026-09-04</lastmod>
-    <changefreq>monthly</changefreq>
-    <priority>0.9</priority>
-  </url>
-
-  <url>
-    <loc>https://chinatsvi.github.io/farmer-community-Help-FAQ/</loc>
-    <lastmod>2026-09-04</lastmod>
-    <changefreq>monthly</changefreq>
-    <priority>0.5</priority>
-  </url>
-
-  <url>
-    <loc>https://chinatsvi.github.io/farmer-community-contact-us/</loc>
-    <lastmod>2026-09-04</lastmod>
-    <changefreq>yearly</changefreq>
-    <priority>0.5</priority>
-  </url>
-
-  <url>
-    <loc>https://chinatsvi.github.io/farmer-community-privacy-policy/</loc>
-    <lastmod>2026-09-04</lastmod>
-    <changefreq>yearly</changefreq>
-    <priority>0.3</priority>
-  </url>
-
-  <url>
-    <loc>https://chinatsvi.github.io/farmer-community-terms/</loc>
-    <lastmod>2026-09-04</lastmod>
-    <changefreq>yearly</changefreq>
-    <priority>0.3</priority>
-  </url>
-
+  <url><loc>https://chinatsvi.github.io/</loc><lastmod>2026-09-11</lastmod><changefreq>weekly</changefreq><priority>1.0</priority></url>
+  <url><loc>https://chinatsvi.github.io/guides/</loc><changefreq>weekly</changefreq><priority>0.9</priority></url>
+  <url><loc>https://chinatsvi.github.io/calculators/</loc><changefreq>monthly</changefreq><priority>0.9</priority></url>
+  <url><loc>https://chinatsvi.github.io/calendar/</loc><changefreq>monthly</changefreq><priority>0.8</priority></url>
+  <url><loc>https://chinatsvi.github.io/resources/</loc><changefreq>monthly</changefreq><priority>0.7</priority></url>
+  <url><loc>https://chinatsvi.github.io/academy/</loc><changefreq>monthly</changefreq><priority>0.8</priority></url>
+  <url><loc>https://chinatsvi.github.io/community/</loc><changefreq>monthly</changefreq><priority>0.8</priority></url>
+  <url><loc>https://chinatsvi.github.io/faq/</loc><changefreq>monthly</changefreq><priority>0.8</priority></url>
+  <url><loc>https://chinatsvi.github.io/about/</loc><changefreq>yearly</changefreq><priority>0.5</priority></url>
+  <url><loc>https://chinatsvi.github.io/contact/</loc><changefreq>yearly</changefreq><priority>0.5</priority></url>
+  <url><loc>https://chinatsvi.github.io/privacy/</loc><changefreq>yearly</changefreq><priority>0.3</priority></url>
+  <url><loc>https://chinatsvi.github.io/terms/</loc><changefreq>yearly</changefreq><priority>0.3</priority></url>
+  <url><loc>https://chinatsvi.github.io/disclaimer/</loc><changefreq>yearly</changefreq><priority>0.3</priority></url>
+  <url><loc>https://chinatsvi.github.io/calculators/plant-population.html</loc></url>
+  <url><loc>https://chinatsvi.github.io/calculators/crop-spacing.html</loc></url>
+  <url><loc>https://chinatsvi.github.io/calculators/irrigation.html</loc></url>
+  <url><loc>https://chinatsvi.github.io/calculators/farm-profit.html</loc></url>
+  <url><loc>https://chinatsvi.github.io/calculators/break-even.html</loc></url>
+  <url><loc>https://chinatsvi.github.io/calculators/fertilizer.html</loc></url>
+  <url><loc>https://chinatsvi.github.io/calculators/farm-budget.html</loc></url>
+  <url><loc>https://chinatsvi.github.io/calculators/livestock-feed.html</loc></url>
+  <url><loc>https://chinatsvi.github.io/guides/how-to-grow-tomatoes.html</loc></url>
+  <url><loc>https://chinatsvi.github.io/guides/tomato-fertilizer-guide.html</loc></url>
+  <url><loc>https://chinatsvi.github.io/guides/beginner-irrigation-guide.html</loc></url>
+  <url><loc>https://chinatsvi.github.io/guides/how-to-grow-cabbage.html</loc></url>
+  <url><loc>https://chinatsvi.github.io/guides/prepare-soil-for-vegetables.html</loc></url>
+  <url><loc>https://chinatsvi.github.io/guides/understanding-soil-ph.html</loc></url>
+  <url><loc>https://chinatsvi.github.io/guides/calculate-plant-population.html</loc></url>
+  <url><loc>https://chinatsvi.github.io/guides/farm-record-keeping.html</loc></url>
+  <url><loc>https://chinatsvi.github.io/guides/farm-profit-calculation.html</loc></url>
+  <url><loc>https://chinatsvi.github.io/guides/water-tomato-plants.html</loc></url>
+  <url><loc>https://chinatsvi.github.io/guides/tomato-pests-diseases.html</loc></url>
+  <url><loc>https://chinatsvi.github.io/guides/plan-fertilizer-application.html</loc></url>
+  <url><loc>https://chinatsvi.github.io/guides/reduce-water-waste.html</loc></url>
+  <url><loc>https://chinatsvi.github.io/guides/simple-farm-budget.html</loc></url>
+  <url><loc>https://chinatsvi.github.io/guides/livestock-feed-planning.html</loc></url>
+  <url><loc>https://chinatsvi.github.io/guides/farming-dry-conditions.html</loc></url>
+  <url><loc>https://chinatsvi.github.io/guides/beginner-farming-mistakes.html</loc></url>
+  <url><loc>https://chinatsvi.github.io/guides/plan-vegetable-garden.html</loc></url>
+  <url><loc>https://chinatsvi.github.io/guides/understanding-crop-spacing.html</loc></url>
+  <url><loc>https://chinatsvi.github.io/guides/farm-planning-basics.html</loc></url>
 </urlset>
