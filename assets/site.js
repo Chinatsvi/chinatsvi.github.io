@@ -91,7 +91,7 @@
   }
 
   document.addEventListener('DOMContentLoaded', () => {
-    if (content.articles.length < 20) {
+    if (content.articles.length < 20 && !document.querySelector('script[src$="content-more.js"]')) {
       const extension = document.createElement('script');
       extension.src = '/assets/content-more.js';
       extension.onload = start;
