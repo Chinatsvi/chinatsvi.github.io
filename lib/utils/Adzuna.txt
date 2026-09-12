@@ -1,0 +1,26 @@
+Application: Dorcas & Chinatsvi - AgriBase's App
+Default application created on signup.
+Application ID
+This is the application ID, you should send with each API request.
+
+cad36dac
+
+Application Keys
+These are application keys used to authenticate requests.
+
+Create new key
+38fba46f48dde42d574369b3f258ee7b	—
+Properties
+State	live
+Edit
+Plan: Trial Access (Review/Change)
+To extend your limits please contact us.
+
+API Alerts (Show)
+Dashboard
+Overview
+API Access Details
+Change Plan
+Messages
+Stats
+© 2026 ADZUNA LTD.
