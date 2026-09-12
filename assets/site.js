@@ -9,7 +9,7 @@
   function renderHeader() {
     const host = document.querySelector('[data-site-header]');
     if (!host) return;
-    host.innerHTML = '<nav class="site-nav"><div class="nav-inner"><a class="brand" href="/"><img src="/favicon-256.png" alt="AgriBase">AgriBase</a><button class="nav-toggle" aria-label="Open navigation">â˜°</button><div class="nav-links">' +
+    host.innerHTML = '<nav class="site-nav"><div class="nav-inner"><a class="brand" href="/"><img src="/favicon-256.png" alt="AgriBase">AgriBase</a><button class="nav-toggle" aria-label="Open navigation"><span></span><span></span><span></span></button><div class="nav-links">' +
       nav.map(item => '<a href="' + item[1] + '">' + item[0] + '</a>').join('') +
       '</div></div></nav>';
     host.querySelector('.nav-toggle').onclick = () => host.querySelector('.nav-links').classList.toggle('open');
@@ -40,7 +40,9 @@
     const slug = location.pathname.split('/').pop().replace('.html', '');
     const article = content.articles.find(item => item.slug === slug) || content.articles[0];
     document.title = article.title + ' | AgriBase';
-    articleHost.innerHTML = '<div class="meta">' + article.category + '</div><h1>' + article.title + '</h1>' + article.body + '<h2>Related Farming Guides</h2><div class="grid">' + articleCards(content.articles.filter(item => item.slug !== article.slug).slice(0, 3)) + '</div><div class="notice">Recommendations vary with soil, climate, crop variety, water supply and farming system. Use local extension advice and product labels where applicable.</div>';
+    const articleMain = articleHost.closest('main');
+    if (articleMain) articleMain.classList.remove('section');
+    articleHost.outerHTML = '<header class="page-hero article-page-hero"><div class="container"><div class="breadcrumb"><a href="/">Home</a> / <a href="/guides/">Farming Guides</a> / ' + article.title + '</div><div class="eyebrow">' + article.category + '</div><h1>' + article.title + '</h1><p class="lead">' + article.description + '</p></div></header><section class="section"><div class="container article">' + article.body + '<h2>Related Farming Guides</h2><div class="grid">' + articleCards(content.articles.filter(item => item.slug !== article.slug).slice(0, 3)) + '</div><div class="notice">Recommendations vary with soil, climate, crop variety, water supply and farming system. Use local extension advice and product labels where applicable.</div></div></section>';
   }
 
   function renderCalculator() {
