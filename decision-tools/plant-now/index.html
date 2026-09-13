@@ -1,0 +1,976 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1">
+  <meta name="description" content="Should I Plant Now? Check your crop, location, water and growing conditions before planting. Interactive decision tool for farmers.">
+  <title>Should I Plant Now? | AgriBase Decision Tools</title>
+  <link rel="stylesheet" href="/assets/site.css">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link href="https://fonts.googleapis.com/css2?family=Fraunces:wght@600;700&family=Karla:wght@400;700;800&display=swap" rel="stylesheet">
+  <style>
+    .planting-tool {
+      max-width: 800px;
+      margin: 0 auto;
+      padding: 1rem;
+    }
+
+    .tool-section {
+      background: var(--paper);
+      border-radius: 8px;
+      padding: 1.5rem;
+      margin-bottom: 1.5rem;
+      box-shadow: var(--shadow);
+      border: 1px solid var(--border);
+    }
+
+    .progress-bar {
+      display: flex;
+      gap: 0.5rem;
+      margin-bottom: 2rem;
+      flex-wrap: wrap;
+    }
+
+    .progress-step {
+      flex: 1;
+      min-width: 40px;
+      height: 4px;
+      background: var(--border);
+      border-radius: 2px;
+      transition: background 0.3s;
+    }
+
+    .progress-step.active {
+      background: var(--field);
+    }
+
+    .progress-step.completed {
+      background: var(--field-mid);
+    }
+
+    .question-group {
+      margin-bottom: 1.5rem;
+    }
+
+    .question-label {
+      font-weight: 700;
+      margin-bottom: 0.5rem;
+      color: var(--field);
+      font-size: 1.1rem;
+      font-family: var(--display);
+    }
+
+    .question-explanation {
+      font-size: 0.9rem;
+      color: var(--muted);
+      margin-bottom: 1rem;
+      line-height: 1.65;
+    }
+
+    .why-matters {
+      background: var(--cream);
+      border-left: 4px solid var(--field);
+      padding: 1rem;
+      margin: 1rem 0;
+      border-radius: 0 4px 4px 0;
+    }
+
+    .why-matters-title {
+      font-weight: 700;
+      color: var(--field);
+      margin-bottom: 0.5rem;
+      font-family: var(--display);
+    }
+
+    .option-buttons {
+      display: flex;
+      flex-direction: column;
+      gap: 0.75rem;
+    }
+
+    .option-button {
+      padding: 1rem 1.5rem;
+      border: 2px solid var(--field);
+      background: var(--paper);
+      color: var(--field);
+      border-radius: 8px;
+      font-size: 1rem;
+      font-weight: 600;
+      cursor: pointer;
+      transition: all 0.2s;
+      text-align: left;
+      font-family: var(--body);
+    }
+
+    .option-button:hover {
+      background: var(--field);
+      color: var(--cream);
+    }
+
+    .option-button.selected {
+      background: var(--field);
+      color: var(--cream);
+    }
+
+    .form-select {
+      width: 100%;
+      padding: 0.75rem;
+      border: 2px solid var(--border);
+      border-radius: 8px;
+      font-size: 1rem;
+      margin-bottom: 0.5rem;
+      font-family: var(--body);
+      background: var(--paper);
+      color: var(--ink);
+    }
+
+    .form-select:focus {
+      outline: none;
+      border-color: var(--field);
+    }
+
+    .date-input {
+      width: 100%;
+      padding: 0.75rem;
+      border: 2px solid var(--border);
+      border-radius: 8px;
+      font-size: 1rem;
+      font-family: var(--body);
+      background: var(--paper);
+      color: var(--ink);
+    }
+
+    .condition-card {
+      background: var(--cream);
+      border-radius: 8px;
+      padding: 1rem;
+      margin-bottom: 0.75rem;
+      border: 1px solid var(--border);
+    }
+
+    .condition-title {
+      font-weight: 700;
+      color: var(--field);
+      margin-bottom: 0.25rem;
+      font-family: var(--display);
+    }
+
+    .condition-desc {
+      font-size: 0.9rem;
+      color: var(--muted);
+    }
+
+    .risk-item {
+      background: var(--cream);
+      border-left: 4px solid var(--gold);
+      padding: 1rem;
+      margin-bottom: 0.75rem;
+      border-radius: 0 4px 4px 0;
+      border: 1px solid var(--border);
+    }
+
+    .risk-item.high {
+      background: #fff0f0;
+      border-left-color: var(--soil);
+      border-color: #ffd0d0;
+    }
+
+    .risk-item.moderate {
+      background: var(--cream);
+      border-left-color: var(--gold);
+    }
+
+    .risk-item.low {
+      background: #f0fff0;
+      border-left-color: var(--field);
+      border-color: #d0f0d0;
+    }
+
+    .final-result {
+      background: var(--paper);
+      border-radius: 12px;
+      padding: 2rem;
+      margin-top: 2rem;
+      box-shadow: var(--shadow);
+      border: 1px solid var(--border);
+    }
+
+    .result-header {
+      font-size: 1.5rem;
+      font-weight: 700;
+      margin-bottom: 1rem;
+      text-align: center;
+      font-family: var(--display);
+      color: var(--field);
+    }
+
+    .result-status {
+      font-size: 1.25rem;
+      font-weight: 700;
+      padding: 1rem;
+      border-radius: 8px;
+      text-align: center;
+      margin-bottom: 1.5rem;
+      font-family: var(--display);
+    }
+
+    .result-status.good {
+      background: #f0fff0;
+      color: var(--field);
+      border: 1px solid #d0f0d0;
+    }
+
+    .result-status.warning {
+      background: var(--cream);
+      color: var(--gold);
+      border: 1px solid var(--border);
+    }
+
+    .result-status.danger {
+      background: #fff0f0;
+      color: var(--soil);
+      border: 1px solid #ffd0d0;
+    }
+
+    .action-buttons {
+      display: flex;
+      flex-direction: column;
+      gap: 0.75rem;
+      margin-top: 1.5rem;
+    }
+
+    .action-button {
+      padding: 1rem 1.5rem;
+      border: none;
+      border-radius: 8px;
+      font-size: 1rem;
+      font-weight: 600;
+      cursor: pointer;
+      transition: all 0.2s;
+      font-family: var(--body);
+    }
+
+    .action-button.primary {
+      background: var(--field);
+      color: var(--cream);
+    }
+
+    .action-button.primary:hover {
+      background: var(--field-dark);
+    }
+
+    .action-button.secondary {
+      background: var(--muted);
+      color: var(--cream);
+    }
+
+    .action-button.secondary:hover {
+      background: var(--ink);
+    }
+
+    .action-button.outline {
+      background: var(--paper);
+      color: var(--field);
+      border: 2px solid var(--field);
+    }
+
+    .action-button.outline:hover {
+      background: var(--cream);
+    }
+
+    .summary-box {
+      background: var(--cream);
+      border-radius: 8px;
+      padding: 1.5rem;
+      margin: 1.5rem 0;
+      border: 1px solid var(--border);
+    }
+
+    .summary-title {
+      font-weight: 700;
+      margin-bottom: 1rem;
+      color: var(--field);
+      font-family: var(--display);
+    }
+
+    .summary-item {
+      margin-bottom: 0.75rem;
+      padding-bottom: 0.75rem;
+      border-bottom: 1px solid var(--border);
+    }
+
+    .summary-item:last-child {
+      border-bottom: none;
+    }
+
+    .summary-label {
+      font-weight: 600;
+      color: var(--muted);
+    }
+
+    .summary-value {
+      color: var(--field);
+    }
+
+    .next-actions {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+      gap: 1rem;
+      margin-top: 1.5rem;
+    }
+
+    .next-action-card {
+      background: var(--cream);
+      border-radius: 8px;
+      padding: 1rem;
+      text-align: center;
+      text-decoration: none;
+      color: var(--field);
+      transition: all 0.2s;
+      border: 1px solid var(--border);
+    }
+
+    .next-action-card:hover {
+      background: var(--paper);
+      transform: translateY(-2px);
+      border-color: var(--field);
+    }
+
+    .next-action-title {
+      font-weight: 700;
+      margin-bottom: 0.5rem;
+      font-family: var(--display);
+    }
+
+    .next-action-desc {
+      font-size: 0.85rem;
+      color: var(--muted);
+    }
+
+    .disclaimer {
+      background: var(--cream);
+      border: 1px solid var(--gold);
+      border-radius: 8px;
+      padding: 1rem;
+      margin: 1.5rem 0;
+      font-size: 0.85rem;
+      color: var(--muted);
+    }
+
+    .hidden {
+      display: none;
+    }
+
+    .fade-in {
+      animation: fadeIn 0.3s ease-in;
+    }
+
+    @keyframes fadeIn {
+      from { opacity: 0; transform: translateY(10px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+
+    .crop-info {
+      background: var(--tint);
+      border-left: 4px solid var(--field);
+      padding: 1rem;
+      margin: 1rem 0;
+      border-radius: 0 4px 4px 0;
+    }
+
+    .weather-info {
+      background: var(--tint);
+      border-left: 4px solid var(--field);
+      padding: 1rem;
+      margin: 1rem 0;
+      border-radius: 0 4px 4px 0;
+    }
+
+    .planting-calendar {
+      background: var(--cream);
+      border-left: 4px solid var(--gold);
+      padding: 1rem;
+      margin: 1rem 0;
+      border-radius: 0 4px 4px 0;
+    }
+
+    @media (max-width: 600px) {
+      .planting-tool {
+        padding: 0.5rem;
+      }
+
+      .tool-section {
+        padding: 1rem;
+      }
+
+      .option-buttons {
+        gap: 0.5rem;
+      }
+
+      .option-button {
+        padding: 0.875rem 1rem;
+        font-size: 0.95rem;
+      }
+
+      .final-result {
+        padding: 1.5rem;
+      }
+
+      .next-actions {
+        grid-template-columns: 1fr;
+      }
+    }
+  </style>
+</head>
+<body>
+  <div data-site-header></div>
+  <header class="page-hero">
+    <div class="container">
+      <div class="breadcrumb">
+        <a href="/">Home</a> / <a href="/decision-tools/">Decision Tools</a> / Should I Plant Now?
+      </div>
+      <div class="eyebrow">Planting Decision</div>
+      <h1>Should I Plant Now?</h1>
+      <p class="lead">Check your crop, location, water and growing conditions before you spend money on planting.</p>
+    </div>
+  </header>
+
+  <main class="section">
+    <div class="container">
+      <div class="planting-tool">
+        <!-- Progress Indicator -->
+        <div class="progress-bar" id="progressBar">
+          <div class="progress-step active" data-step="1"></div>
+          <div class="progress-step" data-step="2"></div>
+          <div class="progress-step" data-step="3"></div>
+          <div class="progress-step" data-step="4"></div>
+          <div class="progress-step" data-step="5"></div>
+          <div class="progress-step" data-step="6"></div>
+          <div class="progress-step" data-step="7"></div>
+          <div class="progress-step" data-step="8"></div>
+          <div class="progress-step" data-step="9"></div>
+          <div class="progress-step" data-step="10"></div>
+        </div>
+
+        <!-- Start Screen -->
+        <div class="tool-section fade-in" id="startScreen">
+          <h2 style="text-align: center; margin-bottom: 1rem;">Should I Plant Now?</h2>
+          <p style="text-align: center; font-size: 1.1rem; margin-bottom: 1.5rem;">
+            Check your crop, location, water and growing conditions before you spend money on planting.
+          </p>
+          <div class="why-matters">
+            <div class="why-matters-title">Why this matters</div>
+            <p>Planting at the wrong time can waste seed, fertilizer, labour and money. This tool helps you check the important things before you plant.</p>
+          </div>
+          <p style="text-align: center; margin: 1.5rem 0;">
+            This tool will help you understand:
+          </p>
+          <ul style="margin: 1rem 0 1.5rem 2rem;">
+            <li>WHEN to plant</li>
+            <li>WHY the timing matters</li>
+            <li>WHAT conditions should be checked before planting</li>
+            <li>WHAT risks may exist</li>
+            <li>WHAT you should do before planting</li>
+            <li>WHEN you should reconsider or wait</li>
+          </ul>
+          <div class="action-buttons">
+            <button class="action-button primary" onclick="startTool()">Start Planting Check</button>
+          </div>
+        </div>
+
+        <!-- Section 1: Location -->
+        <div class="tool-section hidden fade-in" id="locationSection">
+          <h2>Where are you farming?</h2>
+          <div class="why-matters">
+            <div class="why-matters-title">Why your location matters</div>
+            <p>Your location matters because rainfall, temperature, frost risk, seasons and suitable planting periods are different from one area to another. Do not assume that one planting date works for an entire country.</p>
+          </div>
+          <div class="question-group">
+            <label class="question-label">Select your country</label>
+            <select class="form-select" id="countrySelect" onchange="updateProvinces()">
+              <option value="">Select country</option>
+              <option value="zimbabwe">Zimbabwe</option>
+              <option value="kenya">Kenya</option>
+              <option value="south_africa">South Africa</option>
+              <option value="zambia">Zambia</option>
+              <option value="ghana">Ghana</option>
+              <option value="nigeria">Nigeria</option>
+              <option value="tanzania">Tanzania</option>
+              <option value="ethiopia">Ethiopia</option>
+              <option value="uganda">Uganda</option>
+              <option value="mozambique">Mozambique</option>
+              <option value="malawi">Malawi</option>
+              <option value="other">Other country</option>
+            </select>
+          </div>
+          <div class="question-group hidden" id="provinceGroup">
+            <label class="question-label">Select your province/state</label>
+            <select class="form-select" id="provinceSelect" onchange="updateDistricts()">
+              <option value="">Select province</option>
+            </select>
+          </div>
+          <div class="question-group hidden" id="districtGroup">
+            <label class="question-label">Select your district/area</label>
+            <select class="form-select" id="districtSelect">
+              <option value="">Select district</option>
+            </select>
+          </div>
+          <div class="disclaimer" id="locationDisclaimer" style="display: none;">
+            <strong>Note:</strong> Reliable local information is not currently available for your specific area. This result will be a general guide and not an exact local planting date. Please check with local agricultural extension services for precise local recommendations.
+          </div>
+          <div class="action-buttons">
+            <button class="action-button primary" onclick="confirmLocation()">Continue</button>
+            <button class="action-button secondary" onclick="goBack()">Back</button>
+          </div>
+        </div>
+
+        <!-- Section 2: Crop Selection -->
+        <div class="tool-section hidden fade-in" id="cropSection">
+          <h2>What do you want to plant?</h2>
+          <div class="why-matters">
+            <div class="why-matters-title">Why crop choice matters</div>
+            <p>Different crops have different requirements for temperature, water, soil, and planting time. What works for one crop may not work for another.</p>
+          </div>
+          <div class="question-group">
+            <label class="question-label">Select your crop</label>
+            <select class="form-select" id="cropSelect" onchange="showCropInfo()">
+              <option value="">Select crop</option>
+              <option value="maize">Maize</option>
+              <option value="tomato">Tomato</option>
+              <option value="cabbage">Cabbage</option>
+              <option value="onion">Onion</option>
+              <option value="potato">Potato</option>
+              <option value="beans">Beans</option>
+              <option value="groundnuts">Groundnuts</option>
+              <option value="soybean">Soybean</option>
+              <option value="wheat">Wheat</option>
+              <option value="sweet_potato">Sweet Potato</option>
+              <option value="butternut">Butternut</option>
+              <option value="watermelon">Watermelon</option>
+              <option value="pepper">Pepper</option>
+              <option value="spinach">Spinach</option>
+              <option value="carrot">Carrot</option>
+            </select>
+          </div>
+          <div class="crop-info hidden" id="cropInfo">
+            <div class="why-matters-title" id="cropInfoTitle">Crop Information</div>
+            <p id="cropInfoText"></p>
+          </div>
+          <div class="action-buttons">
+            <button class="action-button primary" onclick="confirmCrop()">Continue</button>
+            <button class="action-button secondary" onclick="goBack()">Back</button>
+          </div>
+        </div>
+
+        <!-- Section 3: Farming Method -->
+        <div class="tool-section hidden fade-in" id="methodSection">
+          <h2>How will you grow this crop?</h2>
+          <div class="why-matters">
+            <div class="why-matters-title">Why farming method matters</div>
+            <p>Rain-fed farming depends mainly on rainfall. If rainfall starts late or stops soon after planting, young plants may struggle. Irrigated farmers have more control over water, but they still need to consider temperature and other growing conditions.</p>
+          </div>
+          <div class="question-group">
+            <label class="question-label">Select your farming method</label>
+            <div class="option-buttons">
+              <button class="option-button" onclick="selectMethod('rainfed')" data-method="rainfed">
+                Rain-fed (depends on rainfall)
+              </button>
+              <button class="option-button" onclick="selectMethod('irrigated')" data-method="irrigated">
+                Irrigated (I have irrigation)
+              </button>
+              <button class="option-button" onclick="selectMethod('both')" data-method="both">
+                Both rain and irrigation
+              </button>
+            </div>
+          </div>
+          <div class="question-group hidden" id="waterSourceGroup">
+            <label class="question-label">What is your main water source?</label>
+            <select class="form-select" id="waterSourceSelect">
+              <option value="">Select water source</option>
+              <option value="borehole">Borehole</option>
+              <option value="river">River</option>
+              <option value="dam">Dam</option>
+              <option value="well">Well</option>
+              <option value="tank">Tank/storage</option>
+              <option value="municipal">Municipal water</option>
+              <option value="other">Other</option>
+            </select>
+          </div>
+          <div class="action-buttons">
+            <button class="action-button primary" onclick="confirmMethod()">Continue</button>
+            <button class="action-button secondary" onclick="goBack()">Back</button>
+          </div>
+        </div>
+
+        <!-- Section 4: Land Preparation -->
+        <div class="tool-section hidden fade-in" id="landSection">
+          <h2>Is your land ready for planting?</h2>
+          <div class="why-matters">
+            <div class="why-matters-title">Why land preparation matters</div>
+            <p>Good seed planted into poorly prepared land can still give poor results. Preparing the field before planting helps the crop establish properly. This does not mean perfect preparation is required in every farming system, but basic preparation is important.</p>
+          </div>
+          <div class="question-group">
+            <label class="question-label">How ready is your land?</label>
+            <div class="option-buttons">
+              <button class="option-button" onclick="selectLandPrep('yes')" data-prep="yes">
+                Yes, land is ready
+              </button>
+              <button class="option-button" onclick="selectLandPrep('partly')" data-prep="partly">
+                Partly ready
+              </button>
+              <button class="option-button" onclick="selectLandPrep('no')" data-prep="no">
+                No, not ready
+              </button>
+            </div>
+          </div>
+          <div class="condition-card">
+            <div class="condition-title">What "ready" typically means:</div>
+            <ul style="margin: 0.5rem 0 0 1.5rem; font-size: 0.9rem;">
+              <li>Land is prepared (tilled, beds formed, etc.)</li>
+              <li>Weeds are under control</li>
+              <li>Soil is workable (not too wet, not too hard)</li>
+              <li>Drainage is acceptable</li>
+              <li>Required inputs are available or can be obtained</li>
+              <li>Planting area is accessible</li>
+            </ul>
+          </div>
+          <div class="action-buttons">
+            <button class="action-button primary" onclick="confirmLandPrep()">Continue</button>
+            <button class="action-button secondary" onclick="goBack()">Back</button>
+          </div>
+        </div>
+
+        <!-- Section 5: Soil Moisture -->
+        <div class="tool-section hidden fade-in" id="moistureSection">
+          <h2>How is the soil moisture?</h2>
+          <div class="why-matters">
+            <div class="why-matters-title">Why soil moisture matters</div>
+            <p>Seed needs suitable moisture to start growing. Very dry soil can prevent good germination, while waterlogged soil can reduce oxygen around roots and damage young plants. Different crops and soil types have different moisture requirements.</p>
+          </div>
+          <div class="question-group">
+            <label class="question-label">What is your soil moisture condition?</label>
+            <div class="option-buttons">
+              <button class="option-button" onclick="selectMoisture('moist')" data-moisture="moist">
+                Moist (suitable for planting)
+              </button>
+              <button class="option-button" onclick="selectMoisture('dry')" data-moisture="dry">
+                Dry
+              </button>
+              <button class="option-button" onclick="selectMoisture('very_wet')" data-moisture="very_wet">
+                Very wet / waterlogged
+              </button>
+              <button class="option-button" onclick="selectMoisture('unknown')" data-moisture="unknown">
+                I don't know
+              </button>
+            </div>
+          </div>
+          <div class="condition-card hidden" id="moistureCheckInfo">
+            <div class="condition-title">How to check soil moisture:</div>
+            <ul style="margin: 0.5rem 0 0 1.5rem; font-size: 0.9rem;">
+              <li>Take a handful of soil from planting depth (5-10 cm deep)</li>
+              <li>Squeeze it in your hand</li>
+              <li><strong>Moist:</strong> Soil forms a ball but breaks apart easily</li>
+              <li><strong>Dry:</strong> Soil falls apart and does not form a ball</li>
+              <li><strong>Very wet:</strong> Water drips out when squeezed, soil is muddy</li>
+              <li>Check several spots in the field</li>
+              <li>Consider recent rainfall and weather</li>
+            </ul>
+          </div>
+          <div class="action-buttons">
+            <button class="action-button primary" onclick="confirmMoisture()">Continue</button>
+            <button class="action-button secondary" onclick="goBack()">Back</button>
+          </div>
+        </div>
+
+        <!-- Section 6: Water Availability -->
+        <div class="tool-section hidden fade-in" id="waterSection">
+          <h2>Do you have enough water for this crop?</h2>
+          <div class="why-matters">
+            <div class="why-matters-title">Why water availability matters</div>
+            <p>Rainfall may be enough today but the crop may need water for several weeks after planting. Before planting, think about what will happen if rainfall becomes unreliable. Young plants are especially sensitive to water stress.</p>
+          </div>
+          <div class="question-group">
+            <label class="question-label">Do you have reliable water for early growth?</label>
+            <div class="option-buttons">
+              <button class="option-button" onclick="selectWaterAvailability('yes')" data-water="yes">
+                Yes, I have enough water
+              </button>
+              <button class="option-button" onclick="selectWaterAvailability('no')" data-water="no">
+                No, water is limited
+              </button>
+              <button class="option-button" onclick="selectWaterAvailability('not_sure')" data-water="not_sure">
+                Not sure
+              </button>
+            </div>
+          </div>
+          <div class="condition-card">
+            <div class="condition-title">Things to consider:</div>
+            <ul style="margin: 0.5rem 0 0 1.5rem; font-size: 0.9rem;">
+              <li>How long will your water source last?</li>
+              <li>What happens if rainfall is delayed?</li>
+              <li>Do you have a backup water plan?</li>
+              <li>Is your water source reliable during dry periods?</li>
+              <li>Have you checked your water source recently?</li>
+            </ul>
+          </div>
+          <div class="action-buttons">
+            <button class="action-button primary" onclick="confirmWater()">Continue</button>
+            <button class="action-button secondary" onclick="goBack()">Back</button>
+          </div>
+        </div>
+
+        <!-- Section 7: Weather and Rainfall -->
+        <div class="tool-section hidden fade-in" id="weatherSection">
+          <h2>Weather and Rainfall Conditions</h2>
+          <div class="why-matters">
+            <div class="why-matters-title">Why weather matters</div>
+            <p>Weather conditions at planting time and during early growth can determine crop success. Temperature, rainfall patterns, and extreme weather events all affect how well your crop will establish.</p>
+          </div>
+          <div class="weather-info">
+            <div class="why-matters-title">Current Weather Information</div>
+            <p><strong>Note:</strong> This tool uses general weather patterns for your region. For the most accurate local weather, check your local meteorological service or agricultural extension office.</p>
+            <p>Weather conditions can change quickly. This information should be used as a guide, not a guarantee.</p>
+          </div>
+          <div class="question-group">
+            <label class="question-label">What are the current weather conditions?</label>
+            <div class="option-buttons">
+              <button class="option-button" onclick="selectWeather('good')" data-weather="good">
+                Good conditions (suitable temperature, some rain expected)
+              </button>
+              <button class="option-button" onclick="selectWeather('dry')" data-weather="dry">
+                Very dry conditions
+              </button>
+              <button class="option-button" onclick="selectWeather('heavy_rain')" data-weather="heavy_rain">
+                Heavy rainfall / flooding risk
+              </button>
+              <button class="option-button" onclick="selectWeather('extreme')" data-weather="extreme">
+                Extreme weather (very hot, very cold, or storm risk)
+              </button>
+              <button class="option-button" onclick="selectWeather('unknown')" data-weather="unknown">
+                I don't know current conditions
+              </button>
+            </div>
+          </div>
+          <div class="question-group">
+            <label class="question-label">Recent rainfall (last 2-4 weeks)</label>
+            <div class="option-buttons">
+              <button class="option-button" onclick="selectRecentRain('adequate')" data-rain="adequate">
+                Adequate rainfall
+              </button>
+              <button class="option-button" onclick="selectRecentRain('low')" data-rain="low">
+                Low rainfall / dry period
+              </button>
+              <button class="option-button" onclick="selectRecentRain('excessive')" data-rain="excessive">
+                Excessive rainfall / flooding
+              </button>
+              <button class="option-button" onclick="selectRecentRain('unknown')" data-rain="unknown">
+                I don't know
+              </button>
+            </div>
+          </div>
+          <div class="disclaimer">
+            <strong>Important:</strong> Never treat weather forecasts as guarantees. Always have a backup plan, especially for rain-fed farming. Local conditions can vary significantly from regional forecasts.
+          </div>
+          <div class="action-buttons">
+            <button class="action-button primary" onclick="confirmWeather()">Continue</button>
+            <button class="action-button secondary" onclick="goBack()">Back</button>
+          </div>
+        </div>
+
+        <!-- Section 8: Planting Window -->
+        <div class="tool-section hidden fade-in" id="plantingWindowSection">
+          <h2>Planting Window for Your Crop</h2>
+          <div class="planting-calendar">
+            <div class="why-matters-title">Recommended Planting Period</div>
+            <p id="plantingWindowInfo">Based on your location and crop selection, here is the general planting guidance.</p>
+          </div>
+          <div class="disclaimer">
+            <strong>Important:</strong> Planting calendars are guides. Actual conditions can change from season to season. Varieties, local microclimates, and changing weather patterns can all affect the best planting time. This information should be combined with your own field observations and local advice.
+          </div>
+          <div class="question-group">
+            <label class="question-label">When are you planning to plant?</label>
+            <div class="option-buttons">
+              <button class="option-button" onclick="selectPlantingDate('today')" data-date="today">
+                Today
+              </button>
+              <button class="option-button" onclick="selectPlantingDate('this_week')" data-date="this_week">
+                This week
+              </button>
+              <button class="option-button" onclick="selectPlantingDate('next_week')" data-date="next_week">
+                Next week
+              </button>
+              <button class="option-button" onclick="selectPlantingDate('specific')" data-date="specific">
+                Specific date
+              </button>
+            </div>
+          </div>
+          <div class="question-group hidden" id="specificDateGroup">
+            <label class="question-label">Enter your planned planting date</label>
+            <input type="date" class="date-input" id="specificDateInput">
+          </div>
+          <div class="condition-card hidden" id="plantingDateResult">
+            <div class="condition-title">Your planned date compared to recommended period:</div>
+            <p id="plantingDateComparison"></p>
+          </div>
+          <div class="action-buttons">
+            <button class="action-button primary" onclick="confirmPlantingDate()">Continue</button>
+            <button class="action-button secondary" onclick="goBack()">Back</button>
+          </div>
+        </div>
+
+        <!-- Section 9: Crop-Specific Conditions -->
+        <div class="tool-section hidden fade-in" id="cropConditionsSection">
+          <h2>Important Conditions for <span id="selectedCropName"></span></h2>
+          <div class="why-matters">
+            <div class="why-matters-title">Why these conditions matter</div>
+            <p>Each crop has specific requirements. Understanding these helps you prepare properly and identify problems early. These are the most important conditions to check for your selected crop.</p>
+          </div>
+          <div id="cropSpecificConditions"></div>
+          <div class="action-buttons">
+            <button class="action-button primary" onclick="confirmCropConditions()">Continue</button>
+            <button class="action-button secondary" onclick="goBack()">Back</button>
+          </div>
+        </div>
+
+        <!-- Section 10: Money and Market Check -->
+        <div class="tool-section hidden fade-in" id="businessSection">
+          <h2>Business Planning Check</h2>
+          <div class="why-matters">
+            <div class="why-matters-title">Why business planning matters</div>
+            <p>Growing a crop is only part of farming as a business. You also need to consider costs, potential income, and where you will sell your harvest. A crop can produce a good harvest and still lose money if costs are too high or the selling price is poor.</p>
+          </div>
+          <div class="question-group">
+            <label class="question-label">Have you calculated how much this crop will cost?</label>
+            <div class="option-buttons">
+              <button class="option-button" onclick="selectCostCalc('yes')" data-cost="yes">
+                Yes, I have calculated costs
+              </button>
+              <button class="option-button" onclick="selectCostCalc('no')" data-cost="no">
+                No, I haven't calculated costs
+              </button>
+              <button class="option-button" onclick="selectCostCalc('partly')" data-cost="partly">
+                Partly (some costs calculated)
+              </button>
+            </div>
+          </div>
+          <div class="condition-card hidden" id="costCalcInfo">
+            <div class="condition-title">Before planting, consider:</div>
+            <ul style="margin: 0.5rem 0 0 1.5rem; font-size: 0.9rem;">
+              <li>Cost of seeds/seedlings</li>
+              <li>Fertilizer and soil amendments</li>
+              <li>Labor costs (planting, weeding, harvesting)</li>
+              <li>Water costs (if irrigated)</li>
+              <li>Pest and disease control</li>
+              <li>Equipment and tools</li>
+              <li>Transport and packaging</li>
+              <li>Expected yield and selling price</li>
+            </ul>
+            <a href="/calculators/farm-budget.html" class="action-button outline" style="display: inline-block; margin-top: 1rem; text-decoration: none;">
+              Calculate My Farm Costs
+            </a>
+          </div>
+          <div class="question-group">
+            <label class="question-label">Do you know where you will sell your harvest?</label>
+            <div class="option-buttons">
+              <button class="option-button" onclick="selectMarket('yes')" data-market="yes">
+                Yes, I have a buyer/market
+              </button>
+              <button class="option-button" onclick="selectMarket('no')" data-market="no">
+                No, I haven't planned this
+              </button>
+              <button class="option-button" onclick="selectMarket('not_sure')" data-market="not_sure">
+                Not sure yet
+              </button>
+            </div>
+          </div>
+          <div class="action-buttons">
+            <button class="action-button primary" onclick="confirmBusiness()">Continue</button>
+            <button class="action-button secondary" onclick="goBack()">Back</button>
+          </div>
+        </div>
+
+        <!-- Final Result Section -->
+        <div class="final-result hidden fade-in" id="finalResult">
+          <h2 style="text-align: center;">YOUR PLANTING CHECK</h2>
+          <div class="result-status" id="resultStatus">CONDITIONS LOOK REASONABLE</div>
+
+          <div class="summary-box">
+            <div class="summary-title">Your Planting Check Summary</div>
+            <div class="summary-item">
+              <div class="summary-label">Crop:</div>
+              <div class="summary-value" id="summaryCrop"></div>
+            </div>
+            <div class="summary-item">
+              <div class="summary-label">Location:</div>
+              <div class="summary-value" id="summaryLocation"></div>
+            </div>
+            <div class="summary-item">
+              <div class="summary-label">Planned planting date:</div>
+              <div class="summary-value" id="summaryDate"></div>
+            </div>
+            <div class="summary-item">
+              <div class="summary-label">Farming method:</div>
+              <div class="summary-value" id="summaryMethod"></div>
+            </div>
+            <div class="summary-item">
+              <div class="summary-label">Land preparation:</div>
+              <div class="summary-value" id="summaryLand"></div>
+            </div>
+            <div class="summary-item">
+              <div class="summary-label">Soil moisture:</div>
+              <div class="summary-value" id="summaryMoisture"></div>
+            </div>
+            <div class="summary-item">
+              <div class="summary-label">Water availability:</div>
+              <div class="summary-value" id="summaryWater"></div>
+            </div>
+            <div class="summary-item">
+              <div class="summary-label">Weather conditions:</div>
+              <div class="summary-value" id="summaryWeather"></div>
+            </div>
+          </div>
+
+          <div class="why-matters">
+            <div class="why-matters-title">WHY THIS MATTERS</div>
+            <p id="resultExplanation"></p>
+          </div>
+
+          <div class="why-matters">
+            <div class="why-matters-title">MAIN RISKS IDENTIFIED</div>
+            <div id="risksContainer"></div>
+          </div>
+
+          <div class="why-matters">
+            <div class="why-matters-title">WHAT YOU CAN DO</div>
+            <ul id="recommendationsList" style="margin: 0.5rem 0 0 1.5rem;"></ul>
+          </div>
+
+          <div class="why-matters">
+            <div class="why-matters-title">DECISION</div>
+            <p id="finalDecision" style="font-weight: 700; font-size: 1.1rem;"></p>
+          </div>
+
+          <div class="disclaimer">
+            <strong>Important:</strong> This result is based on the information you entered and available agricultural/weather information at the time of the check. Conditions can change. This tool provides decision support, not a guarantee of success. Always use your own judgment and local knowledge.
+          </div>
+
+          <h3 style="margin-top: 2rem;">What should I do next?</h3>
+          <div class="next-actions" id="nextActions">
+            <!-- Next actions will be populated by JavaScript -->
+          </div>
+
+          <div class="action-buttons">
+            <button class="action-button primary" onclick="saveResult()">Save My Planting Check</button>
+            <button class="action-button outline" onclick="downloadResult()">Download Summary</button>
+            <button class="action-button secondary" onclick="restartTool()">Start New Check</button>
+          </div>
+        </div>
+      </div>
+    </div>
+  </main>
+
+  <div data-site-footer></div>
+  <script src="/assets/planting-tool.js"></script>
+  <script src="/assets/site.js"></script>
+</body>
+</html>
