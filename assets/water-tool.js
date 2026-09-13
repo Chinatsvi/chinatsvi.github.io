@@ -489,7 +489,10 @@ function startLimitedWaterMode() {
 }
 
 function showIrrigationHelp() {
-  alert('This feature is coming soon. For now, use the calculator to understand your water needs, and check the educational content below for irrigation guidance.');
+  // Redirect to the irrigation handbook
+  // The handbook has been loaded in content.js with slug 'beginner-irrigation-guide'
+  // Navigate to the guides page where the irrigation handbook is available
+  window.location.href = '/guides/';
 }
 
 function showSection(sectionId) {
