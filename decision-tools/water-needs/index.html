@@ -3,11 +3,456 @@
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width,initial-scale=1">
-  <meta name="description" content="How Much Water Does My Farm Need? Calculate water requirements based on crop type, area, weather and irrigation system efficiency.">
-  <title>How Much Water Does My Farm Need? | AgriBase Decision Tools</title>
+  <meta name="description" content="How Much Water Does My Farm Need? Calculate crop water requirements, irrigation needs, rainfall contribution, pump runtime and watering schedules using your crop, soil, area, weather and irrigation method.">
+  <title>How Much Water Does My Farm Need? Irrigation & Crop Water Calculator | AgriBase Decision Tools</title>
   <link rel="stylesheet" href="/assets/site.css">
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link href="https://fonts.googleapis.com/css2?family=Fraunces:wght@600;700&family=Karla:wght@400;700;800&display=swap" rel="stylesheet">
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "WebApplication",
+    "name": "Farm Irrigation Water Calculator",
+    "description": "Estimate crop water needs, irrigation requirements, rainfall contribution, pump runtime and watering schedules using your crop, soil, area, weather and irrigation method.",
+    "applicationCategory": "Agriculture",
+    "operatingSystem": "Web Browser",
+    "offers": {
+      "@type": "Offer",
+      "price": "0",
+      "priceCurrency": "USD"
+    }
+  }
+  </script>
+  <style>
+    .water-tool {
+      max-width: 900px;
+      margin: 0 auto;
+      padding: 1rem;
+    }
+
+    .tool-section {
+      background: var(--paper);
+      border-radius: 8px;
+      padding: 1.5rem;
+      margin-bottom: 1.5rem;
+      box-shadow: var(--shadow);
+      border: 1px solid var(--border);
+    }
+
+    .progress-bar {
+      display: flex;
+      gap: 0.5rem;
+      margin-bottom: 2rem;
+      flex-wrap: wrap;
+    }
+
+    .progress-step {
+      flex: 1;
+      min-width: 40px;
+      height: 4px;
+      background: var(--border);
+      border-radius: 2px;
+      transition: background 0.3s;
+    }
+
+    .progress-step.active {
+      background: var(--field);
+    }
+
+    .progress-step.completed {
+      background: var(--field-mid);
+    }
+
+    .step-number {
+      font-family: var(--display);
+      font-weight: 700;
+      color: var(--gold);
+      font-size: 0.9rem;
+      margin-bottom: 0.5rem;
+    }
+
+    .question-group {
+      margin-bottom: 1.5rem;
+    }
+
+    .question-label {
+      font-weight: 700;
+      margin-bottom: 0.5rem;
+      color: var(--field);
+      font-size: 1.1rem;
+      font-family: var(--display);
+    }
+
+    .why-matters {
+      background: var(--cream);
+      border-left: 4px solid var(--field);
+      padding: 1rem;
+      margin: 1rem 0;
+      border-radius: 0 4px 4px 0;
+      cursor: pointer;
+    }
+
+    .why-matters-title {
+      font-weight: 700;
+      color: var(--field);
+      margin-bottom: 0.5rem;
+      font-family: var(--display);
+      display: flex;
+      align-items: center;
+      gap: 0.5rem;
+    }
+
+    .why-matters-content {
+      display: none;
+      margin-top: 0.5rem;
+    }
+
+    .why-matters.show .why-matters-content {
+      display: block;
+    }
+
+    .option-buttons {
+      display: flex;
+      flex-direction: column;
+      gap: 0.75rem;
+    }
+
+    .option-button {
+      padding: 1rem 1.5rem;
+      border: 2px solid var(--field);
+      background: var(--paper);
+      color: var(--field);
+      border-radius: 8px;
+      font-size: 1rem;
+      font-weight: 600;
+      cursor: pointer;
+      transition: all 0.2s;
+      text-align: left;
+      font-family: var(--body);
+    }
+
+    .option-button:hover {
+      background: var(--field);
+      color: var(--cream);
+    }
+
+    .option-button.selected {
+      background: var(--field);
+      color: var(--cream);
+    }
+
+    .form-input {
+      width: 100%;
+      padding: 0.75rem;
+      border: 2px solid var(--border);
+      border-radius: 8px;
+      font-size: 1rem;
+      font-family: var(--body);
+      background: var(--paper);
+      color: var(--ink);
+      margin-bottom: 0.5rem;
+    }
+
+    .form-input:focus {
+      outline: none;
+      border-color: var(--field);
+    }
+
+    .form-select {
+      width: 100%;
+      padding: 0.75rem;
+      border: 2px solid var(--border);
+      border-radius: 8px;
+      font-size: 1rem;
+      font-family: var(--body);
+      background: var(--paper);
+      color: var(--ink);
+      margin-bottom: 0.5rem;
+    }
+
+    .unit-group {
+      display: flex;
+      gap: 0.5rem;
+      align-items: center;
+    }
+
+    .unit-select {
+      width: 120px;
+      flex-shrink: 0;
+    }
+
+    .number-input {
+      flex: 1;
+    }
+
+    .result-box {
+      background: var(--cream);
+      border-radius: 8px;
+      padding: 1.5rem;
+      margin: 1.5rem 0;
+      border: 1px solid var(--border);
+    }
+
+    .result-title {
+      font-weight: 700;
+      margin-bottom: 1rem;
+      color: var(--field);
+      font-family: var(--display);
+    }
+
+    .result-value {
+      font-size: 1.5rem;
+      font-weight: 700;
+      color: var(--field);
+      margin: 0.5rem 0;
+    }
+
+    .result-label {
+      font-size: 0.9rem;
+      color: var(--muted);
+    }
+
+    .water-balance {
+      padding: 1.5rem;
+      border-radius: 8px;
+      margin: 1.5rem 0;
+      text-align: center;
+    }
+
+    .water-balance.sufficient {
+      background: #f0fff0;
+      border: 1px solid #d0f0d0;
+    }
+
+    .water-balance.tight {
+      background: var(--cream);
+      border: 1px solid var(--border);
+    }
+
+    .water-balance.shortage {
+      background: #fff0f0;
+      border: 1px solid #ffd0d0;
+    }
+
+    .balance-status {
+      font-size: 1.25rem;
+      font-weight: 700;
+      font-family: var(--display);
+      margin-bottom: 0.5rem;
+    }
+
+    .sufficient .balance-status {
+      color: var(--field);
+    }
+
+    .tight .balance-status {
+      color: var(--gold);
+    }
+
+    .shortage .balance-status {
+      color: var(--soil);
+    }
+
+    .action-buttons {
+      display: flex;
+      flex-direction: column;
+      gap: 0.75rem;
+      margin-top: 1.5rem;
+    }
+
+    .action-button {
+      padding: 1rem 1.5rem;
+      border: none;
+      border-radius: 8px;
+      font-size: 1rem;
+      font-weight: 600;
+      cursor: pointer;
+      transition: all 0.2s;
+      font-family: var(--body);
+    }
+
+    .action-button.primary {
+      background: var(--field);
+      color: var(--cream);
+    }
+
+    .action-button.primary:hover {
+      background: var(--field-dark);
+    }
+
+    .action-button.secondary {
+      background: var(--muted);
+      color: var(--cream);
+    }
+
+    .action-button.secondary:hover {
+      background: var(--ink);
+    }
+
+    .action-button.outline {
+      background: var(--paper);
+      color: var(--field);
+      border: 2px solid var(--field);
+    }
+
+    .action-button.outline:hover {
+      background: var(--cream);
+    }
+
+    .hidden {
+      display: none;
+    }
+
+    .fade-in {
+      animation: fadeIn 0.3s ease-in;
+    }
+
+    @keyframes fadeIn {
+      from { opacity: 0; transform: translateY(10px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+
+    .disclaimer {
+      background: var(--cream);
+      border: 1px solid var(--gold);
+      border-radius: 8px;
+      padding: 1rem;
+      margin: 1.5rem 0;
+      font-size: 0.85rem;
+      color: var(--muted);
+    }
+
+    .info-box {
+      background: var(--tint);
+      border-left: 4px solid var(--field);
+      padding: 1rem;
+      margin: 1rem 0;
+      border-radius: 0 4px 4px 0;
+    }
+
+    .warning-box {
+      background: #fff0f0;
+      border-left: 4px solid var(--soil);
+      padding: 1rem;
+      margin: 1rem 0;
+      border-radius: 0 4px 4px 0;
+    }
+
+    .calculation-details {
+      background: var(--cream);
+      border-radius: 8px;
+      padding: 1.5rem;
+      margin: 1.5rem 0;
+      border: 1px solid var(--border);
+    }
+
+    .calculation-row {
+      display: flex;
+      justify-content: space-between;
+      padding: 0.5rem 0;
+      border-bottom: 1px solid var(--border);
+    }
+
+    .calculation-row:last-child {
+      border-bottom: none;
+    }
+
+    .calculation-label {
+      font-weight: 600;
+    }
+
+    .calculation-value {
+      color: var(--field);
+      font-weight: 700;
+    }
+
+    .scenario-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+      gap: 1rem;
+      margin: 1rem 0;
+    }
+
+    .scenario-card {
+      padding: 1rem;
+      border-radius: 8px;
+      border: 1px solid var(--border);
+      text-align: center;
+    }
+
+    .scenario-card.improvement {
+      background: #f0fff0;
+      border-color: #d0f0d0;
+    }
+
+    .scenario-card.neutral {
+      background: var(--cream);
+    }
+
+    .recommendation-list {
+      margin: 1rem 0;
+    }
+
+    .recommendation-item {
+      display: flex;
+      align-items: flex-start;
+      gap: 0.75rem;
+      margin-bottom: 0.75rem;
+      padding: 0.75rem;
+      background: var(--cream);
+      border-radius: 4px;
+    }
+
+    .recommendation-number {
+      background: var(--field);
+      color: var(--cream);
+      width: 24px;
+      height: 24px;
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-weight: 700;
+      flex-shrink: 0;
+    }
+
+    .recommendation-text {
+      flex: 1;
+      font-size: 0.9rem;
+    }
+
+    @media (max-width: 600px) {
+      .water-tool {
+        padding: 0.5rem;
+      }
+
+      .tool-section {
+        padding: 1rem;
+      }
+
+      .option-buttons {
+        gap: 0.5rem;
+      }
+
+      .option-button {
+        padding: 0.875rem 1rem;
+        font-size: 0.95rem;
+      }
+
+      .unit-group {
+        flex-direction: column;
+        align-items: stretch;
+      }
+
+      .unit-select {
+        width: 100%;
+      }
+
+      .scenario-grid {
+        grid-template-columns: 1fr;
+      }
+    }
+  </style>
 </head>
 <body>
   <div data-site-header></div>
@@ -16,33 +461,652 @@
       <div class="breadcrumb">
         <a href="/">Home</a> / <a href="/decision-tools/">Decision Tools</a> / How Much Water Does My Farm Need?
       </div>
-      <div class="eyebrow">Irrigation Decision</div>
+      <div class="eyebrow">Irrigation Planning</div>
       <h1>How Much Water Does My Farm Need?</h1>
-      <p class="lead">Calculate water requirements based on crop type, area, weather and irrigation system efficiency.</p>
+      <p class="lead">Estimate your crop's water need, irrigation requirement and watering schedule using your crop, soil, area, weather and irrigation method.</p>
     </div>
   </header>
+
   <main class="section">
-    <div class="container article">
-      <div class="notice">
-        <strong>Coming Soon:</strong> This decision tool is under development. Check back for comprehensive water planning tools.
+    <div class="container">
+      <div class="water-tool">
+        <!-- Progress Indicator -->
+        <div class="progress-bar" id="progressBar">
+          <div class="progress-step active" data-step="1"></div>
+          <div class="progress-step" data-step="2"></div>
+          <div class="progress-step" data-step="3"></div>
+          <div class="progress-step" data-step="4"></div>
+          <div class="progress-step" data-step="5"></div>
+          <div class="progress-step" data-step="6"></div>
+          <div class="progress-step" data-step="7"></div>
+          <div class="progress-step" data-step="8"></div>
+        </div>
+
+        <!-- Start Screen -->
+        <div class="tool-section fade-in" id="startScreen">
+          <h2 style="text-align: center; margin-bottom: 1rem;">How Much Water Does My Farm Need?</h2>
+          <p style="text-align: center; font-size: 1.1rem; margin-bottom: 1.5rem;">
+            Estimate your crop's water need, irrigation requirement and watering schedule.
+          </p>
+          <div class="disclaimer">
+            <strong>IMPORTANT: This is an estimate, not a guarantee.</strong>
+            <p>Water requirements change with weather, soil, crop growth and rainfall. Use the result as a planning guide and check the soil and crop regularly.</p>
+          </div>
+          <p style="text-align: center; margin: 1.5rem 0;">
+            This tool will help you understand:
+          </p>
+          <ul style="margin: 1rem 0 1.5rem 2rem;">
+            <li>How much water your crop needs</li>
+            <li>How much water rainfall already provides</li>
+            <li>How much additional water irrigation may need to provide</li>
+            <li>How soil type affects irrigation</li>
+            <li>How crop growth stage affects water requirements</li>
+            <li>How irrigation method affects water use</li>
+            <li>Whether your available water is enough</li>
+            <li>How much water to apply and when</li>
+            <li>How much irrigation may cost</li>
+            <li>What to do when water is limited</li>
+          </ul>
+          <div class="action-buttons">
+            <button class="action-button primary" onclick="startTool()">Calculate My Water Need</button>
+            <button class="action-button outline" onclick="startLimitedWaterMode()">I Have Limited Water</button>
+            <button class="action-button secondary" onclick="showIrrigationHelp()">Help Me Understand Irrigation</button>
+          </div>
+        </div>
+
+        <!-- Section 1: Farm Location and Size -->
+        <div class="tool-section hidden fade-in" id="farmSection">
+          <div class="step-number">STEP 1</div>
+          <h2>Your Farm</h2>
+          <div class="question-group">
+            <label class="question-label">Where is your farm?</label>
+            <select class="form-select" id="countrySelect">
+              <option value="">Select country</option>
+              <option value="zimbabwe">Zimbabwe</option>
+              <option value="kenya">Kenya</option>
+              <option value="south_africa">South Africa</option>
+              <option value="zambia">Zambia</option>
+              <option value="ghana">Ghana</option>
+              <option value="nigeria">Nigeria</option>
+              <option value="tanzania">Tanzania</option>
+              <option value="ethiopia">Ethiopia</option>
+              <option value="uganda">Uganda</option>
+              <option value="mozambique">Mozambique</option>
+              <option value="malawi">Malawi</option>
+              <option value="other">Other country</option>
+            </select>
+          </div>
+          <div class="why-matters" onclick="toggleWhy('location')">
+            <div class="why-matters-title">Why does this matter? <span>▼</span></div>
+            <div class="why-matters-content" id="locationWhy">
+              <p>Weather conditions like temperature, humidity, wind and sunshine vary between places. These factors affect how much water your crop loses each day, which influences irrigation requirements.</p>
+            </div>
+          </div>
+          <div class="question-group">
+            <label class="question-label">How large is the area you want to irrigate?</label>
+            <div class="unit-group">
+              <input type="number" class="form-input number-input" id="farmArea" placeholder="Area size">
+              <select class="form-select unit-select" id="areaUnit">
+                <option value="hectares">Hectares</option>
+                <option value="acres">Acres</option>
+                <option value="sqm">Square metres</option>
+              </select>
+            </div>
+            <p style="font-size: 0.85rem; color: var(--muted); margin-top: 0.5rem;">
+              1 hectare = 10,000 square metres. We need the area because 1 hectare and 0.1 hectare do not require the same total amount of water even if they grow the same crop.
+            </p>
+          </div>
+          <div class="action-buttons">
+            <button class="action-button primary" onclick="confirmFarm()">Continue</button>
+            <button class="action-button secondary" onclick="goBack()">Back</button>
+          </div>
+        </div>
+
+        <!-- Section 2: Crop Selection -->
+        <div class="tool-section hidden fade-in" id="cropSection">
+          <div class="step-number">STEP 2</div>
+          <h2>Your Crop</h2>
+          <div class="question-group">
+            <label class="question-label">What are you growing?</label>
+            <select class="form-select" id="cropSelect" onchange="showCropInfo()">
+              <option value="">Select crop</option>
+              <option value="maize">Maize</option>
+              <option value="tomato">Tomato</option>
+              <option value="cabbage">Cabbage</option>
+              <option value="onion">Onion</option>
+              <option value="potato">Potato</option>
+              <option value="beans">Beans</option>
+              <option value="groundnuts">Groundnuts</option>
+              <option value="soybean">Soybean</option>
+              <option value="wheat">Wheat</option>
+              <option value="sorghum">Sorghum</option>
+              <option value="millet">Millet</option>
+              <option value="sugar_beans">Sugar beans</option>
+              <option value="sweet_potato">Sweet potato</option>
+              <option value="watermelon">Watermelon</option>
+              <option value="butternut">Butternut</option>
+              <option value="pumpkin">Pumpkin</option>
+              <option value="pepper">Pepper</option>
+              <option value="spinach">Spinach</option>
+              <option value="lettuce">Lettuce</option>
+              <option value="carrot">Carrot</option>
+            </select>
+          </div>
+          <div class="info-box hidden" id="cropInfoBox">
+            <div class="why-matters-title">Crop Information</div>
+            <p id="cropInfoText"></p>
+          </div>
+          <div class="question-group">
+            <label class="question-label">What growth stage is your crop in?</label>
+            <select class="form-select" id="growthStage">
+              <option value="">Select growth stage</option>
+            </select>
+          </div>
+          <div class="why-matters" onclick="toggleWhy('growthStage')">
+            <div class="why-matters-title">Why does this matter? <span>▼</span></div>
+            <div class="why-matters-content" id="growthStageWhy">
+              <p>Crops do not use the same amount of water throughout their life. Water demand usually changes as the crop develops. Flowering and fruit development stages often require more water than early establishment.</p>
+            </div>
+          </div>
+          <div class="question-group">
+            <label class="question-label">When did you plant?</label>
+            <input type="date" class="form-input" id="plantingDate">
+          </div>
+          <div class="action-buttons">
+            <button class="action-button primary" onclick="confirmCrop()">Continue</button>
+            <button class="action-button secondary" onclick="goBack()">Back</button>
+          </div>
+        </div>
+
+        <!-- Section 3: Soil -->
+        <div class="tool-section hidden fade-in" id="soilSection">
+          <div class="step-number">STEP 3</div>
+          <h2>Your Soil</h2>
+          <div class="question-group">
+            <label class="question-label">What type of soil do you have?</label>
+            <div class="option-buttons">
+              <button class="option-button" onclick="selectSoil('sand')" data-soil="sand">
+                Sand
+              </button>
+              <button class="option-button" onclick="selectSoil('sandy_loam')" data-soil="sandy_loam">
+                Sandy loam
+              </button>
+              <button class="option-button" onclick="selectSoil('loam')" data-soil="loam">
+                Loam
+              </button>
+              <button class="option-button" onclick="selectSoil('clay_loam')" data-soil="clay_loam">
+                Clay loam
+              </button>
+              <button class="option-button" onclick="selectSoil('clay')" data-soil="clay">
+                Clay
+              </button>
+              <button class="option-button" onclick="selectSoil('not_sure')" data-soil="not_sure">
+                Not sure
+              </button>
+            </div>
+          </div>
+          <div class="why-matters" onclick="toggleWhy('soil')">
+            <div class="why-matters-title">Why does this matter? <span>▼</span></div>
+            <div class="why-matters-content" id="soilWhy">
+              <p>Sandy soils usually allow water to move through them more quickly and may need smaller, more frequent irrigation. Clay soils can hold more water but may take water in more slowly and can become waterlogged if too much water is applied. Loam soils often have a balance between water storage and drainage.</p>
+            </div>
+          </div>
+          <div class="question-group">
+            <label class="question-label">How wet is the soil now?</label>
+            <div class="option-buttons">
+              <button class="option-button" onclick="selectSoilMoisture('very_dry')" data-moisture="very_dry">
+                Very dry
+              </button>
+              <button class="option-button" onclick="selectSoilMoisture('dry')" data-moisture="dry">
+                Dry
+              </button>
+              <button class="option-button" onclick="selectSoilMoisture('moist')" data-moisture="moist">
+                Moist
+              </button>
+              <button class="option-button" onclick="selectSoilMoisture('wet')" data-moisture="wet">
+                Wet
+              </button>
+              <button class="option-button" onclick="selectSoilMoisture('very_wet')" data-moisture="very_wet">
+                Very wet
+              </button>
+              <button class="option-button" onclick="selectSoilMoisture('not_sure')" data-moisture="not_sure">
+                I don't know
+              </button>
+            </div>
+          </div>
+          <div class="why-matters" onclick="toggleWhy('soilMoisture')">
+            <div class="why-matters-title">Why does this matter? <span>▼</span></div>
+            <div class="why-matters-content" id="soilMoistureWhy">
+              <p>The amount of water already stored in the soil affects how much irrigation is needed now. If the soil is already very wet, adding more water may not help and could cause problems. If it is very dry, the crop may already be under water stress.</p>
+            </div>
+          </div>
+          <div class="action-buttons">
+            <button class="action-button primary" onclick="confirmSoil()">Continue</button>
+            <button class="action-button secondary" onclick="goBack()">Back</button>
+          </div>
+        </div>
+
+        <!-- Section 4: Irrigation Method -->
+        <div class="tool-section hidden fade-in" id="irrigationSection">
+          <div class="step-number">STEP 4</div>
+          <h2>Your Irrigation Method</h2>
+          <div class="question-group">
+            <label class="question-label">How do you apply water?</label>
+            <div class="option-buttons">
+              <button class="option-button" onclick="selectIrrigationMethod('drip')" data-method="drip">
+                Drip irrigation
+              </button>
+              <button class="option-button" onclick="selectIrrigationMethod('sprinkler')" data-method="sprinkler">
+                Sprinkler
+              </button>
+              <button class="option-button" onclick="selectIrrigationMethod('furrow')" data-method="furrow">
+                Furrow
+              </button>
+              <button class="option-button" onclick="selectIrrigationMethod('basin')" data-method="basin">
+                Basin
+              </button>
+              <button class="option-button" onclick="selectIrrigationMethod('flood')" data-method="flood">
+                Flood
+              </button>
+              <button class="option-button" onclick="selectIrrigationMethod('watering_can')" data-method="watering_can">
+                Watering can
+              </button>
+              <button class="option-button" onclick="selectIrrigationMethod('hose')" data-method="hose">
+                Hose
+              </button>
+              <button class="option-button" onclick="selectIrrigationMethod('other')" data-method="other">
+                Other
+              </button>
+            </div>
+          </div>
+          <div class="why-matters" onclick="toggleWhy('irrigationMethod')">
+            <div class="why-matters-title">Why does this matter? <span>▼</span></div>
+            <div class="why-matters-content" id="irrigationMethodWhy">
+              <p>Different irrigation methods have different efficiencies. Some water is lost during conveyance and application. Drip irrigation can reduce water losses when properly designed and managed, but actual performance depends on the system and management. Furrow and flood irrigation often have higher water losses but require less infrastructure.</p>
+            </div>
+          </div>
+          <div class="question-group">
+            <label class="question-label">Do you know your irrigation system efficiency?</label>
+            <div class="option-buttons">
+              <button class="option-button" onclick="selectEfficiencyKnowledge('yes')" data-efficiency="yes">
+                Yes — I know the percentage
+              </button>
+              <button class="option-button" onclick="selectEfficiencyKnowledge('no')" data-efficiency="no">
+                No — estimate from system type
+              </button>
+              <button class="option-button" onclick="selectEfficiencyKnowledge('not_sure')" data-efficiency="not_sure">
+                I don't know
+              </button>
+            </div>
+          </div>
+          <div class="question-group hidden" id="efficiencyInputGroup">
+            <label class="question-label">Enter your system efficiency (percentage)</label>
+            <div class="unit-group">
+              <input type="number" class="form-input number-input" id="systemEfficiency" placeholder="Efficiency %">
+              <span style="font-weight: 600;">%</span>
+            </div>
+            <p style="font-size: 0.85rem; color: var(--muted); margin-top: 0.5rem;">
+              Efficiency is the percentage of water that actually reaches the crop root zone. If 100 litres are delivered and 80 litres reach the crop, efficiency is 80%.
+            </p>
+          </div>
+          <div class="action-buttons">
+            <button class="action-button primary" onclick="confirmIrrigation()">Continue</button>
+            <button class="action-button secondary" onclick="goBack()">Back</button>
+          </div>
+        </div>
+
+        <!-- Section 5: Water Source -->
+        <div class="tool-section hidden fade-in" id="waterSourceSection">
+          <div class="step-number">STEP 5</div>
+          <h2>Your Water Source</h2>
+          <div class="question-group">
+            <label class="question-label">What is your water source?</label>
+            <div class="option-buttons">
+              <button class="option-button" onclick="selectWaterSource('borehole')" data-source="borehole">
+                Borehole
+              </button>
+              <button class="option-button" onclick="selectWaterSource('well')" data-source="well">
+                Well
+              </button>
+              <button class="option-button" onclick="selectWaterSource('river')" data-source="river">
+                River
+              </button>
+              <button class="option-button" onclick="selectWaterSource('dam')" data-source="dam">
+                Dam
+              </button>
+              <button class="option-button" onclick="selectWaterSource('reservoir')" data-source="reservoir">
+                Reservoir
+              </button>
+              <button class="option-button" onclick="selectWaterSource('tank')" data-source="tank">
+                Tank
+              </button>
+              <button class="option-button" onclick="selectWaterSource('municipal')" data-source="municipal">
+                Municipal supply
+              </button>
+              <button class="option-button" onclick="selectWaterSource('rainwater')" data-source="rainwater">
+                Rainwater storage
+              </button>
+              <button class="option-button" onclick="selectWaterSource('other')" data-source="other">
+                Other
+              </button>
+            </div>
+          </div>
+          <div class="question-group">
+            <label class="question-label">How much water can your source provide?</label>
+            <div class="unit-group">
+              <input type="number" class="form-input number-input" id="sourceCapacity" placeholder="Flow rate">
+              <select class="form-select unit-select" id="capacityUnit">
+                <option value="l_per_hour">Litres/hour</option>
+                <option value="l_per_min">Litres/minute</option>
+                <option value="m3_per_hour">Cubic metres/hour</option>
+                <option value="m3_per_day">Cubic metres/day</option>
+              </select>
+            </div>
+          </div>
+          <div class="why-matters" onclick="toggleWhy('waterSource')">
+            <div class="why-matters-title">Why does this matter? <span>▼</span></div>
+            <div class="why-matters-content" id="waterSourceWhy">
+              <p>Knowing how much water your source can supply helps us check whether your irrigation plan is physically possible. If your source cannot provide enough water, you may need to adjust your irrigation plan, improve efficiency, or reduce the irrigated area.</p>
+            </div>
+          </div>
+          <div class="question-group">
+            <label class="question-label">Do you have a pump?</label>
+            <div class="option-buttons">
+              <button class="option-button" onclick="selectPump('yes')" data-pump="yes">
+                Yes
+              </button>
+              <button class="option-button" onclick="selectPump('no')" data-pump="no">
+                No
+              </button>
+            </div>
+          </div>
+          <div class="question-group hidden" id="pumpDetailsGroup">
+            <label class="question-label">What is your pump flow rate?</label>
+            <div class="unit-group">
+              <input type="number" class="form-input number-input" id="pumpFlowRate" placeholder="Flow rate">
+              <select class="form-select unit-select" id="pumpUnit">
+                <option value="l_per_min">Litres/minute</option>
+                <option value="l_per_hour">Litres/hour</option>
+                <option value="m3_per_hour">Cubic metres/hour</option>
+              </select>
+            </div>
+          </div>
+          <div class="question-group hidden" id="pumpHoursGroup">
+            <label class="question-label">How many hours can you operate the pump per day?</label>
+            <input type="number" class="form-input" id="pumpHours" placeholder="Hours per day">
+          </div>
+          <div class="action-buttons">
+            <button class="action-button primary" onclick="confirmWaterSource()">Continue</button>
+            <button class="action-button secondary" onclick="goBack()">Back</button>
+          </div>
+        </div>
+
+        <!-- Section 6: Weather and Rainfall -->
+        <div class="tool-section hidden fade-in" id="weatherSection">
+          <div class="step-number">STEP 6</div>
+          <h2>Weather and Rainfall</h2>
+          <div class="info-box">
+            <div class="why-matters-title">Current Weather Information</div>
+            <p><strong>Note:</strong> This tool uses general weather patterns for your region. For the most accurate local weather, check your local meteorological service or agricultural extension office. Weather conditions can change quickly.</p>
+          </div>
+          <div class="question-group">
+            <label class="question-label">What are the current weather conditions?</label>
+            <div class="option-buttons">
+              <button class="option-button" onclick="selectWeather('hot_dry')" data-weather="hot_dry">
+                Hot and dry
+              </button>
+              <button class="option-button" onclick="selectWeather('moderate')" data-weather="moderate">
+                Moderate temperature
+              </button>
+              <button class="option-button" onclick="selectWeather('cool')" data-weather="cool">
+                Cool
+              </button>
+              <button class="option-button" onclick="selectWeather('rainy')" data-weather="rainy">
+                Rainy season
+              </button>
+              <button class="option-button" onclick="selectWeather('not_sure')" data-weather="not_sure">
+                Not sure
+              </button>
+            </div>
+          </div>
+          <div class="question-group">
+            <label class="question-label">Recent rainfall (last 7 days)</label>
+            <div class="unit-group">
+              <input type="number" class="form-input number-input" id="recentRainfall" placeholder="Rainfall amount">
+              <select class="form-select unit-select" id="rainfallUnit">
+                <option value="mm">Millimetres (mm)</option>
+              </select>
+            </div>
+          </div>
+          <div class="why-matters" onclick="toggleWhy('rainfall')">
+            <div class="why-matters-title">Why does this matter? <span>▼</span></div>
+            <div class="why-matters-content" id="rainfallWhy">
+              <p>Not all rain that falls on your field becomes water available to the crop. Some may run off, evaporate, or drain below the root zone. Recent rainfall can reduce or eliminate the need for irrigation, but the effectiveness depends on soil type, rainfall intensity, and how dry the soil was before the rain.</p>
+            </div>
+          </div>
+          <div class="question-group">
+            <label class="question-label">Expected rainfall in the next few days?</label>
+            <div class="option-buttons">
+              <button class="option-button" onclick="selectExpectedRain('none')" data-expected-rain="none">
+                No rain expected
+              </button>
+              <button class="option-button" onclick="selectExpectedRain('light')" data-expected-rain="light">
+                Light rain possible
+              </button>
+              <button class="option-button" onclick="selectExpectedRain('moderate')" data-expected-rain="moderate">
+                Moderate rain expected
+              </button>
+              <button class="option-button" onclick="selectExpectedRain('heavy')" data-expected-rain="heavy">
+                Heavy rain expected
+              </button>
+              <button class="option-button" onclick="selectExpectedRain('not_sure')" data-expected-rain="not_sure">
+                Not sure
+              </button>
+            </div>
+          </div>
+          <div class="action-buttons">
+            <button class="action-button primary" onclick="confirmWeather()">Calculate Results</button>
+            <button class="action-button secondary" onclick="goBack()">Back</button>
+          </div>
+        </div>
+
+        <!-- Final Results Section -->
+        <div class="tool-section hidden fade-in" id="finalResult">
+          <h2 style="text-align: center;">YOUR IRRIGATION CHECK</h2>
+
+          <div class="result-box">
+            <div class="result-title">Crop Information</div>
+            <div class="calculation-row">
+              <span class="calculation-label">Crop:</span>
+              <span class="calculation-value" id="resultCrop"></span>
+            </div>
+            <div class="calculation-row">
+              <span class="calculation-label">Growth stage:</span>
+              <span class="calculation-value" id="resultGrowthStage"></span>
+            </div>
+            <div class="calculation-row">
+              <span class="calculation-label">Area:</span>
+              <span class="calculation-value" id="resultArea"></span>
+            </div>
+            <div class="calculation-row">
+              <span class="calculation-label">Soil type:</span>
+              <span class="calculation-value" id="resultSoil"></span>
+            </div>
+            <div class="calculation-row">
+              <span class="calculation-label">Irrigation method:</span>
+              <span class="calculation-value" id="resultIrrigationMethod"></span>
+            </div>
+          </div>
+
+          <div class="result-box">
+            <div class="result-title">Water Requirements</div>
+            <div class="calculation-row">
+              <span class="calculation-label">Estimated crop water demand:</span>
+              <span class="calculation-value" id="resultCropWaterDemand"></span>
+            </div>
+            <div class="calculation-row">
+              <span class="calculation-label">Estimated irrigation requirement:</span>
+              <span class="calculation-value" id="resultIrrigationRequirement"></span>
+            </div>
+            <div class="calculation-row">
+              <span class="calculation-label">Gross irrigation requirement:</span>
+              <span class="calculation-value" id="resultGrossRequirement"></span>
+            </div>
+            <div class="calculation-row">
+              <span class="calculation-label">Estimated volume per day:</span>
+              <span class="calculation-value" id="resultVolumePerDay"></span>
+            </div>
+          </div>
+
+          <div class="water-balance" id="waterBalance">
+            <div class="balance-status" id="balanceStatus">WATER SUPPLY FIT</div>
+            <p id="balanceExplanation"></p>
+          </div>
+
+          <div class="result-box">
+            <div class="result-title">Water Source Capacity</div>
+            <div class="calculation-row">
+              <span class="calculation-label">Available water:</span>
+              <span class="calculation-value" id="resultAvailableWater"></span>
+            </div>
+            <div class="calculation-row">
+              <span class="calculation-label">Water shortage/surplus:</span>
+              <span class="calculation-value" id="resultWaterBalance"></span>
+            </div>
+          </div>
+
+          <div class="result-box" id="pumpRuntimeBox">
+            <div class="result-title">Pump Runtime</div>
+            <div class="calculation-row">
+              <span class="calculation-label">Estimated pumping time:</span>
+              <span class="calculation-value" id="resultPumpRuntime"></span>
+            </div>
+          </div>
+
+          <div class="warning-box hidden" id="warningBox">
+            <div class="why-matters-title">Important Warnings</div>
+            <div id="warningContent"></div>
+          </div>
+
+          <div class="info-box">
+            <div class="why-matters-title">Main Recommendation</div>
+            <p id="mainRecommendation"></p>
+          </div>
+
+          <div class="result-box">
+            <div class="result-title">What This Means</div>
+            <p id="whatThisMeans"></p>
+          </div>
+
+          <div class="result-box">
+            <div class="result-title">What To Check</div>
+            <ul id="whatToCheck" style="margin: 0.5rem 0 0 1.5rem;"></ul>
+          </div>
+
+          <div class="result-box">
+            <div class="result-title">What You Can Change</div>
+            <ul id="whatYouCanChange" style="margin: 0.5rem 0 0 1.5rem;"></ul>
+          </div>
+
+          <div class="calculation-details hidden" id="calculationDetails">
+            <div class="result-title">How Was This Calculated?</div>
+            <div id="calculationExplanation"></div>
+          </div>
+
+          <button class="action-button outline" onclick="toggleCalculationDetails()" style="width: 100%; margin-top: 1rem;">
+            Show/Hide Calculation Details
+          </button>
+
+          <div class="disclaimer">
+            <strong>Important:</strong> This result is based on the information you entered and available agricultural data at the time of calculation. Water requirements change with weather, soil, crop growth and rainfall. Use this as a planning guide and check soil moisture and crop conditions regularly. Always use your own judgment and local knowledge. Consult local agricultural extension services for precise local recommendations.
+          </div>
+
+          <div class="action-buttons">
+            <button class="action-button primary" onclick="saveResult()">Save My Water Plan</button>
+            <button class="action-button outline" onclick="downloadResult()">Download Report</button>
+            <button class="action-button secondary" onclick="restartTool()">Start New Calculation</button>
+          </div>
+        </div>
       </div>
-      <h2>What this tool will help you calculate</h2>
-      <ul>
-        <li>Crop water requirements based on type and growth stage</li>
-        <li>Effective rainfall and irrigation need</li>
-        <li>System efficiency and water losses</li>
-        <li>Pumping and storage requirements</li>
-        <li>Water budget and seasonal planning</li>
-      </ul>
-      <h2>Related resources</h2>
-      <ul>
-        <li><a href="/guides/beginner-irrigation-guide.html">Beginner's Guide to Irrigation</a></li>
-        <li><a href="/calculators/irrigation.html">Irrigation Calculator</a></li>
-        <li><a href="/guides/reduce-water-waste.html">Reduce Water Waste Guide</a></li>
-      </ul>
     </div>
   </main>
+
+  <!-- Educational Content Section for SEO -->
+  <section class="section alt">
+    <div class="container">
+      <div class="section-head">
+        <div class="eyebrow">Understanding Irrigation</div>
+        <h2>What is Crop Water Requirement?</h2>
+        <p>Crop water requirement is the amount of water a crop needs to grow properly and produce a good harvest. This depends on the crop type, growth stage, weather conditions, soil type, and many other factors. Different crops need different amounts of water, and the same crop needs different amounts at different growth stages.</p>
+      </div>
+      <div class="grid">
+        <article class="card">
+          <h3>What is Irrigation Water Requirement?</h3>
+          <p>Irrigation water requirement is the additional water that must be supplied through irrigation after rainfall has been considered. Not all rain that falls becomes available to the crop — some runs off, evaporates, or drains below the root zone. Irrigation fills the gap between what the crop needs and what rainfall provides.</p>
+        </article>
+        <article class="card">
+          <h3>Why Crops Need Different Amounts of Water</h3>
+          <p>Different crops have different water needs because of their growth patterns, leaf area, root depth, and how they use water. Vegetables like tomatoes and lettuce generally need more frequent irrigation than crops like maize or wheat. Understanding your specific crop's water needs helps you irrigate more effectively.</p>
+        </article>
+        <article class="card">
+          <h3>Why Weather Changes Irrigation Needs</h3>
+          <p>Hot, dry, and windy conditions increase water loss from crops and soil. On hot days, crops lose more water through transpiration. When it's cloudy or humid, water loss is lower. This is why irrigation needs change from day to day and season to season — you cannot use the same irrigation schedule all year round.</p>
+        </article>
+        <article class="card">
+          <h3>Why Crop Growth Stage Matters</h3>
+          <p>Crops do not use the same amount of water throughout their life. Seedlings need gentle, frequent watering. During rapid vegetative growth, water demand increases. Flowering and fruit development are often the most water-sensitive stages. As crops mature, water needs often decrease. Matching irrigation to growth stage improves efficiency and crop quality.</p>
+        </article>
+        <article class="card">
+          <h3>How Soil Type Affects Irrigation</h3>
+          <p>Sandy soils drain quickly and hold less water, so they often need more frequent, smaller irrigation applications. Clay soils hold more water but absorb it slowly and can become waterlogged. Loam soils balance water storage and drainage. Understanding your soil type helps you choose the right irrigation frequency and amount.</p>
+        </article>
+        <article class="card">
+          <h3>How Rainfall Reduces Irrigation Needs</h3>
+          <p>Rainfall can supply some or all of your crop's water needs, reducing or eliminating the need for irrigation. However, not all rainfall is effective — some runs off, evaporates, or drains below the root zone. After rain, always check soil moisture before irrigating again to avoid over-irrigation.</p>
+        </article>
+      </div>
+    </div>
+  </section>
+
+  <section class="section">
+    <div class="container">
+      <div class="section-head">
+        <div class="eyebrow">Common Questions</div>
+        <h2>Irrigation FAQ</h2>
+      </div>
+      <div class="article">
+        <h3>What is ETo?</h3>
+        <p>ETo (reference evapotranspiration) is a measure of how strongly the weather can remove water from a well-watered reference surface. It depends on temperature, humidity, wind, and sunshine. ETo helps us estimate how much water your crop might lose to the atmosphere under current weather conditions.</p>
+        <h3>What is Kc?</h3>
+        <p>Kc (crop coefficient) adjusts the weather-based water demand to your specific crop and its growth stage. Different crops have different Kc values, and the same crop has different Kc values at different growth stages. The relationship is: Crop water need = ETo × Kc.</p>
+        <h3>How to calculate crop water use?</h3>
+        <p>Crop water use is estimated using the relationship ETc = ETo × Kc, where ETc is crop evapotranspiration, ETo is reference evapotranspiration from weather, and Kc is the crop coefficient for your crop and growth stage. This is the standard FAO methodology used worldwide.</p>
+        <h3>How to calculate irrigation requirement?</h3>
+        <p>Irrigation requirement is approximately crop water demand minus effective rainfall. You then divide by irrigation system efficiency to get the gross amount that must be delivered. Not all water applied reaches the crop — some is lost during conveyance and application.</p>
+        <h3>How irrigation efficiency affects water use?</h3>
+        <p>Irrigation efficiency is the percentage of water that actually reaches the crop root zone. If your system is 70% efficient, you need to apply about 143 litres for every 100 litres the crop needs. Improving efficiency can significantly reduce water waste and pumping costs.</p>
+        <h3>How much water does one hectare need?</h3>
+        <p>Water needs vary greatly by crop, location, season, and growth stage. As a reference, 1 mm of water over 1 hectare equals 10,000 litres. A vegetable crop might need 5-8 mm per day during peak demand (50,000-80,000 litres per hectare), while a drought-tolerant crop might need 3-5 mm per day (30,000-50,000 litres per hectare).</p>
+        <h3>How to calculate pump runtime?</h3>
+        <p>Pump runtime = required water volume ÷ actual pump flow rate. If you need 30,000 litres and your pump delivers 5,000 litres per hour, you need approximately 6 hours of pumping. Always measure your actual pump flow rate — rated flow may differ from actual performance.</p>
+        <h3>How to know when to irrigate?</h3>
+        <p>The best way is to check soil moisture around the root zone. Simple methods include feeling the soil, observing plant stress, or using a soil moisture meter. Irrigate when the soil has dried to the point where the crop may begin experiencing stress, but before permanent damage occurs.</p>
+        <h3>How to avoid over-irrigation?</h3>
+        <p>Check soil moisture before irrigating. Don't irrigate immediately after rain. Use appropriate irrigation amounts for your soil type. Monitor for runoff or waterlogging. Remember that more water is not always better — over-irrigation can waste water, increase costs, leach nutrients, and harm crop roots.</p>
+        <h3>How to avoid under-irrigation?</h3>
+        <p>Monitor soil moisture regularly. Irrigate before the crop shows severe stress. Consider your crop's critical growth stages. Plan for peak water demand periods. Have a backup water source if possible. During hot, dry periods, you may need to irrigate more frequently.</p>
+        <h3>How to save irrigation water?</h3>
+        <p>Repair leaks and broken emitters. Improve irrigation scheduling based on actual crop need and weather. Use appropriate irrigation methods for your crop and soil. Mulch where agronomically suitable to reduce soil evaporation. Control weeds that compete for water. Maintain proper system pressure and uniformity.</p>
+        <h3>How to calculate irrigation cost?</h3>
+        <p>Calculate energy or fuel cost based on pump power and operating hours. Add water purchase costs if applicable. Include maintenance and equipment costs. Compare irrigation cost to expected production benefit to ensure irrigation is economically worthwhile for your situation.</p>
+        <h3>How to plan irrigation when water is limited?</h3>
+        <p>When water is limited, prioritize critical growth stages. Consider reducing irrigated area rather than under-irrigating the entire field. Choose crops with lower water requirements where suitable. Improve irrigation efficiency. Use water harvesting where appropriate. Plan for expected water shortages rather than reacting when they occur.</p>
+      </div>
+    </div>
+  </section>
+
   <div data-site-footer></div>
+  <script src="/assets/water-tool.js"></script>
   <script src="/assets/site.js"></script>
 </body>
 </html>
