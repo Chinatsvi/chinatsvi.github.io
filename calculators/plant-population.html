@@ -1,1 +1,89 @@
-<!doctype html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><meta name="description" content="Estimate plant population from field area and row and plant spacing."><title>Plant Population Calculator | AgriBase</title><link rel="stylesheet" href="/assets/site.css"><link rel="preconnect" href="https://fonts.googleapis.com"><link href="https://fonts.googleapis.com/css2?family=Fraunces:wght@600;700&family=Karla:wght@400;700;800&display=swap" rel="stylesheet"></head><body><div data-site-header></div><header class="page-hero"><div class="container"><div class="breadcrumb"><a href="/">Home</a> / <a href="/calculators/">Calculators</a> / Plant Population</div><div class="eyebrow">Crop planning</div><h1>Plant Population Calculator</h1><p class="lead">Estimate planting positions from field area and spacing.</p></div></header><main class="section"><div class="container"><div class="tool" data-calculator="population"><div class="tool-grid"><div class="field"><label for="area">Field size</label><input id="area" type="number" min="0" step="any" placeholder="1"></div><div class="field"><label for="unit">Unit</label><select id="unit"><option value="hectares">Hectares</option><option value="acres">Acres</option></select></div><div class="field"><label for="row">Row spacing (cm)</label><input id="row" type="number" min="0" step="any" placeholder="75"></div><div class="field"><label for="plant">Plant spacing (cm)</label><input id="plant" type="number" min="0" step="any" placeholder="25"></div></div><div class="tool-actions"><button class="button" data-calculate>Calculate population</button><button class="button secondary" data-reset>Clear</button></div><div class="result"><strong></strong><p>Formula: area in hectares x 10,000 / (row spacing in metres x plant spacing in metres).</p></div></div><div class="notice" style="margin-top:20px">This estimates planting positions. Adjust seed or seedling orders for germination, mortality, paths and unusable areas.</div></div></main><div data-site-footer></div><script src="/assets/content.js"></script><script src="/assets/site.js"></script></body></html>
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1">
+  <meta name="description" content="Estimate plant population from field area and row and plant spacing.">
+  <title>Plant Population Calculator | AgriBase</title>
+  <link rel="stylesheet" href="/assets/site.css">
+  <link rel="stylesheet" href="/assets/adsense.css">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link href="https://fonts.googleapis.com/css2?family=Fraunces:wght@600;700&family=Karla:wght@400;700;800&display=swap" rel="stylesheet">
+</head>
+<body>
+  <div data-site-header></div>
+  <header class="page-hero">
+    <div class="container">
+      <div class="breadcrumb">
+        <a href="/">Home</a> / <a href="/calculators/">Calculators</a> / Plant Population
+      </div>
+      <div class="eyebrow">Crop planning</div>
+      <h1>Plant Population Calculator</h1>
+      <p class="lead">Estimate planting positions from field area and spacing.</p>
+    </div>
+  </header>
+  
+  <!-- Ad Placement: Leaderboard below hero -->
+  <div class="container">
+    <div class="ad-container ad-leaderboard">
+      <div data-ad-slot="leaderboard"></div>
+    </div>
+  </div>
+
+  <main class="section">
+    <div class="container">
+      <div class="tool" data-calculator="population">
+        <div class="tool-grid">
+          <div class="field">
+            <label for="area">Field size</label>
+            <input id="area" type="number" min="0" step="any" placeholder="1">
+          </div>
+          <div class="field">
+            <label for="unit">Unit</label>
+            <select id="unit">
+              <option value="hectares">Hectares</option>
+              <option value="acres">Acres</option>
+            </select>
+          </div>
+          <div class="field">
+            <label for="row">Row spacing (cm)</label>
+            <input id="row" type="number" min="0" step="any" placeholder="75">
+          </div>
+          <div class="field">
+            <label for="plant">Plant spacing (cm)</label>
+            <input id="plant" type="number" min="0" step="any" placeholder="25">
+          </div>
+        </div>
+        <div class="tool-actions">
+          <button class="button" data-calculate>Calculate population</button>
+          <button class="button secondary" data-reset>Clear</button>
+        </div>
+        <div class="result">
+          <strong></strong>
+          <p>Formula: area in hectares x 10,000 / (row spacing in metres x plant spacing in metres).</p>
+        </div>
+      </div>
+      
+      <!-- Ad Placement: Medium rectangle in content -->
+      <div class="ad-container ad-medium-rectangle">
+        <div data-ad-slot="mediumRectangle"></div>
+      </div>
+      
+      <div class="notice" style="margin-top:20px">
+        This estimates planting positions. Adjust seed or seedling orders for germination, mortality, and replanting needs.
+      </div>
+    </div>
+  </main>
+  
+  <!-- Ad Placement: Leaderboard before footer -->
+  <div class="container">
+    <div class="ad-container ad-leaderboard">
+      <div data-ad-slot="leaderboard"></div>
+    </div>
+  </div>
+  
+  <div data-site-footer></div>
+  <script src="/assets/site.js"></script>
+  <script src="/assets/adsense.js"></script>
+</body>
+</html>

@@ -1,0 +1,230 @@
+/* AdSense Test Advertisement Styles */
+
+/* Base Ad Container */
+.ad-container {
+  width: 100%;
+  margin: 1.5rem 0;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  clear: both;
+}
+
+/* Test Ad Placeholder - Replace with real AdSense code */
+.test-ad {
+  background: linear-gradient(135deg, #f5f7fa 0%, #c3cfe2 100%);
+  border: 2px dashed #999;
+  border-radius: 8px;
+  padding: 1rem;
+  text-align: center;
+  color: #666;
+  font-family: var(--body);
+  position: relative;
+  overflow: hidden;
+}
+
+.test-ad::before {
+  content: "AD";
+  position: absolute;
+  top: 5px;
+  right: 5px;
+  background: #999;
+  color: white;
+  font-size: 0.6rem;
+  padding: 2px 6px;
+  border-radius: 3px;
+  font-weight: bold;
+}
+
+.test-ad-content {
+  min-height: 100px;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  gap: 0.5rem;
+}
+
+.test-ad-title {
+  font-weight: 700;
+  color: #333;
+  font-size: 0.9rem;
+}
+
+.test-ad-description {
+  font-size: 0.8rem;
+  color: #666;
+}
+
+.test-ad-cta {
+  background: #1f4d2c;
+  color: white;
+  padding: 0.3rem 0.8rem;
+  border-radius: 4px;
+  font-size: 0.75rem;
+  text-decoration: none;
+  display: inline-block;
+  margin-top: 0.5rem;
+}
+
+/* Leaderboard Ad (728x90) */
+.ad-leaderboard {
+  max-width: 728px;
+  height: 90px;
+}
+
+.ad-leaderboard .test-ad {
+  width: 100%;
+  height: 100%;
+  min-height: 90px;
+}
+
+/* Large Rectangle (336x280) */
+.ad-rectangle {
+  max-width: 336px;
+  height: 280px;
+}
+
+.ad-rectangle .test-ad {
+  width: 100%;
+  height: 100%;
+  min-height: 280px;
+}
+
+/* Medium Rectangle (300x250) */
+.ad-medium-rectangle {
+  max-width: 300px;
+  height: 250px;
+}
+
+.ad-medium-rectangle .test-ad {
+  width: 100%;
+  height: 100%;
+  min-height: 250px;
+}
+
+/* Square (250x250) */
+.ad-square {
+  max-width: 250px;
+  height: 250px;
+}
+
+.ad-square .test-ad {
+  width: 100%;
+  height: 100%;
+  min-height: 250px;
+}
+
+/* Half Page (300x600) */
+.ad-half-page {
+  max-width: 300px;
+  height: 600px;
+}
+
+.ad-half-page .test-ad {
+  width: 100%;
+  height: 100%;
+  min-height: 600px;
+}
+
+/* Mobile Banner (320x50) */
+.ad-mobile-banner {
+  max-width: 320px;
+  height: 50px;
+}
+
+.ad-mobile-banner .test-ad {
+  width: 100%;
+  height: 100%;
+  min-height: 50px;
+}
+
+/* Responsive Ad */
+.ad-responsive {
+  width: 100%;
+  min-height: 100px;
+}
+
+.ad-responsive .test-ad {
+  width: 100%;
+  min-height: 100px;
+}
+
+/* In-Content Ad */
+.ad-in-content {
+  max-width: 100%;
+  margin: 2rem auto;
+}
+
+/* Sidebar Ad */
+.ad-sidebar {
+  max-width: 300px;
+  margin: 1rem 0;
+}
+
+/* Footer Ad */
+.ad-footer {
+  max-width: 728px;
+  margin: 1rem auto;
+}
+
+/* Sticky Sidebar Ad */
+.ad-sticky-sidebar {
+  position: sticky;
+  top: 1rem;
+  max-width: 300px;
+}
+
+/* Hide ads on small screens if needed */
+@media (max-width: 768px) {
+  .ad-leaderboard {
+    max-width: 320px;
+    height: 50px;
+  }
+  
+  .ad-half-page {
+    display: none;
+  }
+  
+  .ad-sticky-sidebar {
+    position: static;
+  }
+}
+
+/* Ad spacing between content */
+.ad-spacing-top {
+  margin-top: 1rem;
+}
+
+.ad-spacing-bottom {
+  margin-bottom: 1rem;
+}
+
+/* Grid ad placement */
+.ad-grid-item {
+  grid-column: span 1;
+}
+
+@media (min-width: 768px) {
+  .ad-grid-item {
+    grid-column: span 2;
+  }
+}
+
+/* Center ads in containers */
+.ad-centered {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+/* Minimal ad style for content integration */
+.ad-minimal {
+  border: 1px solid #e0e0e0;
+  background: #f9f9f9;
+  padding: 0.5rem;
+}
+
+.ad-minimal::before {
+  display: none;
+}

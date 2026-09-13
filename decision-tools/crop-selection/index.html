@@ -6,6 +6,7 @@
   <meta name="description" content="Crop & Farming Enterprise Selection Calculator: Find suitable crops and farming enterprises based on your budget, land, water, location, market, production costs and risk. Compare farming options before investing your money.">
   <title>What Should I Plant With My Money? Crop & Farming Enterprise Selection Calculator | AgriBase Decision Tools</title>
   <link rel="stylesheet" href="/assets/site.css">
+  <link rel="stylesheet" href="/assets/adsense.css">
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link href="https://fonts.googleapis.com/css2?family=Fraunces:wght@600;700&family=Karla:wght@400;700;800&display=swap" rel="stylesheet">
   <script type="application/ld+json">
@@ -496,6 +497,13 @@
     </div>
   </header>
 
+  <!-- Ad Placement: Leaderboard below hero -->
+  <div class="container">
+    <div class="ad-container ad-leaderboard">
+      <div data-ad-slot="leaderboard"></div>
+    </div>
+  </div>
+
   <main class="section">
     <div class="container">
       <div class="selection-tool">
@@ -560,6 +568,11 @@
           <div class="action-buttons">
             <button class="action-button primary" onclick="startStandardMode()">Start Full Analysis</button>
           </div>
+        </div>
+
+        <!-- Ad Placement: Medium rectangle between start and money section -->
+        <div class="ad-container ad-medium-rectangle">
+          <div data-ad-slot="mediumRectangle"></div>
         </div>
 
         <!-- Section 1: Money -->
@@ -1020,6 +1033,11 @@
           </div>
         </div>
 
+        <!-- Ad Placement: Rectangle before final results -->
+        <div class="ad-container ad-rectangle">
+          <div data-ad-slot="rectangle"></div>
+        </div>
+
         <!-- Final Results Section -->
         <div class="tool-section hidden fade-in" id="finalResult">
           <h2 style="text-align: center;">YOUR FARMING DECISION</h2>
@@ -1204,5 +1222,6 @@
   <div data-site-footer></div>
   <script src="/assets/crop-selection-tool.js"></script>
   <script src="/assets/site.js"></script>
+  <script src="/assets/adsense.js"></script>
 </body>
 </html>
