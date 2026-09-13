@@ -1144,7 +1144,7 @@ function updateResultsUI(usableMoney, landInHectares, contingencyAmount) {
     document.getElementById('firstChoiceName').textContent = first.name;
     document.getElementById('firstChoiceScore').textContent = `FIT: ${getFitLabel(first.score.total)}`;
     document.getElementById('firstChoiceReasons').innerHTML = generateReasons(first, state);
-    document.getElementById('firstChoiceInfo').innerHTML = generateEnterpriseInfo(first, results.budgets[first.key]);
+    document.getElementById('firstChoiceInfo').innerHTML = generateEnterpriseInfo(first, results.budgets[first.key], state);
   }
 
   if (results.recommended.length >= 2) {
@@ -1169,7 +1169,7 @@ function updateResultsUI(usableMoney, landInHectares, contingencyAmount) {
 
   // Update budget breakdown
   if (results.recommended.length >= 1) {
-    updateBudgetBreakdown(results.budgets[results.recommended[0].key]);
+    updateBudgetBreakdown(results.budgets[results.recommended[0].key], state);
   }
 
   // Update profit threats
@@ -1217,7 +1217,7 @@ function generateReasons(enterprise, state) {
   return reasons.map(r => `<p>• ${r}</p>`).join('');
 }
 
-function generateEnterpriseInfo(enterprise, budget) {
+function generateEnterpriseInfo(enterprise, budget, state) {
   const info = [];
   info.push(`<p><strong>Estimated investment:</strong> ${state.money.currency} ${budget.total.toLocaleString()}</p>`);
   info.push(`<p><strong>Production duration:</strong> ${enterprise.enterprise.productionDuration} days</p>`);
@@ -1299,7 +1299,7 @@ function updateWhyNotOthers(recommended) {
   whyNot.innerHTML = explanation;
 }
 
-function updateBudgetBreakdown(budget) {
+function updateBudgetBreakdown(budget, state) {
   const breakdown = document.getElementById('budgetBreakdown');
   let html = '';
 
