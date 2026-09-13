@@ -1,0 +1,793 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1">
+  <meta name="description" content="When Do I Control Pest/Weed and Which Chemical to Use? Interactive field scouting and spray decision tool for farmers. Calculate economic injury thresholds, knapsack mixing rates, weather safety, and pre-harvest intervals.">
+  <title>When Do I Control Pest/Weed & Which Chemical to Use? Field Scouting & Spray Decision Tool | AgriBase</title>
+  <link rel="stylesheet" href="/assets/site.css">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link href="https://fonts.googleapis.com/css2?family=Fraunces:wght@600;700&family=Karla:wght@400;700;800&display=swap" rel="stylesheet">
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "WebApplication",
+    "name": "Pest and Weed Control Scouting Decision Tool",
+    "description": "Determine if pest or weed infestation exceeds economic damage thresholds, select approved chemicals, calculate knapsack mixing rates, and verify weather safety before spraying.",
+    "applicationCategory": "Agriculture",
+    "operatingSystem": "Web Browser",
+    "offers": {
+      "@type": "Offer",
+      "price": "0",
+      "priceCurrency": "USD"
+    }
+  }
+  </script>
+  <style>
+    .spray-tool {
+      max-width: 900px;
+      margin: 0 auto;
+      padding: 1rem;
+    }
+
+    .tool-section {
+      background: var(--paper);
+      border-radius: 8px;
+      padding: 1.5rem;
+      margin-bottom: 1.5rem;
+      box-shadow: var(--shadow);
+      border: 1px solid var(--border);
+    }
+
+    .progress-bar {
+      display: flex;
+      gap: 0.5rem;
+      margin-bottom: 2rem;
+      flex-wrap: wrap;
+    }
+
+    .progress-step {
+      flex: 1;
+      min-width: 35px;
+      height: 4px;
+      background: var(--border);
+      border-radius: 2px;
+      transition: background 0.3s;
+    }
+
+    .progress-step.active {
+      background: var(--field);
+    }
+
+    .progress-step.completed {
+      background: var(--field-mid);
+    }
+
+    .step-number {
+      font-family: var(--display);
+      font-weight: 700;
+      color: var(--gold);
+      font-size: 0.9rem;
+      margin-bottom: 0.5rem;
+    }
+
+    .question-group {
+      margin-bottom: 1.5rem;
+    }
+
+    .question-label {
+      font-weight: 700;
+      margin-bottom: 0.5rem;
+      color: var(--field);
+      font-size: 1.1rem;
+      font-family: var(--display);
+    }
+
+    .why-asking {
+      background: var(--cream);
+      border-left: 4px solid var(--field);
+      padding: 1rem;
+      margin: 1rem 0;
+      border-radius: 0 4px 4px 0;
+    }
+
+    .why-asking-title {
+      font-weight: 700;
+      color: var(--field);
+      margin-bottom: 0.5rem;
+      font-family: var(--display);
+    }
+
+    .option-buttons {
+      display: flex;
+      flex-direction: column;
+      gap: 0.75rem;
+    }
+
+    .option-button {
+      padding: 1rem 1.25rem;
+      border: 2px solid var(--border);
+      background: var(--paper);
+      color: var(--ink);
+      border-radius: 8px;
+      font-size: 1rem;
+      font-weight: 600;
+      cursor: pointer;
+      transition: all 0.2s;
+      text-align: left;
+      font-family: var(--body);
+    }
+
+    .option-button:hover {
+      border-color: var(--field);
+      background: var(--tint);
+    }
+
+    .option-button.selected {
+      background: var(--field);
+      color: var(--cream);
+      border-color: var(--field);
+    }
+
+    .form-input-group {
+      display: flex;
+      gap: 0.75rem;
+      align-items: center;
+      margin-bottom: 1rem;
+    }
+
+    .form-input {
+      flex: 1;
+      padding: 0.85rem 1rem;
+      border: 2px solid var(--border);
+      border-radius: 8px;
+      font-size: 1.05rem;
+      font-family: var(--body);
+      background: var(--paper);
+    }
+
+    .form-input:focus {
+      outline: none;
+      border-color: var(--field);
+    }
+
+    .condition-card {
+      background: var(--cream);
+      border-radius: 8px;
+      padding: 1.15rem;
+      margin-bottom: 0.85rem;
+      border: 1px solid var(--border);
+    }
+
+    .final-result {
+      background: var(--paper);
+      border-radius: 12px;
+      padding: 2rem;
+      margin-top: 2rem;
+      box-shadow: var(--shadow);
+      border: 1px solid var(--border);
+    }
+
+    .result-status {
+      font-size: 1.3rem;
+      font-weight: 800;
+      padding: 1.1rem;
+      border-radius: 8px;
+      text-align: center;
+      margin-bottom: 1.5rem;
+      font-family: var(--display);
+      letter-spacing: 0.5px;
+    }
+
+    .result-status.good {
+      background: #f0fff0;
+      color: var(--field);
+      border: 2px solid #a3e0a3;
+    }
+
+    .result-status.warning {
+      background: #fff8e6;
+      color: #a05a00;
+      border: 2px solid var(--gold);
+    }
+
+    .result-status.danger {
+      background: #fff0f0;
+      color: var(--soil);
+      border: 2px solid #ffa8a8;
+    }
+
+    .summary-box {
+      background: var(--cream);
+      border-radius: 8px;
+      padding: 1.5rem;
+      margin: 1.5rem 0;
+      border: 1px solid var(--border);
+    }
+
+    .summary-title {
+      font-weight: 700;
+      margin-bottom: 1rem;
+      color: var(--field);
+      font-family: var(--display);
+      font-size: 1.15rem;
+    }
+
+    .summary-item {
+      display: flex;
+      justify-content: space-between;
+      margin-bottom: 0.75rem;
+      padding-bottom: 0.75rem;
+      border-bottom: 1px solid var(--border);
+      flex-wrap: wrap;
+      gap: 0.5rem;
+    }
+
+    .summary-item:last-child {
+      border-bottom: none;
+    }
+
+    .summary-label {
+      font-weight: 600;
+      color: var(--muted);
+    }
+
+    .summary-value {
+      color: var(--field);
+      font-weight: 700;
+    }
+
+    .action-buttons {
+      display: flex;
+      flex-direction: column;
+      gap: 0.75rem;
+      margin-top: 1.5rem;
+    }
+
+    .action-button {
+      padding: 1rem 1.5rem;
+      border: none;
+      border-radius: 8px;
+      font-size: 1rem;
+      font-weight: 700;
+      cursor: pointer;
+      transition: all 0.2s;
+      font-family: var(--body);
+      text-align: center;
+      text-decoration: none;
+    }
+
+    .action-button.primary {
+      background: var(--field);
+      color: var(--cream);
+    }
+
+    .action-button.primary:hover {
+      background: var(--field-dark);
+    }
+
+    .action-button.secondary {
+      background: var(--muted);
+      color: var(--cream);
+    }
+
+    .action-button.secondary:hover {
+      background: var(--ink);
+    }
+
+    .action-button.outline {
+      background: var(--paper);
+      color: var(--field);
+      border: 2px solid var(--field);
+    }
+
+    .action-button.outline:hover {
+      background: var(--cream);
+    }
+
+    .disclaimer {
+      background: #fff9e6;
+      border-left: 4px solid var(--gold);
+      border-radius: 0 8px 8px 0;
+      padding: 1rem;
+      margin: 1.5rem 0;
+      font-size: 0.88rem;
+      color: var(--ink);
+      line-height: 1.6;
+    }
+
+    .next-actions {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+      gap: 1rem;
+      margin-top: 1.5rem;
+    }
+
+    .next-action-card {
+      background: var(--cream);
+      border-radius: 8px;
+      padding: 1.1rem;
+      text-align: center;
+      text-decoration: none;
+      color: var(--field);
+      transition: all 0.2s;
+      border: 1px solid var(--border);
+      display: block;
+    }
+
+    .next-action-card:hover {
+      background: var(--paper);
+      transform: translateY(-2px);
+      border-color: var(--field);
+    }
+
+    .hidden {
+      display: none;
+    }
+
+    .fade-in {
+      animation: fadeIn 0.3s ease-in;
+    }
+
+    @keyframes fadeIn {
+      from { opacity: 0; transform: translateY(8px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+
+    .term-box {
+      background: var(--tint);
+      border-left: 4px solid var(--field);
+      padding: 1rem;
+      margin: 1.25rem 0;
+      border-radius: 0 6px 6px 0;
+    }
+
+    @media (max-width: 600px) {
+      .spray-tool {
+        padding: 0.5rem;
+      }
+      .tool-section {
+        padding: 1rem;
+      }
+      .form-input-group {
+        flex-direction: column;
+        align-items: stretch;
+      }
+      .final-result {
+        padding: 1.25rem;
+      }
+      .next-actions {
+        grid-template-columns: 1fr;
+      }
+    }
+  </style>
+</head>
+<body>
+  <div data-site-header></div>
+  <header class="page-hero">
+    <div class="container">
+      <div class="breadcrumb">
+        <a href="/">Home</a> / <a href="/decision-tools/">Decision Tools</a> / When Do I Control Pest/Weed & Which Chemical to Use?
+      </div>
+      <div class="eyebrow">Scouting & Chemical Spray Decision</div>
+      <h1>When Do I Control Pest/Weed & Which Chemical to Use?</h1>
+      <p class="lead">Use this field scouting template to check if pest or weed damage has crossed the economic threshold. Get exact knapsack mixing rates, safety waiting periods, and weather timing advice.</p>
+    </div>
+  </header>
+
+  <main class="section">
+    <div class="container">
+      <div class="spray-tool">
+        
+        <!-- Progress Bar -->
+        <div class="progress-bar" id="progressBar">
+          <div class="progress-step active" data-step="1"></div>
+          <div class="progress-step" data-step="2"></div>
+          <div class="progress-step" data-step="3"></div>
+          <div class="progress-step" data-step="4"></div>
+          <div class="progress-step" data-step="5"></div>
+          <div class="progress-step" data-step="6"></div>
+        </div>
+
+        <!-- Start Screen -->
+        <div class="tool-section fade-in" id="startScreen">
+          <h2 style="text-align: center; margin-bottom: 1rem;">Field Scouting & Chemical Spray Decision Tool</h2>
+          <p style="text-align: center; font-size: 1.05rem; margin-bottom: 1.5rem; color: var(--muted);">
+            Never spray blind! Check whether pest numbers actually justify buying and spraying chemicals, or if waiting will save you money.
+          </p>
+          <div class="why-asking">
+            <div class="why-asking-title">Why timing and chemical selection matter</div>
+            <p>Spraying chemicals when only 2% of plants have bugs wastes your money and kills beneficial predator insects (like ladybirds). But waiting too long allows caterpillars to bore into stems where sprays cannot reach them. This tool calculates the exact <strong>Economic Damage Threshold</strong> for your field.</p>
+          </div>
+          <div class="condition-card">
+            <div style="font-weight: 700; color: var(--field); margin-bottom: 0.5rem;">What this tool will tell you:</div>
+            <ul style="margin: 0 0 0 1.25rem; font-size: 0.95rem; line-height: 1.6;">
+              <li><strong>Spray Decision:</strong> SPRAY TODAY vs WAIT & MONITOR vs DO NOT SPRAY.</li>
+              <li><strong>Exact Knapsack Dosage:</strong> Millilitres (ml) or grams (g) per 15L/16L backpack sprayer.</li>
+              <li><strong>Weather Safety Check:</strong> Is wind, rain, or midday sun going to ruin your spray today?</li>
+              <li><strong>Pre-Harvest Interval (PHI):</strong> Required safe waiting days before picking and eating.</li>
+            </ul>
+          </div>
+          <div class="action-buttons">
+            <button class="action-button primary" onclick="startPestWeedTool()">Start Field Scouting & Spray Check →</button>
+          </div>
+        </div>
+
+        <!-- Step 1: Crop and Growth Stage -->
+        <div class="tool-section hidden fade-in" id="step1Crop">
+          <div class="step-number">STEP 1 OF 5</div>
+          <h2>Which crop are you scouting?</h2>
+
+          <div class="question-group">
+            <label class="question-label">Select your crop:</label>
+            <div class="option-buttons" id="cropSelectButtons">
+              <button class="option-button selected" data-value="maize" onclick="selectCropType('maize')">
+                🌽 Maize / Corn (Fall armyworm, stalk borers, weed competition)
+              </button>
+              <button class="option-button" data-value="tomato" onclick="selectCropType('tomato')">
+                🍅 Tomato (Tuta absoluta, whiteflies, red spider mites, blight)
+              </button>
+              <button class="option-button" data-value="cabbage" onclick="selectCropType('cabbage')">
+                🥬 Cabbage & Brassicas (Diamondback moth DBM, aphids)
+              </button>
+              <button class="option-button" data-value="onion" onclick="selectCropType('onion')">
+                🧅 Onion & Garlic (Thrips, purple blotch, weed choking)
+              </button>
+              <button class="option-button" data-value="beans" onclick="selectCropType('beans')">
+                🫘 Dry Beans, Soybeans, Legumes (Bean fly, aphids, pod borers)
+              </button>
+            </div>
+          </div>
+
+          <div class="question-group">
+            <label class="question-label">What is the current growth stage?</label>
+            <div class="option-buttons" id="stageButtons">
+              <button class="option-button" data-value="seedling" onclick="selectGrowthStage('seedling')">
+                1. Seedling / Emergence (First 2-3 weeks after germination)
+              </button>
+              <button class="option-button selected" data-value="vegetative" onclick="selectGrowthStage('vegetative')">
+                2. Active Vegetative Growth (Leaves, stems, tillering)
+              </button>
+              <button class="option-button" data-value="flowering" onclick="selectGrowthStage('flowering')">
+                3. Flowering, Tasseling, or Early Fruit Set
+              </button>
+              <button class="option-button" data-value="maturity" onclick="selectGrowthStage('maturity')">
+                4. Fruit Ripening / Near Harvest
+              </button>
+            </div>
+          </div>
+
+          <div class="action-buttons">
+            <button class="action-button primary" onclick="confirmStep1()">Continue to Target Problem →</button>
+            <button class="action-button secondary" onclick="goBack()">Back</button>
+          </div>
+        </div>
+
+        <!-- Step 2: Target Problem -->
+        <div class="tool-section hidden fade-in" id="step2Target">
+          <div class="step-number">STEP 2 OF 5</div>
+          <h2>What are you trying to control today?</h2>
+
+          <div class="question-group">
+            <label class="question-label">Select the target problem:</label>
+            <div class="option-buttons" id="targetProblemButtons">
+              <button class="option-button selected" data-value="pest" onclick="selectTargetProblem('pest')">
+                🐛 Insect Pests (Caterpillars, worms, aphids, thrips, leafminers)
+              </button>
+              <button class="option-button" data-value="weed" onclick="selectTargetProblem('weed')">
+                🌿 Weeds (Grasses, broadleaf weeds competing for water & fertilizer)
+              </button>
+              <button class="option-button" data-value="disease" onclick="selectTargetProblem('disease')">
+                🍄 Fungal / Blight Spores (Preventative coating before heavy rains)
+              </button>
+            </div>
+          </div>
+
+          <div class="action-buttons">
+            <button class="action-button primary" onclick="confirmStep2()">Continue to Field Scouting Counts →</button>
+            <button class="action-button secondary" onclick="goBack()">Back</button>
+          </div>
+        </div>
+
+        <!-- Step 3: Scouting Counts & Economic Threshold -->
+        <div class="tool-section hidden fade-in" id="step3Scouting">
+          <div class="step-number">STEP 3 OF 5</div>
+          <h2>Field Scouting Observation Counts</h2>
+          <div class="why-asking">
+            <div class="why-asking-title">How to scout your field</div>
+            <p>Walk across your field in a zig-zag (W-pattern). Stop at 5 different locations and inspect 10 plants at each stop (total 50 plants). Count how many plants have live pests or fresh damage.</p>
+          </div>
+
+          <!-- Pest Scouting Group -->
+          <div id="pestScoutingGroup">
+            <div class="question-group">
+              <label class="question-label">Total number of plants inspected in your scouting walk:</label>
+              <input type="number" step="5" min="10" value="50" class="form-input" id="totalScoutedInput" style="max-width: 250px;">
+            </div>
+
+            <div class="question-group">
+              <label class="question-label">Number of plants with LIVE pests or fresh chewing holes:</label>
+              <input type="number" step="1" min="0" value="12" class="form-input" id="infestedCountInput" style="max-width: 250px;">
+            </div>
+          </div>
+
+          <!-- Weed Scouting Group -->
+          <div id="weedScoutingGroup" class="hidden">
+            <div class="question-group">
+              <label class="question-label">Weed Growth Stage:</label>
+              <div class="option-buttons" id="weedStageButtons">
+                <button class="option-button" data-value="pre_emergence" onclick="selectWeedStage('pre_emergence')">
+                  Pre-emergence (Crops planted in moist soil, weed seeds have not emerged yet)
+                </button>
+                <button class="option-button selected" data-value="young_2_to_4_leaves" onclick="selectWeedStage('young_2_to_4_leaves')">
+                  Young Tender Weeds (2 to 4 leaves — Best time for post-emergence spray)
+                </button>
+                <button class="option-button" data-value="mature_flowering" onclick="selectWeedStage('mature_flowering')">
+                  Mature / Flowering Weeds (> 15cm tall — hard to kill with chemicals)
+                </button>
+              </div>
+            </div>
+
+            <div class="question-group">
+              <label class="question-label">Weed Density in Field:</label>
+              <div class="option-buttons" id="weedDensityButtons">
+                <button class="option-button" data-value="low_scattered" onclick="selectWeedDensity('low_scattered')">
+                  Low / Scattered (A few individual weeds)
+                </button>
+                <button class="option-button selected" data-value="medium_active" onclick="selectWeedDensity('medium_active')">
+                  Moderate (Weeds growing actively across rows)
+                </button>
+                <button class="option-button" data-value="heavy_choking" onclick="selectWeedDensity('heavy_choking')">
+                  Heavy / Choking (Weeds carpeting the ground and competing with crops)
+                </button>
+              </div>
+            </div>
+          </div>
+
+          <div class="action-buttons">
+            <button class="action-button primary" onclick="confirmStep3()">Continue to Weather & Timing Check →</button>
+            <button class="action-button secondary" onclick="goBack()">Back</button>
+          </div>
+        </div>
+
+        <!-- Step 4: Weather & Spray Timing Check -->
+        <div class="tool-section hidden fade-in" id="step4Weather">
+          <div class="step-number">STEP 4 OF 5</div>
+          <h2>Weather & Spray Timing Safety Check</h2>
+          <div class="why-asking">
+            <div class="why-asking-title">Why weather ruins chemical applications</div>
+            <p>Spraying in wind blows poison off target; spraying before rain washes your investment down the river; spraying under hot sun burns crop leaves.</p>
+          </div>
+
+          <div class="question-group">
+            <label class="question-label">Current Wind Conditions:</label>
+            <div class="option-buttons" id="windButtons">
+              <button class="option-button selected" data-value="calm" onclick="selectWind('calm')">
+                🍃 Calm to gentle breeze (&lt; 10 km/h — Smoke rises almost vertically)
+              </button>
+              <button class="option-button" data-value="strong_wind" onclick="selectWind('strong_wind')">
+                💨 Strong wind / Gusts (Tree branches swaying — High drift hazard)
+              </button>
+            </div>
+          </div>
+
+          <div class="question-group">
+            <label class="question-label">Rain Forecast for the next 4 to 6 hours:</label>
+            <div class="option-buttons" id="rainButtons">
+              <button class="option-button selected" data-value="dry_next_6_hours" onclick="selectRain('dry_next_6_hours')">
+                ☀️ Clear skies / No rain expected for the next 4-6 hours
+              </button>
+              <button class="option-button" data-value="rain_within_2_hours" onclick="selectRain('rain_within_2_hours')">
+                🌧️ Rain / Thunderstorm expected within 2 hours
+              </button>
+            </div>
+          </div>
+
+          <div class="question-group">
+            <label class="question-label">Time of Day:</label>
+            <div class="option-buttons" id="timeButtons">
+              <button class="option-button selected" data-value="cool_morning_evening" onclick="selectTimeOfDay('cool_morning_evening')">
+                🌅 Cool early morning (6:30 AM – 9:30 AM) or Late Afternoon (3:30 PM – 6:00 PM)
+              </button>
+              <button class="option-button" data-value="hot_midday_sun" onclick="selectTimeOfDay('hot_midday_sun')">
+                ☀️ Midday Scorching Sun (11:00 AM – 2:30 PM)
+              </button>
+            </div>
+          </div>
+
+          <div class="action-buttons">
+            <button class="action-button primary" onclick="confirmStep4()">Continue to Equipment & Safety →</button>
+            <button class="action-button secondary" onclick="goBack()">Back</button>
+          </div>
+        </div>
+
+        <!-- Step 5: Equipment & Safety Gear -->
+        <div class="tool-section hidden fade-in" id="step5Equipment">
+          <div class="step-number">STEP 5 OF 5</div>
+          <h2>Sprayer Equipment & Operator Safety</h2>
+
+          <div class="question-group">
+            <label class="question-label">What sprayer are you using?</label>
+            <div class="option-buttons" id="sprayerButtons">
+              <button class="option-button selected" data-value="knapsack_15l" onclick="selectSprayer('knapsack_15l')">
+                🎒 15 Litre Backpack Knapsack Sprayer
+              </button>
+              <button class="option-button" data-value="knapsack_16l" onclick="selectSprayer('knapsack_16l')">
+                🎒 16 Litre Backpack Knapsack Sprayer
+              </button>
+              <button class="option-button" data-value="boom_sprayer" onclick="selectSprayer('boom_sprayer')">
+                🚜 Tractor Boom Sprayer / Motorized Mist Blower
+              </button>
+            </div>
+          </div>
+
+          <div class="question-group">
+            <label class="question-label">Do you have personal protective equipment (gloves, mask, boots)?</label>
+            <div class="option-buttons" id="ppeButtons">
+              <button class="option-button selected" data-value="yes" onclick="selectPPE('yes')">
+                ✅ Yes, I have gloves, rubber boots, and a respirator/mask
+              </button>
+              <button class="option-button" data-value="no" onclick="selectPPE('no')">
+                ⚠️ No protective gear available
+              </button>
+            </div>
+          </div>
+
+          <div class="action-buttons">
+            <button class="action-button primary" onclick="confirmStep5()">Generate Spray Decision & Prescription →</button>
+            <button class="action-button secondary" onclick="goBack()">Back</button>
+          </div>
+        </div>
+
+        <!-- Final Results Screen -->
+        <div class="final-result hidden fade-in" id="finalResult">
+          <h2 style="text-align: center; margin-bottom: 0.5rem;">FIELD SCOUTING & SPRAY PRESCRIPTION</h2>
+          <div class="result-status good" id="resultStatus">DECISION READY</div>
+
+          <div class="summary-box">
+            <div class="summary-title">Scouting Summary</div>
+            <div class="summary-item">
+              <div class="summary-label">Crop & Growth Stage:</div>
+              <div class="summary-value" id="summaryCrop"></div>
+            </div>
+            <div class="summary-item">
+              <div class="summary-label">Target Problem:</div>
+              <div class="summary-value" id="summaryTarget"></div>
+            </div>
+            <div class="summary-item">
+              <div class="summary-label">Scouted Infestation Rate:</div>
+              <div class="summary-value" id="summaryScoutingResult"></div>
+            </div>
+            <div class="summary-item">
+              <div class="summary-label">Decision Verdict:</div>
+              <div class="summary-value" id="summaryDecisionVerdict"></div>
+            </div>
+          </div>
+
+          <!-- Decision Explanation -->
+          <div class="summary-box" style="background: #fff; border-left: 5px solid var(--field);">
+            <div class="summary-title" style="color: var(--field);">WHY THIS DECISION?</div>
+            <div id="decisionExplanationText"></div>
+          </div>
+
+          <!-- Chemical Prescription Card -->
+          <div class="summary-box" style="background: #fff; border-left: 5px solid var(--soil);">
+            <div class="summary-title" style="color: var(--soil);">🧪 RECOMMENDED CHEMICAL & KNAPSACK DOSAGE</div>
+            <div id="chemicalPrescriptionCard"></div>
+          </div>
+
+          <!-- Organic Alternative Card -->
+          <div class="summary-box" style="background: #f4faf4; border-left: 5px solid var(--field-mid);">
+            <div class="summary-title" style="color: var(--field);">🌿 ORGANIC & CULTURAL NON-CHEMICAL SOLUTION</div>
+            <div id="organicAlternativeCard"></div>
+          </div>
+
+          <!-- Safety Rules -->
+          <div class="summary-box" style="background: #fff9e6; border-left: 5px solid var(--gold);">
+            <div class="summary-title" style="color: #8c5300;">⚠️ SPRAY OPERATOR SAFETY & HANDLING RULES</div>
+            <ul id="safetyRulesList" style="margin: 0.5rem 0 0 1.25rem; font-size: 0.95rem; line-height: 1.65;"></ul>
+          </div>
+
+          <!-- Terms Explained -->
+          <div class="term-box">
+            <div style="font-weight: 700; color: var(--field); margin-bottom: 0.5rem; font-family: var(--display); font-size: 1.05rem;">
+              📖 SPRAY & CHEMICAL TERMS EXPLAINED SIMPLY
+            </div>
+            <div id="termsContainer"></div>
+          </div>
+
+          <div class="disclaimer">
+            <strong>Legal and Environmental Notice:</strong> Always read the chemical manufacturer's container label before opening. Never wash spray equipment or dump leftover chemical washings directly into rivers, dams, or drinking water wells.
+          </div>
+
+          <!-- Next Actions -->
+          <h3 style="margin-top: 2rem;">Related Decision Tools</h3>
+          <div class="next-actions">
+            <a href="/decision-tools/crop-diagnosis/" class="next-action-card">
+              <div style="font-weight: 700; margin-bottom: 0.25rem;">What Is Wrong With My Crop? →</div>
+              <div style="font-size: 0.85rem; color: var(--muted);">Diagnose sick plants & symptoms</div>
+            </a>
+            <a href="/decision-tools/soil-needs/" class="next-action-card">
+              <div style="font-weight: 700; margin-bottom: 0.25rem;">What Does My Soil Need? →</div>
+              <div style="font-size: 0.85rem; color: var(--muted);">Calculate fertilizer & lime needs</div>
+            </a>
+            <a href="/decision-tools/water-needs/" class="next-action-card">
+              <div style="font-weight: 700; margin-bottom: 0.25rem;">Water Needs Calculator →</div>
+              <div style="font-size: 0.85rem; color: var(--muted);">Check crop irrigation timing</div>
+            </a>
+          </div>
+
+          <div class="action-buttons">
+            <button class="action-button primary" onclick="saveResult()">Save Scouting Record to My Phone/Browser</button>
+            <button class="action-button outline" onclick="downloadResult()">Download Printable Spray Record (.txt)</button>
+            <button class="action-button secondary" onclick="restartTool()">Start New Scouting Check</button>
+          </div>
+
+        </div>
+
+      </div>
+    </div>
+  </main>
+
+  <!-- In-Depth Educational Guide -->
+  <section class="section alt">
+    <div class="container">
+      <div class="section-head">
+        <div class="eyebrow">Practical Field Masterclass</div>
+        <h2>Field Scouting & Chemical Safety Guide for Farmers</h2>
+        <p>Master the principles of Integrated Pest Management (IPM), knapsack calibration, and toxicity color bands to protect your wallet and your health.</p>
+      </div>
+
+      <div class="grid">
+        <article class="card">
+          <h3>1. The 5-Point W-Pattern Scouting Method</h3>
+          <p>Never judge a whole 5-hectare field by looking only at the plants next to the road. Walk across your field in a large <strong>W-shaped pattern</strong>. Stop at 5 evenly spaced spots. At each stop, inspect 10 consecutive plants closely (look inside funnels, under leaves, and at the ground). Write down the number of infested plants. Total infested divided by 50 gives your exact infestation percentage.</p>
+        </article>
+
+        <article class="card">
+          <h3>2. Knapsack Calibration: The 100m² Test</h3>
+          <p>Using the wrong water volume causes overdosing (scorching crops) or underdosing (weeds survive). To calibrate: Measure a 10m x 10m plot (100m²). Fill knapsack with clean water to a known mark. Spray the 100m² plot at your normal walking speed. Measure how many litres of water you used. Multiply by 100 to get litres needed per hectare!</p>
+        </article>
+
+        <article class="card">
+          <h3>3. Understanding Pesticide Toxicity Color Bands</h3>
+          <p>Every legitimate chemical bottle has a colored band across the bottom:<br>
+          🟢 <strong>Green Band (Caution):</strong> Low mammalian toxicity; safest for humans and beneficials.<br>
+          🔵 <strong>Blue Band (Warning):</strong> Moderately hazardous; wear gloves and mask.<br>
+          🟡 <strong>Yellow Band (Danger - Poison):</strong> Highly toxic; handle with extreme caution.<br>
+          🔴 <strong>Red Band (Very Toxic - Restricted):</strong> Lethal poison; restricted to certified operators only.</p>
+        </article>
+
+        <article class="card">
+          <h3>4. Pre-Emergence vs Post-Emergence Herbicides</h3>
+          <p><strong>Pre-emergence herbicides</strong> (e.g. Atrazine) form a chemical seal on the soil surface that kills weed seedlings as they germinate. They MUST be sprayed onto moist soil within 48 hours of planting. <strong>Post-emergence herbicides</strong> (e.g. Nicosulfuron, Fluazifop) are sprayed onto growing green weed leaves and absorb through the foliage.</p>
+        </article>
+      </div>
+    </div>
+  </section>
+
+  <!-- FAQ Section -->
+  <section class="section">
+    <div class="container">
+      <div class="section-head">
+        <div class="eyebrow">Common Questions</div>
+        <h2>Pest, Weed & Chemical Timing FAQ</h2>
+      </div>
+      <div class="article">
+        <h3>Why did my expensive caterpillar spray fail to kill Fall Armyworm?</h3>
+        <p>Caterpillar sprays fail for three main reasons: <strong>1. Spraying too late:</strong> Large caterpillars (> 2cm) are tough and hide deep inside cobs. <strong>2. Wrong nozzle / aim:</strong> Spray was broadcast over the leaves instead of directed into the plant funnel. <strong>3. Chemical resistance:</strong> Using the same cheap synthetic pyrethroid spray (e.g. Cypermethrin) 5 times in a row. Always rotate chemical active ingredients (e.g. switch to Emamectin benzoate or Chlorantraniliprole).</p>
+
+        <h3>Can I spray selective grass killer on broadleaf vegetables like tomatoes or beans?</h3>
+        <p>Yes! Selective graminicides (like <strong>Fluazifop-P-butyl</strong> or <strong>Quizalofop</strong>) kill only true grasses (annual grass, couch grass) and will not harm broadleaf plants like tomatoes, cabbages, beans, or potatoes at all. However, NEVER spray selective grass killers on maize, wheat, or sorghum, as they will kill your cereal crop!</p>
+
+        <h3>What should I do if it rains 1 hour after I sprayed my field?</h3>
+        <p>Most contact pesticides and herbicides need at least <strong>3 to 4 rain-free hours</strong> ("rainfastness period") to absorb into plant tissue. If heavy rain fell within 1 hour, up to 70% of the active chemical washed off onto the ground. Wait 48 hours, re-scout your field to check if pests survived, and re-apply if necessary.</p>
+      </div>
+    </div>
+  </section>
+
+  <div data-site-footer></div>
+  <script src="/assets/pest-weed-tool.js"></script>
+  <script src="/assets/site.js"></script>
+</body>
+</html>
