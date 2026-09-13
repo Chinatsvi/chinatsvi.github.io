@@ -3,11 +3,373 @@
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width,initial-scale=1">
-  <meta name="description" content="What Does My Soil Need? Determine soil requirements, fertilizer needs and amendments based on soil tests and crop demands.">
-  <title>What Does My Soil Need? | AgriBase Decision Tools</title>
+  <meta name="description" content="What Does My Soil Need? Interactive soil health and fertilizer calculator. Determine lime requirements, basal and top-dressing fertilizer bags, split application timing, and organic manure rates.">
+  <title>What Does My Soil Need? Soil Health & Fertilizer Calculator | AgriBase Decision Tools</title>
   <link rel="stylesheet" href="/assets/site.css">
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link href="https://fonts.googleapis.com/css2?family=Fraunces:wght@600;700&family=Karla:wght@400;700;800&display=swap" rel="stylesheet">
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "WebApplication",
+    "name": "Soil Health & Fertilizer Prescription Calculator",
+    "description": "Calculate agricultural lime, basal fertilizer, top-dressing splits, and organic manure needs based on soil tests or field observations.",
+    "applicationCategory": "Agriculture",
+    "operatingSystem": "Web Browser",
+    "offers": {
+      "@type": "Offer",
+      "price": "0",
+      "priceCurrency": "USD"
+    }
+  }
+  </script>
+  <style>
+    .soil-tool {
+      max-width: 900px;
+      margin: 0 auto;
+      padding: 1rem;
+    }
+
+    .tool-section {
+      background: var(--paper);
+      border-radius: 8px;
+      padding: 1.5rem;
+      margin-bottom: 1.5rem;
+      box-shadow: var(--shadow);
+      border: 1px solid var(--border);
+    }
+
+    .progress-bar {
+      display: flex;
+      gap: 0.5rem;
+      margin-bottom: 2rem;
+      flex-wrap: wrap;
+    }
+
+    .progress-step {
+      flex: 1;
+      min-width: 35px;
+      height: 4px;
+      background: var(--border);
+      border-radius: 2px;
+      transition: background 0.3s;
+    }
+
+    .progress-step.active {
+      background: var(--field);
+    }
+
+    .progress-step.completed {
+      background: var(--field-mid);
+    }
+
+    .step-number {
+      font-family: var(--display);
+      font-weight: 700;
+      color: var(--gold);
+      font-size: 0.9rem;
+      margin-bottom: 0.5rem;
+    }
+
+    .question-group {
+      margin-bottom: 1.5rem;
+    }
+
+    .question-label {
+      font-weight: 700;
+      margin-bottom: 0.5rem;
+      color: var(--field);
+      font-size: 1.1rem;
+      font-family: var(--display);
+    }
+
+    .why-asking {
+      background: var(--cream);
+      border-left: 4px solid var(--field);
+      padding: 1rem;
+      margin: 1rem 0;
+      border-radius: 0 4px 4px 0;
+    }
+
+    .why-asking-title {
+      font-weight: 700;
+      color: var(--field);
+      margin-bottom: 0.5rem;
+      font-family: var(--display);
+    }
+
+    .option-buttons {
+      display: flex;
+      flex-direction: column;
+      gap: 0.75rem;
+    }
+
+    .option-button {
+      padding: 1rem 1.25rem;
+      border: 2px solid var(--border);
+      background: var(--paper);
+      color: var(--ink);
+      border-radius: 8px;
+      font-size: 1rem;
+      font-weight: 600;
+      cursor: pointer;
+      transition: all 0.2s;
+      text-align: left;
+      font-family: var(--body);
+    }
+
+    .option-button:hover {
+      border-color: var(--field);
+      background: var(--tint);
+    }
+
+    .option-button.selected {
+      background: var(--field);
+      color: var(--cream);
+      border-color: var(--field);
+    }
+
+    .form-input-group {
+      display: flex;
+      gap: 0.75rem;
+      align-items: center;
+      margin-bottom: 1rem;
+    }
+
+    .form-input {
+      flex: 1;
+      padding: 0.85rem 1rem;
+      border: 2px solid var(--border);
+      border-radius: 8px;
+      font-size: 1.05rem;
+      font-family: var(--body);
+      background: var(--paper);
+    }
+
+    .form-input:focus {
+      outline: none;
+      border-color: var(--field);
+    }
+
+    .form-select {
+      padding: 0.85rem 1rem;
+      border: 2px solid var(--border);
+      border-radius: 8px;
+      font-size: 1rem;
+      font-family: var(--body);
+      background: var(--paper);
+    }
+
+    .condition-card {
+      background: var(--cream);
+      border-radius: 8px;
+      padding: 1.15rem;
+      margin-bottom: 0.85rem;
+      border: 1px solid var(--border);
+    }
+
+    .final-result {
+      background: var(--paper);
+      border-radius: 12px;
+      padding: 2rem;
+      margin-top: 2rem;
+      box-shadow: var(--shadow);
+      border: 1px solid var(--border);
+    }
+
+    .result-status {
+      font-size: 1.3rem;
+      font-weight: 800;
+      padding: 1.1rem;
+      border-radius: 8px;
+      text-align: center;
+      margin-bottom: 1.5rem;
+      font-family: var(--display);
+      letter-spacing: 0.5px;
+    }
+
+    .result-status.good {
+      background: #f0fff0;
+      color: var(--field);
+      border: 2px solid #a3e0a3;
+    }
+
+    .result-status.warning {
+      background: #fff8e6;
+      color: #a05a00;
+      border: 2px solid var(--gold);
+    }
+
+    .result-status.danger {
+      background: #fff0f0;
+      color: var(--soil);
+      border: 2px solid #ffa8a8;
+    }
+
+    .summary-box {
+      background: var(--cream);
+      border-radius: 8px;
+      padding: 1.5rem;
+      margin: 1.5rem 0;
+      border: 1px solid var(--border);
+    }
+
+    .summary-title {
+      font-weight: 700;
+      margin-bottom: 1rem;
+      color: var(--field);
+      font-family: var(--display);
+      font-size: 1.15rem;
+    }
+
+    .summary-item {
+      display: flex;
+      justify-content: space-between;
+      margin-bottom: 0.75rem;
+      padding-bottom: 0.75rem;
+      border-bottom: 1px solid var(--border);
+      flex-wrap: wrap;
+      gap: 0.5rem;
+    }
+
+    .summary-item:last-child {
+      border-bottom: none;
+    }
+
+    .summary-label {
+      font-weight: 600;
+      color: var(--muted);
+    }
+
+    .summary-value {
+      color: var(--field);
+      font-weight: 700;
+    }
+
+    .action-buttons {
+      display: flex;
+      flex-direction: column;
+      gap: 0.75rem;
+      margin-top: 1.5rem;
+    }
+
+    .action-button {
+      padding: 1rem 1.5rem;
+      border: none;
+      border-radius: 8px;
+      font-size: 1rem;
+      font-weight: 700;
+      cursor: pointer;
+      transition: all 0.2s;
+      font-family: var(--body);
+      text-align: center;
+      text-decoration: none;
+    }
+
+    .action-button.primary {
+      background: var(--field);
+      color: var(--cream);
+    }
+
+    .action-button.primary:hover {
+      background: var(--field-dark);
+    }
+
+    .action-button.secondary {
+      background: var(--muted);
+      color: var(--cream);
+    }
+
+    .action-button.secondary:hover {
+      background: var(--ink);
+    }
+
+    .action-button.outline {
+      background: var(--paper);
+      color: var(--field);
+      border: 2px solid var(--field);
+    }
+
+    .action-button.outline:hover {
+      background: var(--cream);
+    }
+
+    .disclaimer {
+      background: #fff9e6;
+      border-left: 4px solid var(--gold);
+      border-radius: 0 8px 8px 0;
+      padding: 1rem;
+      margin: 1.5rem 0;
+      font-size: 0.88rem;
+      color: var(--ink);
+      line-height: 1.6;
+    }
+
+    .next-actions {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+      gap: 1rem;
+      margin-top: 1.5rem;
+    }
+
+    .next-action-card {
+      background: var(--cream);
+      border-radius: 8px;
+      padding: 1.1rem;
+      text-align: center;
+      text-decoration: none;
+      color: var(--field);
+      transition: all 0.2s;
+      border: 1px solid var(--border);
+      display: block;
+    }
+
+    .next-action-card:hover {
+      background: var(--paper);
+      transform: translateY(-2px);
+      border-color: var(--field);
+    }
+
+    .hidden {
+      display: none;
+    }
+
+    .fade-in {
+      animation: fadeIn 0.3s ease-in;
+    }
+
+    @keyframes fadeIn {
+      from { opacity: 0; transform: translateY(8px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+
+    .term-box {
+      background: var(--tint);
+      border-left: 4px solid var(--field);
+      padding: 1rem;
+      margin: 1.25rem 0;
+      border-radius: 0 6px 6px 0;
+    }
+
+    @media (max-width: 600px) {
+      .soil-tool {
+        padding: 0.5rem;
+      }
+      .tool-section {
+        padding: 1rem;
+      }
+      .form-input-group {
+        flex-direction: column;
+        align-items: stretch;
+      }
+      .final-result {
+        padding: 1.25rem;
+      }
+      .next-actions {
+        grid-template-columns: 1fr;
+      }
+    }
+  </style>
 </head>
 <body>
   <div data-site-header></div>
@@ -16,34 +378,468 @@
       <div class="breadcrumb">
         <a href="/">Home</a> / <a href="/decision-tools/">Decision Tools</a> / What Does My Soil Need?
       </div>
-      <div class="eyebrow">Soil/Fertilizer Decision</div>
+      <div class="eyebrow">Soil & Fertilizer Decision</div>
       <h1>What Does My Soil Need?</h1>
-      <p class="lead">Determine soil requirements, fertilizer needs and amendments based on soil tests and crop demands.</p>
+      <p class="lead">Calculate your exact lime requirements, basal fertilizer bags, top-dressing split schedules, and organic manure rates based on your crop and field size.</p>
     </div>
   </header>
+
   <main class="section">
-    <div class="container article">
-      <div class="notice">
-        <strong>Coming Soon:</strong> This decision tool is under development. Check back for comprehensive soil analysis guidance.
+    <div class="container">
+      <div class="soil-tool">
+        
+        <!-- Progress Bar -->
+        <div class="progress-bar" id="progressBar">
+          <div class="progress-step active" data-step="1"></div>
+          <div class="progress-step" data-step="2"></div>
+          <div class="progress-step" data-step="3"></div>
+          <div class="progress-step" data-step="4"></div>
+          <div class="progress-step" data-step="5"></div>
+          <div class="progress-step" data-step="6"></div>
+        </div>
+
+        <!-- Start Screen -->
+        <div class="tool-section fade-in" id="startScreen">
+          <h2 style="text-align: center; margin-bottom: 1rem;">Soil Health & Fertilizer Prescription</h2>
+          <p style="text-align: center; font-size: 1.05rem; margin-bottom: 1.5rem; color: var(--muted);">
+            Don't guess with fertilizer prices! Check whether your soil is sour (acidic), calculate exact 50kg bags needed, and plan application timing so no fertilizer is wasted.
+          </p>
+          <div class="why-asking">
+            <div class="why-asking-title">Why soil health comes before fertilizer</div>
+            <p>If soil is sour (acidic), up to 60% of expensive chemical fertilizer gets locked in the dirt where plant roots cannot reach it. Applying agricultural lime to fix soil pH unlocks natural soil fertility and doubles your fertilizer efficiency.</p>
+          </div>
+          <div class="condition-card">
+            <div style="font-weight: 700; color: var(--field); margin-bottom: 0.5rem;">What this tool calculates:</div>
+            <ul style="margin: 0 0 0 1.25rem; font-size: 0.95rem; line-height: 1.6;">
+              <li><strong>Lime Prescription:</strong> Exactly how many 50kg bags of agricultural lime to apply to sweeten sour soil.</li>
+              <li><strong>Basal Fertilizer at Planting:</strong> Compound fertilizer bags and placement method.</li>
+              <li><strong>Top-Dressing Splits:</strong> Nitrogen fertilizer bags and precise week-by-week split schedule.</li>
+              <li><strong>Organic Manure Alternative:</strong> Wheelbarrows/tons of cured manure or compost.</li>
+            </ul>
+          </div>
+          <div class="action-buttons">
+            <button class="action-button primary" onclick="startSoilTool()">Start Soil & Fertilizer Check →</button>
+          </div>
+        </div>
+
+        <!-- Step 1: Farm Size and Crop Selection -->
+        <div class="tool-section hidden fade-in" id="step1AreaCrop">
+          <div class="step-number">STEP 1 OF 5</div>
+          <h2>Farm Size & Target Crop</h2>
+          <div class="why-asking">
+            <div class="why-asking-title">Why area and crop matter</div>
+            <p>Fertilizer needs depend directly on the size of your planting area and the feeding appetite of the crop. For example, tomatoes need huge amounts of potassium and calcium, while beans manufacture their own nitrogen from the air.</p>
+          </div>
+
+          <div class="question-group">
+            <label class="question-label">How large is your planting field?</label>
+            <div class="form-input-group">
+              <input type="number" step="0.1" min="0.01" value="1" class="form-input" id="farmAreaInput" placeholder="Enter farm area (e.g. 1, 0.5, 2)">
+              <select class="form-select" id="areaUnitSelect">
+                <option value="hectares">Hectares (Ha)</option>
+                <option value="acres">Acres</option>
+                <option value="sqm">Square Metres (m²)</option>
+              </select>
+            </div>
+          </div>
+
+          <div class="question-group">
+            <label class="question-label">Which crop will you plant?</label>
+            <div class="option-buttons" id="cropSelectButtons">
+              <button class="option-button selected" data-value="maize" onclick="selectCrop('maize')">🌽 Maize / Corn (heavy nitrogen feeder)</button>
+              <button class="option-button" data-value="tomato" onclick="selectCrop('tomato')">🍅 Tomato (high potassium & calcium needs)</button>
+              <button class="option-button" data-value="cabbage" onclick="selectCrop('cabbage')">🥬 Cabbage, Kale, Brassicas (prefers sweet soil, pH > 6.2)</button>
+              <button class="option-button" data-value="potato" onclick="selectCrop('potato')">🥔 Irish Potato (tolerates mild acidity, high potassium)</button>
+              <button class="option-button" data-value="onion" onclick="selectCrop('onion')">🧅 Onion & Garlic (shallow root, high phosphorus & sulphur)</button>
+              <button class="option-button" data-value="beans" onclick="selectCrop('beans')">🫘 Beans, Groundnuts, Soybeans (nitrogen-fixing legumes)</button>
+              <button class="option-button" data-value="wheat" onclick="selectCrop('wheat')">🌾 Wheat / Barley (balanced cereal nutrition)</button>
+            </div>
+          </div>
+
+          <div class="action-buttons">
+            <button class="action-button primary" onclick="confirmStep1()">Continue to Soil Test Status →</button>
+            <button class="action-button secondary" onclick="goBack()">Back</button>
+          </div>
+        </div>
+
+        <!-- Step 2: Soil Test Choice -->
+        <div class="tool-section hidden fade-in" id="step2TestChoice">
+          <div class="step-number">STEP 2 OF 5</div>
+          <h2>Do you have a laboratory soil test report?</h2>
+          <div class="why-asking">
+            <div class="why-asking-title">Why a lab test is best (but not required)</div>
+            <p>A lab test gives exact chemical numbers for pH, Nitrogen, Phosphorus, and Potassium. However, if you haven't sent soil to a lab yet, our smart observation model will estimate your soil health from physical field cues (soil feel, color, and drainage).</p>
+          </div>
+
+          <div class="option-buttons" id="testModeButtons">
+            <button class="option-button" data-value="lab" onclick="selectTestMode('lab')">
+              🧪 Yes, I have a soil laboratory test report
+            </button>
+            <button class="option-button" data-value="field" onclick="selectTestMode('field')">
+              🖐️ No soil test report — use visual & field observations
+            </button>
+          </div>
+
+          <div class="action-buttons" style="margin-top: 1.5rem;">
+            <button class="action-button secondary" onclick="goBack()">Back</button>
+          </div>
+        </div>
+
+        <!-- Step 3A: Lab Test Inputs -->
+        <div class="tool-section hidden fade-in" id="step3LabInputs">
+          <div class="step-number">STEP 3 OF 5 (LAB TEST MODE)</div>
+          <h2>Enter Your Soil Test Values</h2>
+
+          <div class="question-group">
+            <label class="question-label">Soil pH (CaCl₂ or Water):</label>
+            <input type="number" step="0.1" min="3.5" max="9.0" value="5.5" class="form-input" id="labPhInput" style="max-width: 250px;">
+            <p style="font-size: 0.85rem; color: var(--muted); margin-top: 0.25rem;">Typical soils range from 4.5 (very acidic) to 7.0 (neutral).</p>
+          </div>
+
+          <div class="question-group">
+            <label class="question-label">Available Phosphorus (P):</label>
+            <select class="form-select" id="labPSelect" style="width: 100%;">
+              <option value="low">Low (&lt; 15 ppm / mg/kg) — Severe phosphorus deficiency</option>
+              <option value="medium" selected>Medium (15 - 30 ppm) — Moderate phosphorus</option>
+              <option value="high">High (&gt; 30 ppm) — Abundant phosphorus</option>
+            </select>
+          </div>
+
+          <div class="question-group">
+            <label class="question-label">Available Potassium (K):</label>
+            <select class="form-select" id="labKSelect" style="width: 100%;">
+              <option value="low">Low (&lt; 0.2 meq/100g) — Low potassium</option>
+              <option value="medium" selected>Medium (0.2 - 0.4 meq/100g) — Adequate</option>
+              <option value="high">High (&gt; 0.4 meq/100g) — Rich potassium</option>
+            </select>
+          </div>
+
+          <div class="question-group">
+            <label class="question-label">Soil Organic Matter (%):</label>
+            <input type="number" step="0.1" min="0.1" max="10" value="2.0" class="form-input" id="labOMInput" style="max-width: 250px;">
+          </div>
+
+          <div class="action-buttons">
+            <button class="action-button primary" onclick="confirmStep3Lab()">Continue to Field History →</button>
+            <button class="action-button secondary" onclick="goBack()">Back</button>
+          </div>
+        </div>
+
+        <!-- Step 3B: Field Observation Mode -->
+        <div class="tool-section hidden fade-in" id="step3FieldObs">
+          <div class="step-number">STEP 3 OF 5 (FIELD OBSERVATION MODE)</div>
+          <h2>Soil Texture & Field Feel</h2>
+          <div class="why-asking">
+            <div class="why-asking-title">How to feel your soil</div>
+            <p>Moisten a small ball of soil in your palm and squeeze it between your thumb and forefinger. Does it feel gritty and fall apart (sand)? Or smooth and sticky like sculpting dough (clay)?</p>
+          </div>
+
+          <div class="question-group">
+            <label class="question-label">Soil Texture (How it feels):</label>
+            <div class="option-buttons" id="textureButtons">
+              <button class="option-button" data-value="sand" onclick="selectSoilTexture('sand')">
+                🏖️ Sandy Soil (gritty, falls apart, water drains very fast, nutrients wash away easily)
+              </button>
+              <button class="option-button selected" data-value="sandy_loam" onclick="selectSoilTexture('sandy_loam')">
+                🌾 Sandy Loam / Loam (crumbly, easy to plow, good balance of air and water)
+              </button>
+              <button class="option-button" data-value="clay" onclick="selectSoilTexture('clay')">
+                🧱 Heavy Clay / Red Soil (sticky when wet, forms hard crusts and cracks when dry)
+              </button>
+            </div>
+          </div>
+
+          <div class="question-group">
+            <label class="question-label">Soil Color:</label>
+            <div class="option-buttons" id="colorButtons">
+              <button class="option-button" data-value="dark_black" onclick="selectSoilColor('dark_black')">
+                🖤 Dark Black or Rich Dark Brown (high natural humus and organic matter)
+              </button>
+              <button class="option-button selected" data-value="red_brown" onclick="selectSoilColor('red_brown')">
+                🟤 Red or Medium Brown (moderate organic matter, common in agricultural soils)
+              </button>
+              <button class="option-button" data-value="pale_sand" onclick="selectSoilColor('pale_sand')">
+                🟡 Pale Yellowish, Grey, or Bleached White Sand (low organic matter, prone to acidity)
+              </button>
+            </div>
+          </div>
+
+          <div class="action-buttons">
+            <button class="action-button primary" onclick="confirmStep3Field()">Continue to Field History →</button>
+            <button class="action-button secondary" onclick="goBack()">Back</button>
+          </div>
+        </div>
+
+        <!-- Step 4: Crop & Manure History -->
+        <div class="tool-section hidden fade-in" id="step4History">
+          <div class="step-number">STEP 4 OF 5</div>
+          <h2>Field History & Manure Background</h2>
+          <div class="why-asking">
+            <div class="why-asking-title">Why crop rotation reduces fertilizer costs</div>
+            <p>Legumes (beans, groundnuts, cowpeas) leave free natural nitrogen behind in the soil, allowing you to reduce top-dressing fertilizer. Cattle and poultry manure also provide residual fertility that lasts 2 to 3 years.</p>
+          </div>
+
+          <div class="question-group">
+            <label class="question-label">What was planted in this field last season?</label>
+            <div class="option-buttons" id="prevCropButtons">
+              <button class="option-button" data-value="legume" onclick="selectPreviousCrop('legume')">
+                🫘 Legumes (Beans, Groundnuts, Soybeans, Cowpeas) — Left nitrogen in soil!
+              </button>
+              <button class="option-button selected" data-value="maize" onclick="selectPreviousCrop('maize')">
+                🌽 Maize, Sorghum, or Wheat (Cereals)
+              </button>
+              <button class="option-button" data-value="vegetable" onclick="selectPreviousCrop('vegetable')">
+                🥬 Heavy Vegetables (Tomatoes, Cabbage, Potatoes)
+              </button>
+              <button class="option-button" data-value="fallow" onclick="selectPreviousCrop('fallow')">
+                🌿 Fallow / Virgin land / Grass rest
+              </button>
+            </div>
+          </div>
+
+          <div class="question-group">
+            <label class="question-label">Have you applied animal manure or compost recently?</label>
+            <div class="option-buttons" id="manureHistoryButtons">
+              <button class="option-button" data-value="recent" onclick="selectManureHistory('recent')">
+                Yes, applied cattle/poultry manure or compost within the last 12 months
+              </button>
+              <button class="option-button selected" data-value="none" onclick="selectManureHistory('none')">
+                No manure or compost has been added recently
+              </button>
+            </div>
+          </div>
+
+          <div class="action-buttons">
+            <button class="action-button primary" onclick="confirmStep4()">Continue to Approach →</button>
+            <button class="action-button secondary" onclick="goBack()">Back</button>
+          </div>
+        </div>
+
+        <!-- Step 5: Farming Approach -->
+        <div class="tool-section hidden fade-in" id="step5Approach">
+          <div class="step-number">STEP 5 OF 5</div>
+          <h2>Fertilizer Strategy & Budget Approach</h2>
+          <div class="question-group">
+            <label class="question-label">Select your preferred fertilizer approach:</label>
+            <div class="option-buttons" id="approachButtons">
+              <button class="option-button selected" data-value="standard" onclick="selectApproach('standard')">
+                🌾 Standard Commercial Practice (Balanced Compound Basal + Split Nitrogen Top-Dress)
+              </button>
+              <button class="option-button" data-value="organic_only" onclick="selectApproach('organic_only')">
+                🌿 Organic & Manure Only (Zero synthetic chemical fertilizers)
+              </button>
+              <button class="option-button" data-value="low_cost_split" onclick="selectApproach('low_cost_split')">
+                💰 Budget Conscious (Reduced synthetic fertilizer supplemented with farmyard manure)
+              </button>
+            </div>
+          </div>
+
+          <div class="action-buttons">
+            <button class="action-button primary" onclick="confirmStep5()">Generate Soil & Fertilizer Prescription →</button>
+            <button class="action-button secondary" onclick="goBack()">Back</button>
+          </div>
+        </div>
+
+        <!-- Final Prescription Screen -->
+        <div class="final-result hidden fade-in" id="finalResult">
+          <h2 style="text-align: center; margin-bottom: 0.5rem;">SOIL & FERTILIZER PRESCRIPTION</h2>
+          <div class="result-status good" id="resultStatus">SOIL HEALTH: EVALUATED</div>
+
+          <div class="summary-box">
+            <div class="summary-title">Farm & Crop Profile</div>
+            <div class="summary-item">
+              <div class="summary-label">Target Crop:</div>
+              <div class="summary-value" id="summaryCrop"></div>
+            </div>
+            <div class="summary-item">
+              <div class="summary-label">Field Area:</div>
+              <div class="summary-value" id="summaryArea"></div>
+            </div>
+            <div class="summary-item">
+              <div class="summary-label">Soil Acidity Status:</div>
+              <div class="summary-value" id="summaryPhStatus"></div>
+            </div>
+            <div class="summary-item">
+              <div class="summary-label">Lime Required:</div>
+              <div class="summary-value" id="summaryLimeNeeds"></div>
+            </div>
+            <div class="summary-item">
+              <div class="summary-label">Basal Fertilizer Total:</div>
+              <div class="summary-value" id="summaryBasalNeeds"></div>
+            </div>
+            <div class="summary-item">
+              <div class="summary-label">Top-Dressing Total:</div>
+              <div class="summary-value" id="summaryTopDressNeeds"></div>
+            </div>
+          </div>
+
+          <!-- Soil pH and Lime Card -->
+          <div class="summary-box" style="background: #fff; border-left: 5px solid var(--soil);">
+            <div class="summary-title" style="color: var(--soil);">1. SOIL pH & AGRICULTURAL LIME PRESCRIPTION</div>
+            <p id="phExplanationText" style="font-size: 0.95rem; line-height: 1.6; margin-bottom: 1rem;"></p>
+            <div id="limeRecommendationCard"></div>
+          </div>
+
+          <!-- Basal Fertilizer Prescription -->
+          <div class="summary-box" style="background: #fff; border-left: 5px solid var(--field);">
+            <div class="summary-title" style="color: var(--field);">2. BASAL FERTILIZER (AT PLANTING TIME)</div>
+            <p style="font-size: 0.9rem; color: var(--muted); margin-bottom: 0.75rem;">
+              Basal fertilizers contain high Phosphorus (P) to stimulate fast early root anchoring and early vigor.
+            </p>
+            <div id="basalRecommendationCard"></div>
+          </div>
+
+          <!-- Top-Dressing Prescription -->
+          <div class="summary-box" style="background: #fff; border-left: 5px solid var(--gold);">
+            <div class="summary-title" style="color: var(--field);">3. TOP-DRESSING FERTILIZER (SPLIT APPLICATIONS)</div>
+            <p style="font-size: 0.9rem; color: var(--muted); margin-bottom: 0.75rem;">
+              Nitrogen washes away quickly in sandy soils. Splitting your top-dressing into two applications increases yield by up to 30%.
+            </p>
+            <div id="topDressRecommendationCard"></div>
+          </div>
+
+          <!-- Organic Manure Alternative -->
+          <div class="summary-box" style="background: #f4faf4; border-left: 5px solid var(--field-mid);">
+            <div class="summary-title" style="color: var(--field);">4. ORGANIC MANURE & SOIL HEALTH BUILDER</div>
+            <div id="organicRecommendationCard"></div>
+          </div>
+
+          <!-- Terms Explained -->
+          <div class="term-box">
+            <div style="font-weight: 700; color: var(--field); margin-bottom: 0.5rem; font-family: var(--display); font-size: 1.05rem;">
+              📖 SOIL & FERTILIZER TERMS EXPLAINED IN SIMPLE ENGLISH
+            </div>
+            <div id="termsContainer"></div>
+          </div>
+
+          <div class="disclaimer">
+            <strong>Important Application Tip:</strong> Never apply dry chemical fertilizers directly touching bare crop stems or seeds—direct contact will salt-scorch (burn) plant tissues. Always place fertilizer 5cm away from the stem and apply when the soil is damp after rain or irrigation.
+          </div>
+
+          <!-- Next Actions -->
+          <h3 style="margin-top: 2rem;">Related Tools & Resources</h3>
+          <div class="next-actions">
+            <a href="/decision-tools/water-needs/" class="next-action-card">
+              <div style="font-weight: 700; margin-bottom: 0.25rem;">Water Needs Calculator →</div>
+              <div style="font-size: 0.85rem; color: var(--muted);">Check crop irrigation timing</div>
+            </a>
+            <a href="/decision-tools/crop-profitability/" class="next-action-card">
+              <div style="font-weight: 700; margin-bottom: 0.25rem;">Will This Crop Make Money? →</div>
+              <div style="font-size: 0.85rem; color: var(--muted);">Calculate input costs & profit</div>
+            </a>
+            <a href="/guides/understanding-your-soil.html" class="next-action-card">
+              <div style="font-weight: 700; margin-bottom: 0.25rem;">Soil Management Guide →</div>
+              <div style="font-size: 0.85rem; color: var(--muted);">Read in-depth soil building guide</div>
+            </a>
+          </div>
+
+          <div class="action-buttons">
+            <button class="action-button primary" onclick="saveResult()">Save Prescription to My Phone/Browser</button>
+            <button class="action-button outline" onclick="downloadResult()">Download Printable Prescription (.txt)</button>
+            <button class="action-button secondary" onclick="restartTool()">Start New Soil Calculation</button>
+          </div>
+
+        </div>
+
       </div>
-      <h2>What this tool will help you determine</h2>
-      <ul>
-        <li>Soil test interpretation and recommendations</li>
-        <li>Fertilizer requirements based on crop needs</li>
-        <li>pH adjustment and amendment needs</li>
-        <li>Organic matter and soil health improvements</li>
-        <li>Nutrient management planning</li>
-      </ul>
-      <h2>Related resources</h2>
-      <ul>
-        <li><a href="/guides/understanding-your-soil.html">Understanding Your Soil</a></li>
-        <li><a href="/guides/understanding-soil-ph.html">Understanding Soil pH</a></li>
-        <li><a href="/guides/plan-fertilizer-application.html">Plan Fertilizer Application</a></li>
-        <li><a href="/calculators/fertilizer.html">Fertilizer Calculator</a></li>
-      </ul>
     </div>
   </main>
+
+  <!-- In-Depth Educational Guide for Farmers -->
+  <section class="section alt">
+    <div class="container">
+      <div class="section-head">
+        <div class="eyebrow">Soil Science Made Simple</div>
+        <h2>How to Understand and Care for Your Soil</h2>
+        <p>Healthy soil is a farmer's most valuable asset. Learn how soil pH, N-P-K nutrients, organic humus, and liming work together to produce bountiful harvests.</p>
+      </div>
+
+      <div class="grid">
+        <article class="card">
+          <h3>1. What is Soil pH?</h3>
+          <p>Soil pH measures how sour (acidic) or sweet (alkaline) your ground is on a scale from 1 to 14. A pH of <strong>6.0 to 6.8</strong> is the ideal sweet spot for almost all vegetables, grains, and legumes. In acidic soil (pH below 5.5), plant roots cannot absorb phosphorus or nitrogen, even if you pour expensive fertilizer onto the field.</p>
+        </article>
+
+        <article class="card">
+          <h3>2. The Role of Agricultural Lime</h3>
+          <p><strong>Agricultural lime</strong> is finely crushed natural limestone rock. When mixed into acidic soil, it neutralizes acid hydrogen ions, raises soil pH, and adds vital Calcium and Magnesium. Lime takes 4 to 6 weeks to react in moist soil, so always broadcast and plow it in well before planting.</p>
+        </article>
+
+        <article class="card">
+          <h3>3. Understanding Nitrogen (N)</h3>
+          <p><strong>What it does:</strong> Nitrogen builds lush green leaves, strong vegetative stems, and plant proteins.<br>
+          <strong>Signs of lack:</strong> Pale yellowing of older bottom leaves starting in an inverted V-shape from the tip.<br>
+          <strong>Sources:</strong> Ammonium Nitrate (AN), Urea, CAN, cured cattle and poultry manure.</p>
+        </article>
+
+        <article class="card">
+          <h3>4. Understanding Phosphorus (P)</h3>
+          <p><strong>What it does:</strong> Phosphorus fuels root development, early seedling establishment, and flowering.<br>
+          <strong>Signs of lack:</strong> Stunted dark green plants with purple or reddish coloring under leaves.<br>
+          <strong>Sources:</strong> Single Superphosphate (SSP), Compound D, Triple Superphosphate (TSP).</p>
+        </article>
+
+        <article class="card">
+          <h3>5. Understanding Potassium (K)</h3>
+          <p><strong>What it does:</strong> Potassium gives plants strong disease resistance, firm fruit skins, sweet flavour, and drought tolerance.<br>
+          <strong>Signs of lack:</strong> Burnt, scorched edges on outer leaf margins.<br>
+          <strong>Sources:</strong> Muriate of Potash (MOP), Potassium Sulfate (SOP), clean wood ash.</p>
+        </article>
+
+        <article class="card">
+          <h3>6. Building Soil Organic Matter</h3>
+          <p><strong>Humus and compost</strong> act like a sponge in your soil. Adding animal manure, green cover crops, or crop residue increases water holding capacity by 400%, feeds beneficial soil earthworms and microbes, and prevents sandy soils from losing nutrients during heavy rain.</p>
+        </article>
+      </div>
+    </div>
+  </section>
+
+  <!-- How to Take a Proper Soil Sample -->
+  <section class="section">
+    <div class="container">
+      <div class="section-head">
+        <div class="eyebrow">Practical Field Guide</div>
+        <h2>How to Take a Proper Soil Sample for Testing</h2>
+      </div>
+
+      <div class="article">
+        <p>A laboratory soil test is only as good as the sample you send. Follow these 5 simple steps to get an accurate field sample:</p>
+        <ol>
+          <li><strong>Sample in a Zig-Zag Pattern:</strong> Walk across your field in a zig-zag (W-shaped or Z-shaped) pattern. Do not take soil from just one spot or near ant heaps, manure piles, or fence lines.</li>
+          <li><strong>Clear Surface Trash:</strong> Scrape away the top layer of dry grass, weeds, and unrotted mulch.</li>
+          <li><strong>Dig a V-Shaped Hole:</strong> Dig down 15-20cm deep (plow depth). Slice a clean 2cm vertical slice of soil from top to bottom.</li>
+          <li><strong>Mix 15 to 20 Sub-samples:</strong> Place slices from 15-20 different spots in a clean plastic bucket and mix them together thoroughly.</li>
+          <li><strong>Pack 500g of Soil:</strong> Take about 500 grams (two handfuls) of the mixed soil, place it in a clean labelled plastic bag with your name and field number, dry it in the shade, and take it to the testing lab.</li>
+        </ol>
+      </div>
+    </div>
+  </section>
+
+  <!-- FAQ Section -->
+  <section class="section alt">
+    <div class="container">
+      <div class="section-head">
+        <div class="eyebrow">Common Questions</div>
+        <h2>Soil & Fertilizer FAQ</h2>
+      </div>
+      <div class="article">
+        <h3>Why should I split my top-dressing fertilizer instead of putting it all at once?</h3>
+        <p>Nitrogen fertilizer dissolves very rapidly in water. If you apply all your top-dressing in one big dose and heavy rain falls, 40-50% of the nitrogen will wash deep down past the roots (leaching) and be lost forever. Applying half at knee-high and half at early flowering ensures the plant has fresh food when its growth demand is highest.</p>
+
+        <h3>Can fresh chicken manure burn my crops?</h3>
+        <p>Yes! Fresh chicken manure is very high in raw uric acid and ammonia salts. If applied fresh next to seeds or young roots, it will draw moisture out of the plant and "burn" the crop. Always let poultry manure compost and cure under shade for 4 to 8 weeks before applying it to your fields.</p>
+
+        <h3>What is the difference between Calcitic Lime and Dolomitic Lime?</h3>
+        <p><strong>Calcitic Lime</strong> contains pure Calcium Carbonate and is used when your soil has enough magnesium. <strong>Dolomitic Lime</strong> contains both Calcium Carbonate and Magnesium Carbonate. If your soil test shows low magnesium or if you farm on light sandy soils, always choose Dolomitic Lime to supply both calcium and magnesium together.</p>
+
+        <h3>Why did my maize turn pale yellow after heavy continuous rain?</h3>
+        <p>Heavy rains cause two problems: <strong>1. Waterlogging:</strong> water fills all the air pores in the soil, suffocating the roots so they cannot breathe or absorb nutrients. <strong>2. Nitrogen Leaching:</strong> water washes mobile nitrate out of the topsoil. Once the water drains and the soil dries out slightly, apply a light nitrogen top-dressing to stimulate rapid green recovery.</p>
+      </div>
+    </div>
+  </section>
+
   <div data-site-footer></div>
+  <script src="/assets/soil-needs-tool.js"></script>
   <script src="/assets/site.js"></script>
 </body>
 </html>

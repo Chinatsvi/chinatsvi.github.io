@@ -3,11 +3,373 @@
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width,initial-scale=1">
-  <meta name="description" content="How Do I Reduce Harvest Losses? Minimize post-harvest losses with proper handling, storage and preservation techniques.">
-  <title>How Do I Reduce Harvest Losses? | AgriBase Decision Tools</title>
+  <meta name="description" content="How Do I Reduce Harvest Losses? Interactive post-harvest loss audit tool for farmers. Calculate your dollar loss, identify top handling leaks, and get simple low-cost solutions to save up to 30% more food and income.">
+  <title>How Do I Reduce Harvest Losses? Post-Harvest Loss Audit & Solutions | AgriBase Decision Tools</title>
   <link rel="stylesheet" href="/assets/site.css">
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link href="https://fonts.googleapis.com/css2?family=Fraunces:wght@600;700&family=Karla:wght@400;700;800&display=swap" rel="stylesheet">
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "WebApplication",
+    "name": "Post-Harvest Loss Audit & Reduction Calculator",
+    "description": "Audit harvesting, handling, packaging, transport, and storage practices to eliminate crop spoilage and recover lost farm income.",
+    "applicationCategory": "Agriculture",
+    "operatingSystem": "Web Browser",
+    "offers": {
+      "@type": "Offer",
+      "price": "0",
+      "priceCurrency": "USD"
+    }
+  }
+  </script>
+  <style>
+    .harvest-tool {
+      max-width: 900px;
+      margin: 0 auto;
+      padding: 1rem;
+    }
+
+    .tool-section {
+      background: var(--paper);
+      border-radius: 8px;
+      padding: 1.5rem;
+      margin-bottom: 1.5rem;
+      box-shadow: var(--shadow);
+      border: 1px solid var(--border);
+    }
+
+    .progress-bar {
+      display: flex;
+      gap: 0.5rem;
+      margin-bottom: 2rem;
+      flex-wrap: wrap;
+    }
+
+    .progress-step {
+      flex: 1;
+      min-width: 35px;
+      height: 4px;
+      background: var(--border);
+      border-radius: 2px;
+      transition: background 0.3s;
+    }
+
+    .progress-step.active {
+      background: var(--field);
+    }
+
+    .progress-step.completed {
+      background: var(--field-mid);
+    }
+
+    .step-number {
+      font-family: var(--display);
+      font-weight: 700;
+      color: var(--gold);
+      font-size: 0.9rem;
+      margin-bottom: 0.5rem;
+    }
+
+    .question-group {
+      margin-bottom: 1.5rem;
+    }
+
+    .question-label {
+      font-weight: 700;
+      margin-bottom: 0.5rem;
+      color: var(--field);
+      font-size: 1.1rem;
+      font-family: var(--display);
+    }
+
+    .why-asking {
+      background: var(--cream);
+      border-left: 4px solid var(--field);
+      padding: 1rem;
+      margin: 1rem 0;
+      border-radius: 0 4px 4px 0;
+    }
+
+    .why-asking-title {
+      font-weight: 700;
+      color: var(--field);
+      margin-bottom: 0.5rem;
+      font-family: var(--display);
+    }
+
+    .option-buttons {
+      display: flex;
+      flex-direction: column;
+      gap: 0.75rem;
+    }
+
+    .option-button {
+      padding: 1rem 1.25rem;
+      border: 2px solid var(--border);
+      background: var(--paper);
+      color: var(--ink);
+      border-radius: 8px;
+      font-size: 1rem;
+      font-weight: 600;
+      cursor: pointer;
+      transition: all 0.2s;
+      text-align: left;
+      font-family: var(--body);
+    }
+
+    .option-button:hover {
+      border-color: var(--field);
+      background: var(--tint);
+    }
+
+    .option-button.selected {
+      background: var(--field);
+      color: var(--cream);
+      border-color: var(--field);
+    }
+
+    .form-input-group {
+      display: flex;
+      gap: 0.75rem;
+      align-items: center;
+      margin-bottom: 1rem;
+    }
+
+    .form-input {
+      flex: 1;
+      padding: 0.85rem 1rem;
+      border: 2px solid var(--border);
+      border-radius: 8px;
+      font-size: 1.05rem;
+      font-family: var(--body);
+      background: var(--paper);
+    }
+
+    .form-input:focus {
+      outline: none;
+      border-color: var(--field);
+    }
+
+    .form-select {
+      padding: 0.85rem 1rem;
+      border: 2px solid var(--border);
+      border-radius: 8px;
+      font-size: 1rem;
+      font-family: var(--body);
+      background: var(--paper);
+    }
+
+    .condition-card {
+      background: var(--cream);
+      border-radius: 8px;
+      padding: 1.15rem;
+      margin-bottom: 0.85rem;
+      border: 1px solid var(--border);
+    }
+
+    .final-result {
+      background: var(--paper);
+      border-radius: 12px;
+      padding: 2rem;
+      margin-top: 2rem;
+      box-shadow: var(--shadow);
+      border: 1px solid var(--border);
+    }
+
+    .result-status {
+      font-size: 1.3rem;
+      font-weight: 800;
+      padding: 1.1rem;
+      border-radius: 8px;
+      text-align: center;
+      margin-bottom: 1.5rem;
+      font-family: var(--display);
+      letter-spacing: 0.5px;
+    }
+
+    .result-status.good {
+      background: #f0fff0;
+      color: var(--field);
+      border: 2px solid #a3e0a3;
+    }
+
+    .result-status.warning {
+      background: #fff8e6;
+      color: #a05a00;
+      border: 2px solid var(--gold);
+    }
+
+    .result-status.danger {
+      background: #fff0f0;
+      color: var(--soil);
+      border: 2px solid #ffa8a8;
+    }
+
+    .summary-box {
+      background: var(--cream);
+      border-radius: 8px;
+      padding: 1.5rem;
+      margin: 1.5rem 0;
+      border: 1px solid var(--border);
+    }
+
+    .summary-title {
+      font-weight: 700;
+      margin-bottom: 1rem;
+      color: var(--field);
+      font-family: var(--display);
+      font-size: 1.15rem;
+    }
+
+    .summary-item {
+      display: flex;
+      justify-content: space-between;
+      margin-bottom: 0.75rem;
+      padding-bottom: 0.75rem;
+      border-bottom: 1px solid var(--border);
+      flex-wrap: wrap;
+      gap: 0.5rem;
+    }
+
+    .summary-item:last-child {
+      border-bottom: none;
+    }
+
+    .summary-label {
+      font-weight: 600;
+      color: var(--muted);
+    }
+
+    .summary-value {
+      color: var(--field);
+      font-weight: 700;
+    }
+
+    .action-buttons {
+      display: flex;
+      flex-direction: column;
+      gap: 0.75rem;
+      margin-top: 1.5rem;
+    }
+
+    .action-button {
+      padding: 1rem 1.5rem;
+      border: none;
+      border-radius: 8px;
+      font-size: 1rem;
+      font-weight: 700;
+      cursor: pointer;
+      transition: all 0.2s;
+      font-family: var(--body);
+      text-align: center;
+      text-decoration: none;
+    }
+
+    .action-button.primary {
+      background: var(--field);
+      color: var(--cream);
+    }
+
+    .action-button.primary:hover {
+      background: var(--field-dark);
+    }
+
+    .action-button.secondary {
+      background: var(--muted);
+      color: var(--cream);
+    }
+
+    .action-button.secondary:hover {
+      background: var(--ink);
+    }
+
+    .action-button.outline {
+      background: var(--paper);
+      color: var(--field);
+      border: 2px solid var(--field);
+    }
+
+    .action-button.outline:hover {
+      background: var(--cream);
+    }
+
+    .disclaimer {
+      background: #fff9e6;
+      border-left: 4px solid var(--gold);
+      border-radius: 0 8px 8px 0;
+      padding: 1rem;
+      margin: 1.5rem 0;
+      font-size: 0.88rem;
+      color: var(--ink);
+      line-height: 1.6;
+    }
+
+    .next-actions {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+      gap: 1rem;
+      margin-top: 1.5rem;
+    }
+
+    .next-action-card {
+      background: var(--cream);
+      border-radius: 8px;
+      padding: 1.1rem;
+      text-align: center;
+      text-decoration: none;
+      color: var(--field);
+      transition: all 0.2s;
+      border: 1px solid var(--border);
+      display: block;
+    }
+
+    .next-action-card:hover {
+      background: var(--paper);
+      transform: translateY(-2px);
+      border-color: var(--field);
+    }
+
+    .hidden {
+      display: none;
+    }
+
+    .fade-in {
+      animation: fadeIn 0.3s ease-in;
+    }
+
+    @keyframes fadeIn {
+      from { opacity: 0; transform: translateY(8px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+
+    .term-box {
+      background: var(--tint);
+      border-left: 4px solid var(--field);
+      padding: 1rem;
+      margin: 1.25rem 0;
+      border-radius: 0 6px 6px 0;
+    }
+
+    @media (max-width: 600px) {
+      .harvest-tool {
+        padding: 0.5rem;
+      }
+      .tool-section {
+        padding: 1rem;
+      }
+      .form-input-group {
+        flex-direction: column;
+        align-items: stretch;
+      }
+      .final-result {
+        padding: 1.25rem;
+      }
+      .next-actions {
+        grid-template-columns: 1fr;
+      }
+    }
+  </style>
 </head>
 <body>
   <div data-site-header></div>
@@ -16,33 +378,392 @@
       <div class="breadcrumb">
         <a href="/">Home</a> / <a href="/decision-tools/">Decision Tools</a> / How Do I Reduce Harvest Losses?
       </div>
-      <div class="eyebrow">Post-Harvest Decision</div>
+      <div class="eyebrow">Post-Harvest Loss Prevention Decision</div>
       <h1>How Do I Reduce Harvest Losses?</h1>
-      <p class="lead">Minimize post-harvest losses with proper handling, storage and preservation techniques.</p>
+      <p class="lead">Audit your harvesting, handling, packaging, and storage practices. Calculate your exact dollar loss and find simple, low-cost solutions to save up to 30% more food and profit.</p>
     </div>
   </header>
+
   <main class="section">
-    <div class="container article">
-      <div class="notice">
-        <strong>Coming Soon:</strong> This decision tool is under development. Check back for comprehensive post-harvest guidance.
+    <div class="container">
+      <div class="harvest-tool">
+        
+        <!-- Progress Bar -->
+        <div class="progress-bar" id="progressBar">
+          <div class="progress-step active" data-step="1"></div>
+          <div class="progress-step" data-step="2"></div>
+          <div class="progress-step" data-step="3"></div>
+          <div class="progress-step" data-step="4"></div>
+          <div class="progress-step" data-step="5"></div>
+          <div class="progress-step" data-step="6"></div>
+        </div>
+
+        <!-- Start Screen -->
+        <div class="tool-section fade-in" id="startScreen">
+          <h2 style="text-align: center; margin-bottom: 1rem;">Post-Harvest Loss Audit</h2>
+          <p style="text-align: center; font-size: 1.05rem; margin-bottom: 1.5rem; color: var(--muted);">
+            In Africa and developing agricultural regions, smallholders lose between 20% and 40% of their harvest to rotting, crushing, weevils, and moisture before it ever reaches a consumer's plate.
+          </p>
+          <div class="why-asking">
+            <div class="why-asking-title">Why cutting losses is the easiest way to increase farm profit</div>
+            <p>Reducing your harvest losses by just 15% gives you the exact same profit boost as expanding your farm by 15%—without needing more land, more seed, or more fertilizer. This tool audits your handling chain and highlights your top 3 profit leaks.</p>
+          </div>
+          <div class="condition-card">
+            <div style="font-weight: 700; color: var(--field); margin-bottom: 0.5rem;">What you will get:</div>
+            <ul style="margin: 0 0 0 1.25rem; font-size: 0.95rem; line-height: 1.6;">
+              <li><strong>Dollar Loss Calculation:</strong> The exact cash value leaking away from your harvest.</li>
+              <li><strong>Top 3 Loss Leaks:</strong> The specific mistakes in harvesting, drying, or bagging hurting you most.</li>
+              <li><strong>Simple Low-Cost Fixes:</strong> Immediate practical changes that recover lost income.</li>
+              <li><strong>Hermetic & Storage Best Practices:</strong> Safe moisture levels and zero-chemical grain preservation.</li>
+            </ul>
+          </div>
+          <div class="action-buttons">
+            <button class="action-button primary" onclick="startHarvestLossTool()">Start Post-Harvest Audit →</button>
+          </div>
+        </div>
+
+        <!-- Step 1: Crop & Harvest Value -->
+        <div class="tool-section hidden fade-in" id="step1Crop">
+          <div class="step-number">STEP 1 OF 5</div>
+          <h2>What commodity are you auditing?</h2>
+
+          <div class="question-group">
+            <label class="question-label">Select your crop type:</label>
+            <div class="option-buttons" id="cropSelectButtons">
+              <button class="option-button selected" data-value="grain" onclick="selectLossCrop('grain')">
+                🌽 Maize, Sorghum, Wheat, Dry Beans, Soybeans (Grains & Pulses)
+              </button>
+              <button class="option-button" data-value="tomato" onclick="selectLossCrop('tomato')">
+                🍅 Tomatoes, Peppers, Soft Fruit (Highly Perishable)
+              </button>
+              <button class="option-button" data-value="vegetable" onclick="selectLossCrop('vegetable')">
+                🥬 Cabbage, Kale, Leafy Greens (Perishable Bulk)
+              </button>
+              <button class="option-button" data-value="potato" onclick="selectLossCrop('potato')">
+                🥔 Irish Potato, Sweet Potato, Cassava (Roots & Tubers)
+              </button>
+              <button class="option-button" data-value="onion" onclick="selectLossCrop('onion')">
+                🧅 Onions, Garlic, Shallots (Alliums)
+              </button>
+            </div>
+          </div>
+
+          <div class="question-group">
+            <label class="question-label">Harvest Volume:</label>
+            <div class="form-input-group">
+              <input type="number" step="1" min="1" value="100" class="form-input" id="harvestVolumeInput" placeholder="Quantity">
+              <select class="form-select" id="volumeUnitSelect">
+                <option value="bags_50kg">50kg Sacks / Bags</option>
+                <option value="wooden_crates">Wooden Crates / Sandak</option>
+                <option value="bags_15kg">15kg Pocket Bags</option>
+                <option value="tons">Metric Tons</option>
+                <option value="heads">Heads / Units</option>
+              </select>
+            </div>
+          </div>
+
+          <div class="question-group">
+            <label class="question-label">Total Estimated Value of Harvest ($):</label>
+            <input type="number" step="10" value="2000" class="form-input" id="cropValueInput" style="max-width: 250px;">
+          </div>
+
+          <div class="action-buttons">
+            <button class="action-button primary" onclick="confirmStep1()">Continue to Harvesting Technique →</button>
+            <button class="action-button secondary" onclick="goBack()">Back</button>
+          </div>
+        </div>
+
+        <!-- Step 2: Harvesting Technique & Timing -->
+        <div class="tool-section hidden fade-in" id="step2Harvesting">
+          <div class="step-number">STEP 2 OF 5</div>
+          <h2>Harvesting Time of Day & Tools Used</h2>
+          <div class="why-asking">
+            <div class="why-asking-title">Why harvest timing matters</div>
+            <p>Harvesting tomatoes or greens during hot midday sun traps "field heat" inside the cells, causing rapid water loss and making them spoil 300% faster.</p>
+          </div>
+
+          <div class="question-group">
+            <label class="question-label">What time of day do you harvest / pick?</label>
+            <div class="option-buttons" id="harvestTimeButtons">
+              <button class="option-button selected" data-value="cool_morning" onclick="selectHarvestTime('cool_morning')">
+                🌅 Cool early morning (6:00 AM – 9:00 AM) or late evening
+              </button>
+              <button class="option-button" data-value="midday_sun" onclick="selectHarvestTime('midday_sun')">
+                ☀️ Midday / Afternoon hot sun (11:00 AM – 3:00 PM)
+              </button>
+            </div>
+          </div>
+
+          <div class="question-group">
+            <label class="question-label">How is the crop harvested?</label>
+            <div class="option-buttons" id="harvestToolButtons">
+              <button class="option-button selected" data-value="knives" onclick="selectHarvestTool('knives')">
+                🔪 Using sharp knives, shears/secateurs, or carefully sorted by hand
+              </button>
+              <button class="option-button" data-value="pulling_by_hand" onclick="selectHarvestTool('pulling_by_hand')">
+                ✊ Ripping / pulling forcefully by hand or rough digging with hoes (causing cuts)
+              </button>
+            </div>
+          </div>
+
+          <div class="action-buttons">
+            <button class="action-button primary" onclick="confirmStep2()">Continue to Field Handling & Drying →</button>
+            <button class="action-button secondary" onclick="goBack()">Back</button>
+          </div>
+        </div>
+
+        <!-- Step 3: Field Handling & Drying -->
+        <div class="tool-section hidden fade-in" id="step3Handling">
+          <div class="step-number">STEP 3 OF 5</div>
+          <h2>Field Handling, Shade & Drying Method</h2>
+          <div class="why-asking">
+            <div class="why-asking-title">The danger of bare ground drying</div>
+            <p>Drying grain on bare dirt allows soil moisture and Aspergillus mold spores to infect the grain, producing deadly <strong>Aflatoxin</strong> poison.</p>
+          </div>
+
+          <div class="question-group">
+            <label class="question-label">Where is picked produce placed in the field?</label>
+            <div class="option-buttons" id="shadeButtons">
+              <button class="option-button selected" data-value="immediate_shade" onclick="selectShadeCare('immediate_shade')">
+                🌳 Immediately moved under tree shade or covered thatch shed
+              </button>
+              <button class="option-button" data-value="direct_sun" onclick="selectShadeCare('direct_sun')">
+                ☀️ Left sitting in direct open sun in the field for several hours
+              </button>
+            </div>
+          </div>
+
+          <div class="question-group">
+            <label class="question-label">How do you dry grains, beans, or cure onions?</label>
+            <div class="option-buttons" id="dryingButtons">
+              <button class="option-button selected" data-value="tarpaulin" onclick="selectDryingMethod('tarpaulin')">
+                ⛺ On clean plastic tarpaulins, canvas sheets, or raised drying racks
+              </button>
+              <button class="option-button" data-value="bare_ground" onclick="selectDryingMethod('bare_ground')">
+                🏖️ Directly on bare ground soil / sand / roadside dirt
+              </button>
+            </div>
+          </div>
+
+          <div class="action-buttons">
+            <button class="action-button primary" onclick="confirmStep3()">Continue to Packaging & Transport →</button>
+            <button class="action-button secondary" onclick="goBack()">Back</button>
+          </div>
+        </div>
+
+        <!-- Step 4: Packaging & Transport -->
+        <div class="tool-section hidden fade-in" id="step4Packaging">
+          <div class="step-number">STEP 4 OF 5</div>
+          <h2>Packaging & Transport Protection</h2>
+
+          <div class="question-group">
+            <label class="question-label">What containers do you pack into?</label>
+            <div class="option-buttons" id="containerButtons">
+              <button class="option-button selected" data-value="rigid_crates" onclick="selectContainerType('rigid_crates')">
+                📦 Rigid ventilated plastic or wooden crates (protects produce from crushing)
+              </button>
+              <button class="option-button" data-value="overstuffed_sacks" onclick="selectContainerType('overstuffed_sacks')">
+                🎒 Overstuffed 50-100kg rough polypropylene sacks (squashes soft fruit)
+              </button>
+            </div>
+          </div>
+
+          <div class="question-group">
+            <label class="question-label">How is produce protected during transport to market?</label>
+            <div class="option-buttons" id="sunCoverButtons">
+              <button class="option-button selected" data-value="covered" onclick="selectSunCover('covered')">
+                🚛 Covered with a clean tarpaulin or light burlap sheet with ventilation
+              </button>
+              <button class="option-button" data-value="open_sun" onclick="selectSunCover('open_sun')">
+                ☀️ Open to scorching sun, road dust, and wind
+              </button>
+            </div>
+          </div>
+
+          <div class="action-buttons">
+            <button class="action-button primary" onclick="confirmStep4()">Continue to Storage & Protection →</button>
+            <button class="action-button secondary" onclick="goBack()">Back</button>
+          </div>
+        </div>
+
+        <!-- Step 5: Storage & Protection -->
+        <div class="tool-section hidden fade-in" id="step5Storage">
+          <div class="step-number">STEP 5 OF 5</div>
+          <h2>Storage Type & Pest/Weevil Protection</h2>
+
+          <div class="question-group">
+            <label class="question-label">What is your primary storage method?</label>
+            <div class="option-buttons" id="storageTypeButtons">
+              <button class="option-button" data-value="hermetic_pics" onclick="selectStorageType('hermetic_pics')">
+                🎒 Airtight Hermetic Bags (PICS bags) or Metal Silo (Zero chemical, zero weevils)
+              </button>
+              <button class="option-button selected" data-value="standard_poly_sacks" onclick="selectStorageType('standard_poly_sacks')">
+                🌾 Standard woven polypropylene sacks in a dry storeroom
+              </button>
+              <button class="option-button" data-value="traditional_crib" onclick="selectStorageType('traditional_crib')">
+                🛖 Traditional wooden granary / open crib
+              </button>
+            </div>
+          </div>
+
+          <div class="question-group">
+            <label class="question-label">How do you protect stored grain/produce from insects?</label>
+            <div class="option-buttons" id="pestProtectionButtons">
+              <button class="option-button" data-value="hermetic_no_chemical" onclick="selectPestProtection('hermetic_no_chemical')">
+                Airtight suffocation (Hermetic bags / sealed drums)
+              </button>
+              <button class="option-button selected" data-value="chemical_dust" onclick="selectPestProtection('chemical_dust')">
+                Registered grain protectant dust (e.g. Actellic Gold / Skana Super)
+              </button>
+              <button class="option-button" data-value="none" onclick="selectPestProtection('none')">
+                No chemical or hermetic protection used
+              </button>
+            </div>
+          </div>
+
+          <div class="action-buttons">
+            <button class="action-button primary" onclick="confirmStep5()">Calculate Post-Harvest Loss & Solutions →</button>
+            <button class="action-button secondary" onclick="goBack()">Back</button>
+          </div>
+        </div>
+
+        <!-- Final Audit Screen -->
+        <div class="final-result hidden fade-in" id="finalResult">
+          <h2 style="text-align: center; margin-bottom: 0.5rem;">POST-HARVEST LOSS AUDIT REPORT</h2>
+          <div class="result-status warning" id="resultStatus">AUDIT COMPLETE</div>
+
+          <div class="summary-box">
+            <div class="summary-title">Harvest Audit Summary</div>
+            <div class="summary-item">
+              <div class="summary-label">Crop & Harvest Volume:</div>
+              <div class="summary-value" id="summaryCrop"></div>
+            </div>
+            <div class="summary-item">
+              <div class="summary-label">Total Estimated Crop Value:</div>
+              <div class="summary-value" id="summaryCropValue"></div>
+            </div>
+            <div class="summary-item">
+              <div class="summary-label">Current Post-Harvest Loss Rate:</div>
+              <div class="summary-value" id="summaryLossPct"></div>
+            </div>
+            <div class="summary-item">
+              <div class="summary-label">Cash Leaking from Harvest:</div>
+              <div class="summary-value" id="summaryDollarLoss" style="color: var(--soil);"></div>
+            </div>
+            <div class="summary-item">
+              <div class="summary-label">Money You Can Recover:</div>
+              <div class="summary-value" id="summaryRecoverable" style="color: var(--field);"></div>
+            </div>
+          </div>
+
+          <!-- Top Leaks -->
+          <div class="summary-box" style="background: #fff; border-left: 5px solid var(--soil);">
+            <div class="summary-title" style="color: var(--soil);">🚨 YOUR TOP 3 CRITICAL PROFIT LEAKS & FIXES</div>
+            <div id="topLeaksContainer"></div>
+          </div>
+
+          <!-- Quick Wins -->
+          <div class="summary-box" style="background: #f4faf4; border-left: 5px solid var(--field);">
+            <div class="summary-title" style="color: var(--field);">🌿 4 GOLDEN RULES OF POST-HARVEST LOSS REDUCTION</div>
+            <ul id="quickWinsList" style="margin: 0.5rem 0 0 1.25rem; font-size: 0.95rem; line-height: 1.65;"></ul>
+          </div>
+
+          <!-- Terms Explained -->
+          <div class="term-box">
+            <div style="font-weight: 700; color: var(--field); margin-bottom: 0.5rem; font-family: var(--display); font-size: 1.05rem;">
+              📖 POST-HARVEST TERMS EXPLAINED SIMPLY
+            </div>
+            <div id="termsContainer"></div>
+          </div>
+
+          <div class="disclaimer">
+            <strong>Farmer Safety Tip:</strong> When using chemical grain protectant dusts, always wear a protective dust mask and gloves. Always respect the required waiting period before cooking or grinding grain into flour.
+          </div>
+
+          <!-- Next Actions -->
+          <h3 style="margin-top: 2rem;">Related Decisions & Tools</h3>
+          <div class="next-actions">
+            <a href="/decision-tools/market-timing/" class="next-action-card">
+              <div style="font-weight: 700; margin-bottom: 0.25rem;">Where & When Should I Sell? →</div>
+              <div style="font-size: 0.85rem; color: var(--muted);">Compare channel prices & storage timing</div>
+            </a>
+            <a href="/decision-tools/risk-check/" class="next-action-card">
+              <div style="font-weight: 700; margin-bottom: 0.25rem;">Farm Risk Check →</div>
+              <div style="font-size: 0.85rem; color: var(--muted);">Audit 360° vulnerabilities on your farm</div>
+            </a>
+            <a href="/calculators/farm-profit.html" class="next-action-card">
+              <div style="font-weight: 700; margin-bottom: 0.25rem;">Farm Profit Calculator →</div>
+              <div style="font-size: 0.85rem; color: var(--muted);">Calculate total farm profits & ROI</div>
+            </a>
+          </div>
+
+          <div class="action-buttons">
+            <button class="action-button primary" onclick="saveResult()">Save Loss Audit to My Phone/Browser</button>
+            <button class="action-button outline" onclick="downloadResult()">Download Printable Audit (.txt)</button>
+            <button class="action-button secondary" onclick="restartTool()">Start New Loss Audit</button>
+          </div>
+
+        </div>
+
       </div>
-      <h2>What this tool will help you reduce</h2>
-      <ul>
-        <li>Harvest timing losses</li>
-        <li>Handling and transportation damage</li>
-        <li>Storage losses and spoilage</li>
-        <li>Processing and packaging waste</li>
-        <li>Market presentation quality losses</li>
-      </ul>
-      <h2>Related resources</h2>
-      <ul>
-        <li><a href="/guides/farm-record-keeping.html">Farm Record Keeping</a></li>
-        <li><a href="/guides/farm-profit-calculation.html">Farm Profit Calculation</a></li>
-        <li><a href="/decision-tools/market-timing/">Where and When Should I Sell?</a></li>
-      </ul>
     </div>
   </main>
+
+  <!-- In-Depth Educational Guide -->
+  <section class="section alt">
+    <div class="container">
+      <div class="section-head">
+        <div class="eyebrow">Practical Post-Harvest Guide</div>
+        <h2>How to Eliminate Food Loss & Protect Your Hard-Earned Crop</h2>
+        <p>A farmer's effort does not end at harvesting. Learn the science and practical tricks of grain drying, onion curing, fruit crating, and weevil defense.</p>
+      </div>
+
+      <div class="grid">
+        <article class="card">
+          <h3>1. The Simple Salt Jar Test for Grain Moisture</h3>
+          <p>You don't need an expensive electric moisture meter to test if your maize or beans are dry enough for storage! Take a clean, dry glass jar, fill it 70% with grain, add 2 tablespoons of dry table salt, and shake vigorously for 1 minute. Let it settle for 10 minutes. If salt sticks to the glass walls, the grain is still damp (> 14% moisture) and will rot. If the salt falls cleanly to the bottom, the grain is safe (&lt; 13% moisture) to bag!</p>
+        </article>
+
+        <article class="card">
+          <h3>2. How to Cure Onions and Potatoes</h3>
+          <p>Never pack fresh onions or potatoes into sacks right after pulling from the field. <strong>Curing</strong> means spreading them in a single layer in a shady, warm, well-ventilated barn for 10 to 14 days. During curing, onion necks shrivel tightly shut (sealing out rot bacteria) and potato skins thicken and toughen, doubling their shelf life.</p>
+        </article>
+
+        <article class="card">
+          <h3>3. The Secret of PICS Hermetic Bags</h3>
+          <p>Purdue Improved Crop Storage (PICS) bags contain two inner airtight high-density plastic liners inside an outer woven sack. When grain is sealed at safe moisture, insects breathe up the tiny trapped oxygen within 24-48 hours and die naturally. You get 100% insect-free grain without buying chemical powders.</p>
+        </article>
+
+        <article class="card">
+          <h3>4. Zero-Energy Cool Chambers (ZECC)</h3>
+          <p>A ZECC is a low-cost, electricity-free cooler built using a double-brick wall with wet river sand packed in the gap. Evaporation of water from the sand cools the inner room by 10°C to 15°C below outside ambient heat and maintains 90% humidity, keeping tomatoes, spinach, and mangoes fresh and crisp for 10-14 days.</p>
+        </article>
+      </div>
+    </div>
+  </section>
+
+  <!-- FAQ Section -->
+  <section class="section">
+    <div class="container">
+      <div class="section-head">
+        <div class="eyebrow">Common Questions</div>
+        <h2>Post-Harvest Loss FAQ</h2>
+      </div>
+      <div class="article">
+        <h3>What causes Aflatoxin in stored maize and groundnuts?</h3>
+        <p><strong>Aflatoxin</strong> is a poisonous chemical toxin produced by the soil fungus <em>Aspergillus flavus</em>. It happens when crops are stressed by drought near harvest, dried directly on bare dirt, or bagged while still wet (> 13.5% moisture). Aflatoxin causes liver cancer and stunting in children. Prevent it by drying crops on plastic tarpaulins and ensuring grain is bone dry before bagging.</p>
+
+        <h3>Why do bottom tomatoes in wooden crates or sacks squash into liquid?</h3>
+        <p>Soft perishable fruit cannot bear excessive weight. When crates are stacked more than 5 high or packed in flexible sacks, the weight of the upper 40kg pushes down onto the bottom layer, crushing cell walls. Once fruit is punctured or bruised, bacterial soft rot spreads to the entire box within 36 hours. Always use rigid stackable plastic crates.</p>
+
+        <h3>How do I stop rats from eating grain in traditional wooden granaries?</h3>
+        <p>Install simple <strong>rodent baffle guards</strong>! Cut circles or cones out of old metal iron sheets or opened metal tin cans and nail them upside down (like a funnel pointing downwards) around every wooden support pole of your granary at least 1 metre above the ground. Rats and mice cannot climb past the smooth downwards metal lip.</p>
+      </div>
+    </div>
+  </section>
+
   <div data-site-footer></div>
+  <script src="/assets/harvest-losses-tool.js"></script>
   <script src="/assets/site.js"></script>
 </body>
 </html>

@@ -3,11 +3,367 @@
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width,initial-scale=1">
-  <meta name="description" content="Where and When Should I Sell? Plan your market timing and sales strategy based on price trends, quality and storage options.">
-  <title>Where and When Should I Sell? | AgriBase Decision Tools</title>
+  <meta name="description" content="Where and When Should I Sell? Interactive farm market decision tool. Compare net profit across farm-gate buyers, local open markets, city wholesale markets, and contract buyers. Calculate storage economics vs immediate sale.">
+  <title>Where and When Should I Sell? Farm Market Channel & Timing Decision | AgriBase Decision Tools</title>
   <link rel="stylesheet" href="/assets/site.css">
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link href="https://fonts.googleapis.com/css2?family=Fraunces:wght@600;700&family=Karla:wght@400;700;800&display=swap" rel="stylesheet">
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "WebApplication",
+    "name": "Farm Market Timing and Channel Decision Tool",
+    "description": "Calculate true net profit across marketing channels and evaluate storage economics to sell at peak prices.",
+    "applicationCategory": "Agriculture",
+    "operatingSystem": "Web Browser",
+    "offers": {
+      "@type": "Offer",
+      "price": "0",
+      "priceCurrency": "USD"
+    }
+  }
+  </script>
+  <style>
+    .market-tool {
+      max-width: 900px;
+      margin: 0 auto;
+      padding: 1rem;
+    }
+
+    .tool-section {
+      background: var(--paper);
+      border-radius: 8px;
+      padding: 1.5rem;
+      margin-bottom: 1.5rem;
+      box-shadow: var(--shadow);
+      border: 1px solid var(--border);
+    }
+
+    .progress-bar {
+      display: flex;
+      gap: 0.5rem;
+      margin-bottom: 2rem;
+      flex-wrap: wrap;
+    }
+
+    .progress-step {
+      flex: 1;
+      min-width: 35px;
+      height: 4px;
+      background: var(--border);
+      border-radius: 2px;
+      transition: background 0.3s;
+    }
+
+    .progress-step.active {
+      background: var(--field);
+    }
+
+    .progress-step.completed {
+      background: var(--field-mid);
+    }
+
+    .step-number {
+      font-family: var(--display);
+      font-weight: 700;
+      color: var(--gold);
+      font-size: 0.9rem;
+      margin-bottom: 0.5rem;
+    }
+
+    .question-group {
+      margin-bottom: 1.5rem;
+    }
+
+    .question-label {
+      font-weight: 700;
+      margin-bottom: 0.5rem;
+      color: var(--field);
+      font-size: 1.1rem;
+      font-family: var(--display);
+    }
+
+    .why-asking {
+      background: var(--cream);
+      border-left: 4px solid var(--field);
+      padding: 1rem;
+      margin: 1rem 0;
+      border-radius: 0 4px 4px 0;
+    }
+
+    .why-asking-title {
+      font-weight: 700;
+      color: var(--field);
+      margin-bottom: 0.5rem;
+      font-family: var(--display);
+    }
+
+    .option-buttons {
+      display: flex;
+      flex-direction: column;
+      gap: 0.75rem;
+    }
+
+    .option-button {
+      padding: 1rem 1.25rem;
+      border: 2px solid var(--border);
+      background: var(--paper);
+      color: var(--ink);
+      border-radius: 8px;
+      font-size: 1rem;
+      font-weight: 600;
+      cursor: pointer;
+      transition: all 0.2s;
+      text-align: left;
+      font-family: var(--body);
+    }
+
+    .option-button:hover {
+      border-color: var(--field);
+      background: var(--tint);
+    }
+
+    .option-button.selected {
+      background: var(--field);
+      color: var(--cream);
+      border-color: var(--field);
+    }
+
+    .form-input-group {
+      display: flex;
+      gap: 0.75rem;
+      align-items: center;
+      margin-bottom: 1rem;
+    }
+
+    .form-input {
+      flex: 1;
+      padding: 0.85rem 1rem;
+      border: 2px solid var(--border);
+      border-radius: 8px;
+      font-size: 1.05rem;
+      font-family: var(--body);
+      background: var(--paper);
+    }
+
+    .form-input:focus {
+      outline: none;
+      border-color: var(--field);
+    }
+
+    .form-select {
+      padding: 0.85rem 1rem;
+      border: 2px solid var(--border);
+      border-radius: 8px;
+      font-size: 1rem;
+      font-family: var(--body);
+      background: var(--paper);
+    }
+
+    .condition-card {
+      background: var(--cream);
+      border-radius: 8px;
+      padding: 1.15rem;
+      margin-bottom: 0.85rem;
+      border: 1px solid var(--border);
+    }
+
+    .final-result {
+      background: var(--paper);
+      border-radius: 12px;
+      padding: 2rem;
+      margin-top: 2rem;
+      box-shadow: var(--shadow);
+      border: 1px solid var(--border);
+    }
+
+    .result-status {
+      font-size: 1.3rem;
+      font-weight: 800;
+      padding: 1.1rem;
+      border-radius: 8px;
+      text-align: center;
+      margin-bottom: 1.5rem;
+      font-family: var(--display);
+      letter-spacing: 0.5px;
+    }
+
+    .result-status.good {
+      background: #f0fff0;
+      color: var(--field);
+      border: 2px solid #a3e0a3;
+    }
+
+    .result-status.warning {
+      background: #fff8e6;
+      color: #a05a00;
+      border: 2px solid var(--gold);
+    }
+
+    .summary-box {
+      background: var(--cream);
+      border-radius: 8px;
+      padding: 1.5rem;
+      margin: 1.5rem 0;
+      border: 1px solid var(--border);
+    }
+
+    .summary-title {
+      font-weight: 700;
+      margin-bottom: 1rem;
+      color: var(--field);
+      font-family: var(--display);
+      font-size: 1.15rem;
+    }
+
+    .summary-item {
+      display: flex;
+      justify-content: space-between;
+      margin-bottom: 0.75rem;
+      padding-bottom: 0.75rem;
+      border-bottom: 1px solid var(--border);
+      flex-wrap: wrap;
+      gap: 0.5rem;
+    }
+
+    .summary-item:last-child {
+      border-bottom: none;
+    }
+
+    .summary-label {
+      font-weight: 600;
+      color: var(--muted);
+    }
+
+    .summary-value {
+      color: var(--field);
+      font-weight: 700;
+    }
+
+    .action-buttons {
+      display: flex;
+      flex-direction: column;
+      gap: 0.75rem;
+      margin-top: 1.5rem;
+    }
+
+    .action-button {
+      padding: 1rem 1.5rem;
+      border: none;
+      border-radius: 8px;
+      font-size: 1rem;
+      font-weight: 700;
+      cursor: pointer;
+      transition: all 0.2s;
+      font-family: var(--body);
+      text-align: center;
+      text-decoration: none;
+    }
+
+    .action-button.primary {
+      background: var(--field);
+      color: var(--cream);
+    }
+
+    .action-button.primary:hover {
+      background: var(--field-dark);
+    }
+
+    .action-button.secondary {
+      background: var(--muted);
+      color: var(--cream);
+    }
+
+    .action-button.secondary:hover {
+      background: var(--ink);
+    }
+
+    .action-button.outline {
+      background: var(--paper);
+      color: var(--field);
+      border: 2px solid var(--field);
+    }
+
+    .action-button.outline:hover {
+      background: var(--cream);
+    }
+
+    .disclaimer {
+      background: #fff9e6;
+      border-left: 4px solid var(--gold);
+      border-radius: 0 8px 8px 0;
+      padding: 1rem;
+      margin: 1.5rem 0;
+      font-size: 0.88rem;
+      color: var(--ink);
+      line-height: 1.6;
+    }
+
+    .next-actions {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+      gap: 1rem;
+      margin-top: 1.5rem;
+    }
+
+    .next-action-card {
+      background: var(--cream);
+      border-radius: 8px;
+      padding: 1.1rem;
+      text-align: center;
+      text-decoration: none;
+      color: var(--field);
+      transition: all 0.2s;
+      border: 1px solid var(--border);
+      display: block;
+    }
+
+    .next-action-card:hover {
+      background: var(--paper);
+      transform: translateY(-2px);
+      border-color: var(--field);
+    }
+
+    .hidden {
+      display: none;
+    }
+
+    .fade-in {
+      animation: fadeIn 0.3s ease-in;
+    }
+
+    @keyframes fadeIn {
+      from { opacity: 0; transform: translateY(8px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+
+    .term-box {
+      background: var(--tint);
+      border-left: 4px solid var(--field);
+      padding: 1rem;
+      margin: 1.25rem 0;
+      border-radius: 0 6px 6px 0;
+    }
+
+    @media (max-width: 600px) {
+      .market-tool {
+        padding: 0.5rem;
+      }
+      .tool-section {
+        padding: 1rem;
+      }
+      .form-input-group {
+        flex-direction: column;
+        align-items: stretch;
+      }
+      .final-result {
+        padding: 1.25rem;
+      }
+      .next-actions {
+        grid-template-columns: 1fr;
+      }
+    }
+  </style>
 </head>
 <body>
   <div data-site-header></div>
@@ -16,33 +372,383 @@
       <div class="breadcrumb">
         <a href="/">Home</a> / <a href="/decision-tools/">Decision Tools</a> / Where and When Should I Sell?
       </div>
-      <div class="eyebrow">Market Decision</div>
+      <div class="eyebrow">Marketing Strategy & Timing Decision</div>
       <h1>Where and When Should I Sell?</h1>
-      <p class="lead">Plan your market timing and sales strategy based on price trends, quality and storage options.</p>
+      <p class="lead">Compare real net profit in your pocket across farm-gate buyers, local open markets, city wholesale markets, and contract buyers. Check if storing for off-season prices will make you money.</p>
     </div>
   </header>
+
   <main class="section">
-    <div class="container article">
-      <div class="notice">
-        <strong>Coming Soon:</strong> This decision tool is under development. Check back for comprehensive market planning guidance.
+    <div class="container">
+      <div class="market-tool">
+        
+        <!-- Progress Bar -->
+        <div class="progress-bar" id="progressBar">
+          <div class="progress-step active" data-step="1"></div>
+          <div class="progress-step" data-step="2"></div>
+          <div class="progress-step" data-step="3"></div>
+          <div class="progress-step" data-step="4"></div>
+          <div class="progress-step" data-step="5"></div>
+          <div class="progress-step" data-step="6"></div>
+        </div>
+
+        <!-- Start Screen -->
+        <div class="tool-section fade-in" id="startScreen">
+          <h2 style="text-align: center; margin-bottom: 1rem;">Market Channel & Selling Timing Check</h2>
+          <p style="text-align: center; font-size: 1.05rem; margin-bottom: 1.5rem; color: var(--muted);">
+            A high market price in the city does not always mean more money in your pocket if transport, trader commissions, and transit spoilage eat away your profits.
+          </p>
+          <div class="why-asking">
+            <div class="why-asking-title">Why marketing strategy makes or breaks a farmer</div>
+            <p>Two farmers with the exact same 10-ton harvest can end up with completely different incomes. One sells into a harvest glut at low prices, while the other stores or targets direct buyers and earns double. This tool calculates your true net profit after all hidden costs.</p>
+          </div>
+          <div class="condition-card">
+            <div style="font-weight: 700; color: var(--field); margin-bottom: 0.5rem;">What you will find out:</div>
+            <ul style="margin: 0 0 0 1.25rem; font-size: 0.95rem; line-height: 1.6;">
+              <li><strong>Net Profit by Channel:</strong> Side-by-side comparison of farm-gate, local town, city wholesale, and contract buyers.</li>
+              <li><strong>Storage Economics:</strong> Is it profitable to store your grain, onions, or potatoes for 3-6 months?</li>
+              <li><strong>Break-Even Future Price:</strong> The exact minimum price you must get later to beat selling today.</li>
+              <li><strong>Middleman Defense Tips:</strong> Practical tactics to avoid scale cheating and unfair rejections.</li>
+            </ul>
+          </div>
+          <div class="action-buttons">
+            <button class="action-button primary" onclick="startMarketTool()">Start Market Strategy Check →</button>
+          </div>
+        </div>
+
+        <!-- Step 1: Crop and Volume -->
+        <div class="tool-section hidden fade-in" id="step1Crop">
+          <div class="step-number">STEP 1 OF 5</div>
+          <h2>What are you selling, and how much?</h2>
+
+          <div class="question-group">
+            <label class="question-label">Select your commodity / crop:</label>
+            <div class="option-buttons" id="cropSelectButtons">
+              <button class="option-button selected" data-value="tomato" onclick="selectMarketCrop('tomato')">
+                🍅 Tomatoes (Perishable — fast sale required)
+              </button>
+              <button class="option-button" data-value="cabbage" onclick="selectMarketCrop('cabbage')">
+                🥬 Cabbage & Leafy Greens (Perishable bulk)
+              </button>
+              <button class="option-button" data-value="onion" onclick="selectMarketCrop('onion')">
+                🧅 Onions & Garlic (Semi-perishable — excellent for storage)
+              </button>
+              <button class="option-button" data-value="potato" onclick="selectMarketCrop('potato')">
+                🥔 Irish Potato (Semi-perishable)
+              </button>
+              <button class="option-button" data-value="maize" onclick="selectMarketCrop('maize')">
+                🌽 Maize & Cereals (Dry grain — storability up to 1-2 years)
+              </button>
+              <button class="option-button" data-value="beans" onclick="selectMarketCrop('beans')">
+                🫘 Dry Beans & Soybeans (High-value grain)
+              </button>
+            </div>
+          </div>
+
+          <div class="question-group">
+            <label class="question-label">What is your expected harvest volume?</label>
+            <div class="form-input-group">
+              <input type="number" step="1" min="1" value="200" class="form-input" id="harvestQtyInput" placeholder="Quantity">
+              <select class="form-select" id="qtyUnitSelect">
+                <option value="wooden_crates">Wooden Crates / Sandak</option>
+                <option value="bags_50kg">50kg Sacks / Bags</option>
+                <option value="bags_10kg">10kg Pocket Bags</option>
+                <option value="tons">Metric Tons</option>
+                <option value="heads">Heads / Units</option>
+              </select>
+            </div>
+          </div>
+
+          <div class="action-buttons">
+            <button class="action-button primary" onclick="confirmStep1()">Continue to Price Inputs →</button>
+            <button class="action-button secondary" onclick="goBack()">Back</button>
+          </div>
+        </div>
+
+        <!-- Step 2: Price Offers -->
+        <div class="tool-section hidden fade-in" id="step2Prices">
+          <div class="step-number">STEP 2 OF 5</div>
+          <h2>Current Prices Offered</h2>
+          <div class="why-asking">
+            <div class="why-asking-title">Tip for price checking</div>
+            <p>Enter realistic prices per crate, bag, or ton. Farm-gate price is what traders offer you on your farm. City wholesale is what traders get when they sell to shopkeepers.</p>
+          </div>
+
+          <div class="question-group">
+            <label class="question-label">Farm-Gate Price (Cash offered on your farm per unit):</label>
+            <input type="number" step="0.5" value="5.0" class="form-input" id="farmGatePriceInput" style="max-width: 250px;">
+          </div>
+
+          <div class="question-group">
+            <label class="question-label">City Wholesale Market Price (per unit in the big city):</label>
+            <input type="number" step="0.5" value="10.0" class="form-input" id="cityWholesalePriceInput" style="max-width: 250px;">
+          </div>
+
+          <div class="question-group">
+            <label class="question-label">Local Town Market Price (per unit direct to consumers):</label>
+            <input type="number" step="0.5" value="7.5" class="form-input" id="localMarketPriceInput" style="max-width: 250px;">
+          </div>
+
+          <div class="question-group">
+            <label class="question-label">Supermarket / Contract Price (if available):</label>
+            <input type="number" step="0.5" value="12.0" class="form-input" id="contractPriceInput" style="max-width: 250px;">
+          </div>
+
+          <div class="action-buttons">
+            <button class="action-button primary" onclick="confirmStep2()">Continue to Transport & Logistics →</button>
+            <button class="action-button secondary" onclick="goBack()">Back</button>
+          </div>
+        </div>
+
+        <!-- Step 3: Transport & Logistics Costs -->
+        <div class="tool-section hidden fade-in" id="step3Logistics">
+          <div class="step-number">STEP 3 OF 5</div>
+          <h2>Transport, Packaging & Transit Losses</h2>
+          <div class="why-asking">
+            <div class="why-asking-title">The hidden costs of city markets</div>
+            <p>Taking produce to the city involves hiring trucks, buying crates/sacks, paying market offloading fees, and 5-10% transit bruising. We subtract all of this to find your true profit.</p>
+          </div>
+
+          <div class="question-group">
+            <label class="question-label">Distance to major city market (km):</label>
+            <input type="number" step="5" value="60" class="form-input" id="distanceKmInput" style="max-width: 250px;">
+          </div>
+
+          <div class="question-group">
+            <label class="question-label">Transport cost per unit to the city ($):</label>
+            <input type="number" step="0.25" value="2.0" class="form-input" id="transportCostInput" style="max-width: 250px;">
+          </div>
+
+          <div class="question-group">
+            <label class="question-label">Packaging cost per unit ($ for sack, crate, twine):</label>
+            <input type="number" step="0.1" value="0.5" class="form-input" id="packagingCostInput" style="max-width: 250px;">
+          </div>
+
+          <div class="question-group">
+            <label class="question-label">Expected transit bruising/spoilage on rough roads (%):</label>
+            <input type="number" step="1" min="0" max="25" value="5" class="form-input" id="transitLossInput" style="max-width: 250px;">
+          </div>
+
+          <div class="action-buttons">
+            <button class="action-button primary" onclick="confirmStep3()">Continue to Storage Check →</button>
+            <button class="action-button secondary" onclick="goBack()">Back</button>
+          </div>
+        </div>
+
+        <!-- Step 4: Storage Capacity & Future Price -->
+        <div class="tool-section hidden fade-in" id="step4Storage">
+          <div class="step-number">STEP 4 OF 5</div>
+          <h2>Storage Capacity & Off-Season Timing</h2>
+          <div class="why-asking">
+            <div class="why-asking-title">Why harvest prices are lowest</div>
+            <p>During peak harvest, prices collapse because everyone sells at once. If you have safe storage (especially hermetic PICS bags for grain or ventilated sheds for onions), holding your crop for 3 months can double your earnings.</p>
+          </div>
+
+          <div class="question-group">
+            <label class="question-label">What storage facility do you have?</label>
+            <div class="option-buttons" id="storageTypeButtons">
+              <button class="option-button selected" data-value="none" onclick="selectStorageType('none')">
+                🚫 No storage facility — must sell immediately
+              </button>
+              <button class="option-button" data-value="basic_shed" onclick="selectStorageType('basic_shed')">
+                🛖 Basic dry farm shed / ventilated granary
+              </button>
+              <button class="option-button" data-value="hermetic_bags" onclick="selectStorageType('hermetic_bags')">
+                🎒 Airtight Hermetic Bags (PICS bags) or Metal Silo (Zero weevil loss)
+              </button>
+              <button class="option-button" data-value="cold_room" onclick="selectStorageType('cold_room')">
+                ❄️ Cold storage / rented commercial cooling facility
+              </button>
+            </div>
+          </div>
+
+          <div class="question-group">
+            <label class="question-label">How many months could you store (if profitable)?</label>
+            <input type="number" step="1" min="0" max="12" value="3" class="form-input" id="storageMonthsInput" style="max-width: 250px;">
+          </div>
+
+          <div class="question-group">
+            <label class="question-label">Expected price per unit during off-season peak ($):</label>
+            <input type="number" step="1" value="15.0" class="form-input" id="futurePriceInput" style="max-width: 250px;">
+          </div>
+
+          <div class="action-buttons">
+            <button class="action-button primary" onclick="confirmStep4()">Continue to Cash Flow Urgency →</button>
+            <button class="action-button secondary" onclick="goBack()">Back</button>
+          </div>
+        </div>
+
+        <!-- Step 5: Cash Urgency -->
+        <div class="tool-section hidden fade-in" id="step5Urgency">
+          <div class="step-number">STEP 5 OF 5</div>
+          <h2>Financial Need & Cash Flow Urgency</h2>
+          <div class="question-group">
+            <label class="question-label">How urgently do you need cash from this harvest?</label>
+            <div class="option-buttons" id="financialNeedButtons">
+              <button class="option-button" data-value="urgent" onclick="selectFinancialNeed('urgent')">
+                ⚡ Urgent: Need cash right now for school fees, debts, or immediate family needs
+              </button>
+              <button class="option-button selected" data-value="can_wait" onclick="selectFinancialNeed('can_wait')">
+                ⏳ Can wait: Have basic cash buffer and can hold produce for 2-4 months for higher profits
+              </button>
+              <button class="option-button" data-value="flexible" onclick="selectFinancialNeed('flexible')">
+                🌾 Flexible: Want to split — sell 30% for immediate cash and store 70% for off-season peak
+              </button>
+            </div>
+          </div>
+
+          <div class="action-buttons">
+            <button class="action-button primary" onclick="confirmStep5()">Analyze Marketing Strategy & Net Profit →</button>
+            <button class="action-button secondary" onclick="goBack()">Back</button>
+          </div>
+        </div>
+
+        <!-- Final Results Screen -->
+        <div class="final-result hidden fade-in" id="finalResult">
+          <h2 style="text-align: center; margin-bottom: 0.5rem;">FARM MARKETING STRATEGY REPORT</h2>
+          <div class="result-status good" id="resultStatus">RECOMMENDATION READY</div>
+
+          <div class="summary-box">
+            <div class="summary-title">Strategy Summary</div>
+            <div class="summary-item">
+              <div class="summary-label">Commodity & Volume:</div>
+              <div class="summary-value" id="summaryCrop"></div>
+            </div>
+            <div class="summary-item">
+              <div class="summary-label">Best Market Channel:</div>
+              <div class="summary-value" id="summaryBestChannel"></div>
+            </div>
+            <div class="summary-item">
+              <div class="summary-label">Estimated Net in Pocket:</div>
+              <div class="summary-value" id="summaryNetPerUnit"></div>
+            </div>
+            <div class="summary-item">
+              <div class="summary-label">Total Real Cash Profit:</div>
+              <div class="summary-value" id="summaryTotalNet"></div>
+            </div>
+            <div class="summary-item">
+              <div class="summary-label">Storage Decision:</div>
+              <div class="summary-value" id="summaryStorageVerdict"></div>
+            </div>
+          </div>
+
+          <!-- Channel Comparisons Table -->
+          <div class="summary-box" style="background: #fff; border-left: 5px solid var(--field);">
+            <div class="summary-title" style="color: var(--field);">1. MARKET CHANNEL COMPARISON (TRUE NET PROFIT)</div>
+            <p style="font-size: 0.9rem; color: var(--muted); margin-bottom: 1rem;">
+              Calculated after subtracting transport, bags, market commissions, and transit road losses.
+            </p>
+            <div id="channelComparisonContainer"></div>
+          </div>
+
+          <!-- Storage Economics Card -->
+          <div class="summary-box" style="background: #fff; border-left: 5px solid var(--gold);">
+            <div class="summary-title" style="color: var(--field);">2. STORAGE ECONOMICS: SELL NOW VS STORE FOR OFF-SEASON</div>
+            <div id="storageEconomicsCard"></div>
+          </div>
+
+          <!-- Negotiation and Middleman Tactics -->
+          <div class="summary-box" style="background: #fff9e6; border-left: 5px solid var(--gold);">
+            <div class="summary-title" style="color: #8c5300;">3. HOW TO DEFEND YOURSELF AGAINST TRADER EXPLOITATION</div>
+            <ul id="negotiationTipsList" style="margin: 0.5rem 0 0 1.25rem; font-size: 0.95rem; line-height: 1.65;"></ul>
+          </div>
+
+          <!-- Terms Explained -->
+          <div class="term-box">
+            <div style="font-weight: 700; color: var(--field); margin-bottom: 0.5rem; font-family: var(--display); font-size: 1.05rem;">
+              📖 AGRICULTURAL MARKETING TERMS EXPLAINED SIMPLY
+            </div>
+            <div id="termsContainer"></div>
+          </div>
+
+          <div class="disclaimer">
+            <strong>Important Market Advice:</strong> Agricultural market prices fluctuate daily based on weather, road conditions, and border imports. Always verify current prices with multiple traders before loading a truck.
+          </div>
+
+          <!-- Next Actions -->
+          <h3 style="margin-top: 2rem;">Related Tools & Resources</h3>
+          <div class="next-actions">
+            <a href="/decision-tools/harvest-losses/" class="next-action-card">
+              <div style="font-weight: 700; margin-bottom: 0.25rem;">How to Reduce Harvest Losses →</div>
+              <div style="font-size: 0.85rem; color: var(--muted);">Protect produce from rotting in storage</div>
+            </a>
+            <a href="/decision-tools/crop-profitability/" class="next-action-card">
+              <div style="font-weight: 700; margin-bottom: 0.25rem;">Enterprise Profitability →</div>
+              <div style="font-size: 0.85rem; color: var(--muted);">Calculate production costs & margins</div>
+            </a>
+            <a href="/calculators/break-even.html" class="next-action-card">
+              <div style="font-weight: 700; margin-bottom: 0.25rem;">Break-Even Calculator →</div>
+              <div style="font-size: 0.85rem; color: var(--muted);">Calculate minimum sales price</div>
+            </a>
+          </div>
+
+          <div class="action-buttons">
+            <button class="action-button primary" onclick="saveResult()">Save Strategy to My Phone/Browser</button>
+            <button class="action-button outline" onclick="downloadResult()">Download Printable Strategy Report (.txt)</button>
+            <button class="action-button secondary" onclick="restartTool()">Start New Market Comparison</button>
+          </div>
+
+        </div>
+
       </div>
-      <h2>What this tool will help you plan</h2>
-      <ul>
-        <li>Optimal harvest timing for best prices</li>
-        <li>Market price trends and seasonality</li>
-        <li>Storage options and shelf life considerations</li>
-        <li>Market channel selection (local, wholesale, direct)</li>
-        <li>Quality-based pricing strategies</li>
-      </ul>
-      <h2>Related resources</h2>
-      <ul>
-        <li><a href="/guides/farm-record-keeping.html">Farm Record Keeping</a></li>
-        <li><a href="/guides/farm-profit-calculation.html">Farm Profit Calculation</a></li>
-        <li><a href="/decision-tools/harvest-losses/">Reduce Harvest Losses</a></li>
-      </ul>
     </div>
   </main>
+
+  <!-- In-Depth Educational Marketing Guide -->
+  <section class="section alt">
+    <div class="container">
+      <div class="section-head">
+        <div class="eyebrow">Farmer Market Guide</div>
+        <h2>How to Get Maximum Value for Your Harvest</h2>
+        <p>Growing a great crop is only 50% of farming. The other 50% is marketing smart. Master these principles to earn more money from every harvest.</p>
+      </div>
+
+      <div class="grid">
+        <article class="card">
+          <h3>1. How to Avoid Being Cheated by Middlemen</h3>
+          <p>Middlemen provide a valuable transport service, but dishonest brokers exploit uncoordinated farmers. Always use your own spring balance or platform scale to weigh sacks. Never accept "heaped crates" (sandak) where buyers take 40kg of tomatoes while paying for 30kg. Group together with 4-5 neighbors to fill a whole truck and bypass local brokers.</p>
+        </article>
+
+        <article class="card">
+          <h3>2. Beating the "Harvest Glut"</h3>
+          <p>When everyone plants with the first rain in November, everyone harvests maize and tomatoes in March. Supply surges, and prices collapse by 60%. Beat the glut by staggered planting (planting small batches every 2 weeks), planting off-season with drip irrigation, or using early/late maturing hybrid seed varieties.</p>
+        </article>
+
+        <article class="card">
+          <h3>3. Grading: Sorting Grade 1 vs Grade 2</h3>
+          <p>Mixing small, blemished fruit with large, clean, premium fruit drags your entire crate down to Grade 2 prices. Sorting your harvest into Grade 1 (flawless, uniform) and Grade 2 (smaller or cosmetic marks) allows you to sell Grade 1 to supermarkets and hotels at a 40% premium, while selling Grade 2 to local food processors and open markets.</p>
+        </article>
+
+        <article class="card">
+          <h3>4. Hermetic PICS Bags vs Grain Dusts</h3>
+          <p>PICS (Purdue Improved Crop Storage) bags use three airtight plastic layers. When grain is sealed inside at safe moisture (&lt; 13%), live weevils use up the remaining oxygen within 24 hours and suffocate. You can store clean maize and beans for up to 2 years with <strong>zero chemical poison dust</strong>, saving you chemical costs and allowing you to sell at peak off-season prices.</p>
+        </article>
+      </div>
+    </div>
+  </section>
+
+  <!-- FAQ Section -->
+  <section class="section">
+    <div class="container">
+      <div class="section-head">
+        <div class="eyebrow">Common Questions</div>
+        <h2>Market Strategy & Timing FAQ</h2>
+      </div>
+      <div class="article">
+        <h3>Is it better to sell at the farm gate or hire a truck to the city market?</h3>
+        <p>It depends on your harvest volume and the price gap. If the city price is $10 and the farm-gate price is $5, but truck transport, crates, offloading, and 5% transit loss cost $3.50 per crate, your net city income is $6.50. You make $1.50 more per crate in the city. However, if your volume is very small (less than 30 crates), the hassle and time spent may not be worth it compared to instant cash at your gate.</p>
+
+        <h3>How much weight does grain lose while in storage?</h3>
+        <p>Grain naturally loses between 2% and 5% of its total weight over 3 to 6 months of storage due to natural evaporation of moisture and respiration. When calculating storage profit, always factor in a 3-5% weight shrinkage so you are not surprised when a 50kg bag weighs 48kg at selling time.</p>
+
+        <h3>What is a Forward Contract?</h3>
+        <p>A <strong>forward contract</strong> is a formal or informal written agreement between a farmer and a buyer (like a school, hotel, or food processor) before harvest. It specifies the volume, quality grade, delivery date, and guaranteed fixed price. This protects the farmer against price crashes at harvest time.</p>
+      </div>
+    </div>
+  </section>
+
   <div data-site-footer></div>
+  <script src="/assets/market-timing-tool.js"></script>
   <script src="/assets/site.js"></script>
 </body>
 </html>
