@@ -484,8 +484,9 @@ function startTool() {
 }
 
 function startLimitedWaterMode() {
-  alert('Limited water mode coming soon. For now, use the main calculator to understand your water requirements, then we can help you plan with limited water.');
-  startTool();
+  // Redirect to the crop selection tool
+  // Farmers with limited water should consider crops with lower water requirements
+  window.location.href = '/decision-tools/crop-selection/';
 }
 
 function showIrrigationHelp() {
