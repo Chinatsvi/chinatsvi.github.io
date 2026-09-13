@@ -3,47 +3,1350 @@
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width,initial-scale=1">
-  <meta name="description" content="Will This Crop Make Me Money? Analyze crop profitability with cost, yield, market price and margin calculations.">
-  <title>Will This Crop Make Me Money? | AgriBase Decision Tools</title>
+  <meta name="description" content="Farm Profitability Calculator: Compare crops, livestock, costs, risks, ROI, break-even and market fit before investing. Free enterprise decision tool for farmers.">
+  <title>Farm Profitability Calculator: Compare Crops, Costs, Risks and Returns | AgriBase Decision Tools</title>
   <link rel="stylesheet" href="/assets/site.css">
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link href="https://fonts.googleapis.com/css2?family=Fraunces:wght@600;700&family=Karla:wght@400;700;800&display=swap" rel="stylesheet">
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "WebApplication",
+    "name": "Farm Enterprise Profitability Calculator",
+    "description": "Compare farming enterprises using production costs, market prices, labour, water, capital, break-even, profit, ROI and risk before investing.",
+    "applicationCategory": "Agriculture",
+    "operatingSystem": "Web Browser",
+    "offers": {
+      "@type": "Offer",
+      "price": "0",
+      "priceCurrency": "USD"
+    }
+  }
+  </script>
+  <style>
+    .enterprise-tool {
+      max-width: 900px;
+      margin: 0 auto;
+      padding: 1rem;
+    }
+
+    .tool-section {
+      background: var(--paper);
+      border-radius: 8px;
+      padding: 1.5rem;
+      margin-bottom: 1.5rem;
+      box-shadow: var(--shadow);
+      border: 1px solid var(--border);
+    }
+
+    .progress-bar {
+      display: flex;
+      gap: 0.5rem;
+      margin-bottom: 2rem;
+      flex-wrap: wrap;
+    }
+
+    .progress-step {
+      flex: 1;
+      min-width: 40px;
+      height: 4px;
+      background: var(--border);
+      border-radius: 2px;
+      transition: background 0.3s;
+    }
+
+    .progress-step.active {
+      background: var(--field);
+    }
+
+    .progress-step.completed {
+      background: var(--field-mid);
+    }
+
+    .step-number {
+      font-family: var(--display);
+      font-weight: 700;
+      color: var(--gold);
+      font-size: 0.9rem;
+      margin-bottom: 0.5rem;
+    }
+
+    .question-group {
+      margin-bottom: 1.5rem;
+    }
+
+    .question-label {
+      font-weight: 700;
+      margin-bottom: 0.5rem;
+      color: var(--field);
+      font-size: 1.1rem;
+      font-family: var(--display);
+    }
+
+    .why-asking {
+      background: var(--cream);
+      border-left: 4px solid var(--field);
+      padding: 1rem;
+      margin: 1rem 0;
+      border-radius: 0 4px 4px 0;
+      cursor: pointer;
+    }
+
+    .why-asking-title {
+      font-weight: 700;
+      color: var(--field);
+      margin-bottom: 0.5rem;
+      font-family: var(--display);
+      display: flex;
+      align-items: center;
+      gap: 0.5rem;
+    }
+
+    .why-asking-content {
+      display: none;
+      margin-top: 0.5rem;
+    }
+
+    .why-asking.show .why-asking-content {
+      display: block;
+    }
+
+    .option-buttons {
+      display: flex;
+      flex-direction: column;
+      gap: 0.75rem;
+    }
+
+    .option-button {
+      padding: 1rem 1.5rem;
+      border: 2px solid var(--field);
+      background: var(--paper);
+      color: var(--field);
+      border-radius: 8px;
+      font-size: 1rem;
+      font-weight: 600;
+      cursor: pointer;
+      transition: all 0.2s;
+      text-align: left;
+      font-family: var(--body);
+    }
+
+    .option-button:hover {
+      background: var(--field);
+      color: var(--cream);
+    }
+
+    .option-button.selected {
+      background: var(--field);
+      color: var(--cream);
+    }
+
+    .form-input {
+      width: 100%;
+      padding: 0.75rem;
+      border: 2px solid var(--border);
+      border-radius: 8px;
+      font-size: 1rem;
+      font-family: var(--body);
+      background: var(--paper);
+      color: var(--ink);
+      margin-bottom: 0.5rem;
+    }
+
+    .form-input:focus {
+      outline: none;
+      border-color: var(--field);
+    }
+
+    .form-select {
+      width: 100%;
+      padding: 0.75rem;
+      border: 2px solid var(--border);
+      border-radius: 8px;
+      font-size: 1rem;
+      font-family: var(--body);
+      background: var(--paper);
+      color: var(--ink);
+      margin-bottom: 0.5rem;
+    }
+
+    .currency-group {
+      display: flex;
+      gap: 0.5rem;
+      align-items: center;
+    }
+
+    .currency-select {
+      width: 100px;
+      flex-shrink: 0;
+    }
+
+    .number-input {
+      flex: 1;
+    }
+
+    .budget-table {
+      width: 100%;
+      border-collapse: collapse;
+      margin: 1rem 0;
+      font-size: 0.9rem;
+    }
+
+    .budget-table th,
+    .budget-table td {
+      padding: 0.75rem;
+      text-align: left;
+      border-bottom: 1px solid var(--border);
+    }
+
+    .budget-table th {
+      background: var(--cream);
+      font-weight: 700;
+      color: var(--field);
+      font-family: var(--display);
+    }
+
+    .budget-table tr:hover {
+      background: var(--cream);
+    }
+
+    .percentage-bar {
+      height: 8px;
+      background: var(--border);
+      border-radius: 4px;
+      overflow: hidden;
+      margin-top: 0.5rem;
+    }
+
+    .percentage-fill {
+      height: 100%;
+      background: var(--field);
+      transition: width 0.3s;
+    }
+
+    .cost-breakdown {
+      margin: 1.5rem 0;
+    }
+
+    .cost-item {
+      display: flex;
+      align-items: center;
+      gap: 1rem;
+      margin-bottom: 1rem;
+      padding: 0.75rem;
+      background: var(--cream);
+      border-radius: 8px;
+      border: 1px solid var(--border);
+    }
+
+    .cost-item.largest {
+      border-left: 4px solid var(--soil);
+    }
+
+    .cost-item-label {
+      flex: 1;
+      font-weight: 600;
+    }
+
+    .cost-item-value {
+      font-weight: 700;
+      color: var(--field);
+    }
+
+    .cost-item-percent {
+      font-size: 0.85rem;
+      color: var(--muted);
+      min-width: 60px;
+      text-align: right;
+    }
+
+    .sensitivity-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(120px, 1fr));
+      gap: 0.5rem;
+      margin: 1rem 0;
+    }
+
+    .sensitivity-cell {
+      padding: 0.75rem;
+      text-align: center;
+      border-radius: 8px;
+      font-size: 0.85rem;
+      border: 1px solid var(--border);
+    }
+
+    .sensitivity-cell.positive {
+      background: #f0fff0;
+      border-color: #d0f0d0;
+    }
+
+    .sensitivity-cell.negative {
+      background: #fff0f0;
+      border-color: #ffd0d0;
+    }
+
+    .sensitivity-cell.neutral {
+      background: var(--cream);
+    }
+
+    .risk-category {
+      margin-bottom: 1rem;
+      padding: 1rem;
+      border-radius: 8px;
+      border: 1px solid var(--border);
+    }
+
+    .risk-category.high {
+      background: #fff0f0;
+      border-left: 4px solid var(--soil);
+    }
+
+    .risk-category.moderate {
+      background: var(--cream);
+      border-left: 4px solid var(--gold);
+    }
+
+    .risk-category.low {
+      background: #f0fff0;
+      border-left: 4px solid var(--field);
+    }
+
+    .risk-title {
+      font-weight: 700;
+      margin-bottom: 0.5rem;
+      font-family: var(--display);
+      color: var(--field);
+    }
+
+    .final-result {
+      background: var(--paper);
+      border-radius: 12px;
+      padding: 2rem;
+      margin-top: 2rem;
+      box-shadow: var(--shadow);
+      border: 1px solid var(--border);
+    }
+
+    .result-status {
+      font-size: 1.5rem;
+      font-weight: 700;
+      padding: 1.5rem;
+      border-radius: 8px;
+      text-align: center;
+      margin-bottom: 1.5rem;
+      font-family: var(--display);
+    }
+
+    .result-status.strong-fit {
+      background: #f0fff0;
+      color: var(--field);
+      border: 1px solid #d0f0d0;
+    }
+
+    .result-status.possible-fit {
+      background: var(--cream);
+      color: var(--gold);
+      border: 1px solid var(--border);
+    }
+
+    .result-status.high-risk {
+      background: #fff0f0;
+      color: var(--soil);
+      border: 1px solid #ffd0d0;
+    }
+
+    .result-status.poor-fit {
+      background: #f5f5f5;
+      color: var(--muted);
+      border: 1px solid var(--border);
+    }
+
+    .action-buttons {
+      display: flex;
+      flex-direction: column;
+      gap: 0.75rem;
+      margin-top: 1.5rem;
+    }
+
+    .action-button {
+      padding: 1rem 1.5rem;
+      border: none;
+      border-radius: 8px;
+      font-size: 1rem;
+      font-weight: 600;
+      cursor: pointer;
+      transition: all 0.2s;
+      font-family: var(--body);
+    }
+
+    .action-button.primary {
+      background: var(--field);
+      color: var(--cream);
+    }
+
+    .action-button.primary:hover {
+      background: var(--field-dark);
+    }
+
+    .action-button.secondary {
+      background: var(--muted);
+      color: var(--cream);
+    }
+
+    .action-button.secondary:hover {
+      background: var(--ink);
+    }
+
+    .action-button.outline {
+      background: var(--paper);
+      color: var(--field);
+      border: 2px solid var(--field);
+    }
+
+    .action-button.outline:hover {
+      background: var(--cream);
+    }
+
+    .summary-box {
+      background: var(--cream);
+      border-radius: 8px;
+      padding: 1.5rem;
+      margin: 1.5rem 0;
+      border: 1px solid var(--border);
+    }
+
+    .summary-title {
+      font-weight: 700;
+      margin-bottom: 1rem;
+      color: var(--field);
+      font-family: var(--display);
+    }
+
+    .comparison-table {
+      width: 100%;
+      border-collapse: collapse;
+      margin: 1rem 0;
+      font-size: 0.85rem;
+    }
+
+    .comparison-table th,
+    .comparison-table td {
+      padding: 0.5rem;
+      text-align: center;
+      border: 1px solid var(--border);
+    }
+
+    .comparison-table th {
+      background: var(--cream);
+      font-weight: 700;
+      color: var(--field);
+      font-family: var(--display);
+    }
+
+    .hidden {
+      display: none;
+    }
+
+    .fade-in {
+      animation: fadeIn 0.3s ease-in;
+    }
+
+    @keyframes fadeIn {
+      from { opacity: 0; transform: translateY(10px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+
+    .disclaimer {
+      background: var(--cream);
+      border: 1px solid var(--gold);
+      border-radius: 8px;
+      padding: 1rem;
+      margin: 1.5rem 0;
+      font-size: 0.85rem;
+      color: var(--muted);
+    }
+
+    .info-box {
+      background: var(--tint);
+      border-left: 4px solid var(--field);
+      padding: 1rem;
+      margin: 1rem 0;
+      border-radius: 0 4px 4px 0;
+    }
+
+    .threat-box {
+      background: #fff0f0;
+      border-left: 4px solid var(--soil);
+      padding: 1rem;
+      margin: 1rem 0;
+      border-radius: 0 4px 4px 0;
+    }
+
+    .checklist {
+      margin: 1rem 0;
+    }
+
+    .checklist-item {
+      display: flex;
+      align-items: flex-start;
+      gap: 0.75rem;
+      margin-bottom: 0.75rem;
+      padding: 0.5rem;
+      background: var(--cream);
+      border-radius: 4px;
+    }
+
+    .checklist-checkbox {
+      width: 20px;
+      height: 20px;
+      border: 2px solid var(--field);
+      border-radius: 4px;
+      flex-shrink: 0;
+      cursor: pointer;
+    }
+
+    .checklist-checkbox.checked {
+      background: var(--field);
+    }
+
+    .checklist-text {
+      flex: 1;
+      font-size: 0.9rem;
+    }
+
+    @media (max-width: 600px) {
+      .enterprise-tool {
+        padding: 0.5rem;
+      }
+
+      .tool-section {
+        padding: 1rem;
+      }
+
+      .option-buttons {
+        gap: 0.5rem;
+      }
+
+      .option-button {
+        padding: 0.875rem 1rem;
+        font-size: 0.95rem;
+      }
+
+      .currency-group {
+        flex-direction: column;
+        align-items: stretch;
+      }
+
+      .currency-select {
+        width: 100%;
+      }
+
+      .budget-table {
+        font-size: 0.8rem;
+      }
+
+      .sensitivity-grid {
+        grid-template-columns: repeat(2, 1fr);
+      }
+    }
+  </style>
 </head>
 <body>
   <div data-site-header></div>
   <header class="page-hero">
     <div class="container">
       <div class="breadcrumb">
-        <a href="/">Home</a> / <a href="/decision-tools/">Decision Tools</a> / Will This Crop Make Me Money?
+        <a href="/">Home</a> / <a href="/decision-tools/">Decision Tools</a> / Will This Farming Enterprise Make Me Money?
       </div>
-      <div class="eyebrow">Business Decision</div>
-      <h1>Will This Crop Make Me Money?</h1>
-      <p class="lead">Analyze crop profitability with cost, yield, market price and margin calculations.</p>
+      <div class="eyebrow">Enterprise Decision</div>
+      <h1>Will This Farming Enterprise Make Me Money?</h1>
+      <p class="lead">Compare the money, resources, market and risks before you invest in crops, livestock or other agricultural enterprises.</p>
     </div>
   </header>
+
   <main class="section">
-    <div class="container article">
-      <div class="notice">
-        <strong>Coming Soon:</strong> This decision tool is under development. Check back for comprehensive profitability analysis.
+    <div class="container">
+      <div class="enterprise-tool">
+        <!-- Progress Indicator -->
+        <div class="progress-bar" id="progressBar">
+          <div class="progress-step active" data-step="1"></div>
+          <div class="progress-step" data-step="2"></div>
+          <div class="progress-step" data-step="3"></div>
+          <div class="progress-step" data-step="4"></div>
+          <div class="progress-step" data-step="5"></div>
+          <div class="progress-step" data-step="6"></div>
+          <div class="progress-step" data-step="7"></div>
+          <div class="progress-step" data-step="8"></div>
+          <div class="progress-step" data-step="9"></div>
+        </div>
+
+        <!-- Start Screen -->
+        <div class="tool-section fade-in" id="startScreen">
+          <h2 style="text-align: center; margin-bottom: 1rem;">Will This Farming Enterprise Make Me Money?</h2>
+          <p style="text-align: center; font-size: 1.1rem; margin-bottom: 1.5rem;">
+            Compare the money, resources, market and risks before you invest.
+          </p>
+          <div class="info-box">
+            <div class="why-asking-title">Important: This tool does not guarantee profit</div>
+            <p>This tool uses the information you provide to estimate the financial result and identify important risks. Actual results can change because of weather, yields, input prices, selling prices, pests, diseases, labour costs, transport and market conditions.</p>
+          </div>
+          <p style="text-align: center; margin: 1.5rem 0;">
+            This tool will help you understand:
+          </p>
+          <ul style="margin: 1rem 0 1.5rem 2rem;">
+            <li>Can I afford this enterprise?</li>
+            <li>Do I have the required resources?</li>
+            <li>Can I produce it successfully?</li>
+            <li>Do I have a realistic market?</li>
+            <li>What happens if the price falls?</li>
+            <li>What happens if production is lower?</li>
+            <li>How long will my money be tied up?</li>
+            <li>What is my break-even point?</li>
+            <li>What could make me lose money?</li>
+            <li>Is this enterprise suitable for MY farm?</li>
+          </ul>
+          <div class="action-buttons">
+            <button class="action-button primary" onclick="startTool()">Start Enterprise Check</button>
+            <button class="action-button outline" onclick="startComparison()">Compare Enterprises</button>
+          </div>
+        </div>
+
+        <!-- Section 1: Farm Information -->
+        <div class="tool-section hidden fade-in" id="farmInfoSection">
+          <div class="step-number">STEP 1</div>
+          <h2>Your Farm</h2>
+          <div class="question-group">
+            <label class="question-label">Where is your farm?</label>
+            <select class="form-select" id="countrySelect" onchange="updateProvinces()">
+              <option value="">Select country</option>
+              <option value="zimbabwe">Zimbabwe</option>
+              <option value="kenya">Kenya</option>
+              <option value="south_africa">South Africa</option>
+              <option value="zambia">Zambia</option>
+              <option value="ghana">Ghana</option>
+              <option value="nigeria">Nigeria</option>
+              <option value="tanzania">Tanzania</option>
+              <option value="ethiopia">Ethiopia</option>
+              <option value="uganda">Uganda</option>
+              <option value="mozambique">Mozambique</option>
+              <option value="malawi">Malawi</option>
+              <option value="other">Other country</option>
+            </select>
+          </div>
+          <div class="question-group">
+            <label class="question-label">What are you trying to achieve?</label>
+            <div class="option-buttons">
+              <button class="option-button" onclick="selectGoal('max_profit')" data-goal="max_profit">
+                Maximum profit
+              </button>
+              <button class="option-button" onclick="selectGoal('regular_income')" data-goal="regular_income">
+                Regular income
+              </button>
+              <button class="option-button" onclick="selectGoal('quick_income')" data-goal="quick_income">
+                Quick income
+              </button>
+              <button class="option-button" onclick="selectGoal('food_money')" data-goal="food_money">
+                Grow food and make some money
+              </button>
+              <button class="option-button" onclick="selectGoal('use_land')" data-goal="use_land">
+                Use my available land
+              </button>
+              <button class="option-button" onclick="selectGoal('use_water')" data-goal="use_water">
+                Use my available water
+              </button>
+              <button class="option-button" onclick="selectGoal('small_business')" data-goal="small_business">
+                Start a small business
+              </button>
+              <button class="option-button" onclick="selectGoal('long_term')" data-goal="long_term">
+                Build a long-term farm business
+              </button>
+              <button class="option-button" onclick="selectGoal('not_sure')" data-goal="not_sure">
+                I am not sure
+              </button>
+            </div>
+          </div>
+          <div class="why-asking" onclick="toggleWhy('goal')">
+            <div class="why-asking-title">Why are we asking this? <span>▼</span></div>
+            <div class="why-asking-content" id="goalWhy">
+              <p>Different farmers need different things. A crop that gives a large profit after six months may not be suitable for someone who needs income every month. Your goal helps us recommend enterprises that fit your timeline and needs.</p>
+            </div>
+          </div>
+          <div class="action-buttons">
+            <button class="action-button primary" onclick="confirmFarmInfo()">Continue</button>
+            <button class="action-button secondary" onclick="goBack()">Back</button>
+          </div>
+        </div>
+
+        <!-- Section 2: Enterprise Selection -->
+        <div class="tool-section hidden fade-in" id="enterpriseSection">
+          <div class="step-number">STEP 2</div>
+          <h2>What Enterprise Are You Considering?</h2>
+          <div class="question-group">
+            <label class="question-label">Select enterprise type</label>
+            <select class="form-select" id="enterpriseType" onchange="showEnterprises()">
+              <option value="">Select type</option>
+              <option value="crops">Crops</option>
+              <option value="livestock">Livestock</option>
+              <option value="poultry">Poultry</option>
+              <option value="fish">Fish</option>
+              <option value="horticulture">Horticulture</option>
+              <option value="other">Other agricultural enterprises</option>
+            </select>
+          </div>
+          <div class="question-group hidden" id="enterpriseSelectGroup">
+            <label class="question-label">Select specific enterprise</label>
+            <select class="form-select" id="enterpriseSelect" onchange="showEnterpriseInfo()">
+              <option value="">Select enterprise</option>
+            </select>
+          </div>
+          <div class="info-box hidden" id="enterpriseInfo">
+            <div class="why-asking-title">Enterprise Information</div>
+            <p id="enterpriseInfoText"></p>
+          </div>
+          <div class="question-group">
+            <label class="question-label">How much are you planning to start with?</label>
+            <div class="currency-group">
+              <input type="number" class="form-input number-input" id="enterpriseScale" placeholder="Amount">
+              <select class="form-select" id="scaleUnit">
+                <option value="hectares">Hectares</option>
+                <option value="acres">Acres</option>
+                <option value="animals">Number of animals</option>
+                <option value="birds">Number of birds</option>
+                <option value="sqm">Square metres</option>
+              </select>
+            </div>
+          </div>
+          <div class="why-asking" onclick="toggleWhy('scale')">
+            <div class="why-asking-title">Why are we asking this? <span>▼</span></div>
+            <div class="why-asking-content" id="scaleWhy">
+              <p>The scale of your enterprise affects capital requirements, labour needs, market quantity and risk level. Starting too large can expose you to more risk than you can handle if you are inexperienced or if conditions are unfavorable.</p>
+            </div>
+          </div>
+          <div class="action-buttons">
+            <button class="action-button primary" onclick="confirmEnterprise()">Continue</button>
+            <button class="action-button secondary" onclick="goBack()">Back</button>
+          </div>
+        </div>
+
+        <!-- Section 3: Capital -->
+        <div class="tool-section hidden fade-in" id="capitalSection">
+          <div class="step-number">STEP 3</div>
+          <h2>Your Capital</h2>
+          <div class="question-group">
+            <label class="question-label">How much money can you safely invest?</label>
+            <div class="currency-group">
+              <select class="form-select currency-select" id="currencySelect">
+                <option value="USD">USD</option>
+                <option value="ZAR">ZAR</option>
+                <option value="ZWL">ZWL</option>
+                <option value="KES">KES</option>
+                <option value="NGN">NGN</option>
+                <option value="GHS">GHS</option>
+                <option value="TZS">TZS</option>
+                <option value="ETB">ETB</option>
+                <option value="UGX">UGX</option>
+                <option value="MZN">MZN</option>
+                <option value="MWK">MWK</option>
+              </select>
+              <input type="number" class="form-input number-input" id="availableCapital" placeholder="Amount">
+            </div>
+          </div>
+          <div class="question-group">
+            <label class="question-label">Is this your total available money or only the money you are willing to invest?</label>
+            <div class="option-buttons">
+              <button class="option-button" onclick="selectCapitalType('total')" data-capital="total">
+                Total available money
+              </button>
+              <button class="option-button" onclick="selectCapitalType('investment')" data-capital="investment">
+                Only money I am willing to invest
+              </button>
+              <button class="option-button" onclick="selectCapitalType('loan')" data-capital="loan">
+                Loan/borrowed money
+              </button>
+              <button class="option-button" onclick="selectCapitalType('combination')" data-capital="combination">
+                Combination
+              </button>
+            </div>
+          </div>
+          <div class="why-asking" onclick="toggleWhy('capital')">
+            <div class="why-asking-title">Why are we asking this? <span>▼</span></div>
+            <div class="why-asking-content" id="capitalWhy">
+              <p>Do not treat every dollar you own as farming money. You may need money for emergencies, household needs or unexpected farm costs. Understanding your capital type helps us assess your risk exposure and financial safety.</p>
+            </div>
+          </div>
+          <div class="question-group">
+            <label class="question-label">Contingency planning allowance (suggested: 10%)</label>
+            <div class="currency-group">
+              <input type="number" class="form-input number-input" id="contingencyPercent" value="10" placeholder="Percentage">
+              <span style="font-weight: 600;">%</span>
+            </div>
+            <p style="font-size: 0.85rem; color: var(--muted); margin-top: 0.5rem;">
+              This is a suggested planning allowance — adjust it to your situation. This represents extra money set aside for unexpected costs.
+            </p>
+          </div>
+          <div class="action-buttons">
+            <button class="action-button primary" onclick="confirmCapital()">Continue</button>
+            <button class="action-button secondary" onclick="goBack()">Back</button>
+          </div>
+        </div>
+
+        <!-- Section 4: Resources -->
+        <div class="tool-section hidden fade-in" id="resourcesSection">
+          <div class="step-number">STEP 4</div>
+          <h2>Your Resources</h2>
+          <div class="question-group">
+            <label class="question-label">How much land can you actually use?</label>
+            <div class="currency-group">
+              <input type="number" class="form-input number-input" id="landAmount" placeholder="Amount">
+              <select class="form-select" id="landUnit">
+                <option value="hectares">Hectares</option>
+                <option value="acres">Acres</option>
+                <option value="sqm">Square metres</option>
+              </select>
+            </div>
+          </div>
+          <div class="question-group">
+            <label class="question-label">Is this land owned, leased or communal?</label>
+            <div class="option-buttons">
+              <button class="option-button" onclick="selectLandType('owned')" data-land="owned">
+                Owned
+              </button>
+              <button class="option-button" onclick="selectLandType('leased')" data-land="leased">
+                Leased
+              </button>
+              <button class="option-button" onclick="selectLandType('communal')" data-land="communal">
+                Communal
+              </button>
+            </div>
+          </div>
+          <div class="question-group">
+            <label class="question-label">What water do you have?</label>
+            <div class="option-buttons">
+              <button class="option-button" onclick="selectWater('rainfed')" data-water="rainfed">
+                Rain-fed only
+              </button>
+              <button class="option-button" onclick="selectWater('borehole')" data-water="borehole">
+                Borehole
+              </button>
+              <button class="option-button" onclick="selectWater('dam')" data-water="dam">
+                Dam
+              </button>
+              <button class="option-button" onclick="selectWater('river')" data-water="river">
+                River
+              </button>
+              <button class="option-button" onclick="selectWater('well')" data-water="well">
+                Well
+              </button>
+              <button class="option-button" onclick="selectWater('municipal')" data-water="municipal">
+                Municipal water
+              </button>
+              <button class="option-button" onclick="selectWater('tank')" data-water="tank">
+                Tank/storage
+              </button>
+              <button class="option-button" onclick="selectWater('other')" data-water="other">
+                Other
+              </button>
+            </div>
+          </div>
+          <div class="question-group">
+            <label class="question-label">Is water available throughout the production period?</label>
+            <div class="option-buttons">
+              <button class="option-button" onclick="selectWaterAvailability('yes')" data-water-avail="yes">
+                Yes
+              </button>
+              <button class="option-button" onclick="selectWaterAvailability('no')" data-water-avail="no">
+                No
+              </button>
+              <button class="option-button" onclick="selectWaterAvailability('not_sure')" data-water-avail="not_sure">
+                Not sure
+              </button>
+            </div>
+          </div>
+          <div class="question-group">
+            <label class="question-label">How much labour can you provide?</label>
+            <div class="option-buttons">
+              <button class="option-button" onclick="selectLabour('family')" data-labour="family">
+                Family labour only
+              </button>
+              <button class="option-button" onclick="selectLabour('hired')" data-labour="hired">
+                Hired labour
+              </button>
+              <button class="option-button" onclick="selectLabour('both')" data-labour="both">
+                Both family and hired labour
+              </button>
+            </div>
+          </div>
+          <div class="question-group">
+            <label class="question-label">Number of workers</label>
+            <input type="number" class="form-input" id="workerCount" placeholder="Number of workers">
+          </div>
+          <div class="question-group">
+            <label class="question-label">Daily wage per worker</label>
+            <div class="currency-group">
+              <input type="number" class="form-input number-input" id="dailyWage" placeholder="Daily wage">
+            </div>
+          </div>
+          <div class="why-asking" onclick="toggleWhy('resources')">
+            <div class="why-asking-title">Why are we asking this? <span>▼</span></div>
+            <div class="why-asking-content" id="resourcesWhy">
+              <p>An enterprise can look profitable on paper but fail if it needs water that you cannot reliably provide, or if labour costs are higher than expected. We check resource fit to ensure the enterprise matches what you actually have available.</p>
+            </div>
+          </div>
+          <div class="action-buttons">
+            <button class="action-button primary" onclick="confirmResources()">Continue</button>
+            <button class="action-button secondary" onclick="goBack()">Back</button>
+          </div>
+        </div>
+
+        <!-- Section 5: Production Costs -->
+        <div class="tool-section hidden fade-in" id="costsSection">
+          <div class="step-number">STEP 5</div>
+          <h2>Production Costs</h2>
+          <div class="info-box">
+            <div class="why-asking-title">Enter your estimated production costs</div>
+            <p>Be as realistic as possible. Underestimating costs can lead to unexpected losses and financial stress.</p>
+          </div>
+          <div id="costInputs">
+            <!-- Cost inputs will be populated by JavaScript based on enterprise type -->
+          </div>
+          <div class="disclaimer">
+            <strong>Important:</strong> These are your estimated costs. Actual costs may vary based on local prices, supplier, quality, quantity, transport and other factors. Get quotes from local suppliers where possible.
+          </div>
+          <div class="action-buttons">
+            <button class="action-button primary" onclick="confirmCosts()">Continue</button>
+            <button class="action-button secondary" onclick="goBack()">Back</button>
+          </div>
+        </div>
+
+        <!-- Section 6: Production and Market -->
+        <div class="tool-section hidden fade-in" id="productionSection">
+          <div class="step-number">STEP 6</div>
+          <h2>Production and Market</h2>
+          <div class="question-group">
+            <label class="question-label">How much do you expect to produce?</label>
+            <div class="currency-group">
+              <input type="number" class="form-input number-input" id="expectedProduction" placeholder="Amount">
+              <select class="form-select" id="productionUnit">
+                <option value="kg">Kilograms (kg)</option>
+                <option value="tonnes">Tonnes</option>
+                <option value="litres">Litres</option>
+                <option value="pieces">Pieces/units</option>
+                <option value="dozens">Dozens</option>
+              </select>
+            </div>
+          </div>
+          <div class="why-asking" onclick="toggleWhy('production')">
+            <div class="why-asking-title">Why are we asking this? <span>▼</span></div>
+            <div class="why-asking-content" id="productionWhy">
+              <p>Expected production determines your potential revenue. However, actual production can be lower or higher depending on weather, management, pests, diseases and other factors. We will calculate multiple scenarios to show the range of possible outcomes.</p>
+            </div>
+          </div>
+          <div class="question-group">
+            <label class="question-label">What price do you realistically expect to receive?</label>
+            <div class="currency-group">
+              <input type="number" class="form-input number-input" id="sellingPrice" placeholder="Price per unit">
+            </div>
+          </div>
+          <div class="question-group">
+            <label class="question-label">Price level</label>
+            <div class="option-buttons">
+              <button class="option-button" onclick="selectPriceLevel('farmgate')" data-price="farmgate">
+                Farm-gate price (price at farm)
+              </button>
+              <button class="option-button" onclick="selectPriceLevel('wholesale')" data-price="wholesale">
+                Wholesale price
+              </button>
+              <button class="option-button" onclick="selectPriceLevel('retail')" data-price="retail">
+                Direct-to-consumer price
+              </button>
+              <button class="option-button" onclick="selectPriceLevel('contract')" data-price="contract">
+                Contract price
+              </button>
+            </div>
+          </div>
+          <div class="why-asking" onclick="toggleWhy('price')">
+            <div class="why-asking-title">Why are we asking this? <span>▼</span></div>
+            <div class="why-asking-content" id="priceWhy">
+              <p>Farmers may receive less than the final retail price because of wholesalers, traders, transport, grading, commissions and other costs. The price level you select affects your actual revenue and profit calculation.</p>
+            </div>
+          </div>
+          <div class="question-group">
+            <label class="question-label">What percentage of your harvest may be lost or downgraded?</label>
+            <div class="currency-group">
+              <input type="number" class="form-input number-input" id="lossPercent" value="10" placeholder="Percentage">
+              <span style="font-weight: 600;">%</span>
+            </div>
+            <p style="font-size: 0.85rem; color: var(--muted); margin-top: 0.5rem;">
+              Consider post-harvest losses from damage, spoilage, quality downgrading, and other factors.
+            </p>
+          </div>
+          <div class="question-group">
+            <label class="question-label">Distance to market</label>
+            <div class="currency-group">
+              <input type="number" class="form-input number-input" id="marketDistance" placeholder="Distance">
+              <select class="form-select" id="distanceUnit">
+                <option value="km">Kilometres</option>
+                <option value="miles">Miles</option>
+              </select>
+            </div>
+          </div>
+          <div class="question-group">
+            <label class="question-label">Transport cost per trip</label>
+            <div class="currency-group">
+              <input type="number" class="form-input number-input" id="transportCost" placeholder="Cost per trip">
+            </div>
+          </div>
+          <div class="question-group">
+            <label class="question-label">Expected number of trips to market</label>
+            <input type="number" class="form-input" id="tripsCount" placeholder="Number of trips">
+          </div>
+          <div class="action-buttons">
+            <button class="action-button primary" onclick="confirmProduction()">Continue</button>
+            <button class="action-button secondary" onclick="goBack()">Back</button>
+          </div>
+        </div>
+
+        <!-- Section 7: Market Analysis -->
+        <div class="tool-section hidden fade-in" id="marketSection">
+          <div class="step-number">STEP 7</div>
+          <h2>Market Analysis</h2>
+          <div class="question-group">
+            <label class="question-label">Where will you sell?</label>
+            <div class="option-buttons">
+              <button class="option-button" onclick="selectMarket('local_market')" data-market="local_market">
+                Local market
+              </button>
+              <button class="option-button" onclick="selectMarket('wholesale')" data-market="wholesale">
+                Wholesale buyer
+              </button>
+              <button class="option-button" onclick="selectMarket('retail')" data-market="retail">
+                Direct to consumers
+              </button>
+              <button class="option-button" onclick="selectMarket('contract')" data-market="contract">
+                Contract buyer
+              </button>
+              <button class="option-button" onclick="selectMarket('processor')" data-market="processor">
+                Processor
+              </button>
+              <button class="option-button" onclick="selectMarket('export')" data-market="export">
+                Export
+              </button>
+            </div>
+          </div>
+          <div class="question-group">
+            <label class="question-label">Do you have a confirmed buyer?</label>
+            <div class="option-buttons">
+              <button class="option-button" onclick="selectBuyer('yes')" data-buyer="yes">
+                Yes, confirmed buyer
+              </button>
+              <button class="option-button" onclick="selectBuyer('no')" data-buyer="no">
+                No confirmed buyer
+              </button>
+              <button class="option-button" onclick="selectBuyer('not_sure')" data-buyer="not_sure">
+                Not sure yet
+              </button>
+            </div>
+          </div>
+          <div class="question-group">
+            <label class="question-label">How many realistic buyers do you have?</label>
+            <div class="option-buttons">
+              <button class="option-button" onclick="selectBuyerCount('1')" data-buyer-count="1">
+                1 buyer
+              </button>
+              <button class="option-button" onclick="selectBuyerCount('2-3')" data-buyer-count="2-3">
+                2-3 buyers
+              </button>
+              <button class="option-button" onclick="selectBuyerCount('4-5')" data-buyer-count="4-5">
+                4-5 buyers
+              </button>
+              <button class="option-button" onclick="selectBuyerCount('more')" data-buyer-count="more">
+                More than 5 buyers
+              </button>
+              <button class="option-button" onclick="selectBuyerCount('unknown')" data-buyer-count="unknown">
+                Unknown
+              </button>
+            </div>
+          </div>
+          <div class="why-asking" onclick="toggleWhy('market')">
+            <div class="why-asking-title">Why are we asking this? <span>▼</span></div>
+            <div class="why-asking-content" id="marketWhy">
+              <p>Depending on only one buyer can increase your bargaining risk. If that buyer reduces the price or stops buying, you may have few alternatives. Multiple buyers generally reduce market concentration risk, but this depends on your specific situation and product.</p>
+            </div>
+          </div>
+          <div class="question-group">
+            <label class="question-label">Is the product perishable?</label>
+            <div class="option-buttons">
+              <button class="option-button" onclick="selectPerishability('high')" data-perish="high">
+                Highly perishable (spoils quickly)
+              </button>
+              <button class="option-button" onclick="selectPerishability('moderate')" data-perish="moderate">
+                Moderately perishable
+              </button>
+              <button class="option-button" onclick="selectPerishability('low')" data-perish="low">
+                Low perishability (stores well)
+              </button>
+            </div>
+          </div>
+          <div class="question-group">
+            <label class="question-label">Can you store the product?</label>
+            <div class="option-buttons">
+              <button class="option-button" onclick="selectStorage('yes')" data-storage="yes">
+                Yes, I have storage
+              </button>
+              <button class="option-button" onclick="selectStorage('no')" data-storage="no">
+                No storage available
+              </button>
+              <button class="option-button" onclick="selectStorage('partial')" data-storage="partial">
+                Limited storage
+              </button>
+            </div>
+          </div>
+          <div class="action-buttons">
+            <button class="action-button primary" onclick="confirmMarket()">Continue</button>
+            <button class="action-button secondary" onclick="goBack()">Back</button>
+          </div>
+        </div>
+
+        <!-- Section 8: Experience and Risk -->
+        <div class="tool-section hidden fade-in" id="experienceSection">
+          <div class="step-number">STEP 8</div>
+          <h2>Your Experience and Risk</h2>
+          <div class="question-group">
+            <label class="question-label">How experienced are you with this enterprise?</label>
+            <div class="option-buttons">
+              <button class="option-button" onclick="selectExperience('beginner')" data-experience="beginner">
+                Beginner - never done this before
+              </button>
+              <button class="option-button" onclick="selectExperience('some')" data-experience="some">
+                Some experience
+              </button>
+              <button class="option-button" onclick="selectExperience('experienced')" data-experience="experienced">
+                Experienced - done this several times
+              </button>
+              <button class="option-button" onclick="selectExperience('expert')" data-experience="expert">
+                Expert - very experienced
+              </button>
+            </div>
+          </div>
+          <div class="why-asking" onclick="toggleWhy('experience')">
+            <div class="why-asking-title">Why are we asking this? <span>▼</span></div>
+            <div class="why-asking-content" id="experienceWhy">
+              <p>A profitable enterprise can still be risky for a beginner if it requires skills you do not yet have. If you are a beginner, we may recommend starting smaller, learning first, seeking extension advice, or using a trial area to limit your exposure to loss.</p>
+            </div>
+          </div>
+          <div class="question-group">
+            <label class="question-label">What is your biggest concern about this enterprise?</label>
+            <div class="option-buttons">
+              <button class="option-button" onclick="selectConcern('price')" data-concern="price">
+                Price may fall
+              </button>
+              <button class="option-button" onclick="selectConcern('yield')" data-concern="yield">
+                Production may be lower than expected
+              </button>
+              <button class="option-button" onclick="selectConcern('costs')" data-concern="costs">
+                Input costs may increase
+              </button>
+              <button class="option-button" onclick="selectConcern('market')" data-concern="market">
+                May not find buyer
+              </button>
+              <button class="option-button" onclick="selectConcern('weather')" data-concern="weather">
+                Weather risks
+              </button>
+              <button class="option-button" onclick="selectConcern('water')" data-concern="water">
+                Water availability
+              </button>
+              <button class="option-button" onclick="selectConcern('pests')" data-concern="pests">
+                Pests and diseases
+              </button>
+              <button class="option-button" onclick="selectConcern('capital')" data-concern="capital">
+                Not enough capital
+              </button>
+              <button class="option-button" onclick="selectConcern('labour')" data-concern="labour">
+                Labour availability
+              </button>
+              <button class="option-button" onclick="selectConcern('time')" data-concern="time">
+                Takes too long before income
+              </button>
+            </div>
+          </div>
+          <div class="action-buttons">
+            <button class="action-button primary" onclick="confirmExperience()">Calculate Results</button>
+            <button class="action-button secondary" onclick="goBack()">Back</button>
+          </div>
+        </div>
+
+        <!-- Final Results Section -->
+        <div class="final-result hidden fade-in" id="finalResult">
+          <h2 style="text-align: center;">YOUR FARMING ENTERPRISE DECISION</h2>
+          <div class="result-status" id="resultStatus">POSSIBLE FIT — CHECK KEY RISKS</div>
+
+          <div class="summary-box">
+            <div class="summary-title">Enterprise Summary</div>
+            <div class="summary-item">
+              <div class="summary-label">Enterprise:</div>
+              <div class="summary-value" id="summaryEnterprise"></div>
+            </div>
+            <div class="summary-item">
+              <div class="summary-label">Location:</div>
+              <div class="summary-value" id="summaryLocation"></div>
+            </div>
+            <div class="summary-item">
+              <div class="summary-label">Planned scale:</div>
+              <div class="summary-value" id="summaryScale"></div>
+            </div>
+            <div class="summary-item">
+              <div class="summary-label">Capital required:</div>
+              <div class="summary-value" id="summaryCapitalRequired"></div>
+            </div>
+            <div class="summary-item">
+              <div class="summary-label">Capital used:</div>
+              <div class="summary-value" id="summaryCapitalUsed"></div>
+            </div>
+            <div class="summary-item">
+              <div class="summary-label">Total cost:</div>
+              <div class="summary-value" id="summaryTotalCost"></div>
+            </div>
+            <div class="summary-item">
+              <div class="summary-label">Expected revenue:</div>
+              <div class="summary-value" id="summaryRevenue"></div>
+            </div>
+            <div class="summary-item">
+              <div class="summary-label">Expected profit:</div>
+              <div class="summary-value" id="summaryProfit"></div>
+            </div>
+            <div class="summary-item">
+              <div class="summary-label">Profit margin:</div>
+              <div class="summary-value" id="summaryMargin"></div>
+            </div>
+            <div class="summary-item">
+              <div class="summary-label">ROI:</div>
+              <div class="summary-value" id="summaryROI"></div>
+            </div>
+            <div class="summary-item">
+              <div class="summary-label">Break-even price:</div>
+              <div class="summary-value" id="summaryBreakEvenPrice"></div>
+            </div>
+            <div class="summary-item">
+              <div class="summary-label">Break-even production:</div>
+              <div class="summary-value" id="summaryBreakEvenProduction"></div>
+            </div>
+          </div>
+
+          <div class="cost-breakdown">
+            <h3 style="font-family: var(--display); color: var(--field);">WHERE YOUR MONEY GOES</h3>
+            <div id="costBreakdownChart"></div>
+          </div>
+
+          <div class="threat-box">
+            <h3 style="font-family: var(--display); color: var(--soil);">WHAT COULD MAKE ME LOSE MONEY?</h3>
+            <div id="threatsContainer"></div>
+          </div>
+
+          <div class="summary-box">
+            <h3 style="font-family: var(--display); color: var(--field);">SENSITIVITY ANALYSIS</h3>
+            <p style="margin-bottom: 1rem;">What happens if conditions change?</p>
+            <h4 style="font-family: var(--display); margin: 1rem 0 0.5rem;">Price Sensitivity</h4>
+            <div class="sensitivity-grid" id="priceSensitivity"></div>
+            <h4 style="font-family: var(--display); margin: 1rem 0 0.5rem;">Yield Sensitivity</h4>
+            <div class="sensitivity-grid" id="yieldSensitivity"></div>
+            <h4 style="font-family: var(--display); margin: 1rem 0 0.5rem;">Cost Sensitivity</h4>
+            <div class="sensitivity-grid" id="costSensitivity"></div>
+          </div>
+
+          <div class="summary-box">
+            <h3 style="font-family: var(--display); color: var(--field);">RISK ANALYSIS</h3>
+            <div id="riskAnalysis"></div>
+          </div>
+
+          <div class="info-box">
+            <h3 style="font-family: var(--display); color: var(--field);">WHY THIS RESULT?</h3>
+            <p id="resultExplanation"></p>
+          </div>
+
+          <div class="summary-box">
+            <h3 style="font-family: var(--display); color: var(--field);">WHAT SHOULD I VERIFY BEFORE SPENDING?</h3>
+            <div class="checklist" id="verificationChecklist"></div>
+          </div>
+
+          <div class="info-box">
+            <h3 style="font-family: var(--display); color: var(--field);">THREE THINGS TO DO BEFORE INVESTING</h3>
+            <ol id="nextActions" style="margin: 0.5rem 0 0 1.5rem;"></ol>
+          </div>
+
+          <div class="disclaimer">
+            <strong>Important:</strong> This result is based on the information you entered and available agricultural data at the time of analysis. Actual results can change because of weather, yields, input prices, selling prices, pests, diseases, labour costs, transport and market conditions. This tool provides decision support, not a guarantee of success. Always use your own judgment and local knowledge. Consult local agricultural extension services for precise local recommendations.
+          </div>
+
+          <div class="action-buttons">
+            <button class="action-button primary" onclick="saveResult()">Save My Enterprise Decision</button>
+            <button class="action-button outline" onclick="downloadResult()">Download Report</button>
+            <button class="action-button secondary" onclick="restartTool()">Start New Analysis</button>
+          </div>
+        </div>
       </div>
-      <h2>What this tool will help you calculate</h2>
-      <ul>
-        <li>Total production costs per hectare/acre</li>
-        <li>Expected yield and revenue projections</li>
-        <li>Profit margins and break-even analysis</li>
-        <li>Scenario planning (conservative, expected, optimistic)</li>
-        <li>Return on investment comparison</li>
-      </ul>
-      <h2>Related resources</h2>
-      <ul>
-        <li><a href="/calculators/farm-profit.html">Farm Profit Calculator</a></li>
-        <li><a href="/calculators/break-even.html">Break-Even Calculator</a></li>
-        <li><a href="/guides/farm-profit-calculation.html">How to Calculate Farm Profit</a></li>
-        <li><a href="/guides/simple-farm-budget.html">Simple Farm Budget Guide</a></li>
-      </ul>
     </div>
   </main>
+
+  <!-- Educational Content Section for SEO -->
+  <section class="section alt">
+    <div class="container">
+      <div class="section-head">
+        <div class="eyebrow">Understanding Farm Profitability</div>
+        <h2>What is Farm Profitability?</h2>
+        <p>Farm profitability is the difference between the money you earn from selling your farm products and the money you spend to produce them. A farm can produce a large harvest but still lose money if production costs are too high or selling prices are too low.</p>
+      </div>
+      <div class="grid">
+        <article class="card">
+          <h3>Revenue vs Profit</h3>
+          <p><strong>Revenue</strong> is the total money received from sales before any costs are subtracted. <strong>Profit</strong> is what remains after all production costs are paid. Many farmers focus only on harvest size, but profit determines whether the business is sustainable.</p>
+        </article>
+        <article class="card">
+          <h3>Gross Margin</h3>
+          <p><strong>Gross margin</strong> shows how much money remains after variable production costs (like seed, feed, fertilizer) are subtracted from revenue. It helps compare different enterprises but is not the same as final profit because it doesn't include fixed costs like equipment and buildings.</p>
+        </article>
+        <article class="card">
+          <h3>Profit Margin</h3>
+          <p><strong>Profit margin</strong> is profit expressed as a percentage of revenue. If your profit margin is 20%, it means for every $100 of sales, about $20 remains as profit after costs. Higher margins generally provide more buffer against price or cost changes.</p>
+        </article>
+        <article class="card">
+          <h3>Return on Investment (ROI)</h3>
+          <p><strong>ROI</strong> measures how much profit your investment produces compared to the capital invested. If you invest $1,000 and earn $250 profit, your ROI is 25%. This helps compare different investment opportunities.</p>
+        </article>
+        <article class="card">
+          <h3>Break-Even Point</h3>
+          <p><strong>Break-even</strong> is the point where your revenue equals your costs. Understanding your break-even price and break-even production helps you know the minimum performance needed to avoid losses. This is especially important for new enterprises.</p>
+        </article>
+      </div>
+    </div>
+  </section>
+
+  <section class="section">
+    <div class="container">
+      <div class="section-head">
+        <div class="eyebrow">Common Questions</div>
+        <h2>Farm Profitability FAQ</h2>
+      </div>
+      <div class="article">
+        <h3>Why do market prices matter?</h3>
+        <p>Farmers may receive much less than retail prices shown in markets. Wholesalers, traders, transport, grading, commissions and other costs reduce the actual price received. Always estimate the realistic farm-gate or wholesale price, not retail price.</p>
+        <h3>Why do production costs matter?</h3>
+        <p>Underestimating production costs is a common cause of farm business failure. Costs like feed, fertilizer, labour, transport and equipment can consume most of your revenue. Accurate cost estimation is essential for realistic profit planning.</p>
+        <h3>Why does yield risk matter?</h3>
+        <p>Planning based on perfect weather and maximum yields is dangerous. Actual production varies due to weather, pests, diseases, management and other factors. Conservative yield planning helps protect against over-optimistic expectations.</p>
+        <h3>Why do transport costs matter?</h3>
+        <p>Transport can represent a significant portion of production costs, especially for perishable products or distant markets. Distance, fuel prices, and load efficiency all affect whether an enterprise is profitable at a given location.</p>
+        <h3>Why does working capital matter?</h3>
+        <p>A business can be profitable overall but still fail if the farmer runs out of cash before harvest. Understanding your peak cash requirement and having access to working capital is as important as calculating final profit.</p>
+        <h3>How do I compare farming enterprises?</h3>
+        <p>Compare enterprises using multiple factors: capital requirement, expected profit, ROI, time to income, risk level, resource requirements, and market fit. Don't compare only by profit — an enterprise with higher profit may require more capital, carry more risk, or take longer to generate income.</p>
+        <h3>What is opportunity cost?</h3>
+        <p>Opportunity cost is what you give up by choosing one enterprise over another. Using your land, capital, water and labour for one enterprise means you cannot use those resources for another. Consider what you might have earned from the alternative.</p>
+      </div>
+    </div>
+  </section>
+
   <div data-site-footer></div>
+  <script src="/assets/enterprise-tool.js"></script>
   <script src="/assets/site.js"></script>
 </body>
 </html>
