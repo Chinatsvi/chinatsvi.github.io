@@ -90,6 +90,15 @@
     renderFooter();
     renderArticles();
     renderCalculator();
+    loadAdSense();
+  }
+
+  function loadAdSense() {
+    if (document.querySelector('script[src$="/assets/adsense.js"]')) return;
+    const script = document.createElement('script');
+    script.src = '/assets/adsense.js';
+    script.async = true;
+    document.body.appendChild(script);
   }
 
   document.addEventListener('DOMContentLoaded', () => {

@@ -1,12 +1,12 @@
 # AdSense Implementation Guide
 
 ## Overview
-Test AdSense advertisements have been implemented across the AgriBase website. This document explains the current setup and how to replace with real AdSense code.
+AgriBase uses responsive Google AdSense units on the home page, guides, calculators, community page, and decision tools. The shared loader uses publisher `ca-pub-2606126305565597` and ad unit `7638324548`, reserves space to reduce layout shift, and initializes each slot once.
 
 ## Files Created
 
 ### 1. `/assets/adsense.css`
-Contains styling for all advertisement types and placements:
+Contains styling for shared advertisement containers and placements:
 - Leaderboard ads (728x90)
 - Rectangle ads (336x280)
 - Medium rectangle ads (300x250)
@@ -18,12 +18,10 @@ Contains styling for all advertisement types and placements:
 
 ### 2. `/assets/adsense.js`
 JavaScript management system for advertisements:
-- Test mode currently enabled
-- Placeholder ad generation
-- Configuration for real AdSense integration
-- Ad slot management
-- Lazy loading support
-- Ad blocker detection
+- Loads the AdSense library when a page does not already load it
+- Creates responsive production units from `data-ad-slot` containers
+- Prevents duplicate initialization
+- Leaves slots unobtrusive when ads are unavailable or blocked
 
 ## Current Ad Placements
 
@@ -48,14 +46,23 @@ JavaScript management system for advertisements:
 ### Community Page
 - Leaderboard below hero, medium rectangle in content, leaderboard before footer
 
-## How to Replace with Real AdSense
+## AdSense Configuration
 
-### Step 1: Get Your AdSense Account
+The current production configuration is in `/assets/adsense.js`:
+
+```js
+adClientId: 'ca-pub-2606126305565597',
+adSlotId: '7638324548'
+```
+
+Change these values only when the AdSense account or ad unit changes. The `ads.txt` entry must continue to use the same publisher ID.
+
+### Account and ad unit setup
 1. Sign up for Google AdSense at https://www.google.com/adsense/
 2. Add your website and get approval
 3. Get your AdSense client ID (format: `ca-pub-XXXXXXXXXXXXXXXX`)
 
-### Step 2: Create Ad Units
+### Create additional ad units
 1. In your AdSense dashboard, create ad units for each size you need:
    - Leaderboard (728x90)
    - Medium Rectangle (300x250)
@@ -64,75 +71,7 @@ JavaScript management system for advertisements:
 
 2. Copy the ad unit IDs for each created unit
 
-### Step 3: Update Configuration
-Edit `/assets/adsense.js` and update the configuration:
-
-```javascript
-const AdSenseManager = {
-  config: {
-    testMode: false, // Change from true to false
-    adClientId: 'ca-pub-XXXXXXXXXXXXXXXX', // Replace with your real client ID
-    enableLazyLoading: true,
-    adBlockDetection: true
-  },
-
-  adSlots: {
-    leaderboard: 'div-gpt-ad-XXXXXXXXXX-0',      // Replace with real ad slot IDs
-    rectangle: 'div-gpt-ad-XXXXXXXXXX-1',        // Replace with real ad slot IDs
-    mediumRectangle: 'div-gpt-ad-XXXXXXXXXX-2',  // Replace with real ad slot IDs
-    square: 'div-gpt-ad-XXXXXXXXXX-3',          // Replace with real ad slot IDs
-    halfPage: 'div-gpt-ad-XXXXXXXXXX-4',         // Replace with real ad slot IDs
-    mobileBanner: 'div-gpt-ad-XXXXXXXXXX-5',     // Replace with real ad slot IDs
-    inContent: 'div-gpt-ad-XXXXXXXXXX-6',        // Replace with real ad slot IDs
-    sidebar: 'div-gpt-ad-XXXXXXXXXX-7'           // Replace with real ad slot IDs
-  },
-```
-
-### Step 4: Update Real AdSense Integration
-In `/assets/adsense.js`, uncomment and implement the real AdSense loading in the `loadRealAdSense` function:
-
-```javascript
-loadRealAdSense: function() {
-  // Add AdSense script
-  (function() {
-    var script = document.createElement('script');
-    script.src = 'https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js';
-    script.async = true;
-    document.head.appendChild(script);
-    
-    script.onload = function() {
-      AdSenseManager.initializeAdSlots();
-    };
-  })();
-},
-
-initializeAdSlots: function() {
-  const adContainers = document.querySelectorAll('[data-ad-slot]');
-  
-  adContainers.forEach(container => {
-    const slotType = container.getAttribute('data-ad-slot');
-    const slotId = this.adSlots[slotType];
-    
-    if (slotId) {
-      // Create real AdSense ad
-      const adIns = document.createElement('ins');
-      adIns.className = 'adsbygoogle';
-      adIns.style.display = 'block';
-      adIns.setAttribute('data-ad-client', this.config.adClientId);
-      adIns.setAttribute('data-ad-slot', slotId);
-      adIns.setAttribute('data-ad-format', 'auto');
-      adIns.setAttribute('data-full-width-responsive', 'true');
-      
-      container.innerHTML = '';
-      container.appendChild(adIns);
-      
-      (adsbygoogle = window.adsbygoogle || []).push({});
-    }
-  });
-}
-```
-
-### Step 5: Remove Test Ad Styling (Optional)
+### Remove old test styling (Optional)
 If you want to remove the test ad styling, you can delete or comment out the test ad CSS in `/assets/adsense.css`:
 
 ```css

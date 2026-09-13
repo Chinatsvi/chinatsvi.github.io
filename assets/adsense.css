@@ -1,16 +1,33 @@
-/* AdSense Test Advertisement Styles */
-
 /* Base Ad Container */
 .ad-container {
   width: 100%;
-  margin: 1.5rem 0;
+  min-height: 90px;
+  margin: 2.5rem 0;
   display: flex;
+  flex-direction: column;
   justify-content: center;
   align-items: center;
   clear: both;
 }
 
-/* Test Ad Placeholder - Replace with real AdSense code */
+.ad-label {
+  display: block;
+  margin-bottom: .5rem;
+  color: #6e6152;
+  font-family: var(--body);
+  font-size: .7rem;
+  letter-spacing: .08em;
+  text-align: center;
+  text-transform: uppercase;
+}
+
+/* Keep the reserved area stable while AdSense decides whether to fill it. */
+.adsbygoogle {
+  display: block;
+  width: 100%;
+  min-height: 90px;
+}
+
 .test-ad {
   background: linear-gradient(135deg, #f5f7fa 0%, #c3cfe2 100%);
   border: 2px dashed #999;
@@ -177,6 +194,15 @@
 
 /* Hide ads on small screens if needed */
 @media (max-width: 768px) {
+  .ad-container {
+    min-height: 70px;
+    margin: 1.75rem 0;
+  }
+
+  .adsbygoogle {
+    min-height: 70px;
+  }
+
   .ad-leaderboard {
     max-width: 320px;
     height: 50px;
