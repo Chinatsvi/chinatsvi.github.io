@@ -1,15 +1,15 @@
-(function () {
+﻿(function () {
   const content = window.AGRIBASE_CONTENT || { articles: [] };
   const nav = [
     ['Home', '/'], ['Farming Guides', '/guides/'], ['Calculators', '/calculators/'],
     ['Crop Calendar', '/calendar/'], ['Resources', '/resources/'], ['Academy', '/academy/'],
-    ['Community App', '/community/'], ['About', '/about/'], ['Contact', '/contact/']
+    ['Community App', '/community/'], ['Questions', '/faq/'], ['About', '/about/'], ['Contact', '/contact/']
   ];
 
   function renderHeader() {
     const host = document.querySelector('[data-site-header]');
     if (!host) return;
-    host.innerHTML = '<nav class="site-nav"><div class="nav-inner"><a class="brand" href="/"><img src="/farmers-community/favicon-256.png" alt="AgriBase">AgriBase</a><button class="nav-toggle" aria-label="Open navigation"><span></span><span></span><span></span></button><div class="nav-links">' +
+    host.innerHTML = '<nav class="site-nav"><div class="nav-inner"><a class="brand" href="/"><img src="/favicon-256.png" alt="AgriBase">AgriBase</a><button class="nav-toggle" aria-label="Open navigation"><span></span><span></span><span></span></button><div class="nav-links">' +
       nav.map(item => '<a href="' + item[1] + '">' + item[0] + '</a>').join('') +
       '</div></div></nav>';
     host.querySelector('.nav-toggle').onclick = () => host.querySelector('.nav-links').classList.toggle('open');
@@ -18,11 +18,11 @@
   function renderFooter() {
     const host = document.querySelector('[data-site-footer]');
     if (!host) return;
-    host.innerHTML = '<footer><div class="container footer-grid"><div><h3>AgriBase</h3><p>Practical farming knowledge, planning tools and community resources for farmers.</p></div><div><h3>Learn</h3><a href="/guides/">Farming Guides</a><a href="/academy/">Farming Academy</a><a href="/calendar/">Crop Calendar</a></div><div><h3>Tools</h3><a href="/calculators/">Farm Calculators</a><a href="/resources/">Resources</a><a href="/community/">Community App</a></div><div><h3>Trust</h3><a href="/about/">About</a><a href="/contact/">Contact</a><a href="/privacy/">Privacy Policy</a><a href="/terms/">Terms of Use</a><a href="/disclaimer/">Disclaimer</a></div></div><div class="container copyright">© 2026 AgriBase. Educational information; adapt decisions to local conditions.</div></footer>';
+    host.innerHTML = '<footer><div class="container footer-grid"><div><h3>AgriBase</h3><p>Practical farming knowledge, planning tools and community resources for farmers.</p></div><div><h3>Learn</h3><a href="/guides/">Farming Guides</a><a href="/academy/">Farming Academy</a><a href="/calendar/">Crop Calendar</a></div><div><h3>Tools</h3><a href="/calculators/">Farm Calculators</a><a href="/resources/">Resources</a><a href="/community/">Community App</a></div><div><h3>Trust</h3><a href="/about/">About</a><a href="/contact/">Contact</a><a href="/privacy/">Privacy Policy</a><a href="/terms/">Terms of Use</a><a href="/disclaimer/">Disclaimer</a></div></div><div class="container copyright">Â© 2026 AgriBase. Educational information; adapt decisions to local conditions.</div></footer>';
   }
 
   function articleCards(items) {
-    return items.map(article => '<article class="card"><div class="meta">' + article.category + '</div><h3>' + article.title + '</h3><p>' + article.description + '</p><a class="link" href="/guides/' + article.slug + '.html">Read guide →</a></article>').join('');
+    return items.map(article => '<article class="card"><div class="meta">' + article.category + '</div><h3>' + article.title + '</h3><p>' + article.description + '</p><a class="link" href="/guides/' + article.slug + '.html">Read guide â†’</a></article>').join('');
   }
 
   function renderArticles() {
@@ -73,7 +73,7 @@
         const gross = net / (value('eff') / 100);
         const area = value('area') * (document.getElementById('unit').value === 'acres' ? 0.404686 : 1);
         const litres = gross * area * 10000;
-        text = Math.round(litres).toLocaleString() + ' litres (' + (litres / 1000).toFixed(1) + ' m³) | Gross depth: ' + gross.toFixed(2) + ' mm';
+        text = Math.round(litres).toLocaleString() + ' litres (' + (litres / 1000).toFixed(1) + ' mÂ³) | Gross depth: ' + gross.toFixed(2) + ' mm';
       }
       if (type === 'fertilizer') text = (value('rate') * value('area')).toFixed(2) + ' kg of product';
       output.querySelector('strong').textContent = text;
@@ -104,3 +104,4 @@
     }
   });
 })();
+

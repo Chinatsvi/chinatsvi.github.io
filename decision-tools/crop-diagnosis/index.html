@@ -1,0 +1,814 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1">
+  <meta name="description" content="What Is Wrong With My Crop? Interactive crop diagnosis tool for farmers. Identify pests, fungal and bacterial diseases, nutrient deficiencies, and spray damage with simple step-by-step guidance.">
+  <title>What Is Wrong With My Crop? Crop Pest, Disease & Problem Diagnosis | AgriBase Decision Tools</title>
+  <link rel="stylesheet" href="/assets/site.css">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link href="https://fonts.googleapis.com/css2?family=Fraunces:wght@600;700&family=Karla:wght@400;700;800&display=swap" rel="stylesheet">
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "WebApplication",
+    "name": "Crop Health & Pest/Disease Diagnostic Tool",
+    "description": "Diagnose crop pests, diseases, nutrient deficiencies and environmental stresses with actionable treatment steps.",
+    "applicationCategory": "Agriculture",
+    "operatingSystem": "Web Browser",
+    "offers": {
+      "@type": "Offer",
+      "price": "0",
+      "priceCurrency": "USD"
+    }
+  }
+  </script>
+  <style>
+    .diagnosis-tool {
+      max-width: 900px;
+      margin: 0 auto;
+      padding: 1rem;
+    }
+
+    .tool-section {
+      background: var(--paper);
+      border-radius: 8px;
+      padding: 1.5rem;
+      margin-bottom: 1.5rem;
+      box-shadow: var(--shadow);
+      border: 1px solid var(--border);
+    }
+
+    .progress-bar {
+      display: flex;
+      gap: 0.5rem;
+      margin-bottom: 2rem;
+      flex-wrap: wrap;
+    }
+
+    .progress-step {
+      flex: 1;
+      min-width: 35px;
+      height: 4px;
+      background: var(--border);
+      border-radius: 2px;
+      transition: background 0.3s;
+    }
+
+    .progress-step.active {
+      background: var(--field);
+    }
+
+    .progress-step.completed {
+      background: var(--field-mid);
+    }
+
+    .step-number {
+      font-family: var(--display);
+      font-weight: 700;
+      color: var(--gold);
+      font-size: 0.9rem;
+      margin-bottom: 0.5rem;
+    }
+
+    .question-group {
+      margin-bottom: 1.5rem;
+    }
+
+    .question-label {
+      font-weight: 700;
+      margin-bottom: 0.5rem;
+      color: var(--field);
+      font-size: 1.1rem;
+      font-family: var(--display);
+    }
+
+    .why-asking {
+      background: var(--cream);
+      border-left: 4px solid var(--field);
+      padding: 1rem;
+      margin: 1rem 0;
+      border-radius: 0 4px 4px 0;
+    }
+
+    .why-asking-title {
+      font-weight: 700;
+      color: var(--field);
+      margin-bottom: 0.5rem;
+      font-family: var(--display);
+    }
+
+    .option-buttons {
+      display: flex;
+      flex-direction: column;
+      gap: 0.75rem;
+    }
+
+    .option-button {
+      padding: 1rem 1.25rem;
+      border: 2px solid var(--border);
+      background: var(--paper);
+      color: var(--ink);
+      border-radius: 8px;
+      font-size: 1rem;
+      font-weight: 600;
+      cursor: pointer;
+      transition: all 0.2s;
+      text-align: left;
+      font-family: var(--body);
+    }
+
+    .option-button:hover {
+      border-color: var(--field);
+      background: var(--tint);
+    }
+
+    .option-button.selected {
+      background: var(--field);
+      color: var(--cream);
+      border-color: var(--field);
+    }
+
+    .symptom-check-card {
+      background: var(--cream);
+      border: 1px solid var(--border);
+      border-radius: 8px;
+      padding: 0.85rem 1rem;
+      margin-bottom: 0.65rem;
+      transition: background 0.2s;
+    }
+
+    .symptom-check-card:hover {
+      background: var(--paper);
+    }
+
+    .condition-card {
+      background: var(--cream);
+      border-radius: 8px;
+      padding: 1.1rem;
+      margin-bottom: 0.85rem;
+      border: 1px solid var(--border);
+    }
+
+    .final-result {
+      background: var(--paper);
+      border-radius: 12px;
+      padding: 2rem;
+      margin-top: 2rem;
+      box-shadow: var(--shadow);
+      border: 1px solid var(--border);
+    }
+
+    .result-status {
+      font-size: 1.3rem;
+      font-weight: 800;
+      padding: 1.1rem;
+      border-radius: 8px;
+      text-align: center;
+      margin-bottom: 1.5rem;
+      font-family: var(--display);
+      letter-spacing: 0.5px;
+    }
+
+    .result-status.good {
+      background: #f0fff0;
+      color: var(--field);
+      border: 2px solid #a3e0a3;
+    }
+
+    .result-status.warning {
+      background: #fff8e6;
+      color: #a05a00;
+      border: 2px solid var(--gold);
+    }
+
+    .result-status.danger {
+      background: #fff0f0;
+      color: var(--soil);
+      border: 2px solid #ffa8a8;
+    }
+
+    .summary-box {
+      background: var(--cream);
+      border-radius: 8px;
+      padding: 1.5rem;
+      margin: 1.5rem 0;
+      border: 1px solid var(--border);
+    }
+
+    .summary-title {
+      font-weight: 700;
+      margin-bottom: 1rem;
+      color: var(--field);
+      font-family: var(--display);
+      font-size: 1.15rem;
+    }
+
+    .summary-item {
+      display: flex;
+      justify-content: space-between;
+      margin-bottom: 0.75rem;
+      padding-bottom: 0.75rem;
+      border-bottom: 1px solid var(--border);
+      flex-wrap: wrap;
+      gap: 0.5rem;
+    }
+
+    .summary-item:last-child {
+      border-bottom: none;
+    }
+
+    .summary-label {
+      font-weight: 600;
+      color: var(--muted);
+    }
+
+    .summary-value {
+      color: var(--field);
+      font-weight: 700;
+    }
+
+    .action-buttons {
+      display: flex;
+      flex-direction: column;
+      gap: 0.75rem;
+      margin-top: 1.5rem;
+    }
+
+    .action-button {
+      padding: 1rem 1.5rem;
+      border: none;
+      border-radius: 8px;
+      font-size: 1rem;
+      font-weight: 700;
+      cursor: pointer;
+      transition: all 0.2s;
+      font-family: var(--body);
+      text-align: center;
+      text-decoration: none;
+    }
+
+    .action-button.primary {
+      background: var(--field);
+      color: var(--cream);
+    }
+
+    .action-button.primary:hover {
+      background: var(--field-dark);
+    }
+
+    .action-button.secondary {
+      background: var(--muted);
+      color: var(--cream);
+    }
+
+    .action-button.secondary:hover {
+      background: var(--ink);
+    }
+
+    .action-button.outline {
+      background: var(--paper);
+      color: var(--field);
+      border: 2px solid var(--field);
+    }
+
+    .action-button.outline:hover {
+      background: var(--cream);
+    }
+
+    .disclaimer {
+      background: #fff9e6;
+      border-left: 4px solid var(--gold);
+      border-radius: 0 8px 8px 0;
+      padding: 1rem;
+      margin: 1.5rem 0;
+      font-size: 0.88rem;
+      color: var(--ink);
+      line-height: 1.6;
+    }
+
+    .next-actions {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+      gap: 1rem;
+      margin-top: 1.5rem;
+    }
+
+    .next-action-card {
+      background: var(--cream);
+      border-radius: 8px;
+      padding: 1.1rem;
+      text-align: center;
+      text-decoration: none;
+      color: var(--field);
+      transition: all 0.2s;
+      border: 1px solid var(--border);
+      display: block;
+    }
+
+    .next-action-card:hover {
+      background: var(--paper);
+      transform: translateY(-2px);
+      border-color: var(--field);
+    }
+
+    .hidden {
+      display: none;
+    }
+
+    .fade-in {
+      animation: fadeIn 0.3s ease-in;
+    }
+
+    @keyframes fadeIn {
+      from { opacity: 0; transform: translateY(8px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+
+    .term-box {
+      background: var(--tint);
+      border-left: 4px solid var(--field);
+      padding: 1rem;
+      margin: 1.25rem 0;
+      border-radius: 0 6px 6px 0;
+    }
+
+    @media (max-width: 600px) {
+      .diagnosis-tool {
+        padding: 0.5rem;
+      }
+      .tool-section {
+        padding: 1rem;
+      }
+      .final-result {
+        padding: 1.25rem;
+      }
+      .next-actions {
+        grid-template-columns: 1fr;
+      }
+    }
+  </style>
+</head>
+<body>
+  <div data-site-header></div>
+  <header class="page-hero">
+    <div class="container">
+      <div class="breadcrumb">
+        <a href="/">Home</a> / <a href="/decision-tools/">Decision Tools</a> / What Is Wrong With My Crop?
+      </div>
+      <div class="eyebrow">Pest, Disease & Crop Problem Decision</div>
+      <h1>What Is Wrong With My Crop?</h1>
+      <p class="lead">Answer simple visual questions about your sick plants to identify pests, diseases, nutrient deficiencies, or chemical burns, with immediate step-by-step treatment solutions.</p>
+    </div>
+  </header>
+
+  <main class="section">
+    <div class="container">
+      <div class="diagnosis-tool">
+        
+        <!-- Progress Bar -->
+        <div class="progress-bar" id="progressBar">
+          <div class="progress-step active" data-step="1"></div>
+          <div class="progress-step" data-step="2"></div>
+          <div class="progress-step" data-step="3"></div>
+          <div class="progress-step" data-step="4"></div>
+          <div class="progress-step" data-step="5"></div>
+          <div class="progress-step" data-step="6"></div>
+          <div class="progress-step" data-step="7"></div>
+        </div>
+
+        <!-- Start Screen -->
+        <div class="tool-section fade-in" id="startScreen">
+          <h2 style="text-align: center; margin-bottom: 1rem;">Crop Problem Diagnostic Check</h2>
+          <p style="text-align: center; font-size: 1.05rem; margin-bottom: 1.5rem; color: var(--muted);">
+            Are your leaves yellowing, fruit rotting, or holes appearing in your crop? Check what is harming your plants before wasting money on the wrong sprays or fertilizers.
+          </p>
+          <div class="why-asking">
+            <div class="why-asking-title">Why accurate diagnosis matters</div>
+            <p>Spraying insecticide on a fungal disease wastes money and does nothing to save the crop. Spraying fertilizer when roots are rotting can kill plants faster. This tool helps you pinpoint the exact cause and take the right action today.</p>
+          </div>
+          <div class="condition-card">
+            <div style="font-weight: 700; color: var(--field); margin-bottom: 0.5rem;">What you will get:</div>
+            <ul style="margin: 0 0 0 1.25rem; font-size: 0.95rem; line-height: 1.6;">
+              <li><strong>Most Likely Cause:</strong> Pest, fungal/bacterial disease, nutrient shortage, or weather/chemical stress.</li>
+              <li><strong>Immediate Stop-Loss Action:</strong> What you must do in the next 24 hours.</li>
+              <li><strong>Safe Treatment Options:</strong> Organic, cultural, and chemical remedies with exact dilution rates and safety waiting periods.</li>
+              <li><strong>Prevention for Future Seasons:</strong> How to stop the problem returning.</li>
+            </ul>
+          </div>
+          <div class="action-buttons">
+            <button class="action-button primary" onclick="startDiagnosisTool()">Start Crop Health Diagnosis →</button>
+          </div>
+        </div>
+
+        <!-- Step 1: Crop Selection & Stage -->
+        <div class="tool-section hidden fade-in" id="step1Crop">
+          <div class="step-number">STEP 1 OF 6</div>
+          <h2>Which crop is having problems?</h2>
+          <div class="why-asking">
+            <div class="why-asking-title">Why crop type and growth stage matter</div>
+            <p>Different crops face distinct enemies. For example, maize is targeted by Fall Armyworm, tomatoes by Late Blight and Tuta Absoluta, and cabbages by Diamondback Moth. The growth stage also tells us whether the problem affects establishment or yield.</p>
+          </div>
+          
+          <div class="question-group">
+            <label class="question-label">Select your crop</label>
+            <div class="option-buttons" id="cropTypeButtons">
+              <button class="option-button" data-value="maize" onclick="selectCropType('maize')">🌽 Maize / Corn</button>
+              <button class="option-button" data-value="tomato" onclick="selectCropType('tomato')">🍅 Tomato</button>
+              <button class="option-button" data-value="cabbage" onclick="selectCropType('cabbage')">🥬 Cabbage, Kale, Rape, Brassicas</button>
+              <button class="option-button" data-value="onion" onclick="selectCropType('onion')">🧅 Onion, Garlic, Shallots</button>
+              <button class="option-button" data-value="potato" onclick="selectCropType('potato')">🥔 Irish Potato</button>
+              <button class="option-button" data-value="beans" onclick="selectCropType('beans')">🫘 Beans, Soybeans, Groundnuts, Legumes</button>
+              <button class="option-button" data-value="pepper" onclick="selectCropType('pepper')">🌶️ Peppers / Chilies</button>
+              <button class="option-button" data-value="wheat" onclick="selectCropType('wheat')">🌾 Wheat / Barley / Sorghum</button>
+              <button class="option-button" data-value="general" onclick="selectCropType('general')">🌱 Other Field or Vegetable Crop</button>
+            </div>
+          </div>
+
+          <div class="question-group">
+            <label class="question-label">What is the current growth stage?</label>
+            <div class="option-buttons" id="growthStageButtons">
+              <button class="option-button" data-value="seedling" onclick="selectGrowthStage('seedling')">1. Seedling / Emergence (first 2-3 weeks after planting)</button>
+              <button class="option-button" data-value="vegetative" onclick="selectGrowthStage('vegetative')">2. Vegetative growth (actively developing leaves and stems)</button>
+              <button class="option-button" data-value="flowering_fruiting" onclick="selectGrowthStage('flowering_fruiting')">3. Flowering, tasseling, or fruit/tuber formation</button>
+              <button class="option-button" data-value="maturity" onclick="selectGrowthStage('maturity')">4. Near harvest / ripening</button>
+            </div>
+          </div>
+
+          <div class="action-buttons">
+            <button class="action-button primary" onclick="confirmStep1()">Continue to Plant Part →</button>
+            <button class="action-button secondary" onclick="goBack()">Back</button>
+          </div>
+        </div>
+
+        <!-- Step 2: Plant Part Affected -->
+        <div class="tool-section hidden fade-in" id="step2Part">
+          <div class="step-number">STEP 2 OF 6</div>
+          <h2>Where do you see the most damage?</h2>
+          <div class="why-asking">
+            <div class="why-asking-title">Why the affected plant part matters</div>
+            <p>Symptoms on old bottom leaves usually point to mobile nutrient shortages (like Nitrogen or Potassium) or soil-splashed blights. Symptoms on fruit point to calcium imbalances or caterpillars. Wilting of the entire green plant points to root rot or vascular bacterial blockages.</p>
+          </div>
+
+          <div class="question-group">
+            <label class="question-label">Select the main part showing sickness:</label>
+            <div class="option-buttons" id="affectedPartButtons">
+              <button class="option-button" data-value="leaves" onclick="selectAffectedPart('leaves')">🍃 Leaves (yellowing, holes, spots, curling, wilting)</button>
+              <button class="option-button" data-value="stem" onclick="selectAffectedPart('stem')">🪵 Stalk / Stem (boring holes, blackening, rotting at base)</button>
+              <button class="option-button" data-value="fruit" onclick="selectAffectedPart('fruit')">🍅 Fruit, Pods, Cobs, or Tubers (spots, black bottom, rotting, holes)</button>
+              <button class="option-button" data-value="roots" onclick="selectAffectedPart('roots')">🌱 Roots / Crown (black, mushy, stunted, knots/galls)</button>
+              <button class="option-button" data-value="entire_plant" onclick="selectAffectedPart('entire_plant')">🥀 Entire Plant (sudden wilting, severe stunting, dying off)</button>
+            </div>
+          </div>
+
+          <div class="action-buttons">
+            <button class="action-button primary" onclick="confirmStep2()">Continue to Symptoms →</button>
+            <button class="action-button secondary" onclick="goBack()">Back</button>
+          </div>
+        </div>
+
+        <!-- Step 3: Visual Symptoms Checklist -->
+        <div class="tool-section hidden fade-in" id="step3Symptoms">
+          <div class="step-number">STEP 3 OF 6</div>
+          <h2>What specific signs do you see?</h2>
+          <p style="margin-bottom: 1rem; color: var(--muted);">Tick all symptoms that match what you observe in the field:</p>
+
+          <div class="question-group" id="symptomsContainer">
+            <!-- Dynamically populated -->
+          </div>
+
+          <div class="action-buttons">
+            <button class="action-button primary" onclick="confirmStep3()">Continue to Field Pattern →</button>
+            <button class="action-button secondary" onclick="goBack()">Back</button>
+          </div>
+        </div>
+
+        <!-- Step 4: Field Distribution and Speed -->
+        <div class="tool-section hidden fade-in" id="step4Pattern">
+          <div class="step-number">STEP 4 OF 6</div>
+          <h2>How is the problem spreading in the field?</h2>
+          <div class="why-asking">
+            <div class="why-asking-title">Why field distribution and speed matter</div>
+            <p>If damage happened overnight across an entire straight line, it is almost always chemical spray drift, frost, or fertilizer burn. If it spreads gradually plant-by-plant in circular patches, it is usually a living pest or fungal infection.</p>
+          </div>
+
+          <div class="question-group">
+            <label class="question-label">Where are sick plants located?</label>
+            <div class="option-buttons" id="distributionButtons">
+              <button class="option-button" data-value="scattered" onclick="selectDistribution('scattered')">Scattered random individual plants across the field</button>
+              <button class="option-button" data-value="patches" onclick="selectDistribution('patches')">Growing circular patches or specific beds</button>
+              <button class="option-button" data-value="widespread" onclick="selectDistribution('widespread')">Widespread across almost every single plant</button>
+              <button class="option-button" data-value="low_spots" onclick="selectDistribution('low_spots')">Mainly in low-lying water-puddling or poor drainage spots</button>
+              <button class="option-button" data-value="along_edges" onclick="selectDistribution('along_edges')">Along field borders and edges next to bush or neighbors</button>
+            </div>
+          </div>
+
+          <div class="question-group">
+            <label class="question-label">How fast did the symptoms appear?</label>
+            <div class="option-buttons" id="speedButtons">
+              <button class="option-button" data-value="rapid" onclick="selectOnsetSpeed('rapid')">Very fast (within 24 to 72 hours)</button>
+              <button class="option-button" data-value="moderate" onclick="selectOnsetSpeed('moderate')">Moderate (over 1 to 2 weeks)</button>
+              <button class="option-button" data-value="slow" onclick="selectOnsetSpeed('slow')">Slow & gradual (developing over several weeks)</button>
+            </div>
+          </div>
+
+          <div class="action-buttons">
+            <button class="action-button primary" onclick="confirmStep4()">Continue to Field History →</button>
+            <button class="action-button secondary" onclick="goBack()">Back</button>
+          </div>
+        </div>
+
+        <!-- Step 5: Weather and Chemical History -->
+        <div class="tool-section hidden fade-in" id="step5History">
+          <div class="step-number">STEP 5 OF 6</div>
+          <h2>Recent Weather and Chemical History</h2>
+          
+          <div class="question-group">
+            <label class="question-label">What has the weather been like in the last 7-14 days?</label>
+            <div class="option-buttons" id="weatherHistoryButtons">
+              <button class="option-button" data-value="wet_cloudy" onclick="selectWeatherHistory('wet_cloudy')">🌧️ Wet, rainy, cloudy, or high humidity / mist</button>
+              <button class="option-button" data-value="hot_dry" onclick="selectWeatherHistory('hot_dry')">☀️ Very hot, bright, dry, and windy</button>
+              <button class="option-button" data-value="cold_frost" onclick="selectWeatherHistory('cold_frost')">❄️ Sudden cold snap or frosty mornings</button>
+              <button class="option-button" data-value="normal" onclick="selectWeatherHistory('normal')">⛅ Moderate normal seasonal weather</button>
+            </div>
+          </div>
+
+          <div class="question-group">
+            <label class="question-label">Did you or your neighbor apply any spray or fertilizer recently?</label>
+            <div class="option-buttons" id="sprayHistoryButtons">
+              <button class="option-button" data-value="no_sprays" onclick="selectSprayHistory('no_sprays')">No chemicals or fertilizers applied recently</button>
+              <button class="option-button" data-value="recent_herbicide" onclick="selectSprayHistory('recent_herbicide')">Applied weedkiller (herbicide) or neighbor sprayed nearby</button>
+              <button class="option-button" data-value="recent_fertilizer" onclick="selectSprayHistory('recent_fertilizer')">Applied dry fertilizer or foliar spray in the last 5 days</button>
+              <button class="option-button" data-value="recent_pesticide" onclick="selectSprayHistory('recent_pesticide')">Sprayed insecticide or fungicide recently</button>
+            </div>
+          </div>
+
+          <div class="action-buttons">
+            <button class="action-button primary" onclick="confirmStep5()">Continue to Close Inspection →</button>
+            <button class="action-button secondary" onclick="goBack()">Back</button>
+          </div>
+        </div>
+
+        <!-- Step 6: Close Physical Inspection -->
+        <div class="tool-section hidden fade-in" id="step6Inspection">
+          <div class="step-number">STEP 6 OF 6</div>
+          <h2>Close-up Inspection of Sick Plants</h2>
+          <div class="why-asking">
+            <div class="why-asking-title">Field scouting tip</div>
+            <p>Pick one sick plant and look closely under the leaves, inside the funnels, and at the roots. Check for live crawling insects, sticky honeydew, or foul rot smells.</p>
+          </div>
+
+          <div class="question-group">
+            <label class="question-label">Do you see live insects or pests?</label>
+            <div class="option-buttons" id="insectPresenceButtons">
+              <button class="option-button" data-value="caterpillars" onclick="selectInsectPresence('caterpillars')">🐛 Caterpillars, worms, or borers visible</button>
+              <button class="option-button" data-value="tiny_specks" onclick="selectInsectPresence('tiny_specks')">🐜 Tiny crawling specks under leaves (aphids, mites, thrips, whiteflies)</button>
+              <button class="option-button" data-value="beetles" onclick="selectInsectPresence('beetles')">🪲 Beetles, grasshoppers, or hard-shelled bugs</button>
+              <button class="option-button" data-value="none_visible" onclick="selectInsectPresence('none_visible')">🔍 No insects visible, only spots, rot, or discolouration</button>
+            </div>
+          </div>
+
+          <div class="question-group">
+            <label class="question-label">How do the roots and lower stem look?</label>
+            <div class="option-buttons" id="rootConditionButtons">
+              <button class="option-button" data-value="healthy_white" onclick="selectRootCondition('healthy_white')">Roots are healthy, clean, white/cream, and firm</button>
+              <button class="option-button" data-value="black_mushy" onclick="selectRootCondition('black_mushy')">Roots are black, brown, soft, mushy, or smell rotten</button>
+              <button class="option-button" data-value="knots_swollen" onclick="selectRootCondition('knots_swollen')">Roots have strange swellings, bumps, or knots (nematodes)</button>
+              <button class="option-button" data-value="not_checked" onclick="selectRootCondition('not_checked')">Have not dug up roots to check</button>
+            </div>
+          </div>
+
+          <div class="action-buttons">
+            <button class="action-button primary" onclick="confirmStep6()">Calculate Diagnosis & Treatment Plan →</button>
+            <button class="action-button secondary" onclick="goBack()">Back</button>
+          </div>
+        </div>
+
+        <!-- Final Results Screen -->
+        <div class="final-result hidden fade-in" id="finalResult">
+          <h2 style="text-align: center; margin-bottom: 0.5rem;">CROP HEALTH DIAGNOSTIC REPORT</h2>
+          <div class="result-status warning" id="resultStatus">DIAGNOSIS COMPLETE</div>
+
+          <div class="summary-box">
+            <div class="summary-title">Inspection Summary</div>
+            <div class="summary-item">
+              <div class="summary-label">Crop & Growth Stage:</div>
+              <div class="summary-value" id="summaryCrop"></div>
+            </div>
+            <div class="summary-item">
+              <div class="summary-label">Main Affected Part:</div>
+              <div class="summary-value" id="summaryPart"></div>
+            </div>
+            <div class="summary-item">
+              <div class="summary-label">Problem Category:</div>
+              <div class="summary-value" id="summaryCategory"></div>
+            </div>
+            <div class="summary-item">
+              <div class="summary-label">Action Urgency:</div>
+              <div class="summary-value" id="summaryUrgency"></div>
+            </div>
+          </div>
+
+          <!-- Problem Description -->
+          <div class="summary-box" style="background: #fff; border-left: 5px solid var(--field);">
+            <div class="summary-title" style="color: var(--field);">WHAT IS HAPPENING TO YOUR CROP</div>
+            <div id="problemDescription"></div>
+          </div>
+
+          <!-- Immediate Action -->
+          <div class="summary-box" style="background: #fff0f0; border-left: 5px solid var(--soil); border-color: #ffd0d0;">
+            <div class="summary-title" style="color: var(--soil);">🚨 IMMEDIATE ACTION (DO THIS IN THE NEXT 24 HOURS)</div>
+            <p id="immediateActionText" style="font-size: 1.05rem; font-weight: 700; line-height: 1.6; color: var(--ink);"></p>
+          </div>
+
+          <!-- Treatment Plan -->
+          <div class="summary-box">
+            <div class="summary-title">📋 RECOMMENDED STEP-BY-STEP TREATMENT PLAN</div>
+            <ol id="treatmentList" style="margin: 0.5rem 0 0 1.5rem; line-height: 1.65;"></ol>
+          </div>
+
+          <!-- Cultural and Organic Controls -->
+          <div class="summary-box" style="background: #f4faf4; border-left: 5px solid var(--field-mid);">
+            <div class="summary-title" style="color: var(--field);">🌿 NATURAL & CULTURAL REMEDIES (NO CHEMICAL COST)</div>
+            <ul id="culturalList" style="margin: 0.5rem 0 0 1.5rem; line-height: 1.65;"></ul>
+          </div>
+
+          <!-- Chemical Remedies & Safety -->
+          <div class="summary-box">
+            <div class="summary-title">🧪 CHEMICAL OPTIONS & SAFE WAITING PERIODS</div>
+            <p style="font-size: 0.9rem; color: var(--muted); margin-bottom: 1rem;">
+              Always follow the <strong>Pre-Harvest Interval (PHI)</strong>—the required number of days to wait between spraying and safely harvesting for human consumption.
+            </p>
+            <div id="chemicalOptionsContainer"></div>
+          </div>
+
+          <!-- Difficult Terms Explained -->
+          <div class="term-box">
+            <div style="font-weight: 700; color: var(--field); margin-bottom: 0.5rem; font-family: var(--display); font-size: 1.05rem;">
+              📖 AGRICULTURAL TERMS EXPLAINED SIMPLY FOR THIS DIAGNOSIS
+            </div>
+            <div id="termsContainer"></div>
+          </div>
+
+          <!-- Prevention for Future -->
+          <div class="summary-box">
+            <div class="summary-title">🛡️ HOW TO PREVENT THIS IN FUTURE SEASONS</div>
+            <ul id="preventionList" style="margin: 0.5rem 0 0 1.5rem; line-height: 1.65;"></ul>
+          </div>
+
+          <!-- Secondary Possibilities -->
+          <div class="summary-box" style="background: var(--cream);">
+            <div class="summary-title" style="color: var(--muted); font-size: 1rem;">OTHER POSSIBLE CAUSES TO KEEP IN MIND</div>
+            <div id="secondaryPossibilities"></div>
+          </div>
+
+          <div class="disclaimer">
+            <strong>Important Farmer Advice:</strong> This tool provides diagnostic decision support based on agronomic research and field scouting patterns. If symptoms are severe and spreading quickly, collect 2-3 fresh sample plants in a clean plastic bag and take them immediately to your nearest local agricultural extension officer or certified agronomist for microscopic lab confirmation.
+          </div>
+
+          <!-- Next Actions -->
+          <h3 style="margin-top: 2rem;">Related Decisions & Calculators</h3>
+          <div class="next-actions">
+            <a href="/decision-tools/soil-needs/" class="next-action-card">
+              <div style="font-weight: 700; margin-bottom: 0.25rem;">What Does My Soil Need? →</div>
+              <div style="font-size: 0.85rem; color: var(--muted);">Check fertilizer and pH requirements</div>
+            </a>
+            <a href="/decision-tools/water-needs/" class="next-action-card">
+              <div style="font-weight: 700; margin-bottom: 0.25rem;">Water Needs Calculator →</div>
+              <div style="font-size: 0.85rem; color: var(--muted);">Fix overwatering or drought stress</div>
+            </a>
+            <a href="/calculators/fertilizer.html" class="next-action-card">
+              <div style="font-weight: 700; margin-bottom: 0.25rem;">Fertilizer Calculator →</div>
+              <div style="font-size: 0.85rem; color: var(--muted);">Calculate top-dressing kg for your field</div>
+            </a>
+          </div>
+
+          <div class="action-buttons">
+            <button class="action-button primary" onclick="saveResult()">Save Diagnosis to My Phone/Browser</button>
+            <button class="action-button outline" onclick="downloadResult()">Download Printable Diagnostic Summary (.txt)</button>
+            <button class="action-button secondary" onclick="restartTool()">Start a New Diagnosis</button>
+          </div>
+
+        </div>
+
+      </div>
+    </div>
+  </main>
+
+  <!-- In-Depth Educational Guide for Farmers -->
+  <section class="section alt">
+    <div class="container">
+      <div class="section-head">
+        <div class="eyebrow">Practical Farmer Field Guide</div>
+        <h2>Visual Guide to Crop Symptoms: Pest vs Disease vs Nutrient</h2>
+        <p>Before buying expensive bottles of chemical spray, use this guide to accurately distinguish between insect attacks, microbial infections, nutrient deficiencies, and environmental stresses.</p>
+      </div>
+
+      <div class="grid">
+        <article class="card">
+          <h3>1. Chewing Insects (Pests)</h3>
+          <p><strong>Look for:</strong> Clean ragged holes in leaves, missing leaf margins, sawdust-like droppings (frass), or bored holes in stalks and fruit.</p>
+          <p><strong>Key Examples:</strong> Fall Armyworm, African Bollworm, Cutworms, Grasshoppers, Stalk borers.</p>
+          <p><strong>First Response:</strong> Target the young caterpillar stage before they hide inside stems or cobs. Use biologicals (Bt) or selective insecticides.</p>
+        </article>
+
+        <article class="card">
+          <h3>2. Sucking Pests (Vectors)</h3>
+          <p><strong>Look for:</strong> Sticky clear honeydew on leaves, black sooty mold, curled leaf edges, silvery bleached leaves, or sudden leaf yellowing.</p>
+          <p><strong>Key Examples:</strong> Aphids, Red Spider Mites, Thrips, Whiteflies, Leafhoppers.</p>
+          <p><strong>First Response:</strong> Spray under leaves where sucking bugs hide. Use soapy water, neem oil, or translaminar/systemic sprays with a wetting agent.</p>
+        </article>
+
+        <article class="card">
+          <h3>3. Fungal Diseases (Molds & Blights)</h3>
+          <p><strong>Look for:</strong> Brown or black water-soaked spots, fuzzy powdery white/grey growth under leaves, concentric rings on spots, or rapid leaf death during wet humid weather.</p>
+          <p><strong>Key Examples:</strong> Early Blight, Late Blight, Powdery Mildew, Rust, Anthracnose.</p>
+          <p><strong>First Response:</strong> Stop overhead watering immediately. Spray preventative copper or mancozeb before rains, or curative systemic fungicides if already infected.</p>
+        </article>
+
+        <article class="card">
+          <h3>4. Bacterial Diseases</h3>
+          <p><strong>Look for:</strong> Sudden wilting while leaves are still green, foul smelling rotten stems or cabbage heads, V-shaped yellow wedges on leaf edges with black veins.</p>
+          <p><strong>Key Examples:</strong> Bacterial Wilt, Black Rot, Soft Rot.</p>
+          <p><strong>First Response:</strong> Remove and burn infected plants immediately. Do not work in wet fields. Rotate crops for at least 3 years away from that plant family.</p>
+        </article>
+
+        <article class="card">
+          <h3>5. Nutrient Shortages</h3>
+          <p><strong>Look for:</strong> Smooth colour changes across entire fields without rotting, chewed holes, or fungal mold. Older bottom leaves yellowing first (Nitrogen), purple leaf undersides (Phosphorus), or burnt leaf rims (Potassium).</p>
+          <p><strong>First Response:</strong> Apply balanced basal fertilizer, top-dressing, or foliar feed. Check soil pH to prevent nutrient lockup.</p>
+        </article>
+
+        <article class="card">
+          <h3>6. Chemical & Weather Burns</h3>
+          <p><strong>Look for:</strong> Sudden twisted curling leaves (strap leaves) within 48 hours of spraying, bleached white burn spots on upper leaves facing the sun, or sharp boundary lines matching spray paths.</p>
+          <p><strong>First Response:</strong> Wash foliage with clean water if recent. Apply amino acid / seaweed biostimulant tonics to help plants recover.</p>
+        </article>
+      </div>
+    </div>
+  </section>
+
+  <!-- Plain English Agricultural Glossary -->
+  <section class="section">
+    <div class="container">
+      <div class="section-head">
+        <div class="eyebrow">Farmer Dictionary</div>
+        <h2>Crop Health Terms Explained in Simple English</h2>
+      </div>
+      
+      <div class="article">
+        <h3>Pre-Harvest Interval (PHI) / Waiting Period</h3>
+        <p><strong>What it means:</strong> The mandatory number of days a farmer must wait between spraying a pesticide and harvesting the crop. Eating or selling food before the PHI expires leaves dangerous chemical poison inside the food which can poison consumers and cause market bans.</p>
+
+        <h3>Systemic Chemical</h3>
+        <p><strong>What it means:</strong> A chemical medicine that enters through the leaves or roots and travels through the plant sap to protect the entire plant from the inside. It cannot be washed off by rain once absorbed (usually 2-3 hours after spraying).</p>
+
+        <h3>Contact Chemical</h3>
+        <p><strong>What it means:</strong> A chemical medicine that acts only on the surface where the spray droplet lands. It acts like an outer protective shield. If rain washes it off before it dries, its protection is lost.</p>
+
+        <h3>Chlorosis</h3>
+        <p><strong>What it means:</strong> The yellowing of green plant tissue caused by a loss of chlorophyll (the green food-making pigment). It can be caused by lack of nitrogen, poor drainage, or virus infection.</p>
+
+        <h3>Necrosis</h3>
+        <p><strong>What it means:</strong> Dead, brown, dry, or black plant tissue that has completely collapsed.</p>
+
+        <h3>Integrated Pest Management (IPM)</h3>
+        <p><strong>What it means:</strong> A smart, money-saving farming method that combines good land hygiene, resistant seeds, companion plants, and hand-picking, and only uses chemical sprays as a last resort when pest numbers exceed economic loss thresholds.</p>
+
+        <h3>Frass</h3>
+        <p><strong>What it means:</strong> The waste droppings left behind by insects and caterpillars. In maize funnels, it looks like wet sawdust.</p>
+
+        <h3>Vector</h3>
+        <p><strong>What it means:</strong> An insect (like an aphid, whitefly, or leafhopper) that carries a plant virus from a sick plant and injects it into a healthy plant when feeding on sap.</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- FAQ Section -->
+  <section class="section alt">
+    <div class="container">
+      <div class="section-head">
+        <div class="eyebrow">Frequently Asked Questions</div>
+        <h2>Crop Diagnosis FAQ</h2>
+      </div>
+      <div class="article">
+        <h3>Why are my bottom leaves turning yellow while top leaves stay green?</h3>
+        <p>This is almost always a sign of <strong>Nitrogen deficiency</strong> or natural plant aging. Nitrogen is a mobile nutrient, meaning the plant robs nitrogen from its older bottom leaves to feed new growing leaves at the top. If the yellowing starts in an inverted V-shape at the leaf tip, apply a nitrogen top-dressing (like Ammonium Nitrate or Urea) around the moist root zone.</p>
+
+        <h3>Why did my tomatoes wilt completely while the leaves were still green?</h3>
+        <p>Sudden wilting of green tomato plants usually indicates <strong>Bacterial Wilt (Ralstonia)</strong> or severe root drowning/rot. You can do the quick "Glass of Water Test": cut a 5cm piece of the lower stem and suspend it in a clean glass of clear water. If white milky threads stream down from the cut stem within 2-3 minutes, bacteria have clogged the stem pipelines. Infected plants must be dug up and burned.</p>
+
+        <h3>How do I know if an insect is a friend (beneficial) or a pest?</h3>
+        <p>Not all insects in your field are harmful! Ladybirds, praying mantises, hoverfly larvae, dragonflies, and parasitic wasps are natural friends that eat aphids and caterpillar eggs for free. Chewing caterpillars, leaf-mining grubs, stem borers, and thrips are pests. Never spray broad-spectrum cheap chemicals indiscriminately, as they kill your free natural predators and cause pest populations to explode afterwards.</p>
+
+        <h3>Can I mix insecticide, fungicide, and foliar fertilizer in one spray tank?</h3>
+        <p>Yes, but you must be careful about chemical compatibility. Always do a "Jar Test" first: mix small amounts in a clean 1-litre glass jar with water. If the mixture turns milky curd, forms thick jelly, gets hot, or settles into a hard precipitate, they are incompatible and must NEVER be mixed. Never mix copper fungicides with acidic foliar fertilizers or phosphorus sprays.</p>
+      </div>
+    </div>
+  </section>
+
+  <div data-site-footer></div>
+  <script src="/assets/crop-diagnosis-tool.js"></script>
+  <script src="/assets/site.js"></script>
+</body>
+</html>

@@ -1,0 +1,771 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1">
+  <meta name="description" content="Farm Risk Check. Interactive 360-degree farm risk assessment tool. Audit weather, market, financial, operational, and biosecurity vulnerabilities to build a resilient, profitable farming business.">
+  <title>Farm Risk Check | Comprehensive Farm Resilience Audit | AgriBase Decision Tools</title>
+  <link rel="stylesheet" href="/assets/site.css">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link href="https://fonts.googleapis.com/css2?family=Fraunces:wght@600;700&family=Karla:wght@400;700;800&display=swap" rel="stylesheet">
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "WebApplication",
+    "name": "Farm Risk & Resilience Assessment Calculator",
+    "description": "Assess farm vulnerabilities across weather, market, finance, operations, and biosecurity to prevent catastrophic losses.",
+    "applicationCategory": "Agriculture",
+    "operatingSystem": "Web Browser",
+    "offers": {
+      "@type": "Offer",
+      "price": "0",
+      "priceCurrency": "USD"
+    }
+  }
+  </script>
+  <style>
+    .risk-tool {
+      max-width: 900px;
+      margin: 0 auto;
+      padding: 1rem;
+    }
+
+    .tool-section {
+      background: var(--paper);
+      border-radius: 8px;
+      padding: 1.5rem;
+      margin-bottom: 1.5rem;
+      box-shadow: var(--shadow);
+      border: 1px solid var(--border);
+    }
+
+    .progress-bar {
+      display: flex;
+      gap: 0.5rem;
+      margin-bottom: 2rem;
+      flex-wrap: wrap;
+    }
+
+    .progress-step {
+      flex: 1;
+      min-width: 35px;
+      height: 4px;
+      background: var(--border);
+      border-radius: 2px;
+      transition: background 0.3s;
+    }
+
+    .progress-step.active {
+      background: var(--field);
+    }
+
+    .progress-step.completed {
+      background: var(--field-mid);
+    }
+
+    .step-number {
+      font-family: var(--display);
+      font-weight: 700;
+      color: var(--gold);
+      font-size: 0.9rem;
+      margin-bottom: 0.5rem;
+    }
+
+    .question-group {
+      margin-bottom: 1.5rem;
+    }
+
+    .question-label {
+      font-weight: 700;
+      margin-bottom: 0.5rem;
+      color: var(--field);
+      font-size: 1.1rem;
+      font-family: var(--display);
+    }
+
+    .why-asking {
+      background: var(--cream);
+      border-left: 4px solid var(--field);
+      padding: 1rem;
+      margin: 1rem 0;
+      border-radius: 0 4px 4px 0;
+    }
+
+    .why-asking-title {
+      font-weight: 700;
+      color: var(--field);
+      margin-bottom: 0.5rem;
+      font-family: var(--display);
+    }
+
+    .option-buttons {
+      display: flex;
+      flex-direction: column;
+      gap: 0.75rem;
+    }
+
+    .option-button {
+      padding: 1rem 1.25rem;
+      border: 2px solid var(--border);
+      background: var(--paper);
+      color: var(--ink);
+      border-radius: 8px;
+      font-size: 1rem;
+      font-weight: 600;
+      cursor: pointer;
+      transition: all 0.2s;
+      text-align: left;
+      font-family: var(--body);
+    }
+
+    .option-button:hover {
+      border-color: var(--field);
+      background: var(--tint);
+    }
+
+    .option-button.selected {
+      background: var(--field);
+      color: var(--cream);
+      border-color: var(--field);
+    }
+
+    .condition-card {
+      background: var(--cream);
+      border-radius: 8px;
+      padding: 1.15rem;
+      margin-bottom: 0.85rem;
+      border: 1px solid var(--border);
+    }
+
+    .final-result {
+      background: var(--paper);
+      border-radius: 12px;
+      padding: 2rem;
+      margin-top: 2rem;
+      box-shadow: var(--shadow);
+      border: 1px solid var(--border);
+    }
+
+    .result-status {
+      font-size: 1.3rem;
+      font-weight: 800;
+      padding: 1.1rem;
+      border-radius: 8px;
+      text-align: center;
+      margin-bottom: 1.5rem;
+      font-family: var(--display);
+      letter-spacing: 0.5px;
+    }
+
+    .result-status.good {
+      background: #f0fff0;
+      color: var(--field);
+      border: 2px solid #a3e0a3;
+    }
+
+    .result-status.warning {
+      background: #fff8e6;
+      color: #a05a00;
+      border: 2px solid var(--gold);
+    }
+
+    .result-status.danger {
+      background: #fff0f0;
+      color: var(--soil);
+      border: 2px solid #ffa8a8;
+    }
+
+    .summary-box {
+      background: var(--cream);
+      border-radius: 8px;
+      padding: 1.5rem;
+      margin: 1.5rem 0;
+      border: 1px solid var(--border);
+    }
+
+    .summary-title {
+      font-weight: 700;
+      margin-bottom: 1rem;
+      color: var(--field);
+      font-family: var(--display);
+      font-size: 1.15rem;
+    }
+
+    .summary-item {
+      display: flex;
+      justify-content: space-between;
+      margin-bottom: 0.75rem;
+      padding-bottom: 0.75rem;
+      border-bottom: 1px solid var(--border);
+      flex-wrap: wrap;
+      gap: 0.5rem;
+    }
+
+    .summary-item:last-child {
+      border-bottom: none;
+    }
+
+    .summary-label {
+      font-weight: 600;
+      color: var(--muted);
+    }
+
+    .summary-value {
+      color: var(--field);
+      font-weight: 700;
+    }
+
+    .action-buttons {
+      display: flex;
+      flex-direction: column;
+      gap: 0.75rem;
+      margin-top: 1.5rem;
+    }
+
+    .action-button {
+      padding: 1rem 1.5rem;
+      border: none;
+      border-radius: 8px;
+      font-size: 1rem;
+      font-weight: 700;
+      cursor: pointer;
+      transition: all 0.2s;
+      font-family: var(--body);
+      text-align: center;
+      text-decoration: none;
+    }
+
+    .action-button.primary {
+      background: var(--field);
+      color: var(--cream);
+    }
+
+    .action-button.primary:hover {
+      background: var(--field-dark);
+    }
+
+    .action-button.secondary {
+      background: var(--muted);
+      color: var(--cream);
+    }
+
+    .action-button.secondary:hover {
+      background: var(--ink);
+    }
+
+    .action-button.outline {
+      background: var(--paper);
+      color: var(--field);
+      border: 2px solid var(--field);
+    }
+
+    .action-button.outline:hover {
+      background: var(--cream);
+    }
+
+    .disclaimer {
+      background: #fff9e6;
+      border-left: 4px solid var(--gold);
+      border-radius: 0 8px 8px 0;
+      padding: 1rem;
+      margin: 1.5rem 0;
+      font-size: 0.88rem;
+      color: var(--ink);
+      line-height: 1.6;
+    }
+
+    .next-actions {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+      gap: 1rem;
+      margin-top: 1.5rem;
+    }
+
+    .next-action-card {
+      background: var(--cream);
+      border-radius: 8px;
+      padding: 1.1rem;
+      text-align: center;
+      text-decoration: none;
+      color: var(--field);
+      transition: all 0.2s;
+      border: 1px solid var(--border);
+      display: block;
+    }
+
+    .next-action-card:hover {
+      background: var(--paper);
+      transform: translateY(-2px);
+      border-color: var(--field);
+    }
+
+    .hidden {
+      display: none;
+    }
+
+    .fade-in {
+      animation: fadeIn 0.3s ease-in;
+    }
+
+    @keyframes fadeIn {
+      from { opacity: 0; transform: translateY(8px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+
+    .term-box {
+      background: var(--tint);
+      border-left: 4px solid var(--field);
+      padding: 1rem;
+      margin: 1.25rem 0;
+      border-radius: 0 6px 6px 0;
+    }
+
+    @media (max-width: 600px) {
+      .risk-tool {
+        padding: 0.5rem;
+      }
+      .tool-section {
+        padding: 1rem;
+      }
+      .final-result {
+        padding: 1.25rem;
+      }
+      .next-actions {
+        grid-template-columns: 1fr;
+      }
+    }
+  </style>
+</head>
+<body>
+  <div data-site-header></div>
+  <header class="page-hero">
+    <div class="container">
+      <div class="breadcrumb">
+        <a href="/">Home</a> / <a href="/decision-tools/">Decision Tools</a> / Farm Risk Check
+      </div>
+      <div class="eyebrow">Farm Resilience & Risk Decision</div>
+      <h1>Farm Risk Check</h1>
+      <p class="lead">Audit your farm across 5 core risk pillars: Weather, Market, Financial, Operational, and Biosecurity/Legal. Identify fatal business threats before they wipe out your life savings.</p>
+    </div>
+  </header>
+
+  <main class="section">
+    <div class="container">
+      <div class="risk-tool">
+        
+        <!-- Progress Bar -->
+        <div class="progress-bar" id="progressBar">
+          <div class="progress-step active" data-step="1"></div>
+          <div class="progress-step" data-step="2"></div>
+          <div class="progress-step" data-step="3"></div>
+          <div class="progress-step" data-step="4"></div>
+          <div class="progress-step" data-step="5"></div>
+          <div class="progress-step" data-step="6"></div>
+        </div>
+
+        <!-- Start Screen -->
+        <div class="tool-section fade-in" id="startScreen">
+          <h2 style="text-align: center; margin-bottom: 1rem;">360° Farm Resilience Audit</h2>
+          <p style="text-align: center; font-size: 1.05rem; margin-bottom: 1.5rem; color: var(--muted);">
+            Farming is one of the riskiest businesses in the world. Successful commercial farmers don't avoid risk—they identify threats early and put cheap shields in place to protect their investment.
+          </p>
+          <div class="why-asking">
+            <div class="why-asking-title">Why this risk check matters</div>
+            <p>One unexpected drought, one broken water pump, or one unpaid invoice from a middleman can collapse an otherwise profitable farm. This tool scores your vulnerability across all 5 risk pillars and generates a personalized farm protection roadmap.</p>
+          </div>
+          <div class="condition-card">
+            <div style="font-weight: 700; color: var(--field); margin-bottom: 0.5rem;">What you will discover:</div>
+            <ul style="margin: 0 0 0 1.25rem; font-size: 0.95rem; line-height: 1.6;">
+              <li><strong>Overall Risk Score (0-100):</strong> How vulnerable your farm is to catastrophic failure.</li>
+              <li><strong>5-Pillar Scorecard:</strong> Weather, Market, Financial, Operational, and Biosecurity risk breakdown.</li>
+              <li><strong>Top 3 Fatal Threats:</strong> The hidden traps that could bankrupt your farm this season.</li>
+              <li><strong>Practical Protection Roadmap:</strong> Low-cost resilience actions you can implement this month.</li>
+            </ul>
+          </div>
+          <div class="action-buttons">
+            <button class="action-button primary" onclick="startRiskTool()">Start Farm Risk Audit →</button>
+          </div>
+        </div>
+
+        <!-- Step 1: Farm Profile -->
+        <div class="tool-section hidden fade-in" id="step1Profile">
+          <div class="step-number">STEP 1 OF 5</div>
+          <h2>Farm Scale & Main Enterprises</h2>
+
+          <div class="question-group">
+            <label class="question-label">What is the scale of your farm?</label>
+            <div class="option-buttons" id="farmSizeButtons">
+              <button class="option-button selected" data-value="smallholder" onclick="selectFarmSize('smallholder')">
+                🌱 Smallholder / Family Farm (Less than 5 Hectares / 12 Acres)
+              </button>
+              <button class="option-button" data-value="medium" onclick="selectFarmSize('medium')">
+                🚜 Medium Commercial Farm (5 to 25 Hectares)
+              </button>
+              <button class="option-button" data-value="commercial" onclick="selectFarmSize('commercial')">
+                🏢 Large Commercial Enterprise (Over 25 Hectares)
+              </button>
+            </div>
+          </div>
+
+          <div class="action-buttons">
+            <button class="action-button primary" onclick="confirmStep1()">Continue to Weather & Climate Risk →</button>
+            <button class="action-button secondary" onclick="goBack()">Back</button>
+          </div>
+        </div>
+
+        <!-- Step 2: Weather & Climate Risk -->
+        <div class="tool-section hidden fade-in" id="step2Weather">
+          <div class="step-number">STEP 2 OF 5 (PILLAR 1)</div>
+          <h2>Weather & Climate Vulnerability</h2>
+          <div class="why-asking">
+            <div class="why-asking-title">Why water is the #1 farming risk</div>
+            <p>Rain-fed farming carries enormous risk during mid-season dry spells. Having backup irrigation or soil water conservation (mulch) is your strongest defense.</p>
+          </div>
+
+          <div class="question-group">
+            <label class="question-label">What is your water & irrigation setup?</label>
+            <div class="option-buttons" id="waterSourceButtons">
+              <button class="option-button selected" data-value="rainfed_only" onclick="selectWaterSource('rainfed_only')">
+                🌧️ 100% Rain-fed (No irrigation equipment or reliable backup water)
+              </button>
+              <button class="option-button" data-value="partial_irrigation" onclick="selectWaterSource('partial_irrigation')">
+                💧 Partial Irrigation (River, well, or dam that can dry up during extreme heat)
+              </button>
+              <button class="option-button" data-value="reliable_borehole_solar" onclick="selectWaterSource('reliable_borehole_solar')">
+                ☀️ High Reliability (Borehole + Solar Pump + Storage Reservoir)
+              </button>
+            </div>
+          </div>
+
+          <div class="question-group">
+            <label class="question-label">How often do extreme weather events hit your area?</label>
+            <div class="option-buttons" id="weatherHistButtons">
+              <button class="option-button selected" data-value="frequent_droughts" onclick="selectWeatherHistory('frequent_droughts')">
+                Frequent droughts, heatwaves, or delayed rains every 2-3 years
+              </button>
+              <button class="option-button" data-value="seasonal_frost_floods" onclick="selectWeatherHistory('seasonal_frost_floods')">
+                Seasonal frost, severe hail, or waterlogging/floods
+              </button>
+              <button class="option-button" data-value="rare_extremes" onclick="selectWeatherHistory('rare_extremes')">
+                Stable, dependable weather with rare extreme shocks
+              </button>
+            </div>
+          </div>
+
+          <div class="action-buttons">
+            <button class="action-button primary" onclick="confirmStep2()">Continue to Market & Sales Risk →</button>
+            <button class="action-button secondary" onclick="goBack()">Back</button>
+          </div>
+        </div>
+
+        <!-- Step 3: Market & Sales Risk -->
+        <div class="tool-section hidden fade-in" id="step3Market">
+          <div class="step-number">STEP 3 OF 5 (PILLAR 2)</div>
+          <h2>Market Access & Buyer Concentration</h2>
+          <div class="why-asking">
+            <div class="why-asking-title">The single-buyer trap</div>
+            <p>Relying on only one middleman or buyer gives them 100% control over your financial survival. If they offer 50% less at harvest, you have nowhere else to go.</p>
+          </div>
+
+          <div class="question-group">
+            <label class="question-label">How diversified are your buyers?</label>
+            <div class="option-buttons" id="buyerDiversityButtons">
+              <button class="option-button selected" data-value="single_middleman" onclick="selectBuyerDiversity('single_middleman')">
+                1 single buyer or middleman who comes to the farm
+              </button>
+              <button class="option-button" data-value="2_3_buyers" onclick="selectBuyerDiversity('2_3_buyers')">
+                2 to 3 local buyers / open market stalls
+              </button>
+              <button class="option-button" data-value="contracts_and_direct" onclick="selectBuyerDiversity('contracts_and_direct')">
+                Formal contracts + direct retail customers + multiple wholesale channels
+              </button>
+            </div>
+          </div>
+
+          <div class="question-group">
+            <label class="question-label">Do you have on-farm storage to hold produce?</label>
+            <div class="option-buttons" id="storageBufferButtons">
+              <button class="option-button selected" data-value="no_storage" onclick="selectStorageBuffer('no_storage')">
+                No storage — must sell within 48 hours of harvest at whatever price
+              </button>
+              <button class="option-button" data-value="basic_storage" onclick="selectStorageBuffer('basic_storage')">
+                Basic shed / room (can hold produce for 2-4 weeks)
+              </button>
+              <button class="option-button" data-value="hermetic_or_cold" onclick="selectStorageBuffer('hermetic_or_cold')">
+                Hermetic PICS bags / cool chamber (can hold produce for 3 to 12 months)
+              </button>
+            </div>
+          </div>
+
+          <div class="action-buttons">
+            <button class="action-button primary" onclick="confirmStep3()">Continue to Financial & Debt Risk →</button>
+            <button class="action-button secondary" onclick="goBack()">Back</button>
+          </div>
+        </div>
+
+        <!-- Step 4: Financial & Debt Risk -->
+        <div class="tool-section hidden fade-in" id="step4Financial">
+          <div class="step-number">STEP 4 OF 5 (PILLAR 3)</div>
+          <h2>Financial Reserves & Debt Burden</h2>
+          <div class="why-asking">
+            <div class="why-asking-title">Why cash flow kills farms before bad harvests</div>
+            <p>A farm can have bumper crops in the field, but if you have zero cash to pay workers or diesel before harvest, the business stalls into bankruptcy.</p>
+          </div>
+
+          <div class="question-group">
+            <label class="question-label">How many months of operating expenses do you have saved in cash?</label>
+            <div class="option-buttons" id="cashReserveButtons">
+              <button class="option-button selected" data-value="zero" onclick="selectCashReserve('zero')">
+                0 months — 100% dependent on next harvest cash to survive
+              </button>
+              <button class="option-button" data-value="1_to_3_months" onclick="selectCashReserve('1_to_3_months')">
+                1 to 3 months of emergency operating buffer
+              </button>
+              <button class="option-button" data-value="more_than_6_months" onclick="selectCashReserve('more_than_6_months')">
+                Over 6 months of operating cash in reserve
+              </button>
+            </div>
+          </div>
+
+          <div class="question-group">
+            <label class="question-label">What is your farm debt burden?</label>
+            <div class="option-buttons" id="debtLevelButtons">
+              <button class="option-button" data-value="high_debt" onclick="selectDebtLevel('high_debt')">
+                High debt (high-interest loans from micro-financiers or input credit)
+              </button>
+              <button class="option-button selected" data-value="moderate_manageable" onclick="selectDebtLevel('moderate_manageable')">
+                Moderate, manageable debt with low interest
+              </button>
+              <button class="option-button" data-value="zero_debt" onclick="selectDebtLevel('zero_debt')">
+                Zero debt (100% self-funded / equity)
+              </button>
+            </div>
+          </div>
+
+          <div class="question-group">
+            <label class="question-label">How many income sources does your farm have?</label>
+            <div class="option-buttons" id="incomeSourcesButtons">
+              <button class="option-button selected" data-value="single_crop" onclick="selectIncomeSources('single_crop')">
+                1 single crop enterprise (Monoculture — all eggs in one basket)
+              </button>
+              <button class="option-button" data-value="2_crops" onclick="selectIncomeSources('2_crops')">
+                2 crops with different harvest seasons
+              </button>
+              <button class="option-button" data-value="diversified_crops_livestock_off_farm" onclick="selectIncomeSources('diversified_crops_livestock_off_farm')">
+                Highly diversified (3+ crops + livestock/poultry + off-farm business)
+              </button>
+            </div>
+          </div>
+
+          <div class="action-buttons">
+            <button class="action-button primary" onclick="confirmStep4()">Continue to Operations & Land Security →</button>
+            <button class="action-button secondary" onclick="goBack()">Back</button>
+          </div>
+        </div>
+
+        <!-- Step 5: Operations, Biosecurity & Land Security -->
+        <div class="tool-section hidden fade-in" id="step5Operations">
+          <div class="step-number">STEP 5 OF 5 (PILLARS 4 & 5)</div>
+          <h2>Operational Equipment & Land Security</h2>
+
+          <div class="question-group">
+            <label class="question-label">Is your farm vulnerable to a single equipment breakdown?</label>
+            <div class="option-buttons" id="singlePointButtons">
+              <button class="option-button selected" data-value="high" onclick="selectSinglePoint('high')">
+                Yes (If our 1 pump or tractor breaks, the entire farm stops for weeks)
+              </button>
+              <button class="option-button" data-value="low_backup_available" onclick="selectSinglePoint('low_backup_available')">
+                No (We have backup pumps, spare parts on site, or rental alternatives)
+              </button>
+            </div>
+          </div>
+
+          <div class="question-group">
+            <label class="question-label">What is your land tenure / ownership security?</label>
+            <div class="option-buttons" id="landTenureButtons">
+              <button class="option-button selected" data-value="informal_communal" onclick="selectLandTenure('informal_communal')">
+                Informal / verbal communal permission (risk of boundary dispute or eviction)
+              </button>
+              <button class="option-button" data-value="long_lease_registered" onclick="selectLandTenure('long_lease_registered')">
+                Long-term written and registered lease agreement (> 5 years)
+              </button>
+              <button class="option-button" data-value="title_deed" onclick="selectLandTenure('title_deed')">
+                Full legal Title Deed / Freehold ownership
+              </button>
+            </div>
+          </div>
+
+          <div class="question-group">
+            <label class="question-label">Crop rotation and disease biosecurity:</label>
+            <div class="option-buttons" id="rotationButtons">
+              <button class="option-button" data-value="continuous_same_crop" onclick="selectRotationPractice('continuous_same_crop')">
+                Continuous monoculture (Planting the same crop in the same soil every season)
+              </button>
+              <button class="option-button selected" data-value="2_year_rotation" onclick="selectRotationPractice('2_year_rotation')">
+                2-year basic crop rotation
+              </button>
+              <button class="option-button" data-value="3_year_diverse_rotation" onclick="selectRotationPractice('3_year_diverse_rotation')">
+                Strict 3-year diverse rotation (Solanaceae → Legumes → Cereals → Brassicas)
+              </button>
+            </div>
+          </div>
+
+          <div class="action-buttons">
+            <button class="action-button primary" onclick="confirmStep5()">Generate 360° Farm Risk Scorecard →</button>
+            <button class="action-button secondary" onclick="goBack()">Back</button>
+          </div>
+        </div>
+
+        <!-- Final Report Screen -->
+        <div class="final-result hidden fade-in" id="finalResult">
+          <h2 style="text-align: center; margin-bottom: 0.5rem;">360° FARM RESILIENCE SCORECARD</h2>
+          <div class="result-status warning" id="resultStatus">SCORECARD EVALUATED</div>
+
+          <div class="summary-box">
+            <div class="summary-title">Risk Rating Overview</div>
+            <div class="summary-item">
+              <div class="summary-label">Overall Farm Risk Status:</div>
+              <div class="summary-value" id="summaryRating"></div>
+            </div>
+            <div class="summary-item">
+              <div class="summary-label">Vulnerability Score (Lower is safer):</div>
+              <div class="summary-value" id="summaryScore"></div>
+            </div>
+            <div class="summary-item">
+              <div class="summary-label">1. Weather & Climate Risk:</div>
+              <div class="summary-value" id="summaryWeatherScore"></div>
+            </div>
+            <div class="summary-item">
+              <div class="summary-label">2. Market & Sales Risk:</div>
+              <div class="summary-value" id="summaryMarketScore"></div>
+            </div>
+            <div class="summary-item">
+              <div class="summary-label">3. Financial & Cash Flow Risk:</div>
+              <div class="summary-value" id="summaryFinancialScore"></div>
+            </div>
+            <div class="summary-item">
+              <div class="summary-label">4. Operational & Equipment Risk:</div>
+              <div class="summary-value" id="summaryOperationalScore"></div>
+            </div>
+            <div class="summary-item">
+              <div class="summary-label">5. Biosecurity & Land Tenure Risk:</div>
+              <div class="summary-value" id="summaryBioLegalScore"></div>
+            </div>
+          </div>
+
+          <!-- Fatal Threats Container -->
+          <div class="summary-box" style="background: #fff; border-left: 5px solid var(--soil);">
+            <div class="summary-title" style="color: var(--soil);">🚨 YOUR TOP 3 CRITICAL VULNERABILITIES & PROTECTIONS</div>
+            <div id="criticalThreatsContainer"></div>
+          </div>
+
+          <!-- Resilience Roadmap -->
+          <div class="summary-box" style="background: #f4faf4; border-left: 5px solid var(--field);">
+            <div class="summary-title" style="color: var(--field);">🛡️ PRACTICAL FARM PROTECTION ROADMAP</div>
+            <ul id="resilienceRoadmapList" style="margin: 0.5rem 0 0 1.25rem; font-size: 0.95rem; line-height: 1.65;"></ul>
+          </div>
+
+          <!-- Terms Explained -->
+          <div class="term-box">
+            <div style="font-weight: 700; color: var(--field); margin-bottom: 0.5rem; font-family: var(--display); font-size: 1.05rem;">
+              📖 RISK & BUSINESS TERMS EXPLAINED SIMPLY
+            </div>
+            <div id="termsContainer"></div>
+          </div>
+
+          <div class="disclaimer">
+            <strong>Farmer Empowerment Advice:</strong> You cannot control the weather or global commodity prices, but you CAN control how prepared your farm is. Implementing just two of the recommendations above will protect your business from 80% of common farm bankruptcies.
+          </div>
+
+          <!-- Next Actions -->
+          <h3 style="margin-top: 2rem;">Related Decision Tools</h3>
+          <div class="next-actions">
+            <a href="/decision-tools/crop-profitability/" class="next-action-card">
+              <div style="font-weight: 700; margin-bottom: 0.25rem;">Will This Crop Make Me Money? →</div>
+              <div style="font-size: 0.85rem; color: var(--muted);">Calculate costs, ROI & break-even</div>
+            </a>
+            <a href="/decision-tools/crop-selection/" class="next-action-card">
+              <div style="font-weight: 700; margin-bottom: 0.25rem;">What Should I Plant? →</div>
+              <div style="font-size: 0.85rem; color: var(--muted);">Find low-risk profitable crops</div>
+            </a>
+            <a href="/decision-tools/market-timing/" class="next-action-card">
+              <div style="font-weight: 700; margin-bottom: 0.25rem;">Where & When Should I Sell? →</div>
+              <div style="font-size: 0.85rem; color: var(--muted);">Plan marketing channels & timing</div>
+            </a>
+          </div>
+
+          <div class="action-buttons">
+            <button class="action-button primary" onclick="saveResult()">Save Risk Audit to My Phone/Browser</button>
+            <button class="action-button outline" onclick="downloadResult()">Download Printable Risk Report (.txt)</button>
+            <button class="action-button secondary" onclick="restartTool()">Start New Risk Audit</button>
+          </div>
+
+        </div>
+
+      </div>
+    </div>
+  </main>
+
+  <!-- In-Depth Educational Guide -->
+  <section class="section alt">
+    <div class="container">
+      <div class="section-head">
+        <div class="eyebrow">Agribusiness Masterclass</div>
+        <h2>The 5 Pillars of Farm Risk Management</h2>
+        <p>Learn how top commercial growers protect their families and businesses from weather shocks, market crashes, and disease outbreaks.</p>
+      </div>
+
+      <div class="grid">
+        <article class="card">
+          <h3>1. Weather & Water Resilience</h3>
+          <p>Drought is not an unexpected accident—it is a regular feature of African agriculture. Build resilience by harvesting rainwater in farm ponds, mulching soil with dry grass to stop evaporation, and investing in high-efficiency drip irrigation powered by solar borehole pumps.</p>
+        </article>
+
+        <article class="card">
+          <h3>2. Market & Price Diversity</h3>
+          <p>Never rely on a single trader or one market gate. Maintain at least 3 distinct buyer relationships: local town markets for quick cash flow, institutional buyers (schools/hospitals) for predictable weekly orders, and hermetic storage to sell grain 4 months after harvest at premium prices.</p>
+        </article>
+
+        <article class="card">
+          <h3>3. Building an Emergency Cash Buffer</h3>
+          <p>Farms fail from cash starvation, not lack of effort. Every time you have a profitable harvest, save 20% of your net profit into a dedicated "Farm Emergency Reserve" until you have 3 months of basic operating expenses. This fund pays for sudden pump repairs or family emergencies without touching input money.</p>
+        </article>
+
+        <article class="card">
+          <h3>4. Operational Backups & Maintenance</h3>
+          <p>Identify your "Single Points of Failure." If you only have one water pump, keep spare impellers, seals, and fuel filters on the farm. Train at least one team member or family member on how to operate all equipment so the farm runs smoothly even if you are away.</p>
+        </article>
+
+        <article class="card">
+          <h3>5. Strict Biosecurity & Crop Rotation</h3>
+          <p>Planting tomatoes or cabbage in the same soil every season creates a permanent breeding ground for bacterial wilt, root-knot nematodes, and clubroot. Always follow a 3-year rotational cycle and enforce disinfectant footbaths for visitors entering poultry and greenhouse units.</p>
+        </article>
+      </div>
+    </div>
+  </section>
+
+  <!-- FAQ Section -->
+  <section class="section">
+    <div class="container">
+      <div class="section-head">
+        <div class="eyebrow">Common Questions</div>
+        <h2>Farm Risk Management FAQ</h2>
+      </div>
+      <div class="article">
+        <h3>What is the difference between risk mitigation and agricultural insurance?</h3>
+        <p><strong>Risk mitigation</strong> consists of all the practical management actions you take on your own farm (e.g. drip irrigation, crop rotation, diversifying into poultry, building cash reserves) to prevent losses from happening. <strong>Agricultural insurance</strong> is a financial policy where you pay a premium to an insurance company to compensate you if an unavoidable catastrophe (like severe cyclone or hail) destroys your crop.</p>
+
+        <h3>Why is enterprise diversification better than planting 100% of one high-profit crop?</h3>
+        <p>High-profit crops (like tomatoes or watermelons) carry high price volatility and disease sensitivity. If prices crash from $10 to $2, a monoculture farmer loses everything. Diversifying by dedicating 60% of your land to stable staples (maize/beans), 30% to high-value horticulture, and 10% to poultry guarantees continuous weekly cash flow and shields you against total ruin.</p>
+
+        <h3>How can a smallholder farmer protect against land tenure disputes?</h3>
+        <p>If farming on communal or customary land, always request a written, signed boundary letter from your local traditional authority (Chief or Village Headman) witnessed by neighboring landowners. Plant live boundary hedges (e.g. sisal or kei apple) and keep copies of all land tax or local development receipts in a safe place.</p>
+      </div>
+    </div>
+  </section>
+
+  <div data-site-footer></div>
+  <script src="/assets/risk-check-tool.js"></script>
+  <script src="/assets/site.js"></script>
+</body>
+</html>
