@@ -1,4 +1,4 @@
-﻿(function () {
+(function () {
   const content = window.AGRIBASE_CONTENT || { articles: [] };
   const nav = [
     ['Home', '/'], ['Farming Guides', '/guides/'], ['Calculators', '/calculators/'],
@@ -18,7 +18,7 @@
   function renderFooter() {
     const host = document.querySelector('[data-site-footer]');
     if (!host) return;
-    host.innerHTML = '<footer><div class="container footer-grid"><div><h3>AgriBase</h3><p>Practical farming knowledge, planning tools and community resources for farmers.</p></div><div><h3>Learn</h3><a href="/guides/">Farming Guides</a><a href="/academy/">Farming Academy</a><a href="/calendar/">Crop Calendar</a></div><div><h3>Tools</h3><a href="/calculators/">Farm Calculators</a><a href="/resources/">Resources</a><a href="/community/">Community App</a></div><div><h3>Trust</h3><a href="/about/">About</a><a href="/contact/">Contact</a><a href="/privacy/">Privacy Policy</a><a href="/terms/">Terms of Use</a><a href="/disclaimer/">Disclaimer</a></div></div><div class="container copyright">Â© 2026 AgriBase. Educational information; adapt decisions to local conditions.</div></footer>';
+    host.innerHTML = '<footer><div class="container footer-grid"><div><h3>AgriBase</h3><p>Practical farming knowledge, planning tools and community resources for farmers.</p><div class="footer-visitor-strip"><span class="footer-live-dot"></span><span class="footer-visitor-label">Platform Visits:</span><a href="https://hits.sh/chinatsvi.github.io/" target="_blank" rel="noopener" title="Live platform traffic counter" class="footer-visitor-badge"><img src="https://hits.sh/chinatsvi.github.io.svg?label=Visitors&color=2e7d32&labelColor=1a3b2b" alt="AgriBase Real Visitor Counter" loading="eager"></a></div></div><div><h3>Learn</h3><a href="/guides/">Farming Guides</a><a href="/academy/">Farming Academy</a><a href="/calendar/">Crop Calendar</a></div><div><h3>Tools</h3><a href="/calculators/">Farm Calculators</a><a href="/resources/">Resources</a><a href="/community/">Community App</a></div><div><h3>Trust</h3><a href="/about/">About</a><a href="/contact/">Contact</a><a href="/privacy/">Privacy Policy</a><a href="/terms/">Terms of Use</a><a href="/disclaimer/">Disclaimer</a></div></div><div class="container copyright">&copy; 2026 AgriBase. Educational information; adapt decisions to local conditions.</div></footer>';
   }
 
   function articleCards(items) {
@@ -91,11 +91,228 @@
     };
   }
 
+  function initFarmerVoices() {
+    const toggleBtn = document.getElementById('toggle-voices-btn');
+    const expandableWrapper = document.getElementById('expandable-voices');
+    const toggleText = document.getElementById('toggle-btn-text');
+    const openModalBtn = document.getElementById('open-voice-modal-btn');
+    const modal = document.getElementById('voice-modal');
+    const closeModalBtn = document.getElementById('close-voice-modal');
+    const cancelModalBtn = document.getElementById('cancel-voice-btn');
+    const doneModalBtn = document.getElementById('done-voice-btn');
+    const form = document.getElementById('farmer-voice-form');
+    const userVoicesContainer = document.getElementById('user-voices-container');
+    const totalCountEl = document.getElementById('voices-total-count');
+    const formView = document.getElementById('modal-form-view');
+    const successView = document.getElementById('modal-success-view');
+    const starPicker = document.getElementById('star-picker');
+    const ratingInput = document.getElementById('farmer-rating');
+    const ratingText = document.getElementById('rating-text');
+    const feedbackInput = document.getElementById('farmer-feedback');
+    const charCurrent = document.getElementById('char-current');
+    const emailShareLink = document.getElementById('email-share-link');
+    const whatsappShareLink = document.getElementById('whatsapp-share-link');
+
+    if (!toggleBtn && !openModalBtn) return;
+
+    function getInitials(name) {
+      if (!name) return 'FM';
+      const parts = name.trim().split(/\s+/);
+      if (parts.length >= 2) {
+        return (parts[0][0] + parts[1][0]).toUpperCase();
+      }
+      return name.slice(0, 2).toUpperCase();
+    }
+
+    function escapeHtml(str) {
+      if (!str) return '';
+      return String(str).replace(/[&<>"']/g, function(m) {
+        return { '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;' }[m];
+      });
+    }
+
+    function loadSavedVoices() {
+      try {
+        const saved = JSON.parse(localStorage.getItem('agribase_farmer_voices') || '[]');
+        if (userVoicesContainer) {
+          userVoicesContainer.innerHTML = saved.map(function(v) {
+            const stars = '★'.repeat(v.rating || 5);
+            return '<article class="testimonial-card user-voice-card">' +
+              '<div>' +
+                '<div class="user-voice-badge">Verified Community Voice</div>' +
+                '<div class="quote-header">' +
+                  '<div class="quote-icon">“</div>' +
+                  '<div class="star-rating" aria-label="' + (v.rating || 5) + ' out of 5 stars">' + stars + '</div>' +
+                '</div>' +
+                '<p class="testimonial-text">' + escapeHtml(v.feedback) + '</p>' +
+              '</div>' +
+              '<div class="farmer-profile">' +
+                '<div class="farmer-avatar">' + escapeHtml(getInitials(v.name)) + '</div>' +
+                '<div class="farmer-info">' +
+                  '<strong>' + escapeHtml(v.name) + '</strong>' +
+                  '<span>' + escapeHtml(v.enterprise) + ' • ' + escapeHtml(v.location) + '</span>' +
+                  '<small style="color: var(--field); display: block; margin-top: 2px;">Used: ' + escapeHtml(v.tool) + '</small>' +
+                '</div>' +
+              '</div>' +
+            '</article>';
+          }).join('');
+        }
+        if (totalCountEl) {
+          const total = 8 + saved.length;
+          totalCountEl.textContent = total + ' Verified Farmer Stories';
+        }
+      } catch (e) {
+        console.warn('Could not load farmer voices from localStorage', e);
+      }
+    }
+
+    loadSavedVoices();
+
+    if (toggleBtn && expandableWrapper) {
+      toggleBtn.addEventListener('click', function() {
+        const isClosed = expandableWrapper.style.display === 'none' || expandableWrapper.style.display === '';
+        if (isClosed) {
+          expandableWrapper.style.display = 'block';
+          toggleBtn.setAttribute('aria-expanded', 'true');
+          toggleBtn.classList.add('is-expanded');
+          if (toggleText) toggleText.textContent = 'Show Fewer Stories';
+        } else {
+          expandableWrapper.style.display = 'none';
+          toggleBtn.setAttribute('aria-expanded', 'false');
+          toggleBtn.classList.remove('is-expanded');
+          if (toggleText) toggleText.textContent = 'View More Farmer Voices (5 more stories)';
+          const section = document.getElementById('farmer-voices');
+          if (section) section.scrollIntoView({ behavior: 'smooth', block: 'start' });
+        }
+      });
+    }
+
+    function openModal() {
+      if (!modal) return;
+      modal.style.display = 'flex';
+      document.body.style.overflow = 'hidden';
+      if (formView) formView.style.display = 'block';
+      if (successView) successView.style.display = 'none';
+      if (form) form.reset();
+      setRating(5);
+      if (charCurrent) charCurrent.textContent = '0';
+      const firstInput = document.getElementById('farmer-name');
+      if (firstInput) setTimeout(function() { firstInput.focus(); }, 50);
+    }
+
+    function closeModal() {
+      if (!modal) return;
+      modal.style.display = 'none';
+      document.body.style.overflow = '';
+    }
+
+    if (openModalBtn) openModalBtn.addEventListener('click', openModal);
+    if (closeModalBtn) closeModalBtn.addEventListener('click', closeModal);
+    if (cancelModalBtn) cancelModalBtn.addEventListener('click', closeModal);
+    if (doneModalBtn) doneModalBtn.addEventListener('click', closeModal);
+
+    if (modal) {
+      modal.addEventListener('click', function(e) {
+        if (e.target === modal) closeModal();
+      });
+      window.addEventListener('keydown', function(e) {
+        if (e.key === 'Escape' && modal.style.display === 'flex') closeModal();
+      });
+    }
+
+    function setRating(val) {
+      if (!ratingInput) return;
+      ratingInput.value = val;
+      const stars = starPicker ? starPicker.querySelectorAll('.star-btn') : [];
+      stars.forEach(function(btn) {
+        const btnVal = parseInt(btn.dataset.rating, 10);
+        btn.classList.toggle('active', btnVal <= val);
+      });
+      if (ratingText) {
+        const labels = {
+          1: '1 / 5 Stars (Needs Improvement)',
+          2: '2 / 5 Stars (Fair)',
+          3: '3 / 5 Stars (Good)',
+          4: '4 / 5 Stars (Very Helpful)',
+          5: '5 / 5 Stars (Excellent)'
+        };
+        ratingText.textContent = labels[val] || (val + ' / 5 Stars');
+      }
+    }
+
+    if (starPicker) {
+      starPicker.addEventListener('click', function(e) {
+        const btn = e.target.closest('.star-btn');
+        if (!btn) return;
+        const rating = parseInt(btn.dataset.rating, 10);
+        setRating(rating);
+      });
+    }
+
+    if (feedbackInput && charCurrent) {
+      feedbackInput.addEventListener('input', function() {
+        charCurrent.textContent = String(feedbackInput.value.length);
+      });
+    }
+
+    if (form) {
+      form.addEventListener('submit', function(e) {
+        e.preventDefault();
+        const name = document.getElementById('farmer-name').value.trim();
+        const location = document.getElementById('farmer-location').value.trim();
+        const enterprise = document.getElementById('farmer-enterprise').value.trim();
+        const tool = document.getElementById('farmer-tool').value;
+        const rating = parseInt(ratingInput ? ratingInput.value : '5', 10) || 5;
+        const feedback = feedbackInput.value.trim();
+
+        if (!name || !location || !enterprise || !tool || !feedback) return;
+
+        const newVoice = {
+          name: name,
+          location: location,
+          enterprise: enterprise,
+          tool: tool,
+          rating: rating,
+          feedback: feedback,
+          createdAt: new Date().toISOString()
+        };
+
+        try {
+          const saved = JSON.parse(localStorage.getItem('agribase_farmer_voices') || '[]');
+          saved.unshift(newVoice);
+          localStorage.setItem('agribase_farmer_voices', JSON.stringify(saved));
+        } catch (err) {
+          console.warn('Failed to save to localStorage', err);
+        }
+
+        loadSavedVoices();
+
+        const subject = encodeURIComponent('Farmer Voice Submission from ' + name);
+        const bodyText = encodeURIComponent(
+          'Hi Enock,\n\nI want to share my field experience for AgriBase:\n\n' +
+          'Name/Farm: ' + name + '\nLocation: ' + location + '\nEnterprise: ' + enterprise + '\n' +
+          'AgriBase Tool/Guide: ' + tool + '\nRating: ' + rating + '/5 Stars\n' +
+          'My Experience & Results:\n' + feedback + '\n\nSubmitted via AgriBase Website'
+        );
+        if (emailShareLink) {
+          emailShareLink.href = 'mailto:chinatsvieno@gmail.com?subject=' + subject + '&body=' + bodyText;
+        }
+        if (whatsappShareLink) {
+          whatsappShareLink.href = 'https://wa.me/2774902204?text=' + bodyText;
+        }
+
+        if (formView) formView.style.display = 'none';
+        if (successView) successView.style.display = 'block';
+      });
+    }
+  }
+
   function start() {
     renderHeader();
     renderFooter();
     renderArticles();
     renderCalculator();
+    initFarmerVoices();
     loadAdSense();
   }
 
