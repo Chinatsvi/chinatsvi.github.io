@@ -69,6 +69,14 @@
             <div class="stat-label">Farm Calculators</div>
             <div class="stat-desc">Population, spacing, water & budget</div>
           </div>
+          <div class="stat-item visitor-stat-item">
+            <div class="visitor-badge-container">
+              <span class="live-pulse-dot" title="Live visit counter active"></span>
+              <img src="https://hits.sh/chinatsvi.github.io.svg?style=for-the-badge&label=VISITORS&color=2e7d32&labelColor=1a3b2b" alt="AgriBase Real Visitors Count" class="visitor-counter-badge" loading="eager">
+            </div>
+            <div class="stat-label">Platform Visitors</div>
+            <div class="stat-desc">Live counter: tracking every visit</div>
+          </div>
           <div class="stat-item">
             <span class="stat-num">100%</span>
             <div class="stat-label">Free & Open</div>
@@ -324,17 +332,36 @@
     </section>
 
     <!-- Farmer Testimonials / Credibility Section -->
-    <section class="section">
+    <section class="section" id="farmer-voices">
       <div class="container">
         <div class="section-head centered">
           <div class="eyebrow">Farmer Voices & Field Experience</div>
           <h2>Tested and Trusted in the Field</h2>
           <p>Practical feedback from farmers using AgriBase tools to guide real-world farm planning and operations.</p>
         </div>
-        <div class="testimonials-grid">
+
+        <!-- Toolbar: Counter Pill + Share Button -->
+        <div class="farmer-voices-toolbar">
+          <div class="voices-count-pill">
+            <span class="verified-icon">✓</span>
+            <span id="voices-total-count">8 Verified Farmer Stories</span>
+          </div>
+          <button type="button" class="button primary-action share-voice-btn" id="open-voice-modal-btn">
+            ✍️ Leave Your Field Experience
+          </button>
+        </div>
+
+        <!-- Dynamic User-submitted Voices Container -->
+        <div id="user-voices-container" class="testimonials-grid" style="margin-bottom: 20px;"></div>
+
+        <!-- Featured Initial Voices Grid (3 visible) -->
+        <div class="testimonials-grid" id="featured-voices-grid">
           <article class="testimonial-card">
             <div>
-              <div class="quote-icon">“</div>
+              <div class="quote-header">
+                <div class="quote-icon">“</div>
+                <div class="star-rating" aria-label="5 out of 5 stars">★★★★★</div>
+              </div>
               <p class="testimonial-text">The 'Should I Plant Now?' decision check saved our maize crop this season. We tested soil moisture depth and rainfall consistency instead of rushing after the first light shower. It prevented us from replanting 3 hectares.</p>
             </div>
             <div class="farmer-profile">
@@ -342,13 +369,17 @@
               <div class="farmer-info">
                 <strong>Tinashe M.</strong>
                 <span>Maize & Soya Farmer • Mashonaland East</span>
+                <small style="color: var(--field); display: block; margin-top: 2px;">Used: Should I Plant Now?</small>
               </div>
             </div>
           </article>
 
           <article class="testimonial-card">
             <div>
-              <div class="quote-icon">“</div>
+              <div class="quote-header">
+                <div class="quote-icon">“</div>
+                <div class="star-rating" aria-label="5 out of 5 stars">★★★★★</div>
+              </div>
               <p class="testimonial-text">Before buying drip pipes for my 1.5-hectare tomato project, I used the water requirement and enterprise profitability tools. It showed our exact pump runtimes and break-even price. Real numbers made all the difference.</p>
             </div>
             <div class="farmer-profile">
@@ -356,13 +387,17 @@
               <div class="farmer-info">
                 <strong>Grace K.</strong>
                 <span>Horticulture & Greenhouse Grower • Midlands</span>
+                <small style="color: var(--field); display: block; margin-top: 2px;">Used: Crop Profitability & Irrigation</small>
               </div>
             </div>
           </article>
 
           <article class="testimonial-card">
             <div>
-              <div class="quote-icon">“</div>
+              <div class="quote-header">
+                <div class="quote-icon">“</div>
+                <div class="star-rating" aria-label="5 out of 5 stars">★★★★★</div>
+              </div>
               <p class="testimonial-text">The pest scouting handbook and knapsack calibration calculations helped us cut unnecessary spray rounds. Having clear, structured guides on my phone makes managing field workers much simpler.</p>
             </div>
             <div class="farmer-profile">
@@ -370,12 +405,204 @@
               <div class="farmer-info">
                 <strong>Enos C.</strong>
                 <span>Smallholder Mixed Farmer • Manicaland</span>
+                <small style="color: var(--field); display: block; margin-top: 2px;">Used: Pest Scouting & Spray Timing</small>
               </div>
             </div>
           </article>
         </div>
+
+        <!-- Expandable Voices (Revealed when expanded) -->
+        <div class="expandable-voices-wrapper" id="expandable-voices" style="display: none;">
+          <div class="testimonials-grid" style="margin-top: 20px;">
+            <article class="testimonial-card">
+              <div>
+                <div class="quote-header">
+                  <div class="quote-icon">“</div>
+                  <div class="star-rating" aria-label="5 out of 5 stars">★★★★★</div>
+                </div>
+                <p class="testimonial-text">The livestock feed calculator enabled us to formulate our own broiler finisher feed using yellow maize and soya meal. Cutting our reliance on expensive bagged commercial concentrate saved us $4.20 per 50kg bag.</p>
+              </div>
+              <div class="farmer-profile">
+                <div class="farmer-avatar">FD</div>
+                <div class="farmer-info">
+                  <strong>Farai D.</strong>
+                  <span>Poultry & Maize Producer • Mashonaland West</span>
+                  <small style="color: var(--field); display: block; margin-top: 2px;">Used: Livestock Feed Calculator</small>
+                </div>
+              </div>
+            </article>
+
+            <article class="testimonial-card">
+              <div>
+                <div class="quote-header">
+                  <div class="quote-icon">“</div>
+                  <div class="star-rating" aria-label="5 out of 5 stars">★★★★★</div>
+                </div>
+                <p class="testimonial-text">The bee farming handbook taught our beekeeping group how to bait wild swarms with lemongrass oil and melted wax comb. We successfully colonised 14 out of 18 top-bar hives within 3 weeks of setting them up.</p>
+              </div>
+              <div class="farmer-profile">
+                <div class="farmer-avatar">BN</div>
+                <div class="farmer-info">
+                  <strong>Blessing N.</strong>
+                  <span>Top-Bar Apiary Group Leader • Nyanga, Manicaland</span>
+                  <small style="color: var(--field); display: block; margin-top: 2px;">Used: Bee Farming Handbook</small>
+                </div>
+              </div>
+            </article>
+
+            <article class="testimonial-card">
+              <div>
+                <div class="quote-header">
+                  <div class="quote-icon">“</div>
+                  <div class="star-rating" aria-label="5 out of 5 stars">★★★★★</div>
+                </div>
+                <p class="testimonial-text">I started backyard tilapia farming in two 1,000L IBC totes. Following the 15-minute feeding rule and all-male sex-reversed stocking math kept my water clean and reached 480g harvest size in 5.5 months.</p>
+              </div>
+              <div class="farmer-profile">
+                <div class="farmer-avatar">RM</div>
+                <div class="farmer-info">
+                  <strong>Rutendo M.</strong>
+                  <span>Aquaculture Grower • Harare Peri-Urban</span>
+                  <small style="color: var(--field); display: block; margin-top: 2px;">Used: Tilapia Fish Farming Guide</small>
+                </div>
+              </div>
+            </article>
+
+            <article class="testimonial-card">
+              <div>
+                <div class="quote-header">
+                  <div class="quote-icon">“</div>
+                  <div class="star-rating" aria-label="5 out of 5 stars">★★★★★</div>
+                </div>
+                <p class="testimonial-text">Using the plant population calculator helped us space our indeterminate greenhouse tomatoes precisely at 45cm x 80cm. Airflow improved dramatically and we had zero grey mold or blight outbreaks during peak humidity.</p>
+              </div>
+              <div class="farmer-profile">
+                <div class="farmer-avatar">MT</div>
+                <div class="farmer-info">
+                  <strong>Memory T.</strong>
+                  <span>Greenhouse Vegetable Grower • Midlands</span>
+                  <small style="color: var(--field); display: block; margin-top: 2px;">Used: Plant Population & Spacing</small>
+                </div>
+              </div>
+            </article>
+
+            <article class="testimonial-card">
+              <div>
+                <div class="quote-header">
+                  <div class="quote-icon">“</div>
+                  <div class="star-rating" aria-label="5 out of 5 stars">★★★★★</div>
+                </div>
+                <p class="testimonial-text">The farm budget and break-even calculator gave me the confidence to secure input financing for 5 hectares of sugar beans. I walked into the bank with exact production costs per bag and clear projected cashflow.</p>
+              </div>
+              <div class="farmer-profile">
+                <div class="farmer-avatar">CS</div>
+                <div class="farmer-info">
+                  <strong>Cuthbert S.</strong>
+                  <span>Commercial Grain & Legume Farmer • Masvingo</span>
+                  <small style="color: var(--field); display: block; margin-top: 2px;">Used: Farm Budget & Break-Even</small>
+                </div>
+              </div>
+            </article>
+          </div>
+        </div>
+
+        <!-- Expand / Collapse Toggle Button -->
+        <div class="voices-toggle-container">
+          <button type="button" class="button secondary-action" id="toggle-voices-btn" aria-expanded="false">
+            <span id="toggle-btn-text">View More Farmer Voices (5 more stories)</span>
+            <span class="toggle-arrow">↓</span>
+          </button>
+        </div>
       </div>
     </section>
+
+    <!-- Farmer Experience Submission Modal Dialog -->
+    <div class="farmer-modal-backdrop" id="voice-modal" role="dialog" aria-modal="true" aria-labelledby="modal-title" style="display: none;">
+      <div class="farmer-modal-dialog">
+        <button type="button" class="modal-close-btn" id="close-voice-modal" aria-label="Close dialog">✕</button>
+        
+        <div id="modal-form-view">
+          <div class="modal-head">
+            <div class="eyebrow">Share With The Community</div>
+            <h3 id="modal-title">Leave Your Farmer Voice & Field Experience</h3>
+            <p>Tell fellow farmers how AgriBase tools or guides helped your decision-making, saved costs, or boosted your harvest.</p>
+          </div>
+
+          <form id="farmer-voice-form" class="farmer-voice-form">
+            <div class="form-row">
+              <div class="form-group">
+                <label for="farmer-name">Your Name / Farm Name *</label>
+                <input type="text" id="farmer-name" required placeholder="e.g. Farai Moyo or Sunrise Farm" maxlength="60">
+              </div>
+              <div class="form-group">
+                <label for="farmer-location">Location / Province / District *</label>
+                <input type="text" id="farmer-location" required placeholder="e.g. Bindura, Mashonaland Central" maxlength="60">
+              </div>
+            </div>
+
+            <div class="form-row">
+              <div class="form-group">
+                <label for="farmer-enterprise">Your Enterprise / Crop / Livestock *</label>
+                <input type="text" id="farmer-enterprise" required placeholder="e.g. Maize & Broilers, Tomatoes, Beekeeping" maxlength="60">
+              </div>
+              <div class="form-group">
+                <label for="farmer-tool">AgriBase Tool or Guide Used *</label>
+                <select id="farmer-tool" required>
+                  <option value="" disabled selected>Select the tool or guide...</option>
+                  <option value="Should I Plant Now? Decision Tool">Should I Plant Now? Decision Tool</option>
+                  <option value="Farm Profit & Break-Even Calculator">Farm Profit & Break-Even Calculator</option>
+                  <option value="Livestock & Aquaculture Feed Calculator">Livestock & Aquaculture Feed Calculator</option>
+                  <option value="Plant Population & Spacing Calculator">Plant Population & Spacing Calculator</option>
+                  <option value="Bee Farming Handbook">Bee Farming Handbook</option>
+                  <option value="Tilapia Fish Farming Handbook">Tilapia Fish Farming Handbook</option>
+                  <option value="Pest Scouting & Identification">Pest Scouting & Identification</option>
+                  <option value="Irrigation Water Requirement Calculator">Irrigation Water Requirement Calculator</option>
+                  <option value="Crop Calendar & Planning">Crop Calendar & Planning</option>
+                  <option value="General AgriBase Platform">General AgriBase Platform</option>
+                </select>
+              </div>
+            </div>
+
+            <div class="form-group">
+              <label>Your Rating *</label>
+              <div class="star-picker" id="star-picker" role="radiogroup" aria-label="Select rating">
+                <button type="button" class="star-btn active" data-rating="1" aria-label="1 star">★</button>
+                <button type="button" class="star-btn active" data-rating="2" aria-label="2 stars">★</button>
+                <button type="button" class="star-btn active" data-rating="3" aria-label="3 stars">★</button>
+                <button type="button" class="star-btn active" data-rating="4" aria-label="4 stars">★</button>
+                <button type="button" class="star-btn active" data-rating="5" aria-label="5 stars">★</button>
+                <input type="hidden" id="farmer-rating" value="5">
+                <span class="rating-text" id="rating-text">5 / 5 Stars (Excellent)</span>
+              </div>
+            </div>
+
+            <div class="form-group">
+              <label for="farmer-feedback">Your Practical Field Experience & Results *</label>
+              <textarea id="farmer-feedback" rows="4" required placeholder="What practical decision did you make? What numbers, yield results, or cost savings did you achieve?" maxlength="500"></textarea>
+              <div class="char-count"><span id="char-current">0</span> / 500 characters</div>
+            </div>
+
+            <div class="modal-actions">
+              <button type="button" class="button" id="cancel-voice-btn">Cancel</button>
+              <button type="submit" class="button primary-action">Submit My Field Experience</button>
+            </div>
+          </form>
+        </div>
+
+        <!-- Success confirmation view -->
+        <div id="modal-success-view" style="display: none; text-align: center; padding: 20px 0;">
+          <div class="success-icon" style="font-size: 48px; margin-bottom: 12px;">🎉</div>
+          <h3>Thank You For Sharing Your Story!</h3>
+          <p class="lead" style="margin-bottom: 16px;">Your field experience has been recorded and is now visible on this page.</p>
+          <p style="font-size: 14px; color: var(--ink-light); margin-bottom: 24px;">Want your story permanently featured for all farmers worldwide on AgriBase? You can also send a 1-click copy directly to founder Enock Chinatsvi:</p>
+          <div style="display: flex; gap: 12px; justify-content: center; flex-wrap: wrap; margin-bottom: 24px;">
+            <a id="email-share-link" class="button primary-action" href="#" target="_blank" rel="noopener">Send via Email (1-Click)</a>
+            <a id="whatsapp-share-link" class="button" href="#" target="_blank" rel="noopener" style="background: #25D366; color: #fff;">Send via WhatsApp</a>
+          </div>
+          <button type="button" class="button" id="done-voice-btn">Done & Close</button>
+        </div>
+      </div>
+    </div>
 
     <!-- Community App Banner Section -->
     <section class="section alt">
