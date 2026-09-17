@@ -158,7 +158,7 @@
           }).join('');
         }
         if (totalCountEl) {
-          const total = 8 + saved.length;
+          const total = 9 + saved.length;
           totalCountEl.textContent = total + ' Verified Farmer Stories';
         }
       } catch (e) {
@@ -180,7 +180,7 @@
           expandableWrapper.style.display = 'none';
           toggleBtn.setAttribute('aria-expanded', 'false');
           toggleBtn.classList.remove('is-expanded');
-          if (toggleText) toggleText.textContent = 'View More Farmer Voices (5 more stories)';
+          if (toggleText) toggleText.textContent = 'View More Farmer Voices (6 more stories)';
           const section = document.getElementById('farmer-voices');
           if (section) section.scrollIntoView({ behavior: 'smooth', block: 'start' });
         }
