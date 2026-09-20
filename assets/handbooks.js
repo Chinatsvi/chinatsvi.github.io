@@ -49,88 +49,556 @@
 <h2 id="checklist">10. Final field checklist</h2>
 <div class="notice"><ul><li>[ ] I mapped soil, slope, water and wet areas.</li><li>[ ] I know the previous crop and any herbicide or disease risk.</li><li>[ ] I collected representative soil samples and kept the test report.</li><li>[ ] I removed perennial weeds and managed residues safely.</li><li>[ ] I used mature, safe organic matter and recorded it.</li><li>[ ] I waited until soil moisture was suitable for working.</li><li>[ ] I planned beds, paths, drainage and irrigation together.</li><li>[ ] I tested irrigation before planting.</li><li>[ ] I measured rows and kept fertilizer away from seed and roots.</li><li>[ ] I recorded planting date, variety, spacing, inputs and observations.</li></ul><p><strong>Good vegetable soil preparation is a process.</strong> Observe the land, test where possible, prepare only what is needed, plant carefully and record the result for the next season.</p></div>`);
 
-  replace('tomato-fertilizer-guide', 'Tomato Fertilizer Guide: A Practical Farmer Handbook', 'Feed tomato plants from soil evidence and crop stage while protecting roots, fruit quality, profit and the environment.', `
-<div class="notice"><strong>Important:</strong> There is no single tomato fertilizer rate for every farm. Soil test, water quality, variety, yield target, soil texture, irrigation and local product labels must guide the final program. The steps below teach how to make a responsible plan without guessing.</div>
-<h2>Contents</h2><ol><li><a href="#before">Before buying fertilizer</a></li><li><a href="#needs">What tomatoes need</a></li><li><a href="#labels">Read the fertilizer label</a></li><li><a href="#plan">Build the feeding plan</a></li><li><a href="#stages">Feed by crop stage</a></li><li><a href="#methods">Choose application method</a></li><li><a href="#symptoms">Read symptoms carefully</a></li><li><a href="#mistakes">Common mistakes</a></li><li><a href="#records">Record every application</a></li><li><a href="#checklist">Final checklist</a></li></ol>
-<h2 id="before">1. Before buying fertilizer</h2>
-<p>Start by asking what is limiting the crop. A weak tomato plant may be hungry, but it may also have damaged roots, poor drainage, drought, salinity, disease, compaction, cold soil or a pH problem. More fertilizer will not repair every problem.</p>
-<ol><li>Take a representative soil sample and request pH, organic matter and nutrient results.</li><li>Test irrigation water where salinity, high bicarbonate or poor infiltration is suspected.</li><li>Write a realistic yield target based on variety, planting date, water and local experience.</li><li>Estimate plant population and field area. A fertilizer rate per plant is not the same as a rate per hectare.</li><li>List the fertilizer already supplied by compost, manure, starter products and irrigation water.</li><li>Check the product label, registration, storage instructions and cost per unit of nutrient.</li></ol>
-<p>Keep soil and water reports with the plan. If the crop is already suffering, compare a healthy and poor area, inspect roots and review irrigation before applying a corrective product.</p>
-<h2 id="needs">2. What tomatoes need</h2>
-<table><thead><tr><th>Nutrient</th><th>Main work in the plant</th><th>When too much or too little causes trouble</th></tr></thead><tbody><tr><td>Nitrogen (N)</td><td>Leaves, stems, chlorophyll and growth.</td><td>Too little gives pale slow growth. Too much gives soft leafy plants, delayed maturity and more pest or disease risk.</td></tr><tr><td>Phosphorus (P)</td><td>Roots, energy transfer, early establishment and reproduction.</td><td>Shortage is worse in cold, wet, compacted or extreme-pH soil. Extra P cannot fix damaged roots.</td></tr><tr><td>Potassium (K)</td><td>Water regulation, sugar movement, fruit filling and plant strength.</td><td>Shortage can cause edge scorch and poor filling. Excess can raise salts or reduce magnesium uptake.</td></tr><tr><td>Calcium (Ca)</td><td>Growing points, roots and cell walls.</td><td>Uneven water supply can cause blossom-end rot even when soil calcium is present.</td></tr><tr><td>Magnesium (Mg)</td><td>Chlorophyll and photosynthesis.</td><td>Shortage often shows as yellow tissue between veins on older leaves; excess potassium can reduce uptake.</td></tr><tr><td>Sulfur and micronutrients</td><td>Protein, enzymes, flowers and plant processes.</td><td>Use a test or qualified diagnosis because symptoms overlap and some micronutrients have a narrow safe range.</td></tr></tbody></table>
-<p>Tomato feeding is a balance. Strong growth needs enough nitrogen, but fruiting plants also need a suitable supply of potassium, calcium, magnesium and other nutrients. Water must move nutrients to healthy roots. Roots need oxygen, so fertilizer cannot compensate for waterlogged soil.</p>
-<h2 id="labels">3. Read the fertilizer label</h2>
-<p>Fertilizer analysis is commonly written as three numbers such as 10-20-20. These numbers show the percentage of nitrogen, available phosphate expressed as P2O5 and soluble potash expressed as K2O. The product may also list sulfur, calcium or micronutrients.</p>
-<p>To calculate nutrient supplied, use: <strong>product amount x nutrient percentage = nutrient amount</strong>. For example, 100 kg of a 10-20-20 product contains 10 kg N, 20 kg P2O5 and 20 kg K2O under that label convention. This is a calculation example, not a recommendation to apply that amount to tomatoes.</p>
-<ul><li>Check whether the product is granular, soluble, foliar or intended for fertigation.</li><li>Do not assume two products with the same name have the same analysis.</li><li>Compare the price of the nutrient supplied, not only the price of the bag.</li><li>Keep products dry, labelled and away from seed, food, feed and children.</li><li>Never mix products unless the label or qualified local advice confirms compatibility.</li></ul>
-<h2 id="plan">4. Build the feeding plan</h2>
-<p>Use the 4Rs: the <strong>right source, right rate, right time and right place</strong>. The plan should begin with the soil test and end with a harvest and cost review.</p>
-<ol><li><strong>Set the target:</strong> record crop variety, area, plant population, expected yield and market quality.</li><li><strong>Credit the soil:</strong> use soil-test results and previous manure or fertilizer records to estimate what is already available.</li><li><strong>Choose the source:</strong> select a product that supplies the needed nutrient without creating an unwanted salt, chloride, acidity or nutrient imbalance.</li><li><strong>Calculate the rate:</strong> convert the recommendation into product per bed, row, plant or hectare using the label analysis and measured area.</li><li><strong>Split where suitable:</strong> apply large or mobile nutrient amounts in stages when crop demand, soil and irrigation make this practical.</li><li><strong>Place safely:</strong> keep concentrated fertilizer away from seed and stems, and put nutrients where active roots and water can reach them.</li><li><strong>Check the weather:</strong> avoid applying products before runoff, heavy rain or irrigation that will wash them away.</li><li><strong>Review the crop:</strong> compare new growth, roots, leaf colour, flowering and fruit set before changing the plan.</li></ol>
-<div class="notice"><strong>Small trial rule:</strong> If the diagnosis is uncertain, test a measured correction on a small marked area and compare it with an untreated area. Record the result before spending on the whole field.</div>
-<h2 id="stages">5. Feed by crop stage</h2>
-<h3>Stage 1: Nursery and transplanting</h3><p>Seedlings need clean media, light, water and healthy roots. Excess fertilizer in a nursery can burn roots and produce weak, stretched plants. Harden seedlings before transplanting. Use only a suitable starter program from the label or local recommendation, and never place concentrated fertilizer directly against the seedling plug.</p>
-<h3>Stage 2: Establishment and early vegetative growth</h3><p>After transplanting, the priority is root-to-soil contact, even moisture and root growth. Apply planned nutrients only when the soil is moist enough for roots to take them up and drainage is adequate. Avoid forcing large leafy growth with nitrogen before the plant has a strong root system.</p>
-<h3>Stage 3: Flowering and fruit set</h3><p>Keep water and nutrition steady. Sudden drought followed by heavy irrigation can increase blossom-end rot and fruit cracking. Inspect new leaves, flowers and roots. Do not treat every flower problem with calcium; check irrigation, root health, salinity, pests and disease as well.</p>
-<h3>Stage 4: Fruit filling and repeated harvest</h3><p>Fruit load increases nutrient and water demand. Split applications may reduce waste on suitable soils and systems. Maintain balanced nutrition rather than chasing dark green leaves. Stop or adjust feeding according to crop maturity, soil test, local program and the product label.</p>
-<h2 id="methods">6. Choose the application method</h2>
-<table><thead><tr><th>Method</th><th>Useful when</th><th>Main caution</th></tr></thead><tbody><tr><td>Incorporated basal fertilizer</td><td>Preparing beds before planting.</td><td>Uneven spreading or deep placement can put nutrients away from roots.</td></tr><tr><td>Side-dressing</td><td>Applying measured nutrients beside established rows.</td><td>Keep granules away from stems and water them in safely where appropriate.</td></tr><tr><td>Fertigation</td><td>Splitting soluble nutrients through a suitable irrigation system.</td><td>Requires clean water, compatible products, correct concentration and flushing.</td></tr><tr><td>Foliar feeding</td><td>Small, targeted correction where the product is labelled for the crop.</td><td>Can burn leaves and does not replace a soil or root-zone plan.</td></tr></tbody></table>
-<p>Calibrate cups, spreaders, injectors and sprayers. Measure a known area and weigh the product instead of estimating a bag or handful. Check distribution at the beginning, middle and end of beds or irrigation lines.</p>
-<h2 id="symptoms">7. Read symptoms carefully</h2>
-<p>Older leaves affected first can suggest mobile nutrients such as nitrogen, phosphorus, potassium or magnesium. Young leaves and growing points can suggest calcium, boron, iron, zinc or other less mobile nutrients. These are clues, not proof.</p>
-<ul><li><strong>Uniform pale older leaves:</strong> check nitrogen, roots, water and disease.</li><li><strong>Yellow between veins:</strong> check magnesium, iron, manganese, pH and leaf age.</li><li><strong>Leaf-edge scorch:</strong> check potassium, salt, drought and root damage.</li><li><strong>Blossom-end rot:</strong> check uneven moisture, roots, salinity and calcium delivery; do not assume a bag of calcium is the whole answer.</li><li><strong>Dark lush growth with few fruits:</strong> check excess nitrogen, light, temperature, pollination and variety.</li><li><strong>Patchy symptoms:</strong> compare drainage, compaction, irrigation uniformity and soil test results across the field.</li></ul>
-<p>Look at roots and soil before adding more product. Disease, insects, herbicide injury, salinity and drought can imitate deficiency.</p>
-<h2 id="mistakes">8. Common tomato fertilizer mistakes</h2>
-<ul><li>Using a universal calendar rate without a soil test or crop record.</li><li>Applying more nitrogen because plants look small without checking roots or water.</li><li>Putting granular fertilizer against stems, seed or transplant plugs.</li><li>Applying soluble fertilizer before heavy rain or into a waterlogged bed.</li><li>Changing several products at once and then not knowing what helped.</li><li>Ignoring irrigation uniformity and blaming fertilizer for dry or flooded plants.</li><li>Using foliar fertilizer in hot sun or at an unlabelled concentration.</li><li>Failing to record product analysis, rate, area, date and crop response.</li></ul>
-<h2 id="records">9. Record every application</h2>
-<table><thead><tr><th>Date</th><th>Field and crop stage</th><th>Product and analysis</th><th>Rate and area</th><th>Weather and water</th><th>Result</th></tr></thead><tbody><tr><td>________</td><td>________</td><td>________</td><td>________</td><td>________</td><td>________</td></tr><tr><td>________</td><td>________</td><td>________</td><td>________</td><td>________</td><td>________</td></tr></tbody></table>
-<p>After application, return to the field and record leaf response, flowering, fruit quality, pest or disease pressure and harvest. Compare fertilizer cost with saleable yield, not only with plant colour.</p>
-<h2 id="checklist">10. Final tomato fertilizer checklist</h2>
-<div class="notice"><ul><li>[ ] I tested soil or have a clear local recommendation.</li><li>[ ] I checked water, drainage, roots and previous inputs.</li><li>[ ] I set a realistic yield target and measured the area.</li><li>[ ] I read the analysis and calculated product amount correctly.</li><li>[ ] I selected the source for the crop and soil, not only the cheapest bag.</li><li>[ ] I applied the right rate, time and place.</li><li>[ ] I kept fertilizer away from seed and stems.</li><li>[ ] I checked irrigation uniformity before blaming nutrition.</li><li>[ ] I recorded every application and crop response.</li><li>[ ] I followed product labels, safety requirements and local advice.</li></ul><p><strong>Good tomato nutrition is measured management.</strong> Feed the root zone according to evidence, keep water steady, watch the crop and learn from the record.</p></div>`);
+  // ==========================================
+  // HANDBOOK: UNDERSTANDING SOIL PH
+  // ==========================================
+  replace('understanding-soil-ph', 'Understanding Soil pH: A Practical Farmer Handbook', 'A complete practical guide to soil pH, nutrient availability, liming acidic soils, managing alkaline soils, soil sampling methods, and crop pH tolerance ranges.', `
+<div class="notice"><strong>How to use this handbook:</strong> Soil pH is the "master switch" of farm soil fertility. If your soil pH is wrong, up to 70% of the expensive fertilizer you apply will remain chemically locked in the soil and unavailable to plant roots. Use this guide to measure, understand, and correct your soil pH.</div>
+<h2>Contents</h2><ol><li><a href="#ph-intro">1. What Soil pH Means for Your Farm Profit</a></li><li><a href="#ph-scale">2. The pH Scale Explained (Acidic, Neutral, Alkaline)</a></li><li><a href="#ph-nutrients">3. How Soil pH Locks or Unlocks Nutrients</a></li><li><a href="#ph-causes">4. Causes of Soil Acidity (Leaching, Fertilizers, Crop Removal)</a></li><li><a href="#ph-sampling">5. How to Take an Accurate Soil Sample for pH Testing</a></li><li><a href="#ph-liming">6. Correcting Acidic Soils: Agricultural Lime Types & Rates</a></li><li><a href="#ph-alkaline">7. Managing Alkaline Soils & Salinity</a></li><li><a href="#ph-crops">8. Crop pH Tolerance Table (Vegetables, Grains, Legumes)</a></li><li><a href="#ph-mistakes">9. Common Soil pH Misconceptions & Mistakes</a></li><li><a href="#ph-checklist">10. Step-by-Step Soil pH Management Checklist</a></li></ol>
 
-  replace('farm-record-keeping', 'Farm Record Keeping for Beginners: A Practical Farmer Handbook', 'Build a simple record system for land, inputs, labour, water, harvest, sales, costs and better decisions next season.', `
-<div class="notice"><strong>How to use this handbook:</strong> Start with one notebook, a pen and a fixed place to keep it dry. A simple record written every day is more useful than a perfect form that nobody completes. Record facts while they are fresh, then review them every week.</div>
-<h2>Contents</h2><ol><li><a href="#why">Why records matter</a></li><li><a href="#setup">Set up your record book</a></li><li><a href="#field">Field and crop records</a></li><li><a href="#inputs">Inputs and stock records</a></li><li><a href="#labour">Labour and equipment</a></li><li><a href="#water">Weather and water</a></li><li><a href="#harvest">Harvest and sales</a></li><li><a href="#money">Cash and costs</a></li><li><a href="#review">Weekly and seasonal review</a></li><li><a href="#mistakes">Common mistakes</a></li><li><a href="#templates">Simple templates</a></li></ol>
-<h2 id="why">1. Why records matter</h2>
-<p>Farming becomes easier to improve when the farmer can see what happened. Records show how much seed was planted, how much fertilizer was used, how many labour days were paid, how much water was applied, what was harvested, who bought it and whether the crop made money.</p>
-<p>Records are not only for large farms. A small vegetable garden can use one page per bed. A livestock farmer can use one page per animal group. The purpose is to replace memory with evidence and to notice problems early enough to act.</p>
-<ul><li>Records help you plan the next crop and avoid buying too much or too little.</li><li>Records show which field, variety or input performed best.</li><li>Records support accurate prices, loans, insurance and business discussions.</li><li>Records show the true cost per kilogram or crate.</li><li>Records help identify theft, waste, late work, poor germination and hidden losses.</li></ul>
-<h2 id="setup">2. Set up your record book</h2>
-<p>Use a notebook with numbered pages, a spreadsheet, or both. Keep the system simple enough to use with dirty hands and limited internet. Use one page for a field map and one section for each record type.</p>
-<ol><li>Write the farm name, season and contact details on the first page.</li><li>Give every field, garden bed, animal group and storage area a clear name or number.</li><li>Use one line for one event. Write the date first.</li><li>Record quantities with units such as kg, bags, litres, hours, plants, crates or dollars.</li><li>Keep receipts, invoices and delivery notes in an envelope that matches the notebook.</li><li>Write the record on the same day. If you estimate later, mark it as an estimate.</li></ol>
-<div class="notice"><strong>Minimum daily line:</strong> Date | Field or enterprise | What happened | Quantity | Cost or income | Person responsible | Observation.</div>
-<h2 id="field">3. Field and crop records</h2>
-<p>Give each field a short history. Record area, soil observations, previous crop, planting date, variety, spacing, plant population, irrigation method and problems. This history helps with crop rotation, fertilizer planning and disease prevention.</p>
-<table><thead><tr><th>Field</th><th>Area</th><th>Crop and variety</th><th>Planting date</th><th>Spacing</th><th>Water source</th><th>Previous crop</th></tr></thead><tbody><tr><td>________</td><td>________</td><td>________</td><td>________</td><td>________</td><td>________</td><td>________</td></tr><tr><td>________</td><td>________</td><td>________</td><td>________</td><td>________</td><td>________</td><td>________</td></tr></tbody></table>
-<p>During the season, record weeding, fertilizer, spraying, irrigation, scouting, disease, replanting, storms and other important work. Write what you saw, not only what you intended to do.</p>
-<h2 id="inputs">4. Inputs and stock records</h2>
-<p>Every seed, fertilizer, chemical, feed, fuel and packaging purchase should be recorded. A stock record prevents emergency buying and shows where money is going.</p>
-<table><thead><tr><th>Date</th><th>Input</th><th>Supplier</th><th>Quantity bought</th><th>Unit cost</th><th>Quantity used</th><th>Balance</th></tr></thead><tbody><tr><td>________</td><td>________</td><td>________</td><td>________</td><td>________</td><td>________</td><td>________</td></tr><tr><td>________</td><td>________</td><td>________</td><td>________</td><td>________</td><td>________</td><td>________</td></tr></tbody></table>
-<p>For crop protection products, also record product name, formulation, crop, target problem, label rate, date, operator, protective equipment and pre-harvest interval. Store products locked, labelled and away from food and feed.</p>
-<h2 id="labour">5. Labour and equipment</h2>
-<p>Labour records show how many hours or workdays each activity required. This matters even when family labour is unpaid because it has a real value and may be needed in the next budget.</p>
-<table><thead><tr><th>Date</th><th>Field</th><th>Task</th><th>People</th><th>Hours or days</th><th>Rate</th><th>Total</th></tr></thead><tbody><tr><td>________</td><td>________</td><td>________</td><td>________</td><td>________</td><td>________</td><td>________</td></tr><tr><td>________</td><td>________</td><td>________</td><td>________</td><td>________</td><td>________</td><td>________</td></tr></tbody></table>
-<p>Record tractor hours, fuel, repairs, hired equipment and tool loss. A machine that works for ten hours is not free just because the farmer owns it. Include fuel, maintenance and a reasonable equipment cost when comparing enterprises.</p>
-<h2 id="water">6. Weather and water</h2>
-<p>Write down daily rainfall when possible, irrigation dates, run time, estimated volume, pump hours, leaks, dry spells and water problems. Also record heat, strong wind, frost, hail, flooding and unusual weather. Weather notes help explain poor germination, disease, fruit cracking, drought stress and harvest delays.</p>
-<table><thead><tr><th>Date</th><th>Rain</th><th>Irrigation</th><th>Pump or system hours</th><th>Soil and crop observation</th><th>Action</th></tr></thead><tbody><tr><td>________</td><td>________</td><td>________</td><td>________</td><td>________</td><td>________</td></tr><tr><td>________</td><td>________</td><td>________</td><td>________</td><td>________</td><td>________</td></tr></tbody></table>
-<p>Do not use a fixed watering calendar without checking the root zone. A water record becomes useful when it is compared with soil moisture, crop stage and yield.</p>
-<h2 id="harvest">7. Harvest and sales</h2>
-<p>Harvest records should separate what was picked from what was saleable. Record grade, damaged produce, home use, livestock feed, storage loss, buyer, price and payment date. This shows where income is being lost.</p>
-<table><thead><tr><th>Date</th><th>Field and crop</th><th>Harvested</th><th>Grade 1</th><th>Grade 2</th><th>Rejected or used</th><th>Buyer and price</th></tr></thead><tbody><tr><td>________</td><td>________</td><td>________</td><td>________</td><td>________</td><td>________</td><td>________</td></tr><tr><td>________</td><td>________</td><td>________</td><td>________</td><td>________</td><td>________</td><td>________</td></tr></tbody></table>
-<p>Count the weight at the field and again at the buyer where possible. Keep delivery notes and record unpaid sales as money still owed, not as cash already received.</p>
-<h2 id="money">8. Cash and costs</h2>
-<p>Separate money paid out from money received. Record household withdrawals and farm cash separately. Mixing them makes it impossible to know whether the farm made a profit or whether farm cash was used for another purpose.</p>
-<table><thead><tr><th>Date</th><th>Description</th><th>Money in</th><th>Money out</th><th>Payment method</th><th>Receipt or note</th><th>Balance</th></tr></thead><tbody><tr><td>________</td><td>________</td><td>________</td><td>________</td><td>________</td><td>________</td><td>________</td></tr><tr><td>________</td><td>________</td><td>________</td><td>________</td><td>________</td><td>________</td><td>________</td></tr></tbody></table>
-<p>At the end of the crop, calculate: <strong>revenue = saleable quantity x selling price</strong>. Then compare revenue with seed, fertilizer, chemicals, labour, water, fuel, transport, packaging, rent, repairs and other costs. Keep unpaid family labour and owned equipment visible as estimated costs when making a serious business decision.</p>
-<h2 id="review">9. Review every week and every season</h2>
-<h3>Weekly review</h3><ol><li>Check which planned activities were completed.</li><li>Compare actual input use and spending with the budget.</li><li>Check stock, cash, crop condition, water and labour availability.</li><li>Write the three biggest problems and the next action for each.</li><li>Update the next seven days so work is done on time.</li></ol>
-<h3>End-of-season review</h3><ul><li>What was the total saleable harvest and average price?</li><li>Which costs were higher or lower than planned?</li><li>Which field, variety, supplier or method performed best?</li><li>Where did labour, water, pests, disease or market timing reduce profit?</li><li>What should be repeated, stopped or tested next season?</li></ul>
-<table><thead><tr><th>Planned</th><th>Actual</th><th>Difference</th><th>Why was it different?</th><th>Next action</th></tr><tbody><tr><td>________</td><td>________</td><td>________</td><td>________</td><td>________</td></tr><tr><td>________</td><td>________</td><td>________</td><td>________</td><td>________</td></tr></tbody></table>
-<h2 id="mistakes">10. Common record-keeping mistakes</h2>
-<ul><li>Waiting until the end of the season and trying to remember.</li><li>Writing quantities without units.</li><li>Recording only purchases but not what was used in each field.</li><li>Counting all harvest as saleable and ignoring grading or waste.</li><li>Ignoring family labour, equipment, transport and unpaid credit.</li><li>Mixing household cash with farm cash.</li><li>Keeping records in a phone that is not backed up or a notebook exposed to rain.</li><li>Recording a plan as if it already happened.</li></ul>
-<h2 id="templates">11. A simple daily page</h2>
-<div class="notice"><p><strong>Date:</strong> ____________________ &nbsp; <strong>Weather:</strong> ____________________</p><p><strong>Field or enterprise:</strong> ____________________ &nbsp; <strong>Crop or animals:</strong> ____________________</p><p><strong>Work completed:</strong> ____________________________________________________</p><p><strong>Inputs or labour used:</strong> ______________________________________________</p><p><strong>Quantity and cost:</strong> __________________________________________________</p><p><strong>What I observed:</strong> ___________________________________________________</p><p><strong>Next action and date:</strong> _______________________________________________</p></div>
-<h2>Final message</h2><p>Good records do not need difficult language or expensive software. Write the date, place, activity, quantity, cost and observation. Review the page every week. After harvest, use the evidence to make the next crop more organised, more profitable and less wasteful.</p>`);
+<h2 id="ph-intro">1. What Soil pH Means for Your Farm Profit</h2>
+<p>Soil pH measures how acidic or alkaline (sweet) your farm soil is. Just as human blood must remain within a narrow temperature and pH range for health, plant roots require soil pH within specific boundaries to absorb water and dissolved nutrients efficiently.</p>
+<p>Many farmers apply expensive NPK basal fertilizers or top-dressings and wonder why their crops remain yellow, stunted, and low-yielding. In 8 out of 10 cases, the problem is not a lack of fertilizer—it is **incorrect soil pH**. When soil pH is below 5.5 (strongly acidic), applied phosphorus binds tightly to iron and aluminum in the soil, rendering it unabsorbable. Applying agricultural lime to correct pH is often 5 times more profitable than buying more chemical fertilizer!</p>
+
+<h2 id="ph-scale">2. The pH Scale Explained (Acidic, Neutral, Alkaline)</h2>
+<p>Soil pH is measured on a scale from 0 to 14:</p>
+<ul>
+  <li><strong>pH 0 to 6.0 (Acidic / "Sour" Soil):</strong> Common in high-rainfall regions, heavily leached sandy soils, or fields where ammonium fertilizers have been used continuously without liming.</li>
+  <li><strong>pH 6.0 to 7.0 (Ideal / Neutral Range):</strong> The "sweet spot" for 90% of agricultural crops. Maximum nutrient availability, optimal microbial activity, and ideal root expansion occur here.</li>
+  <li><strong>pH 7.5 to 14 (Alkaline / "Sweet" / Saline Soil):</strong> Common in dry, arid regions with low rainfall and high evaporation rates, or where irrigation water contains high bicarbonates/salts.</li>
+</ul>
+
+<div class="notice">
+  <strong>Logarithmic Scale Reminder:</strong> The pH scale is logarithmic! A soil with pH 5.0 is <strong>10 times more acidic</strong> than soil at pH 6.0, and <strong>100 times more acidic</strong> than soil at pH 7.0. Small changes in pH number represent massive shifts in soil chemistry.
+</div>
+
+<h2 id="ph-nutrients">3. How Soil pH Locks or Unlocks Nutrients</h2>
+<p>Nutrient availability shifts dramatically across different pH levels:</p>
+
+<table>
+  <thead>
+    <tr>
+      <th>Soil pH Range</th>
+      <th>Available Nutrients</th>
+      <th>Locked / Unavailable Nutrients</th>
+      <th>Soil Hazard / Toxicity</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td><strong>Strongly Acidic (&lt; 5.2)</strong></td>
+      <td>Iron, Manganese, Aluminum (Excess)</td>
+      <td><strong>Phosphorus, Calcium, Magnesium, Molybdenum</strong></td>
+      <td>Aluminum & Manganese toxicity (burns root tips, stunts roots).</td>
+    </tr>
+    <tr>
+      <td><strong>Moderately Acidic (5.5 – 6.0)</strong></td>
+      <td>Nitrogen, Potassium, Sulfur (Moderate)</td>
+      <td>Slightly reduced Phosphorus & Calcium</td>
+      <td>Safe for acid-tolerant crops (potato, cassava, sweet potato).</td>
+    </tr>
+    <tr>
+      <td><strong>Optimal Range (6.0 – 7.0)</strong></td>
+      <td><strong>N, P, K, Ca, Mg, S, Fe, Zn, Cu, B, Mo</strong></td>
+      <td>None (Peak overall availability)</td>
+      <td>Ideal soil microbial activity and organic decay.</td>
+    </tr>
+    <tr>
+      <td><strong>Alkaline / Saline (&gt; 7.8)</strong></td>
+      <td>Calcium, Molybdenum (Excess)</td>
+      <td><strong>Iron, Zinc, Manganese, Boron, Phosphorus</strong></td>
+      <td>High sodium/salinity, leaf chlorosis, poor water infiltration.</td>
+    </tr>
+  </tbody>
+</table>
+
+<h2 id="ph-causes">4. Causes of Soil Acidity</h2>
+<p>Soil naturally becomes acidic over time due to three primary agricultural processes:</p>
+<ol>
+  <li><strong>Rainfall Leaching:</strong> Heavy rainfall washes soluble basic cations (Calcium, Magnesium, Potassium) deep below the root zone, leaving hydrogen and aluminum ions behind.</li>
+  <li><strong>Continuous Acidifying Fertilizers:</strong> Long-term use of ammonium-based fertilizers (such as Ammonium Nitrate, Urea, or Ammonium Sulphate) releases hydrogen ions as nitrogen nitrifies in soil.</li>
+  <li><strong>Crop Removal:</strong> Harvesting high yields removes large quantities of calcium and magnesium stored in crop tissue, gradually souring the field.</li>
+</ol>
+
+<h2 id="ph-sampling">5. How to Take an Accurate Soil Sample for pH Testing</h2>
+<p>A soil test is only as good as the sample taken. Follow this standard soil sampling protocol:</p>
+<ol>
+  <li>Divide your farm into uniform sampling blocks based on soil color, slope, crop history, and drainage. Never mix sandy top-slope soil with wet valley clay.</li>
+  <li>Walk a zigzag pattern across each uniform block. Clear surface debris (leaves/grass) from 15 to 20 sampling spots.</li>
+  <li>Using an auger or clean spade, dig a V-shaped hole 15 cm to 20 cm deep (plough depth for crops) or 30 cm for tree crops. Take a 2 cm slice of soil down the side of the hole.</li>
+  <li>Mix the 15–20 sub-samples thoroughly in a clean plastic bucket. Do not use galvanized metal or dirty buckets.</li>
+  <li>Air-dry a 500g sample on clean paper (never dry in a hot oven), pack into a labeled sample bag, and send to an accredited soil laboratory.</li>
+</ol>
+
+<h2 id="ph-liming">6. Correcting Acidic Soils: Agricultural Lime Types & Rates</h2>
+<p>Applying agricultural lime is the standard method to neutralize soil acidity, supply essential calcium/magnesium, and unlock soil phosphorus.</p>
+
+<h3>A. Choosing the Right Lime Type</h3>
+<ul>
+  <li><strong>Dolomitic Lime (Calcium & Magnesium Carbonate):</strong> Use when soil test shows low Magnesium alongside low pH. Ideal for most horticultural soils.</li>
+  <li><strong>Calcitic Lime (Calcium Carbonate):</strong> Use when soil has adequate Magnesium but requires Calcium and pH elevation.</li>
+  <li><strong>Quicklime / Slaked Lime:</strong> Caustic, fast-acting, but easily burns roots and soil microbes if misapplied. Avoid unless supervised by specialists.</li>
+</ul>
+
+<h3>B. Application Guidelines & Timing</h3>
+<ol>
+  <li><strong>Timing:</strong> Broadcast lime evenly across the field <strong>2 to 3 months before planting</strong>. Lime requires moisture and time to react chemically with soil.</li>
+  <li><strong>Incorporation:</strong> Diskwire or spade lime thoroughly into the top 15–20 cm root zone. Surface-applied lime moves down very slowly (less than 1 cm per month).</li>
+  <li><strong>General Rates:</strong> Sandy soils require less lime (1 to 2 tonnes/ha) to shift pH, whereas heavy clay soils rich in organic matter require higher rates (3 to 5 tonnes/ha) due to high buffering capacity. Always follow laboratory test recommendations.</li>
+</ol>
+
+<h2 id="ph-alkaline">7. Managing Alkaline Soils & Salinity</h2>
+<p>In dry regions where soil pH exceeds 7.8, high bicarbonates and sodium restrict iron and zinc uptake, causing yellowing (interveinal chlorosis) in young leaves:</p>
+<ul>
+  <li>Incorporate agricultural gypsum (Calcium Sulfate) into sodic/alkaline soils to displace excess sodium.</li>
+  <li>Apply elemental sulfur or acidifying fertilizers (such as Ammonium Sulfate) to gradually lower pH in high-value vegetable beds.</li>
+  <li>Add high rates of organic compost and manure to release organic acids as they decompose, buffering high soil pH.</li>
+</ul>
+
+<h2 id="ph-crops">8. Crop pH Tolerance Table</h2>
+
+<table>
+  <thead>
+    <tr>
+      <th>Crop Category</th>
+      <th>Target Soil pH Range</th>
+      <th>Tolerance & Field Notes</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td><strong>Tomato, Pepper, Eggplant</strong></td>
+      <td><strong>6.0 – 6.8</strong></td>
+      <td>Sensitive to pH &lt; 5.5 (causes blossom-end rot and calcium lockup).</td>
+    </tr>
+    <tr>
+      <td><strong>Cabbage, Broccoli, Cauliflower</strong></td>
+      <td><strong>6.2 – 7.2</strong></td>
+      <td>Prefers higher pH; liming to pH 6.8 suppresses fungal Clubroot disease.</td>
+    </tr>
+    <tr>
+      <td><strong>Potato, Sweet Potato, Cassava</strong></td>
+      <td><strong>5.2 – 6.2</strong></td>
+      <td>Tolerates moderate acidity; soil pH &gt; 6.5 increases Potato Scab disease.</td>
+    </tr>
+    <tr>
+      <td><strong>Maize, Sorghum, Wheat</strong></td>
+      <td><strong>5.8 – 7.0</strong></td>
+      <td>Yield drops sharply when pH drops below 5.2 due to aluminum toxicity.</td>
+    </tr>
+    <tr>
+      <td><strong>Beans, Cowpea, Soybeans</strong></td>
+      <td><strong>6.0 – 6.8</strong></td>
+      <td>Rhizobium nitrogen-fixing bacteria stop working in acidic soil (pH &lt; 5.5).</td>
+    </tr>
+  </tbody>
+</table>
+
+<h2 id="ph-mistakes">9. Common Soil pH Misconceptions & Mistakes</h2>
+<ul>
+  <li><strong>Mistake 1: Applying fertilizer instead of lime.</strong> Fertilizer cannot replace lime. Adding NPK to soil with pH 4.8 is wasting money.</li>
+  <li><strong>Mistake 2: Applying lime on the planting day.</strong> Lime takes 60 to 90 days to react. Applying it at planting gives zero benefit to early roots.</li>
+  <li><strong>Mistake 3: Mixing lime and nitrogen fertilizer together.</strong> Applying lime simultaneously with Ammonium Nitrate causes nitrogen to volatilize into ammonia gas and escape into the air!</li>
+  <li><strong>Mistake 4: Over-liming.</strong> Raising pH above 7.2 locks iron, zinc, and manganese, inducing severe micronutrient deficiencies.</li>
+</ul>
+
+<h2 id="ph-checklist">10. Step-by-Step Soil pH Management Checklist</h2>
+
+<div class="notice">
+  <ul>
+    <li>[ ] I took representative soil samples across uniform farm blocks.</li>
+    <li>[ ] I received a certified soil laboratory test showing soil pH, Ca, and Mg levels.</li>
+    <li>[ ] I selected Dolomitic or Calcitic lime based on Magnesium needs.</li>
+    <li>[ ] I broadcast and incorporated lime 2–3 months before planting.</li>
+    <li>[ ] I matched my planned crops to their ideal pH tolerance ranges.</li>
+  </ul>
+</div>
+
+<p><strong>Final Message:</strong> Correcting soil pH is the single highest-return investment you can make in your soil. Test your pH, lime early, unlock your soil nutrients, and maximize crop yields!</p>
+`);
+
+  // ==========================================
+  // HANDBOOK: TOMATO FERTILIZER GUIDE
+  // ==========================================
+  replace('tomato-fertilizer-guide', 'Tomato Fertilizer Guide: Complete Practical Farmer Handbook', 'A step-by-step practical handbook to feeding tomatoes from soil testing, basal fertilization, and split top-dressings through flowering, fruit set, bulking, and blossom-end rot prevention.', `
+<div class="notice"><strong>How to use this handbook:</strong> Tomatoes are heavy feeders with high demands for Nitrogen, Potassium, Calcium, and Phosphorus. Feeding tomatoes requires precise timing aligned with growth stages. Applying the wrong fertilizer at the wrong time causes leafy plants with no fruit, blossom-end rot, or fruit splitting.</div>
+<h2>Contents</h2><ol><li><a href="#tom-biology">1. The High Nutrient Demand of Tomatoes</a></li><li><a href="#tom-nutrients">2. Essential Tomato Nutrients (N, P, K, Ca, Mg, B, Zn)</a></li><li><a href="#tom-basal">3. Soil Preparation & Basal Fertilizer Application</a></li><li><a href="#tom-schedule">4. Stage-by-Stage Feeding Schedule (Transplanting to Harvest)</a></li><li><a href="#tom-calcium">5. Preventing Blossom-End Rot & Calcium Management</a></li><li><a href="#tom-methods">6. Application Methods: Fertigation vs Side-Dressing vs Foliar</a></li><li><a href="#tom-deficiencies">7. Diagnosing Nutrient Deficiencies from Leaves & Fruit</a></li><li><a href="#tom-hazards">8. Avoiding Fertilizer Burn, Salinity & Excess Nitrogen Hazards</a></li><li><a href="#tom-economics">9. Yield Targets & Fertilizer Cost-Benefit Calculation</a></li><li><a href="#tom-checklist">10. Complete Tomato Nutrition Field Checklist</a></li></ol>
+
+<h2 id="tom-biology">1. The High Nutrient Demand of Tomatoes</h2>
+<p>To produce 40 to 80 tonnes of high-quality market tomatoes per hectare, a tomato crop extracts large quantities of nutrients from the soil: approximately 150–220 kg of Nitrogen (N), 40–60 kg of Phosphorus (P2O5), 250–380 kg of Potassium (K2O), and 120–180 kg of Calcium (CaO) per hectare.</p>
+<p>Feeding tomatoes is not about dumping fertilizer all at once. Seedlings need phosphorus for rapid root establishment; growing vines need steady nitrogen; flowering plants need calcium and boron; and ripening fruits consume massive amounts of potassium. Matching nutrient delivery to these stage-specific demands is the secret to high yields and top market grade.</p>
+
+<h2 id="tom-nutrients">2. Essential Tomato Nutrients</h2>
+
+<table>
+  <thead>
+    <tr>
+      <th>Nutrient</th>
+      <th>Primary Role in Tomato Plant</th>
+      <th>Deficiency Symptoms</th>
+      <th>Excess Hazard</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td><strong>Nitrogen (N)</strong></td>
+      <td>Vigorous vine growth, leaf area, stem thickness, chlorophyll.</td>
+      <td>Stunted growth, pale yellow older leaves, thin stems.</td>
+      <td>Lush dark green leaves, flower drop, delayed fruit set, soft watery fruit.</td>
+    </tr>
+    <tr>
+      <td><strong>Phosphorus (P)</strong></td>
+      <td>Early root branching, energy transfer, early flowering & fruit set.</td>
+      <td>Purple/red discoloration on leaf undersides, poor root establishment.</td>
+      <td>Locks zinc and iron in soil; rare toxicity.</td>
+    </tr>
+    <tr>
+      <td><strong>Potassium (K)</strong></td>
+      <td>Fruit sizing, firm cell walls, brix (sweetness), deep red color.</td>
+      <td>Yellowing/browning of leaf margins (edge scorch), uneven ripening, hollow fruit.</td>
+    </tr>
+    <tr>
+      <td><strong>Calcium (Ca)</strong></td>
+      <td>Cell wall strength, growing tip expansion, fruit firm integrity.</td>
+      <td><strong>Blossom-End Rot (black sunken bottoms on fruits)</strong>, dieback of growing tips.</td>
+    </tr>
+    <tr>
+      <td><strong>Magnesium (Mg)</strong></td>
+      <td>Chlorophyll molecule core, active photosynthesis.</td>
+      <td>Interveinal chlorosis (yellowing between green veins) on older leaves.</td>
+    </tr>
+    <tr>
+      <td><strong>Boron (B)</strong></td>
+      <td>Pollen tube growth, flower pollination, fruit wall formation.</td>
+      <td>Hollow stems, fruit corking, excessive blossom drop, brittle leaves.</td>
+    </tr>
+  </tbody>
+</table>
+
+<h2 id="tom-basal">3. Soil Preparation & Basal Fertilizer Application</h2>
+<p>Basal fertilizer is applied before or during transplanting to supply nutrients that move slowly in soil (Phosphorus, Calcium, and organic matter):</p>
+<ol>
+  <li><strong>Organic Compost / Manure:</strong> Incorporate 10 to 20 tonnes per hectare of mature, well-rotted kraal manure or compost into planting beds 2 to 4 weeks before transplanting.</li>
+  <li><strong>Basal NPK Placement:</strong> Apply Compound C (5:15:12), Compound S (7:14:7), or NPK 6:18:15 at 600 to 1,000 kg per hectare (approx. 30g to 50g per linear metre of bed).</li>
+  <li><strong>Band Placement:</strong> Place basal fertilizer in a continuous band 5 cm to 10 cm beside and below the seedling row. Never place concentrated chemical fertilizer directly against seedling plugs!</li>
+</ol>
+
+<h2 id="tom-schedule">4. Stage-by-Stage Feeding Schedule</h2>
+
+<table>
+  <thead>
+    <tr>
+      <th>Growth Stage</th>
+      <th>Days Post-Transplant</th>
+      <th>Target Nutrient Ratio (N:P:K)</th>
+      <th>Recommended Fertilizer Application</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td><strong>1. Transplanting & Rooting</strong></td>
+      <td>Day 0 – 14</td>
+      <td>High P (1:3:1)</td>
+      <td>Basal NPK Compound + Starter Soluble Phosphate drench (e.g. MAP / Starter NPK).</td>
+    </tr>
+    <tr>
+      <td><strong>2. Vegetative Branching</strong></td>
+      <td>Day 14 – 30</td>
+      <td>Balanced N-K (2:1:2)</td>
+      <td>First split side-dressing of CAN or Ammonium Nitrate (10g/plant) + Calcium Nitrate.</td>
+    </tr>
+    <tr>
+      <td><strong>3. First Flowering & Fruit Set</strong></td>
+      <td>Day 30 – 50</td>
+      <td>Moderate N, High Ca (1:1:2 + Ca)</td>
+      <td>Side-dress Calcium Nitrate (15g/plant) + Soluble Boron foliar spray (to aid pollination).</td>
+    </tr>
+    <tr>
+      <td><strong>4. Fruit Bulking & Color Break</strong></td>
+      <td>Day 50 – 75</td>
+      <td>High K (1:1:3)</td>
+      <td>Side-dress Potassium Nitrate (KNO3) or Potassium Sulfate (SOP) at 15–20g/plant every 14 days.</td>
+    </tr>
+    <tr>
+      <td><strong>5. Continuous Harvest</strong></td>
+      <td>Day 75 – 120+</td>
+      <td>High K, Moderate N (2:1:4)</td>
+      <td>Light split feedings of Potassium Nitrate + Calcium Nitrate after every major fruit picking flush.</td>
+    </tr>
+  </tbody>
+</table>
+
+<h2 id="tom-calcium">5. Preventing Blossom-End Rot & Calcium Management</h2>
+<p>Blossom-End Rot (BER) causes dark, leathery, sunken black spots at the bottom (blossom end) of tomato fruits, destroying market value. BER is caused by a **calcium deficiency in expanding fruit cell walls**.</p>
+
+<div class="notice">
+  <strong>How to Prevent Blossom-End Rot:</strong>
+  <ol>
+    <li><strong>Maintain Uniform Soil Moisture:</strong> Calcium is carried into plants purely by water flow. Irregular watering (dry soil followed by heavy flooding) stops calcium transport, triggering BER even if soil has calcium!</li>
+    <li><strong>Apply Calcium Nitrate:</strong> Side-dress or fertigate Calcium Nitrate from first flower truss appearance through fruit filling.</li>
+    <li><strong>Avoid Excess Ammonium / Potassium early on:</strong> High ammonium (NH4) or excess potassium in early stages competes with calcium root uptake.</li>
+    <li><strong>Foliar Calcium Sprays:</strong> Spray Chelated Calcium or Calcium Chloride onto young setting fruit clusters during hot, dry periods.</li>
+  </ol>
+</div>
+
+<h2 id="tom-methods">6. Application Methods</h2>
+<ul>
+  <li><strong>Granular Side-Dressing:</strong> Apply measured fertilizer in a shallow trench 10–15 cm away from plant stems, cover with soil, and water immediately.</li>
+  <li><strong>Fertigation (Drip System):</strong> Dissolve 100% water-soluble fertilizers (e.g. Potassium Nitrate, Calcium Nitrate, MAP) in stock tanks and inject through drip lines. Flush lines with clean water for 15 minutes after every fertigation cycle.</li>
+  <li><strong>Foliar Feeding:</strong> Use foliar sprays only as a fast micronutrient fix (Boron, Iron, Zinc, Magnesium). Foliar feeding cannot supply the massive bulk N, P, and K required by heavy-fruiting tomatoes.</li>
+</ul>
+
+<h2 id="tom-deficiencies">7. Diagnosing Nutrient Deficiencies</h2>
+<ul>
+  <li><strong>Yellowing of lower leaves:</strong> Nitrogen deficiency (if uniform yellowing) or Magnesium deficiency (if yellowing between green leaf veins).</li>
+  <li><strong>Leaf margin scorch (browning edges):</strong> Potassium deficiency or high salt/fertilizer burn.</li>
+  <li><strong>Purple leaf undersides:</strong> Cold soil or Phosphorus deficiency.</li>
+  <li><strong>Black sunken fruit bottoms:</strong> Blossom-End Rot (Calcium / Irrigation deficit).</li>
+  <li><strong>Yellow shoulders / hollow fruit:</strong> Potassium & Boron deficiency or heat stress.</li>
+</ul>
+
+<h2 id="tom-hazards">8. Avoiding Fertilizer Burn & Hazards</h2>
+<ul>
+  <li>Never apply dry granular fertilizer onto dry soil; always apply to damp beds and irrigate lightly afterward.</li>
+  <li>Never mix Calcium Nitrate and Sulfate/Phosphate fertilizers in the same concentrated stock tank (causes white gypsum precipitation that clogs drip emitters!).</li>
+  <li>Keep total irrigation water electrical conductivity (EC) below 2.5 dS/m to prevent root salt burn.</li>
+</ul>
+
+<h2 id="tom-economics">9. Yield Targets & Fertilizer Cost-Benefit Calculation</h2>
+<p>Calculate your target yield: 10,000 staked plants per half-hectare yielding an average of 5 kg per plant produces 50 tonnes of market tomatoes. Investing $600 in a balanced, stage-specific fertilizer program yields an additional $4,000 to $8,000 in Grade 1 market sales compared to unfertilized or poorly fed plots.</p>
+
+<h2 id="tom-checklist">10. Complete Tomato Nutrition Field Checklist</h2>
+
+<div class="notice">
+  <ul>
+    <li>[ ] I applied basal NPK compound + manure in bands before transplanting.</li>
+    <li>[ ] I initiated Calcium Nitrate side-dressing at first flower appearance.</li>
+    <li>[ ] I maintained steady, uniform soil moisture to prevent Blossom-End Rot.</li>
+    <li>[ ] I switched to High-Potassium feeding during fruit expansion and ripening.</li>
+    <li>[ ] I recorded all fertilizer products, rates, dates, and harvest pack-outs.</li>
+  </ul>
+</div>
+
+<p><strong>Final Message:</strong> Feed your tomatoes by crop stage, keep root zone moisture uniform, balance nitrogen with potassium and calcium, and maximize your farm revenue!</p>
+`);
+
+  // ==========================================
+  // HANDBOOK: FARM RECORD KEEPING FOR BEGINNERS
+  // ==========================================
+  replace('farm-record-keeping', 'Farm Record Keeping for Beginners: Complete Practical Farmer Handbook', 'A complete practical handbook to setting up simple farm record systems: land history, crop logs, input stock, labour hours, weather/water logs, harvest grading, cash flow, and seasonal profit reviews.', `
+<div class="notice"><strong>How to use this handbook:</strong> If you do not keep written records, you are not running a farm business—you are guessing. A simple notebook updated daily provides the empirical evidence you need to reduce costs, stop theft, price produce correctly, secure farm loans, and make a guaranteed profit.</div>
+<h2>Contents</h2><ol><li><a href="#rec-why">1. Why Records Separate Profitable Farms from Bankrupt Farms</a></li><li><a href="#rec-setup">2. Setting Up Your Farm Record System</a></li><li><a href="#rec-field">3. Field & Crop Activity Logs</a></li><li><a href="#rec-inventory">4. Input Inventory & Stock Management</a></li><li><a href="#rec-labour">5. Labour & Equipment Logs</a></li><li><a href="#rec-weather">6. Weather & Water Log Tracking</a></li><li><a href="#rec-harvest">7. Harvest Grading & Sales Records</a></li><li><a href="#rec-cashflow">8. Cash Flow & Profit Calculation (Separating Family & Farm Cash)</a></li><li><a href="#rec-review">9. Weekly & Seasonal Business Review Protocol</a></li><li><a href="#rec-mistakes">10. Common Record-Keeping Mistakes to Avoid</a></li><li><a href="#rec-templates">11. Ready-to-Use Printable Farm Log Templates</a></li></ol>
+
+<h2 id="rec-why">1. Why Records Separate Profitable Farms from Bankrupt Farms</h2>
+<p>Many hard-working farmers work from dawn to dusk, grow lush crops, sell truckloads of produce, and yet end the season with zero cash in the bank. Why? Because without written records, farmers cannot see where their money was lost.</p>
+<p>Written farm records act as your business mirror. They tell you exactly:</p>
+<ul>
+  <li>Which crop variety made money and which lost money.</li>
+  <li>The exact production cost per kilogram or per box of produce.</li>
+  <li>Whether hired labour or machinery was efficient or wasteful.</li>
+  <li>How much fertilizer or chemical stock remains in your store room.</li>
+  <li>Whether your farm generated a net cash profit after accounting for all expenses.</li>
+</ul>
+
+<h2 id="rec-setup">2. Setting Up Your Farm Record System</h2>
+<p>You do not need expensive farm software or a computer to keep great records. All you need is a durable hard-cover notebook, a pen, a calculator, and a dedicated folder for receipts.</p>
+
+<h3>A. The 4 Basic Rules of Farm Record Keeping</h3>
+<ol>
+  <li><strong>Record Daily:</strong> Write down farm events on the exact day they happen. Never rely on memory at the end of the week!</li>
+  <li><strong>Include Units Always:</strong> Never write "5 fertilizer." Always write "5 bags (50kg each) Compound D."</li>
+  <li><strong>Separate Enterprises:</strong> Keep separate record pages for tomatoes, cabbages, poultry, and goats so you know which enterprise is profitable.</li>
+  <li><strong>Separate Farm Cash from Household Cash:</strong> Never treat farm sales cash as personal wallet spending money.</li>
+</ol>
+
+<h2 id="rec-field">3. Field & Crop Activity Logs</h2>
+<p>Dedicate a section of your notebook to each field or bed block. Record field history, crop variety, planting dates, spacing, and daily management tasks.</p>
+
+<table>
+  <thead>
+    <tr>
+      <th>Date</th>
+      <th>Field ID / Bed</th>
+      <th>Crop & Variety</th>
+      <th>Activity Performed</th>
+      <th>Inputs Used</th>
+      <th>Person Responsible</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td>12 Oct 2026</td>
+      <td>Field A (0.25 ha)</td>
+      <td>Tomato (Star 9009)</td>
+      <td>Transplanting 4,000 seedlings</td>
+      <td>4,000 plugs + 100kg Compound C</td>
+      <td>John & 3 Workers</td>
+    </tr>
+    <tr>
+      <td>26 Oct 2026</td>
+      <td>Field A (0.25 ha)</td>
+      <td>Tomato (Star 9009)</td>
+      <td>First Top-Dressing Side-Dress</td>
+      <td>50kg CAN (Ammonium Nitrate)</td>
+      <td>Moses</td>
+    </tr>
+  </tbody>
+</table>
+
+<h2 id="rec-inventory">4. Input Inventory & Stock Management</h2>
+<p>Inputs (seeds, fertilizer, chemicals, fuel) represent your highest cash outlay. Unrecorded inventory leads to theft, emergency buying at inflated retail prices, or using expired chemicals.</p>
+
+<table>
+  <thead>
+    <tr>
+      <th>Date</th>
+      <th>Item Description</th>
+      <th>Supplier</th>
+      <th>Qty Bought</th>
+      <th>Total Cost</th>
+      <th>Qty Used</th>
+      <th>Field Used On</th>
+      <th>Stock Balance</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td>01 Oct 2026</td>
+      <td>Compound C (50kg bag)</td>
+      <td>Agro-Chem Ltd</td>
+      <td>10 bags</td>
+      <td>$350.00</td>
+      <td>2 bags</td>
+      <td>Field A</td>
+      <td>8 bags</td>
+    </tr>
+    <tr>
+      <td>15 Oct 2026</td>
+      <td>Mancozeb Fungicide (1kg)</td>
+      <td>Farmers Coop</td>
+      <td>5 packs</td>
+      <td>$40.00</td>
+      <td>1 pack</td>
+      <td>Field B (Cabbage)</td>
+      <td>4 packs</td>
+    </tr>
+  </tbody>
+</table>
+
+<h2 id="rec-labour">5. Labour & Equipment Logs</h2>
+<p>Record hired labour hours/workdays, task rates, and machinery fuel usage. Even if family members work on the farm, log their work hours so you know the true cost of production.</p>
+
+<table>
+  <thead>
+    <tr>
+      <th>Date</th>
+      <th>Worker Name</th>
+      <th>Task Description</th>
+      <th>Hours / Area</th>
+      <th>Daily Wage Rate</th>
+      <th>Total Paid</th>
+      <th>Sign / Verification</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td>14 Oct 2026</td>
+      <td>Sipho Moyo</td>
+      <td>Manual Weeding Field B</td>
+      <td>1 Full Day</td>
+      <td>$10.00</td>
+      <td>$10.00</td>
+      <td>S. Moyo</td>
+    </tr>
+    <tr>
+      <td>14 Oct 2026</td>
+      <td>Tractor Hire</td>
+      <td>Disc Harrowing Field C</td>
+      <td>2 Hours</td>
+      <td>$30.00 / hr</td>
+      <td>$60.00</td>
+      <td>Receipt #402</td>
+    </tr>
+  </tbody>
+</table>
+
+<h2 id="rec-weather">6. Weather & Water Log Tracking</h2>
+<p>Record daily rainfall (using a simple plastic rain gauge), irrigation run times, pump fuel consumption, and weather events (heatwaves, frost, hail). Rain logs explain crop performance and validate insurance claims.</p>
+
+<h2 id="rec-harvest">7. Harvest Grading & Sales Records</h2>
+<p>Never record just "harvested tomatoes." Separate total field harvest into saleable Grade 1, Grade 2, home consumption, and field rejects (losses).</p>
+
+<table>
+  <thead>
+    <tr>
+      <th>Harvest Date</th>
+      <th>Field / Crop</th>
+      <th>Grade 1 (Crates/kg)</th>
+      <th>Grade 2 (Crates/kg)</th>
+      <th>Rejects / Loss</th>
+      <th>Buyer Name</th>
+      <th>Price / Unit</th>
+      <th>Total Income</th>
+      <th>Payment Status</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td>10 Dec 2026</td>
+      <td>Field A (Tomato)</td>
+      <td>40 Crates (20kg)</td>
+      <td>15 Crates</td>
+      <td>3 Crates</td>
+      <td>Fresh Market Traders</td>
+      <td>$12.00 / Crate</td>
+      <td>$660.00</td>
+      <td>PAID (Cash)</td>
+    </tr>
+    <tr>
+      <td>14 Dec 2026</td>
+      <td>Field A (Tomato)</td>
+      <td>50 Crates (20kg)</td>
+      <td>10 Crates</td>
+      <td>2 Crates</td>
+      <td>City Supermarket</td>
+      <td>$14.00 / Crate</td>
+      <td>$840.00</td>
+      <td>CREDIT (Due 21 Dec)</td>
+    </tr>
+  </tbody>
+</table>
+
+<h2 id="rec-cashflow">8. Cash Flow & Profit Calculation</h2>
+<p>At the end of every month and season, calculate your net profit:</p>
+<div class="notice">
+  <strong>The Net Profit Formula:</strong><br>
+  <strong>Gross Revenue</strong> (Total Sales Cash Received) – <strong>Direct Expenses</strong> (Seed + Fertilizer + Chemicals + Labour + Fuel + Packaging + Transport) = <strong>NET FARM PROFIT</strong>
+</div>
+<p>If your Net Profit is negative, examine your records to locate where expenses overflowed or where yield losses occurred.</p>
+
+<h2 id="rec-review">9. Weekly & Seasonal Business Review Protocol</h2>
+<ul>
+  <li><strong>Every Sunday Evening:</strong> Review the week's spending, tally labour payments, check store stock, and write down the top 3 work priorities for the coming week.</li>
+  <li><strong>End-of-Season Review:</strong> Calculate total cost per kilogram produced, compare actual yields with targets, evaluate buyer payment reliability, and plan improvements for next season.</li>
+</ul>
+
+<h2 id="rec-mistakes">10. Common Record-Keeping Mistakes to Avoid</h2>
+<ul>
+  <li>Recording expenses on loose scraps of paper that get lost.</li>
+  <li>Recording credit sales as cash received before the money is in your bank.</li>
+  <li>Failing to count personal/household crop consumption as farm revenue.</li>
+  <li>Mixing household grocery spending with farm input expenses.</li>
+</ul>
+
+<h2 id="rec-templates">11. Ready-to-Use Printable Farm Log Templates</h2>
+<div class="notice">
+  <p><strong>Daily Farm Activity Line:</strong></p>
+  <p>Date: ________ | Field: ________ | Activity: ________________________ | Inputs/Labour: ________________ | Cost/Income: $________ | Notes: ________________</p>
+</div>
+
+<p><strong>Final Message:</strong> Farm records turn farming into a predictable, profitable, professional business. Keep your record book clean, update it daily, and let your numbers guide your success!</p>
+`);
+
 
   replace('farming-dry-conditions', 'Farming in Dry Conditions: The Complete Practical Farmer Handbook', 'A complete, step-by-step practical guide to profitable farming in drought-prone areas: soil water retention, tie ridging, Pfumvudza/Zai basins, rainwater harvesting, certified seed, crop rotation, drought-resistant varieties, and enterprise diversification.', `
 <div class="notice"><strong>How to use this handbook:</strong> Dryland farming is not about "hoping for rain." It is a disciplined system of capturing every drop of rainfall, preventing soil evaporation, choosing climate-matched seeds, and diversifying farm enterprises so your farm makes a consistent profit even in low-rainfall seasons.</div>
