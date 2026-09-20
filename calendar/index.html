@@ -1,1 +1,160 @@
-<!doctype html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><meta name="description" content="Crop calendar planning for planting windows, growth stages, irrigation and harvest estimates."><title>Crop Calendar | AgriBase</title><link rel="stylesheet" href="/assets/site.css"><link rel="preconnect" href="https://fonts.googleapis.com"><link href="https://fonts.googleapis.com/css2?family=Fraunces:wght@600;700&family=Karla:wght@400;700;800&display=swap" rel="stylesheet"></head><body><div data-site-header></div><header class="page-hero"><div class="container"><div class="breadcrumb"><a href="/">Home</a> / Crop Calendar</div><div class="eyebrow">Plan the season</div><h1>Crop Calendar</h1><p class="lead">Use crop and location information to organize planting, crop care and harvest windows.</p></div></header><main class="section"><div class="container"><div class="grid"><article class="card"><div class="meta">Tomato</div><h3>Warm-season vegetable</h3><p>Plan transplanting after local cold risk has passed. Manage moisture carefully through flowering and fruit set.</p><a class="link" href="/guides/how-to-grow-tomatoes.html">Read tomato guide →</a></article><article class="card"><div class="meta">Cabbage</div><h3>Cooler-season option</h3><p>Use a locally adapted variety and plan regular water during head enlargement.</p><a class="link" href="/guides/how-to-grow-cabbage.html">Read cabbage guide →</a></article><article class="card"><div class="meta">More crops</div><h3>App calendar data</h3><p>The mobile app includes crop profiles and regional agro-zone data for future expansion of this web interface.</p><a class="link" href="/community/">Explore the app →</a></article></div><div class="notice" style="margin-top:28px"><strong>Important:</strong> dates shown in any calendar are estimates. Rainfall, temperature, elevation, variety, soil, irrigation and farming system can shift planting and harvest windows. Confirm timing with local extension guidance and current weather.</div><h2 style="margin-top:48px">Planning stages</h2><ul class="feature-list"><li>Land preparation and soil testing</li><li>Planting or transplanting window</li><li>Weeding and crop scouting</li><li>Fertilizer timing based on crop stage and soil information</li><li>Irrigation checks and rainfall adjustment</li><li>Expected harvest and market planning</li></ul></div></main><div data-site-footer></div><script src="/assets/content.js"></script><script src="/assets/site.js"></script></body></html>
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="description" content="Location-aware crop calendar and seasonal growth stage planner for African farmers. Mirrors AgriBase mobile app calendar with crop thermal limits, variety maturity, and climate risk alerts.">
+  <title>Crop Calendar & Growth Planner | AgriBase</title>
+  
+  <link rel="stylesheet" href="/assets/site.css">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Fraunces:wght@600;700&family=Karla:wght@400;700;800&display=swap" rel="stylesheet">
+</head>
+<body>
+  <div data-site-header></div>
+
+  <header class="page-hero">
+    <div class="container">
+      <div class="breadcrumb"><a href="/">Home</a> / Crop Calendar</div>
+      <div class="eyebrow">Plan the season</div>
+      <h1>Crop Calendar & Growth Planner</h1>
+      <p class="lead">Select your agro-ecological location, crop, and variety to calculate recommended planting windows, growth stage timelines, climate risks, and harvest estimates.</p>
+    </div>
+  </header>
+
+  <main class="section">
+    <div class="container">
+      <div class="crop-calendar-wrap">
+        
+        <!-- Tab Bar -->
+        <div class="calendar-tab-bar">
+          <button class="tab-btn active" id="tab-btn-plan">🌱 Plan New Crop</button>
+          <button class="tab-btn" id="tab-btn-saved">📋 My Farm Calendars</button>
+        </div>
+
+        <!-- View 1: Plan New Crop Form -->
+        <div id="view-plan-tab">
+          <div class="calendar-form-card">
+            
+            <!-- Step 1: Location -->
+            <div class="form-step-group">
+              <h3>📍 1. Select Agro-Ecological Location</h3>
+              <div class="form-grid-2">
+                <div class="form-field">
+                  <label for="calendar-country">Country</label>
+                  <select id="calendar-country">
+                    <!-- Populated dynamically -->
+                  </select>
+                </div>
+                <div class="form-field">
+                  <label for="calendar-region">Region / District</label>
+                  <select id="calendar-region">
+                    <!-- Populated dynamically -->
+                  </select>
+                </div>
+              </div>
+              <div id="climate-info-box" class="info-note-box" style="display:none;"></div>
+            </div>
+
+            <!-- Step 2: Crop & Variety -->
+            <div class="form-step-group">
+              <h3>🌾 2. Select Crop & Variety</h3>
+              <div class="form-grid-2">
+                <div class="form-field">
+                  <label for="calendar-crop">Horticultural Crop</label>
+                  <select id="calendar-crop">
+                    <!-- Populated dynamically -->
+                  </select>
+                </div>
+                <div class="form-field">
+                  <label for="calendar-variety">Variety (Maturity Type)</label>
+                  <select id="calendar-variety">
+                    <!-- Populated dynamically -->
+                  </select>
+                </div>
+              </div>
+              <div id="crop-description-box" class="info-note-box" style="display:none;"></div>
+            </div>
+
+            <!-- Step 3: Farming System & Schedule -->
+            <div class="form-step-group">
+              <h3>🏗️ 3. Production System & Planting Date</h3>
+              <div class="form-grid-2">
+                <div class="form-field">
+                  <label for="calendar-production-system">Production System</label>
+                  <select id="calendar-production-system">
+                    <option value="openField">Open Field (Standard)</option>
+                    <option value="greenhouse">Greenhouse / Poly Tunnel</option>
+                    <option value="shadeNet">Shade Netting</option>
+                    <option value="containerGarden">Container / Home Garden</option>
+                  </select>
+                </div>
+                <div class="form-field">
+                  <label for="calendar-water-source">Water Source</label>
+                  <select id="calendar-water-source">
+                    <option value="irrigated">Full Irrigation</option>
+                    <option value="rainFed">Rain-Fed (Dependent on Rainfall)</option>
+                    <option value="limitedIrrigation">Supplementary / Limited Irrigation</option>
+                  </select>
+                </div>
+              </div>
+
+              <div class="form-grid-2" style="margin-top: 14px;">
+                <div class="form-field">
+                  <label for="calendar-planting-date">Planned Sowing / Transplanting Date</label>
+                  <input type="date" id="calendar-planting-date">
+                </div>
+                <div class="form-field" style="justify-content: flex-end;">
+                  <label class="checkbox-label">
+                    <input type="checkbox" id="calendar-soil-test">
+                    Certified Soil Test Available
+                  </label>
+                </div>
+              </div>
+            </div>
+
+            <!-- Generate Button -->
+            <button class="button button-lg" id="btn-generate-plan">✨ Generate Crop Calendar Plan</button>
+          </div>
+
+          <!-- Dynamic Results Container -->
+          <div id="results-container" style="display:none;"></div>
+        </div>
+
+        <!-- View 2: Saved Farm Calendars -->
+        <div id="view-saved-tab" style="display:none;">
+          <div id="saved-plans-list">
+            <!-- Saved plans rendered dynamically -->
+          </div>
+        </div>
+
+      </div>
+
+      <!-- Planning Stages Notice & Guidelines -->
+      <div class="notice" style="margin-top:42px">
+        <strong>Important Advisory:</strong> Planting and harvest dates generated are models based on regional agro-ecological zone data, crop temperature thresholds, and variety parameters. Microclimates, soil conditions, unexpected weather shifts, and pest pressures may alter actual timing. Always cross-reference with local agricultural extension officers and seed suppliers.
+      </div>
+
+      <h2 style="margin-top:48px">Key Seasonal Planning Stages</h2>
+      <ul class="feature-list">
+        <li><strong>Land Preparation & Soil Testing:</strong> Prepare friable soil beds, measure pH balance, and apply basal fertilizer 2–4 weeks prior to planting.</li>
+        <li><strong>Planting Window Alignment:</strong> Match transplanting or sowing dates to frost-free thermal windows and optimal seasonal rainfall cycles.</li>
+        <li><strong>Growth Stage Scouting & Weeding:</strong> Conduct weekly field scouting for early pest symptoms (e.g. cutworms, aphids, leafminers) and manage weed competition early.</li>
+        <li><strong>Targeted Split Fertilization:</strong> Apply top-dressings (CAN/Potassium) aligned with vegetative canopy build and fruit bulking stages.</li>
+        <li><strong>Irrigation Scheduling:</strong> Adjust water delivery during moisture-sensitive stages (e.g. flowering, silking, bulking) to prevent fruit splitting or flower drop.</li>
+        <li><strong>Harvest Window & Market Transport:</strong> Harvest at peak commercial maturity (breaker stage for long transport or full ripe for local markets) and shade crates immediately.</li>
+      </ul>
+    </div>
+  </main>
+
+  <div data-site-footer></div>
+
+  <!-- Scripts -->
+  <script src="/assets/content.js"></script>
+  <script src="/assets/site.js"></script>
+  <script src="/assets/crop-calendar-data.js"></script>
+  <script src="/assets/crop-calendar-engine.js"></script>
+  <script src="/assets/crop-calendar-ui.js"></script>
+</body>
+</html>
