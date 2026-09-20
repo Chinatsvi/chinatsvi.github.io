@@ -460,4 +460,492 @@
 <p><strong>Final Message:</strong> Farming in dry conditions is not a curse—it is a specialized business system. By harvesting every drop of rainwater, building soil organic matter, planting certified drought-resistant crops, and combining livestock with crops, your farm will remain productive, profitable, and resilient every season.</p>
 `);
 
-})();
+  // ==========================================
+  // HANDBOOK 1: COMMON MISTAKES BEGINNER FARMERS MAKE
+  // ==========================================
+  replace('beginner-farming-mistakes', 'Common Mistakes Beginner Farmers Make: A Practical Farmer Handbook', 'A complete, step-by-step practical handbook for new farmers to avoid expensive mistakes in land selection, market planning, water management, seed choice, pest scouting, record keeping, and cash flow.', `
+<div class="notice"><strong>How to use this handbook:</strong> Read this guide before spending a single dollar on land, seed, or fertilizer. Most farm failures are not caused by bad weather—they are caused by avoidable planning and management mistakes made in the first 90 days.</div>
+<h2>Contents</h2><ol><li><a href="#intro">1. Why Most New Farms Fail in Year One</a></li><li><a href="#mistake1">2. Mistake 1: Planting Without a Confirmed Market Buyer</a></li><li><a href="#mistake2">3. Mistake 2: Ignoring Soil Testing, pH, and Land History</a></li><li><a href="#mistake3">4. Mistake 3: Underestimating Real Water Requirements</a></li><li><a href="#mistake4">5. Mistake 4: Buying Cheap Grain-Bin Seed Instead of Certified Seed</a></li><li><a href="#mistake5">6. Mistake 5: Over-crowding Crops & Ignoring Spacing Rules</a></li><li><a href="#mistake6">7. Mistake 6: Over-applying Nitrogen & Neglecting Organic Matter</a></li><li><a href="#mistake7">8. Mistake 7: Reactive Chemical Spraying Instead of Scouting</a></li><li><a href="#mistake8">9. Mistake 8: Mixing Household Cash with Farm Cash</a></li><li><a href="#mistake9">10. Mistake 9: Expanding Too Fast Before Mastering Small Beds</a></li><li><a href="#checklist">11. Correct Step-by-Step Beginner Farmer Launch Checklist</a></li></ol>
+
+<h2 id="intro">1. Why Most New Farms Fail in Year One</h2>
+<p>Every year, thousands of enthusiastic new farmers invest their hard-earned savings into crop production, only to suffer severe financial losses or total crop failure. The problem is rarely a lack of passion or hard work. Rather, beginner farmers fall into predictable, repeatable traps that could easily be prevented with basic technical guidance.</p>
+<p>Commercial farming is a disciplined manufacturing business where soil, water, seed, labour, and market timing interact. A failure in any one link breaks the chain. This handbook identifies the 9 most dangerous mistakes beginner farmers make and provides practical, field-tested rules to ensure your farming enterprise is profitable from your very first harvest.</p>
+
+<h2 id="mistake1">2. Mistake 1: Planting Without a Confirmed Market Buyer</h2>
+<p><strong>The Mistake:</strong> Planting 2 hectares of tomatoes or cabbage simply because "everyone eats tomatoes," and waiting until harvest day to look for buyers.</p>
+<p><strong>Why it causes failure:</strong> Perishable crops like tomatoes, leafy greens, and green peppers deteriorate within 48 to 72 hours after picking. When hundreds of local farmers harvest at the same time, local open markets become flooded, prices collapse, and farmers are forced to sell at a loss or watch their crop rot in the field.</p>
+<div class="notice">
+  <strong>The Fix: The Market-First Rule</strong>
+  <ol>
+    <li>Identify your market <em>before</em> buying seed. Visit local market traders, supermarkets, schools, hotels, and informal vendors.</li>
+    <li>Find out what crop varieties they buy, what grade or size they require, what prices they pay across different months, and what packaging crates they accept.</li>
+    <li>Stagger your planting dates (plant small blocks every 2–3 weeks) so you harvest continuously over 2 to 3 months rather than dumping your entire crop in one week.</li>
+  </ol>
+</div>
+
+<h2 id="mistake2">3. Mistake 2: Ignoring Soil Testing, pH, and Land History</h2>
+<p><strong>The Mistake:</strong> Assuming all dark soil is fertile, skipping soil testing, and applying random fertilizers without knowing soil pH or nutrient deficiencies.</p>
+<p><strong>Why it causes failure:</strong> If soil pH is strongly acidic (below 5.5) or alkaline (above 7.5), plant roots cannot absorb major nutrients—even if you apply expensive NPK fertilizer! Fertilizer applied to uncorrected acidic soil is locked in the ground and wasted. Furthermore, planting solanaceous crops (tomatoes/peppers/potatoes) in a field that suffered from bacterial wilt or nematodes in previous seasons guarantees crop destruction.</p>
+
+<table>
+  <thead>
+    <tr>
+      <th>Soil Issue</th>
+      <th>Visual Symptom in Crop</th>
+      <th>Correct Action Before Planting</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td><strong>Strong Acidic Soil (pH &lt; 5.5)</strong></td>
+      <td>Stunted roots, purple leaf margins, fertilizer has no effect.</td>
+      <td>Take a soil test and apply agricultural lime (dolomitic or calcitic) 2–3 months before planting.</td>
+    </tr>
+    <tr>
+      <td><strong>Soil Hardpan / Compaction</strong></td>
+      <td>Shallow horizontal roots, standing surface water after rain.</td>
+      <td>Ripping or deep digging to break the hardpan layer below the surface.</td>
+    </tr>
+    <tr>
+      <td><strong>Nematode / Pathogen History</strong></td>
+      <td>Knobby swollen root galls, sudden wilting in midday heat.</td>
+      <td>Rotate with marigolds, Sunn hemp, or bio-fumigant crops; avoid solanaceous family for 3 years.</td>
+    </tr>
+  </tbody>
+</table>
+
+<h2 id="mistake3">4. Mistake 3: Underestimating Real Water Requirements</h2>
+<p><strong>The Mistake:</strong> Planting 1 hectare of water-demanding vegetables using a small household well, a weak solar pump, or a single 200-litre tank.</p>
+<p><strong>Why it causes failure:</strong> Vegetables require between 4,000 and 7,000 cubic metres (4 to 7 million litres) of water per hectare over a growing season. During peak summer fruit-filling, a single tomato plant consumes 2 to 3 litres of water <em>per day</em>. When the water supply runs dry mid-season, plants drop flowers, fruit splits, and the investment is lost.</p>
+<ul>
+  <li><strong>The Fix:</strong> Measure your continuous water delivery (litres per hour) <em>before</em> deciding your field size. Never expand planted area beyond what your guaranteed dry-season water delivery can sustain during peak heat.</li>
+</ul>
+
+<h2 id="mistake4">5. Mistake 4: Buying Cheap Grain-Bin Seed Instead of Certified Seed</h2>
+<p><strong>The Mistake:</strong> Saving seed from market grain bins or buying uncertified cheap seed from unverified vendors to save money.</p>
+<p><strong>Why it causes failure:</strong> Grain-bin seed often lacks genetic purity, carries seed-borne fungal/bacterial diseases, and yields poorly. Saved hybrid seed (F2 generation) segregates into weak, non-uniform plants with 30% to 50% lower yield.</p>
+<ul>
+  <li><strong>The Fix:</strong> Certified seed from reputable seed houses guarantees high germination (&gt;90%), seedling vigor, uniform maturity, and built-in disease resistance. The cost of certified seed is usually less than 5% of total production costs but accounts for over 50% of your yield potential.</li>
+</ul>
+
+<h2 id="mistake5">6. Mistake 5: Over-crowding Crops & Ignoring Spacing Rules</h2>
+<p><strong>The Mistake:</strong> Planting crops extremely close together in the belief that more plants per square metre automatically means more yield.</p>
+<p><strong>Why it causes failure:</strong> Over-crowded crops compete fiercely for sunlight, soil moisture, and nutrients. Densely packed foliage prevents air circulation, creating a humid micro-climate that triggers catastrophic fungal disease outbreaks (e.g. Early Blight, Late Blight, Downy Mildew). Plants grow tall, thin, and weak, producing small, unmarketable fruits.</p>
+
+<table>
+  <thead>
+    <tr>
+      <th>Crop</th>
+      <th>Recommended Inter-Row Spacing</th>
+      <th>Recommended Intra-Row Spacing</th>
+      <th>Target Plant Population / Ha</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td><strong>Tomato (Staked)</strong></td>
+      <td>100 cm – 120 cm</td>
+      <td>40 cm – 50 cm</td>
+      <td>16,000 – 22,000 plants</td>
+    </tr>
+    <tr>
+      <td><strong>Cabbage</strong></td>
+      <td>50 cm – 60 cm</td>
+      <td>40 cm – 50 cm</td>
+      <td>33,000 – 40,000 plants</td>
+    </tr>
+    <tr>
+      <td><strong>Onion</strong></td>
+      <td>20 cm – 30 cm</td>
+      <td>8 cm – 10 cm</td>
+      <td>350,000 – 500,000 plants</td>
+    </tr>
+    <tr>
+      <td><strong>Maize</strong></td>
+      <td>75 cm – 90 cm</td>
+      <td>25 cm – 30 cm</td>
+      <td>37,000 – 53,000 plants</td>
+    </tr>
+  </tbody>
+</table>
+
+<h2 id="mistake6">7. Mistake 6: Over-applying Nitrogen & Neglecting Organic Matter</h2>
+<p><strong>The Mistake:</strong> Pouring excessive Urea or Ammonium Nitrate onto crops whenever they look weak, while adding zero organic manure or compost to the soil.</p>
+<p><strong>Why it causes failure:</strong> Excess nitrogen creates lush, soft green leaves with weak cell walls, making plants highly vulnerable to aphid infestations, red spider mites, and fungal pathogens. It delays flowering and fruit set. Meanwhile, chemical fertilizer without organic matter degrades soil microbial life and turns soil into hard, unproductive dust.</p>
+<ul>
+  <li><strong>The Fix:</strong> Balance chemical fertilizers with compost or well-rotted animal manure. Apply nitrogen in small, split top-dressings aligned with active growth stages rather than in one heavy dose.</li>
+</ul>
+
+<h2 id="mistake7">8. Mistake 7: Reactive Chemical Spraying Instead of Scouting</h2>
+<p><strong>The Mistake:</strong> Spraying heavy chemical pesticides only <em>after</em> half the crop is severely damaged by insects or blight, or spraying cocktail mixtures blindly without knowing the target pest.</p>
+<p><strong>Why it causes failure:</strong> Chemical pesticides cannot bring dead plant tissue back to life. Spraying the wrong chemical wastes money, kills beneficial insect predators (like ladybirds and lacewings), and can cause chemical toxicity (burns) on leaves.</p>
+
+<div class="notice">
+  <strong>The Fix: Weekly Field Scouting Protocol</strong>
+  <ol>
+    <li>Walk your field in a zigzag pattern twice a week early in the morning.</li>
+    <li>Inspect the undersides of leaves, growing tips, flowers, and stem collars for pests, eggs, or fungal spots.</li>
+    <li>Identify the exact pest or disease before buying a chemical. Use non-chemical measures (mulching, yellow sticky traps, neem extracts) first, and use synthetic chemicals only as a targeted last resort.</li>
+  </ol>
+</div>
+
+<h2 id="mistake8">9. Mistake 8: Mixing Household Cash with Farm Cash</h2>
+<p><strong>The Mistake:</strong> Taking crop sales revenue directly out of the pocket to pay household expenses without keeping written farm records or calculating production costs.</p>
+<p><strong>Why it causes failure:</strong> The farmer thinks they made money because cash entered their pocket, but in reality, they failed to set aside funds for seed, fertilizer, fuel, and labour for the next planting season. When the next season arrives, the farm is broke.</p>
+<ul>
+  <li><strong>The Fix:</strong> Open a separate farm record book or bank account. Treat yourself as an employee by paying yourself a fixed salary. Reinvest farm profits back into farm inputs and maintenance.</li>
+</ul>
+
+<h2 id="mistake9">10. Mistake 9: Expanding Too Fast Before Mastering Small Beds</h2>
+<p><strong>The Mistake:</strong> Renting 5 hectares of land in season one before successfully managing a 0.25-hectare plot.</p>
+<p><strong>Why it causes failure:</strong> Large fields multiply mistakes exponentially. A small weeding or pest delay on 5 hectares requires massive emergency labor and money that a beginner cannot mobilize, leading to total field abandonment.</p>
+<ul>
+  <li><strong>The Fix: Start Small, Master the Process, Scale Profitably.</strong> Perfect your land preparation, irrigation, pest control, and marketing on a small plot (0.1 to 0.25 ha). Once that plot generates consistent net profit, expand incrementally.</li>
+</ul>
+
+<h2 id="checklist">11. Correct Step-by-Step Beginner Farmer Launch Checklist</h2>
+
+<div class="notice">
+  <h3>Before Spending Money</h3>
+  <ul>
+    <li>[ ] I identified 2 to 3 potential buyers and confirmed crop demand and target harvest dates.</li>
+    <li>[ ] I checked my water source delivery (litres per hour) and calculated max field area.</li>
+    <li>[ ] I inspected the land history, drainage, and took a representative soil test.</li>
+    <li>[ ] I opened a dedicated farm record book for inputs, expenses, and crop logs.</li>
+  </ul>
+
+  <h3>Field Setup & Planting</h3>
+  <ul>
+    <li>[ ] I prepared raised beds, incorporated mature compost, and corrected soil pH if needed.</li>
+    <li>[ ] I purchased certified seed/seedlings from a reputable seed supplier.</li>
+    <li>[ ] I marked row spacing with measuring strings and avoided over-crowding.</li>
+    <li>[ ] I tested my irrigation system for uniform water delivery before planting.</li>
+  </ul>
+
+  <h3>Ongoing Management</h3>
+  <ul>
+    <li>[ ] I scout field crops twice weekly for early signs of pests, diseases, or nutrient stress.</li>
+    <li>[ ] I applied split fertilizer top-dressings based on crop growth stages.</li>
+    <li>[ ] I recorded every expense, labor day, chemical spray, and crop harvest.</li>
+  </ul>
+</div>
+
+<p><strong>Final Message:</strong> Successful farming is not good luck—it is good management. Avoid these 9 common mistakes, start with a clear market plan, keep strict records, and build your farm step by step into a profitable business.</p>
+`);
+
+  // ==========================================
+  // HANDBOOK 2: HOW TO PLAN A VEGETABLE GARDEN
+  // ==========================================
+  replace('plan-vegetable-garden', 'How to Plan a Vegetable Garden: A Practical Farmer Handbook', 'A complete practical guide to layout, site selection, bed preparation, crop grouping, succession planting, irrigation setup, paths, and seasonal calendars for high-yield vegetable gardens.', `
+<div class="notice"><strong>How to use this handbook:</strong> A well-planned vegetable garden produces 3 to 5 times more yield per square metre than an unplanned garden. Use this handbook to map your plot, organize beds, schedule succession plantings, and build a high-yielding vegetable unit.</div>
+<h2>Contents</h2><ol><li><a href="#foundations">1. The Foundations of a High-Yield Vegetable Garden</a></li><li><a href="#site">2. Site Selection: Sun, Water, Slope & Wind Assessment</a></li><li><a href="#layout">3. Mapping & Layout: Raised Beds, Rows & Paths</a></li><li><a href="#soil-prep">4. Soil Preparation & Bed Building</a></li><li><a href="#crop-families">5. Crop Selection & Botanical Family Grouping</a></li><li><a href="#succession">6. Succession Planting & Staggered Harvest Calendars</a></li><li><a href="#irrigation-layout">7. Watering & Irrigation System Layout</a></li><li><a href="#pest-barriers">8. Pest Barriers & Companion Planting</a></li><li><a href="#nursery-compost">9. Nursery & Composting Station Setup</a></li><li><a href="#budgeting">10. Garden Budgeting & Input Planning</a></li><li><a href="#garden-checklist">11. Vegetable Garden Planning Checklist</a></li></ol>
+
+<h2 id="foundations">1. The Foundations of a High-Yield Vegetable Garden</h2>
+<p>Whether you are planning a 100 m² household garden or a 2,000 m² commercial market garden, careful planning before digging is what separates a lush, profitable garden from a frustrating waste of effort. A great vegetable garden balances 5 core elements: sunlight, accessible water, soil aeration, efficient human access paths, and continuous crop succession.</p>
+
+<h2 id="site">2. Site Selection: Sun, Water, Slope & Wind Assessment</h2>
+<p>Before driving a spade into the ground, evaluate your potential garden site using these four criteria:</p>
+<ol>
+  <li><strong>Full Sunlight (6 to 8 Hours Daily):</strong> Fruiting vegetables (tomatoes, peppers, eggplants, cucumbers, melons) require at least 6 to 8 hours of direct, unfiltered sunlight every day. Leafy greens (spinach, lettuce, kale) can tolerate light afternoon shade. Avoid sites overshadowed by big trees or tall buildings.</li>
+  <li><strong>Proximity to Water Source:</strong> The garden must be close to your water point (tap, borehole, drum, or pond). If carrying water requires long, exhausting walks, garden maintenance will fail during dry spells.</li>
+  <li><strong>Gentle Slope & Drainage:</strong> Select a flat or gently sloping site. Avoid low-lying frost pockets or flooded hollows where water logs after heavy rains.</li>
+  <li><strong>Wind Protection:</strong> Strong winds desiccate plant foliage, snap young stems, and blow away row covers. Siting near a hedge or planting a living windbreak (e.g. vetiver grass or pigeon pea) protects tender vegetables.</li>
+</ol>
+
+<h2 id="layout">3. Mapping & Layout: Raised Beds, Rows & Paths</h2>
+<p>Draw a simple map of your garden space on paper. Divide the space into permanent planting beds and permanent footpaths.</p>
+
+<h3>A. Permanent Raised Beds vs Flat Beds</h3>
+<ul>
+  <li><strong>Raised Beds (15–30 cm high):</strong> Ideal for heavy soils, high rainfall zones, or rainy seasons. Raised beds improve drainage, warm up quickly, and prevent root rot.</li>
+  <li><strong>Sunken / Flat Beds:</strong> Ideal for dry, sandy soils or semi-arid regions. Flat or slightly sunken beds help trap rainwater and keep root zones cool.</li>
+</ul>
+
+<h3>B. Bed & Path Dimensions</h3>
+<ul>
+  <li><strong>Bed Width:</strong> Make beds 1.0 to 1.2 metres wide. This width allows you to reach the middle of the bed from either side without ever stepping on the soil!</li>
+  <li><strong>Path Width:</strong> Make main access paths 80–100 cm wide (for wheelbarrows) and intra-bed footpaths 40–50 cm wide.</li>
+  <li><strong>Never Step on the Bed:</strong> Stepping on planting beds compacts the soil, crushing air pores and preventing root growth. Keep all foot traffic strictly on paths.</li>
+</ul>
+
+<h2 id="soil-prep">4. Soil Preparation & Bed Building</h2>
+<p>Vegetable roots need loose, crumbly soil rich in organic matter. Prepare your garden beds step-by-step:</p>
+<ol>
+  <li>Clear all perennial weeds, stones, and debris from the bed area.</li>
+  <li>Loosen the top 20–30 cm of soil using a fork or spade without turning subsoil onto the surface.</li>
+  <li>Spread a 5–10 cm layer of mature, well-rotted compost or kraal manure over the bed (approx. 5 to 10 kg per m²).</li>
+  <li>Incorporate agricultural lime if soil is acidic, plus a balanced basal fertilizer (Compound D/NPK) as per soil recommendations.</li>
+  <li>Rake the top surface smooth and level, removing clods bigger than a marble.</li>
+</ol>
+
+<h2 id="crop-families">5. Crop Selection & Botanical Family Grouping</h2>
+<p>Group your garden crops by botanical families. Rotating crop families between beds prevents soil-borne diseases and balances soil nutrient demand:</p>
+
+<table>
+  <thead>
+    <tr>
+      <th>Botanical Family</th>
+      <th>Common Vegetables</th>
+      <th>Nutrient Demand & Characteristics</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td><strong>Solanaceous (Nightshades)</strong></td>
+      <td>Tomato, Potato, Pepper, Eggplant</td>
+      <td>Heavy feeders (High N, P, K, Ca requirement); susceptible to blights and bacterial wilt.</td>
+    </tr>
+    <tr>
+      <td><strong>Brassicas (Cole Crops)</strong></td>
+      <td>Cabbage, Broccoli, Cauliflower, Kale, Rape</td>
+      <td>Heavy nitrogen feeders; require limed soil (pH 6.2–7.0) to prevent clubroot; prone to DBM caterpillars.</td>
+    </tr>
+    <tr>
+      <td><strong>Alliums (Onion Family)</strong></td>
+      <td>Onion, Garlic, Shallot, Leek</td>
+      <td>Light to moderate feeders; poor weed competitors; require clean, friable soil and dry harvest curing.</td>
+    </tr>
+    <tr>
+      <td><strong>Legumes (Fabaceae)</strong></td>
+      <td>Green Beans, Peas, Cowpeas</td>
+      <td>Fixes atmospheric nitrogen; improves soil fertility for the next crop.</td>
+    </tr>
+    <tr>
+      <td><strong>Root Crops (Apiaceae/Chenopods)</strong></td>
+      <td>Carrot, Beetroot, Radish</td>
+      <td>Moderate feeders; require loose, stone-free sandy soil; avoid fresh manure to prevent root forking.</td>
+    </tr>
+    <tr>
+      <td><strong>Cucurbits (Gourd Family)</strong></td>
+      <td>Cucumber, Butternut, Squash, Watermelon</td>
+      <td>Warm season vines; high water requirement; susceptible to powdery mildew and pumpkin fly.</td>
+    </tr>
+  </tbody>
+</table>
+
+<h2 id="succession">6. Succession Planting & Staggered Harvest Calendars</h2>
+<p>Planting your entire garden on a single day results in 50 cabbages or 100 kg of tomatoes maturing all at once, leading to waste. Practice <strong>Succession Planting:</strong></p>
+<ul>
+  <li>Divide your crop allocation into 3 or 4 equal batches.</li>
+  <li>Plant Batch 1 on Day 1. Plant Batch 2 two weeks later. Plant Batch 3 four weeks later.</li>
+  <li>This staggered system guarantees a continuous, steady weekly harvest for your household or market buyers over months!</li>
+</ul>
+
+<h2 id="irrigation-layout">7. Watering & Irrigation System Layout</h2>
+<p>Plan your watering system before planting seeds:</p>
+<ul>
+  <li><strong>Drip Lines:</strong> Lay 15 mm drip lines with 20 cm or 30 cm emitter spacing along each bed row. Drip delivers water directly to roots, keeps foliage dry, and suppresses fungal leaf diseases.</li>
+  <li><strong>Watering Cans / Hoses:</strong> If watering manually, fit a fine spray rose to your watering can so water droplets do not wash away fine seeds or erode soil.</li>
+  <li><strong>Watering Schedule:</strong> Water deeply in the early morning (between 6:00 AM and 8:00 AM) so plants absorb moisture before afternoon heat.</li>
+</ul>
+
+<h2 id="pest-barriers">8. Pest Barriers & Companion Planting</h2>
+<p>Protect your vegetables naturally by incorporating companion plants and physical barriers:</p>
+<ul>
+  <li><strong>Marigolds (Tagetes):</strong> Plant African marigolds along bed borders to repel root-knot nematodes and whiteflies.</li>
+  <li><strong>Basil & Garlic:</strong> Interplant basil near tomatoes and garlic near cabbages to deter aphids and thrips.</li>
+  <li><strong>Shade Netting / Insect Mesh:</strong> Cover brassica beds with 30% shade net or fine insect netting to keep Diamondback Moth out without chemical sprays.</li>
+</ul>
+
+<h2 id="nursery-compost">9. Nursery & Composting Station Setup</h2>
+<p>Set aside a dedicated 3x3 metre station at the corner of your garden for inputs and seedlings:</p>
+<ul>
+  <li><strong>Nursery / Seedbed Trays:</strong> Raised 1 metre off the ground under 50% shade net to raise healthy tomato, cabbage, and pepper seedlings away from cutworms and poultry.</li>
+  <li><strong>Compost Bins / Pits:</strong> Two adjacent 1x1 metre compost bays (one accumulating fresh materials, one maturing).</li>
+</ul>
+
+<h2 id="budgeting">10. Garden Budgeting & Input Planning</h2>
+<p>Before purchasing inputs, list your required garden items: certified seed packets, seedling trays, potting media, basal fertilizer, top-dressing, organic compost, drip fittings, and tools (fork, rake, secateurs, watering can). Keeping a garden input budget prevents overspending.</p>
+
+<h2 id="garden-checklist">11. Vegetable Garden Planning Checklist</h2>
+
+<div class="notice">
+  <h3>Garden Planning Phase</h3>
+  <ul>
+    <li>[ ] I selected a site receiving 6–8 hours of direct daily sunlight near a reliable water source.</li>
+    <li>[ ] I mapped beds (1.0–1.2 m wide) and permanent footpaths on paper.</li>
+    <li>[ ] I grouped crops by botanical families for crop rotation.</li>
+    <li>[ ] I created a staggered succession planting schedule.</li>
+  </ul>
+
+  <h3>Bed Setup & Installation</h3>
+  <ul>
+    <li>[ ] I cleared weeds and incorporated 5–10 kg of compost per m².</li>
+    <li>[ ] I tested irrigation drip lines or watering cans for uniform delivery.</li>
+    <li>[ ] I set up a shaded nursery bench and compost station.</li>
+    <li>[ ] I planted marigolds and companion herbs along borders.</li>
+  </ul>
+</div>
+
+<p><strong>Final Message:</strong> A well-planned vegetable garden is a source of continuous fresh food and income. Map your space, care for your soil beds, plant in successions, and enjoy a bountiful harvest!</p>
+`);
+
+  // ==========================================
+  // HANDBOOK 3: HOW TO REDUCE WATER WASTE ON THE FARM
+  // ==========================================
+  replace('reduce-water-waste', 'How to Reduce Water Waste on the Farm: A Practical Farmer Handbook', 'A comprehensive practical guide to farm water efficiency: auditing water losses, pipe and pump maintenance, drip system calibration, soil mulching, canopy shading, and root-zone irrigation timing.', `
+<div class="notice"><strong>How to use this handbook:</strong> Water is your farm's most precious and expensive input. Pumping, storing, and delivering water costs fuel, electricity, and labour. This handbook guides you through auditing farm water losses, eliminating leaks, calibrating irrigation delivery, and cutting water waste by 30% to 50%.</div>
+<h2>Contents</h2><ol><li><a href="#water-cost">1. The High Cost of Wasted Water</a></li><li><a href="#audit">2. Conducting an On-Farm Water Audit</a></li><li><a href="#pipe-maintenance">3. Fixing Leaks, Valves & Pump Infrastructure</a></li><li><a href="#drip-upgrade">4. Upgrading Irrigation: Drip vs Overhead Loss</a></li><li><a href="#soil-mulch">5. Soil Cover & Preventing Surface Evaporation</a></li><li><a href="#timing">6. Irrigation Timing & Root-Zone Depth Checks</a></li><li><a href="#hydrozoning">7. Crop Hydro-Zoning & Canopy Management</a></li><li><a href="#field-catchment">8. In-Field Water Harvesting & Contour Furrows</a></li><li><a href="#roof-catchment">9. Roof & Infrastructure Rainwater Collection</a></li><li><a href="#moisture-tools">10. Soil Moisture Testing Tools (Feel Test to Tensiometers)</a></li><li><a href="#water-checklist">11. Farm Water Conservation Checklist</a></li></ol>
+
+<h2 id="water-cost">1. The High Cost of Wasted Water</h2>
+<p>On many farms, more than half of the water pumped from boreholes, rivers, or tanks never reaches crop roots! It leaks from cracked pipes, evaporates into hot afternoon air, runs off hard crusted beds, or drains deep below the root zone where plants cannot reach it.</p>
+<p>Wasting water does not just stress crops—it burns diesel fuel, inflates electric power bills, leaches expensive fertilizers out of the root zone, and dries up water sources prematurely. Cutting water waste is the fastest way to reduce farm operating costs and protect your yields.</p>
+
+<h2 id="audit">2. Conducting an On-Farm Water Audit</h2>
+<p>You cannot manage what you do not measure. Conduct a 4-step farm water audit to find where your water is being lost:</p>
+
+<table>
+  <thead>
+    <tr>
+      <th>Audit Step</th>
+      <th>What to Check & Measure</th>
+      <th>Common Hidden Losses</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td><strong>1. Water Source & Pump</strong></td>
+      <td>Measure pump discharge volume (litres per minute) using a 20-litre bucket and stopwatch.</td>
+      <td>Worn pump impellers delivering 30% less water than rated while using 100% fuel.</td>
+    </tr>
+    <tr>
+      <td><strong>2. Delivery Mainlines</strong></td>
+      <td>Inspect main pipes, gate valves, hydrants, and couplings under full pressure.</td>
+      <td>Pin-hole leaks, weeping joints, leaking tap washers, leaking pipe connections.</td>
+    </tr>
+    <tr>
+      <td><strong>3. Field Distribution</strong></td>
+      <td>Check drip lines, sprinklers, or open furrows for uniform water flow.</td>
+      <td>Clogged drip emitters, broken sprinkler nozzles, leaking hose connections.</td>
+    </tr>
+    <tr>
+      <td><strong>4. Soil Root Zone</strong></td>
+      <td>Dig 30 cm deep inspection holes 2 hours after irrigation.</td>
+      <td>Water draining 60 cm below roots (over-watering) or dry soil 5 cm down (under-watering).</td>
+    </tr>
+  </tbody>
+</table>
+
+<h2 id="pipe-maintenance">3. Fixing Leaks, Valves & Pump Infrastructure</h2>
+<p>A single dripping pipe connection losing just 1 drop per second wastes over 10,000 litres of water a year. A 2 mm crack in a pressurized mainline pipe wastes over 300,000 litres a year!</p>
+<ul>
+  <li><strong>Routine Leak Patrols:</strong> Walk your main pipe routes every Monday under full operating pressure. Fix weeping joints immediately using proper PVC cement, compression fittings, or thread tape. Never use plastic bags or wire string as permanent pipe wraps.</li>
+  <li><strong>Valve & Tap Maintenance:</strong> Replace worn rubber washers in gate valves and taps. Fit lockable main valves to prevent unauthorized water draining.</li>
+  <li><strong>Pump Maintenance:</strong> Service diesel/petrol pump engines and solar pump foot-valves. Clean suction strainers to prevent air draw and cavitation.</li>
+</ul>
+
+<h2 id="drip-upgrade">4. Upgrading Irrigation: Drip vs Overhead Loss</h2>
+
+<table>
+  <thead>
+    <tr>
+      <th>Irrigation System</th>
+      <th>Water Application Efficiency</th>
+      <th>Evaporation & Wind Drift Loss</th>
+      <th>Weed Growth Between Rows</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td><strong>Drip Irrigation</strong></td>
+      <td><strong>90% – 95%</strong></td>
+      <td>Very Low (&lt;5%)</td>
+      <td>Minimal (Paths remain dry)</td>
+    </tr>
+    <tr>
+      <td><strong>Micro-Sprinklers</strong></td>
+      <td>75% – 85%</td>
+      <td>Moderate (10%–15%)</td>
+      <td>Moderate</td>
+    </tr>
+    <tr>
+      <td><strong>Impact Sprinklers</strong></td>
+      <td>60% – 70%</td>
+      <td>High (25%–35%)</td>
+      <td>High (Entire field watered)</td>
+    </tr>
+    <tr>
+      <td><strong>Open Flood / Furrow</strong></td>
+      <td>40% – 50%</td>
+      <td>Extreme (40%–50%)</td>
+      <td>Extreme</td>
+    </tr>
+  </tbody>
+</table>
+
+<div class="notice">
+  <strong>Why Drip Irrigation Saves Water & Money:</strong> Drip lines deliver precise water droplets directly to the root zone at low pressure. Foliage remains dry, preventing fungal blights, and inter-row paths remain bone-dry, suppressing weeds. Upgrading from flood or sprinkler to drip cuts water and fuel use by half!
+</div>
+
+<h2 id="soil-mulch">5. Soil Cover & Preventing Surface Evaporation</h2>
+<p>Direct sunlight striking bare soil acts like a thermal pump, sucking moisture out of the root zone into the atmosphere. Eliminate surface evaporation with these three soil cover techniques:</p>
+<ol>
+  <li><strong>Organic Mulching:</strong> Apply a 5–10 cm layer of dry grass, straw, wood shavings, or crop residues over beds. Mulched soil stays damp up to 3 times longer than bare soil.</li>
+  <li><strong>Living Cover Crops:</strong> Interplant low-growing legumes (cowpeas, clover, sweet potato vines) between tall crop rows to shade bare ground.</li>
+  <li><strong>Plastic Mulch Film:</strong> In commercial vegetable operations, lay silver/black UV-stabilized plastic mulch over drip-irrigated beds. Silver plastic reflects heat while completely locking moisture inside the bed.</li>
+</ol>
+
+<h2 id="timing">6. Irrigation Timing & Root-Zone Depth Checks</h2>
+<p><em>When</em> and <em>how long</em> you irrigate determines how much water your crops actually absorb:</p>
+
+<h3>A. Irrigate During Cool Hours</h3>
+<ul>
+  <li>Water early in the morning (5:00 AM to 8:00 AM) or late in the afternoon/evening.</li>
+  <li>Avoid irrigating during peak midday heat (11:00 AM to 3:00 PM) when high temperatures and wind evaporate up to 30% of spray before it hits the ground.</li>
+</ul>
+
+<h3>B. Water Deeply & Less Frequently</h3>
+<ul>
+  <li>Shallow daily watering encourages shallow, weak roots that wilt the moment weather gets hot.</li>
+  <li>Water deeply so moisture penetrates 20 to 30 cm deep. Deep watering encourages roots to grow deep into the subsoil where moisture stays cool and stable.</li>
+</ul>
+
+<h2 id="hydrozoning">7. Crop Hydro-Zoning & Canopy Management</h2>
+<p>Do not water all crops with the same volume! Group crops with similar water needs into separate irrigation zones (Hydro-Zoning):</p>
+<ul>
+  <li><strong>High Water Zone:</strong> Tomatoes, Cabbage, Cucumber, Lettuce, Celery (Group together on Drip Line 1).</li>
+  <li><strong>Moderate Water Zone:</strong> Maize, Beans, Onions, Carrots, Potatoes (Group together on Drip Line 2).</li>
+  <li><strong>Low Water Zone:</strong> Sorghum, Millet, Cowpeas, Cassava, Sweet Potatoes (Group together on Drip Line 3).</li>
+</ul>
+
+<h2 id="field-catchment">8. In-Field Water Harvesting & Contour Furrows</h2>
+<p>Prevent storm water from escaping your fields. Construct contour bunds, tie ridges, and infiltration trenches across field slopes to slow runoff and force rainwater into the ground.</p>
+
+<h2 id="roof-catchment">9. Roof & Infrastructure Rainwater Collection</h2>
+<p>Install wide gutters along all farm sheds, poultry houses, and store rooms. Connect gutters to storage tanks or lined farm ponds to capture free rainwater during rainy seasons.</p>
+
+<h2 id="moisture-tools">10. Soil Moisture Testing Tools (Feel Test to Tensiometers)</h2>
+<p>Stop guessing when to irrigate. Use simple soil moisture testing methods:</p>
+<ol>
+  <li><strong>The Hand-Squeeze Feel Test:</strong> Dig 20 cm down into the crop root zone. Take a handful of soil and squeeze it firmly in your palm.
+    <ul>
+      <li>If soil crumbles completely and will not form a ball = <strong>Soil is DRY. Irrigate immediately.</strong></li>
+      <li>If soil forms a ball that holds together easily and leaves moisture on your palm = <strong>Soil moisture is OPTIMAL. Do not irrigate.</strong></li>
+      <li>If water squirts out between your fingers = <strong>Soil is WATERLOGGED. Stop irrigation.</strong></li>
+    </ul>
+  </li>
+  <li><strong>Tensiometers:</strong> Install simple vacuum tensiometers at 20 cm and 40 cm root depths to read exact soil water suction (centibars) for scientific irrigation scheduling.</li>
+</ol>
+
+<h2 id="water-checklist">11. Farm Water Conservation Checklist</h2>
+
+<div class="notice">
+  <h3>Weekly System Checks</h3>
+  <ul>
+    <li>[ ] I conducted a Monday leak patrol on all mainlines, valves, and couplings under pressure.</li>
+    <li>[ ] I cleaned pump strainers, foot-valves, and flushed drip lines.</li>
+    <li>[ ] I checked drip emitters for uniform flow and cleared clogged holes.</li>
+  </ul>
+
+  <h3>Field & Crop Moisture Management</h3>
+  <ul>
+    <li>[ ] I scheduled irrigation during cool morning or evening hours.</li>
+    <li>[ ] I applied 5–10 cm of organic mulch over exposed vegetable beds.</li>
+    <li>[ ] I performed the hand-squeeze feel test at 20 cm depth before opening irrigation valves.</li>
+    <li>[ ] I grouped crops into Hydro-Zones according to water demand.</li>
+  </ul>
+</div>
+
+<p><strong>Final Message:</strong> Water efficiency is farm profitability. Fix your leaks, upgrade to drip delivery, cover your soil, and water by evidence—not by guess work!</p>
+`);
+
