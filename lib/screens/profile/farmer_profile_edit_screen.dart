@@ -237,15 +237,32 @@ class _FarmerProfileEditScreenState extends State<FarmerProfileEditScreen> {
                     debugPrint('📸 Profile picture tapped!');
                     _pickAndUploadImage(true);
                   },
-                  child: CircleAvatar(
-                    radius: 55,
-                    backgroundColor: Colors.grey[300],
-                    backgroundImage: profilePicUrl != null
-                        ? CachedNetworkImageProvider(profilePicUrl!)
-                        : null,
-                    child: profilePicUrl == null
-                        ? const Icon(Icons.person, size: 50, color: Colors.grey)
-                        : null,
+                  child: Container(
+                    decoration: BoxDecoration(
+                      shape: BoxShape.circle,
+                      border: Border.all(
+                        color: const Color(0xFF2E7D32),
+                        width: 3,
+                      ),
+                      boxShadow: [
+                        BoxShadow(
+                          color: Colors.black.withValues(alpha: 0.08),
+                          blurRadius: 6,
+                          offset: const Offset(0, 2),
+                        ),
+                      ],
+                    ),
+                    padding: const EdgeInsets.all(3),
+                    child: CircleAvatar(
+                      radius: 52,
+                      backgroundColor: const Color(0xFFE8F5E9),
+                      backgroundImage: profilePicUrl != null
+                          ? CachedNetworkImageProvider(profilePicUrl!)
+                          : null,
+                      child: profilePicUrl == null
+                          ? const Icon(Icons.person, size: 50, color: Color(0xFF2E7D32))
+                          : null,
+                    ),
                   ),
                 ),
                 Positioned(

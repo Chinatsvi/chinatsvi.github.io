@@ -763,14 +763,32 @@ class _PostCreationWidgetState extends State<PostCreationWidget> {
               ),
               child: Row(
                 children: [
-                  CircleAvatar(
-                    backgroundImage: _lockedAuthorAvatar.startsWith('http')
-                        ? NetworkImage(_lockedAuthorAvatar)
-                        : null,
-                    backgroundColor: Colors.grey.shade300,
-                    child: !_lockedAuthorAvatar.startsWith('http')
-                        ? const Icon(Icons.person, color: Colors.grey)
-                        : null,
+                  Container(
+                    decoration: BoxDecoration(
+                      shape: BoxShape.circle,
+                      border: Border.all(
+                        color: const Color(0xFF2E7D32),
+                        width: 2,
+                      ),
+                      boxShadow: [
+                        BoxShadow(
+                          color: Colors.black.withValues(alpha: 0.05),
+                          blurRadius: 3,
+                          offset: const Offset(0, 1),
+                        ),
+                      ],
+                    ),
+                    padding: const EdgeInsets.all(2),
+                    child: CircleAvatar(
+                      radius: 18,
+                      backgroundImage: _lockedAuthorAvatar.startsWith('http')
+                          ? NetworkImage(_lockedAuthorAvatar)
+                          : null,
+                      backgroundColor: const Color(0xFFE8F5E9),
+                      child: !_lockedAuthorAvatar.startsWith('http')
+                          ? const Icon(Icons.person, color: Color(0xFF2E7D32))
+                          : null,
+                    ),
                   ),
                   const SizedBox(width: 12),
                   Expanded(

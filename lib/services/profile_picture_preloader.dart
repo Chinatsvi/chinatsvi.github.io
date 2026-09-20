@@ -431,15 +431,32 @@ class CachedProfilePicture extends StatelessWidget {
 
     return GestureDetector(
       onTap: onTap,
-      child: CircleAvatar(
-        radius: size / 2,
-        backgroundColor: Colors.grey.shade300,
-        backgroundImage: imageUrl != null && imageUrl.isNotEmpty
-            ? CachedNetworkImageProvider(imageUrl)
-            : null,
-        child: imageUrl == null || imageUrl.isEmpty
-            ? Icon(Icons.person, color: Colors.grey.shade600, size: size * 0.5)
-            : null,
+      child: Container(
+        decoration: BoxDecoration(
+          shape: BoxShape.circle,
+          border: Border.all(
+            color: const Color(0xFF2E7D32),
+            width: 2,
+          ),
+          boxShadow: [
+            BoxShadow(
+              color: Colors.black.withValues(alpha: 0.05),
+              blurRadius: 3,
+              offset: const Offset(0, 1),
+            ),
+          ],
+        ),
+        padding: const EdgeInsets.all(2),
+        child: CircleAvatar(
+          radius: (size / 2) - 2,
+          backgroundColor: const Color(0xFFE8F5E9),
+          backgroundImage: imageUrl != null && imageUrl.isNotEmpty
+              ? CachedNetworkImageProvider(imageUrl)
+              : null,
+          child: imageUrl == null || imageUrl.isEmpty
+              ? Icon(Icons.person, color: const Color(0xFF2E7D32), size: size * 0.5)
+              : null,
+        ),
       ),
     );
   }

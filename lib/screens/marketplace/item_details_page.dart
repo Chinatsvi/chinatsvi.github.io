@@ -396,19 +396,53 @@ class _ItemDetailsPageState extends State<ItemDetailsPage> {
                                 _fullItemData?['sellerProfilePic'] as String? ??
                                 '';
                             if (fallbackUrl.isNotEmpty) {
-                              return CircleAvatar(
-                                radius: 24,
-                                backgroundImage: NetworkImage(fallbackUrl),
-                                backgroundColor: Colors.grey[200],
+                              return Container(
+                                decoration: BoxDecoration(
+                                  shape: BoxShape.circle,
+                                  border: Border.all(
+                                    color: const Color(0xFF2E7D32),
+                                    width: 2,
+                                  ),
+                                  boxShadow: [
+                                    BoxShadow(
+                                      color: Colors.black.withValues(alpha: 0.05),
+                                      blurRadius: 3,
+                                      offset: const Offset(0, 1),
+                                    ),
+                                  ],
+                                ),
+                                padding: const EdgeInsets.all(2),
+                                child: CircleAvatar(
+                                  radius: 22,
+                                  backgroundImage: NetworkImage(fallbackUrl),
+                                  backgroundColor: const Color(0xFFE8F5E9),
+                                ),
                               );
                             }
 
-                            return CircleAvatar(
-                              radius: 24,
-                              backgroundColor: Colors.grey[300],
-                              child: Icon(
-                                Icons.person,
-                                color: Colors.grey[600],
+                            return Container(
+                              decoration: BoxDecoration(
+                                shape: BoxShape.circle,
+                                border: Border.all(
+                                  color: const Color(0xFF2E7D32),
+                                  width: 2,
+                                ),
+                                boxShadow: [
+                                  BoxShadow(
+                                    color: Colors.black.withValues(alpha: 0.05),
+                                    blurRadius: 3,
+                                    offset: const Offset(0, 1),
+                                  ),
+                                ],
+                              ),
+                              padding: const EdgeInsets.all(2),
+                              child: CircleAvatar(
+                                radius: 22,
+                                backgroundColor: const Color(0xFFE8F5E9),
+                                child: Icon(
+                                  Icons.person,
+                                  color: const Color(0xFF2E7D32),
+                                ),
                               ),
                             );
                           }(),

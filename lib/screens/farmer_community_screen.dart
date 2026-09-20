@@ -14,6 +14,7 @@ import 'package:agribased/services/marketplace/firebase_marketplace_service.dart
 import 'package:agribased/models/post_model.dart';
 
 import 'package:agribased/widgets/optimized_post_card.dart';
+import 'package:agribased/widgets/user_info_display.dart';
 import 'package:agribased/widgets/comment_section.dart';
 import 'package:agribased/widgets/post_creation_widget.dart';
 import 'package:agribased/widgets/skeleton_loader.dart';
@@ -485,14 +486,10 @@ class _FarmerCommunityScreenState extends State<FarmerCommunityScreen>
                           ),
                         ),
                       ),
-                child: CircleAvatar(
-                  radius: 22,
-                  backgroundImage:
-                      currentUserProfilePic != null &&
-                          currentUserProfilePic!.isNotEmpty
-                      ? NetworkImage(currentUserProfilePic!)
-                      : const AssetImage('assets/images/default_avatar.png')
-                            as ImageProvider,
+                child: UserProfileImage(
+                  userId: currentUserId ?? '',
+                  radius: 20,
+                  initialImageUrl: currentUserProfilePic,
                 ),
               ),
               const SizedBox(width: 10),

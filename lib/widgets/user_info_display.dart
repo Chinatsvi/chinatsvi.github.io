@@ -180,6 +180,10 @@ class UserProfileImage extends StatefulWidget {
   final double radius;
   final VoidCallback? onTap;
   final String? initialImageUrl; // Add initial image URL
+  final bool showRing;
+  final Color ringColor;
+  final double ringWidth;
+  final double ringPadding;
 
   const UserProfileImage({
     super.key,
@@ -187,6 +191,10 @@ class UserProfileImage extends StatefulWidget {
     this.radius = 18,
     this.onTap,
     this.initialImageUrl, // Allow pre-setting the image
+    this.showRing = true,
+    this.ringColor = const Color(0xFF2E7D32),
+    this.ringWidth = 2.0,
+    this.ringPadding = 2.0,
   });
 
   @override
@@ -261,22 +269,21 @@ class _UserProfileImageState extends State<UserProfileImage> {
 
   @override
   Widget build(BuildContext context) {
+    Widget avatarWidget;
+
     if (isLoading && profileImageUrl == null) {
       // Show placeholder instead of spinner to avoid flickering
-      return CircleAvatar(
+      avatarWidget = CircleAvatar(
         radius: widget.radius,
-        backgroundColor: Colors.grey[300],
+        backgroundColor: const Color(0xFFE8F5E9),
         child: Icon(
           Icons.person,
-          size: widget.radius * 0.8,
-          color: Colors.grey[600],
+          size: widget.radius * 1.15,
+          color: const Color(0xFF2E7D32),
         ),
       );
-    }
-
-    return GestureDetector(
-      onTap: widget.onTap,
-      child: ClipOval(
+    } else {
+      avatarWidget = ClipOval(
         child: SizedBox(
           key: ValueKey('user-avatar-${widget.userId}-${profileImageUrl ?? ""}'),
           width: widget.radius * 2,
@@ -293,18 +300,44 @@ class _UserProfileImageState extends State<UserProfileImage> {
                   },
                 ),
         ),
-      ),
+      );
+    }
+
+    if (widget.showRing) {
+      avatarWidget = Container(
+        decoration: BoxDecoration(
+          shape: BoxShape.circle,
+          border: Border.all(
+            color: widget.ringColor,
+            width: widget.ringWidth,
+          ),
+          boxShadow: [
+            BoxShadow(
+              color: Colors.black.withValues(alpha: 0.05),
+              blurRadius: 3,
+              offset: const Offset(0, 1),
+            ),
+          ],
+        ),
+        padding: EdgeInsets.all(widget.ringPadding),
+        child: avatarWidget,
+      );
+    }
+
+    return GestureDetector(
+      onTap: widget.onTap,
+      child: avatarWidget,
     );
   }
 
   Widget _buildFallbackAvatar() {
     return Container(
-      color: Colors.grey[300],
+      color: const Color(0xFFE8F5E9),
       alignment: Alignment.center,
       child: Icon(
         Icons.person,
-        size: widget.radius * 0.8,
-        color: Colors.grey[600],
+        size: widget.radius * 1.15,
+        color: const Color(0xFF2E7D32),
       ),
     );
   }

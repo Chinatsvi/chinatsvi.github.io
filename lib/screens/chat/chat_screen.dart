@@ -210,13 +210,10 @@ class _ChatScreenState extends State<ChatScreen>
               ? NetworkImage(photoUrl)
               : null,
           child: (photoUrl == null || photoUrl.isEmpty)
-              ? Text(
-                  name.isNotEmpty ? name[0].toUpperCase() : 'U',
-                  style: const TextStyle(
-                    color: Color(0xFF2E7D32),
-                    fontWeight: FontWeight.bold,
-                    fontSize: 14,
-                  ),
+              ? Icon(
+                  Icons.person,
+                  color: const Color(0xFF2E7D32),
+                  size: radius * 1.15,
                 )
               : null,
         ),

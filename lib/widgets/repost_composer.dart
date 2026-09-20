@@ -167,17 +167,36 @@ class _RepostComposerState extends State<RepostComposer> {
 
                     // Quoted post preview (no stats row here)
                     ListTile(
-                      leading: CircleAvatar(
-                        backgroundImage:
-                            originalPost.authorAvatar.isNotEmpty &&
-                                originalPost.authorAvatar.startsWith('http')
-                            ? NetworkImage(originalPost.authorAvatar)
-                            : null,
-                        child:
-                            originalPost.authorAvatar.isEmpty ||
-                                !originalPost.authorAvatar.startsWith('http')
-                            ? const Icon(Icons.person)
-                            : null,
+                      leading: Container(
+                        decoration: BoxDecoration(
+                          shape: BoxShape.circle,
+                          border: Border.all(
+                            color: const Color(0xFF2E7D32),
+                            width: 2,
+                          ),
+                          boxShadow: [
+                            BoxShadow(
+                              color: Colors.black.withValues(alpha: 0.05),
+                              blurRadius: 3,
+                              offset: const Offset(0, 1),
+                            ),
+                          ],
+                        ),
+                        padding: const EdgeInsets.all(2),
+                        child: CircleAvatar(
+                          radius: 18,
+                          backgroundImage:
+                              originalPost.authorAvatar.isNotEmpty &&
+                                  originalPost.authorAvatar.startsWith('http')
+                              ? NetworkImage(originalPost.authorAvatar)
+                              : null,
+                          backgroundColor: const Color(0xFFE8F5E9),
+                          child:
+                              originalPost.authorAvatar.isEmpty ||
+                                  !originalPost.authorAvatar.startsWith('http')
+                              ? const Icon(Icons.person, color: Color(0xFF2E7D32))
+                              : null,
+                        ),
                       ),
                       title: Text(
                         originalPost.authorName,

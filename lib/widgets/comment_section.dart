@@ -953,22 +953,10 @@ class _CommentSectionState extends State<CommentSection> {
           // Current user avatar with green ring border
           Padding(
             padding: const EdgeInsets.only(bottom: 2),
-            child: Container(
-              decoration: BoxDecoration(
-                shape: BoxShape.circle,
-                border: Border.all(
-                  color: const Color(0xFF2E7D32),
-                  width: 2,
-                ),
-              ),
-              padding: const EdgeInsets.all(2),
-              child: ClipOval(
-                child: UserProfileImage(
-                  userId: widget.currentUserId,
-                  radius: 19,
-                  onTap: () => _navigateToProfile(widget.currentUserId),
-                ),
-              ),
+            child: UserProfileImage(
+              userId: widget.currentUserId,
+              radius: 19,
+              onTap: () => _navigateToProfile(widget.currentUserId),
             ),
           ),
           const SizedBox(width: 8),
