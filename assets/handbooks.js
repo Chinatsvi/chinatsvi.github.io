@@ -131,4 +131,333 @@
 <h2 id="templates">11. A simple daily page</h2>
 <div class="notice"><p><strong>Date:</strong> ____________________ &nbsp; <strong>Weather:</strong> ____________________</p><p><strong>Field or enterprise:</strong> ____________________ &nbsp; <strong>Crop or animals:</strong> ____________________</p><p><strong>Work completed:</strong> ____________________________________________________</p><p><strong>Inputs or labour used:</strong> ______________________________________________</p><p><strong>Quantity and cost:</strong> __________________________________________________</p><p><strong>What I observed:</strong> ___________________________________________________</p><p><strong>Next action and date:</strong> _______________________________________________</p></div>
 <h2>Final message</h2><p>Good records do not need difficult language or expensive software. Write the date, place, activity, quantity, cost and observation. Review the page every week. After harvest, use the evidence to make the next crop more organised, more profitable and less wasteful.</p>`);
+
+  replace('farming-dry-conditions', 'Farming in Dry Conditions: The Complete Practical Farmer Handbook', 'A complete, step-by-step practical guide to profitable farming in drought-prone areas: soil water retention, tie ridging, Pfumvudza/Zai basins, rainwater harvesting, certified seed, crop rotation, drought-resistant varieties, and enterprise diversification.', `
+<div class="notice"><strong>How to use this handbook:</strong> Dryland farming is not about "hoping for rain." It is a disciplined system of capturing every drop of rainfall, preventing soil evaporation, choosing climate-matched seeds, and diversifying farm enterprises so your farm makes a consistent profit even in low-rainfall seasons.</div>
+<h2>Contents</h2><ol><li><a href="#reality">1. The Reality of Dryland Farming & The Profit Principle</a></li><li><a href="#soil-moisture">2. Soil Moisture Conservation & In-Field Water Harvesting</a></li><li><a href="#water-catchment">3. Farm Water Catchment & Storage Infrastructure</a></li><li><a href="#crop-choice">4. Selecting Drought-Resistant Crops & Varieties</a></li><li><a href="#certified-seeds">5. Certified Seed vs Saved Seed: Mitigating Risk in Dry Soils</a></li><li><a href="#crop-rotations">6. Crop Rotation & Legume Intercropping Systems</a></li><li><a href="#soil-fertility">7. Organic Matter, Biochar & Micro-Dosing Fertilization</a></li><li><a href="#mixed-farming">8. Mixed Farming & Enterprise Diversification</a></li><li><a href="#pest-weed">9. Weed, Pest & Disease Management under Thermal Stress</a></li><li><a href="#post-harvest">10. Post-Harvest Preservation & Market Timing</a></li><li><a href="#checklist">11. Dryland Farmer Action Checklist</a></li></ol>
+
+<h2 id="reality">1. The Reality of Dryland Farming & The Profit Principle</h2>
+<p>Dry conditions, erratic rainfall, and mid-season dry spells are no longer unexpected emergencies—they are the normal reality for millions of farmers across arid and semi-arid regions. Continuing to farm dry land using wet-zone practices (ploughing every year, planting late-maturing uncertified maize, broadcasting fertilizer on dry soil, and relying on single crops) guarantees crop failure and financial loss.</p>
+<p>To make farming in dry conditions profitable, every farmer must operate under <strong>Three Fundamental Rules of Dryland Agriculture:</strong></p>
+<ol>
+  <li><strong>Capture Every Drop:</strong> Treat your field surface like a sponge. Never allow rainwater to run off into ditches or roads; capture it where it falls.</li>
+  <li><strong>Stop Soil Evaporation:</strong> Bare soil loses up to 70% of its moisture directly into the hot air through evaporation. Keep the soil covered with mulch or crop canopy at all times.</li>
+  <li><strong>Diversify to Protect Cash Flow:</strong> Never rely on a single crop or enterprise. Combine short-season grains, drought-hardy legumes, root crops, and livestock so that even if one crop experiences stress, other enterprises bring in income.</li>
+</ol>
+
+<h2 id="soil-moisture">2. Soil Moisture Conservation & In-Field Water Harvesting</h2>
+<p>The first reservoir on any farm is the soil root zone. Before spending money on expensive pumps or dams, implement these field-proven soil moisture harvesting structures:</p>
+
+<h3>A. Tie Ridging & Furrow Dyking</h3>
+<p>Tie ridging creates a grid of small earth dams across your crop rows. Regular ridges let rainwater run down the furrows and off the field. Tie ridges block the furrow with cross-earthen ties every 1.5 to 3 metres.</p>
+<ul>
+  <li><strong>How to build tie ridges:</strong> Construct standard contour ridges across the field slope. Dig small earthen mounds (ties) across the furrows connecting adjacent ridges, making the ties about half the height of the main ridge.</li>
+  <li><strong>Why it works:</strong> Rainwater is trapped in small basins between the crop rows, forcing water to soak deep into the root zone instead of washing away topsoil.</li>
+  <li><strong>Result:</strong> Crops survive mid-season dry spells 14 to 21 days longer than crops planted on flat or un-tied land.</li>
+</ul>
+
+<h3>B. Zai Pits & Planting Basins (Pfumvudza / Intwasa System)</h3>
+<p>Planting basins (known as Zai pits in West Africa and Pfumvudza/Intwasa in Southern Africa) concentrate water and organic nutrients directly into micro-basins where seeds are planted.</p>
+<ol>
+  <li><strong>Basin Dimensions:</strong> Dig precise basins measuring 15 cm long, 15 cm wide, and 15 cm deep (or 30 cm long x 15 cm wide x 15 cm deep for maize/sorghum), spaced at 60 cm intra-row and 75 cm to 90 cm inter-row.</li>
+  <li><strong>Nutrient Placement:</strong> Place a handful of well-rotted kraal manure or compost (approx. 500g per basin) plus a targeted micro-dose of basal fertilizer (e.g. 5g of Compound D/NPK) at the bottom of each basin.</li>
+  <li><strong>Soil Backfill:</strong> Cover the nutrients with a thin layer of clean soil (2-3 cm) before planting seeds. This prevents direct fertilizer burn on seeds while placing plant food directly where roots expand.</li>
+  <li><strong>Moisture Capture:</strong> Rainwater collects inside the basin micro-depression, keeping the seedling root zone damp even after light showers.</li>
+</ol>
+
+<h3>C. Contour Bunds, Swales & Stone Lines</h3>
+<p>On sloping land, uncontrolled water flow cuts gullies and strips fertile topsoil. Siting contour structures along key elevation lines slows water velocity and recharges underground water tables:</p>
+<ul>
+  <li><strong>Stone Lines (Diguettes):</strong> In rocky areas, lay lines of stones 20-30 cm high along natural contours. Stone lines slow down runoff, trap silt, and allow water to seep into the soil without washing away.</li>
+  <li><strong>Dead Level Contours (Swales):</strong> Excavate trenches along exact contour lines (0% slope) with the dug earth mounded on the downslope side. Plant vetiver grass or fodder trees (e.g. Leucaena or Bana grass) on the bank to stabilize soil.</li>
+</ul>
+
+<h3>D. Organic Mulching & Crop Canopy Cover</h3>
+<p>Mulching is the single most effective way to lower soil temperatures and stop moisture evaporation:</p>
+<ul>
+  <li>Cover bare soil beds with a 5-10 cm layer of dry grass, crop stalks, maize stover, or dry leaves.</li>
+  <li>Soil under mulch stays 5°C to 10°C cooler than bare soil during hot afternoons, preserving root vitality.</li>
+  <li>Mulch prevents soil crusting after heavy downpours, ensuring subsequent rainfall infiltrates easily.</li>
+</ul>
+
+<h3>E. Minimum Tillage & Conservation Agriculture</h3>
+<p>Repeated deep disc ploughing destroys soil aggregation, burns organic matter, and forms a hard pan that prevents roots from tapping deep moisture. Shift to minimum tillage by disturbing only the planting line or basin while leaving the remaining soil covered and undisturbed.</p>
+
+<h2 id="water-catchment">3. Farm Water Catchment & Storage Infrastructure</h2>
+<p>Capturing surface runoff during heavy storms gives your farm supplemental water for nursery beds, high-value vegetables, or livestock during dry periods.</p>
+
+<h3>A. Roof Rainwater Harvesting</h3>
+<p>Every square metre of corrugated iron roof yields 1 litre of clean water for every 1 mm of rain. A 100 m² roof receives 50,000 litres of water in a 500 mm rainfall season.</p>
+<ul>
+  <li>Fit wide PVC or zinc gutters with leaf guards along all farm building roofs.</li>
+  <li>Direct flow into a first-flush diverter (to discard dusty initial roof wash) before filling plastic storage tanks or brick masonry cisterns.</li>
+  <li>Store harvested water tightly covered to eliminate mosquito breeding and algae growth.</li>
+</ul>
+
+<h3>B. Earth Dams, Water Pans & Farm Ponds</h3>
+<p>Excavated farm ponds (water pans) collect surface runoff from natural drainage paths, farm roads, or contour outlets:</p>
+<ol>
+  <li><strong>Siting:</strong> Locate ponds on low ground downstream of clean catchments (avoid areas where livestock dung or septic systems contaminate water).</li>
+  <li><strong>Excavation & Sizing:</strong> Excavate trapezoidal ponds 2.5 to 3.5 metres deep to minimize surface evaporation area while maximizing volume.</li>
+  <li><strong>Sealing:</strong> Compact a 20 cm layer of heavy clay on the pond bottom, or line with a 0.5 mm to 1.0 mm UV-resistant HDPE geomembrane plastic liner to stop seepage losses in sandy soils.</li>
+  <li><strong>Silt Traps:</strong> Always construct a shallow sediment basin (silt trap) upstream of the pond so muddy water settles out silt before clean water flows into the main pond.</li>
+</ol>
+
+<h3>C. Drip Irrigation & Micro-Watering Efficiency</h3>
+<p>Flood irrigation and overhead sprinklers lose 40% to 60% of water to evaporation and wind drift in hot, dry environments. Drip irrigation delivers water directly to the plant root zone with over 90% efficiency:</p>
+<ul>
+  <li><strong>Low-Head Gravity Drip Kits:</strong> Use 200-litre drums elevated 1.5 to 2 metres high to power gravity drip lines over vegetable beds.</li>
+  <li><strong>Sub-Surface Clay Pot (Olla) Irrigation:</strong> Bury unglazed, porous earthenware clay pots neck-deep near fruit trees or crop beds. Fill the pot with clean water and seal the lid. Water seeps slowly through the porous clay walls directly into surrounding soil as roots need it, with zero evaporation.</li>
+</ul>
+
+<h2 id="crop-choice">4. Selecting Drought-Resistant Crops & Varieties</h2>
+<p>Growing water-hungry varieties in semi-arid zones is the leading cause of farm bankruptcy. Switch your primary cropping plan to crops and varieties evolved for heat and water scarcity:</p>
+
+<table>
+  <thead>
+    <tr>
+      <th>Crop Category</th>
+      <th>Recommended Drought-Resistant Crops</th>
+      <th>Key Advantages in Dry Conditions</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td><strong>Small Grains</strong></td>
+      <td>White & Red Sorghum, Pearl Millet (Mhunga), Finger Millet (Rapoko)</td>
+      <td>Deep extensive root systems; ability to go dormant during dry spells and resume growth when rain falls; minimal water requirement compared to maize.</td>
+    </tr>
+    <tr>
+      <td><strong>Legumes & Pulses</strong></td>
+      <td>Cowpeas (Nhemba), Groundnuts (Nzungu), Bambara Groundnut (Nyimo), Pigeon Pea</td>
+      <td>Fixes atmospheric nitrogen into soil; produces high-protein grain and nutritious livestock residue; thrives in sandy, low-fertility soils.</td>
+    </tr>
+    <tr>
+      <td><strong>Roots & Tubers</strong></td>
+      <td>Cassava, Orange-Fleshed Sweet Potato (OFSP), Drought-Tolerant Yams</td>
+      <td>Stores energy underground; can remain in the soil for months until needed; highly resilient to erratic rainfall.</td>
+    </tr>
+    <tr>
+      <td><strong>Cash & Oilseed Crops</strong></td>
+      <td>Sunflower, Sesame (Simsim), Cotton, Castor Bean</td>
+      <td>Deep taproots extract subsoil moisture; high market value per kilogram; resistant to high heat.</td>
+    </tr>
+    <tr>
+      <td><strong>Early Maize Hybrids</strong></td>
+      <td>Ultra-short season certified maize hybrids (70–90 days maturity)</td>
+      <td>Escapes late-season drought by flowering and maturing before seasonal rains end.</td>
+    </tr>
+  </tbody>
+</table>
+
+<div class="notice"><strong>Farmer Golden Rule:</strong> Never devote 100% of your arable field to maize in dry regions. A resilient dryland farm allocates at least 60% to small grains (sorghum/millet) and legumes (cowpea/groundnut), keeping maize to small, highly-fertilized, moisture-conserved plots (e.g. Pfumvudza basins).</div>
+
+<h2 id="certified-seeds">5. Certified Seed vs Saved Seed: Mitigating Risk in Dry Soils</h2>
+<p>When soil moisture is scarce, seed quality determines whether a crop emerges in 4 days or rots in the ground. Planting uncertified grain-bin seed in dry conditions is a high-risk gamble that frequently fails.</p>
+
+<h3>A. Why Certified Seed Pays Off in Dry Conditions</h3>
+<ul>
+  <li><strong>High Germination Rate (&gt;90%):</strong> Certified seed guarantees vigor. Uniform emergence ensures a complete plant stand before soil surface moisture dries out.</li>
+  <li><strong>Purity & Disease Resistance:</strong> Certified seeds are screened for seed-borne fungal pathogens and treated with protective fungicide/insecticide dressings.</li>
+  <li><strong>Drought-Escaping Genetics:</strong> Hybrid and open-pollinated certified seeds are bred for specific maturity days (early vs medium) and heat tolerance.</li>
+</ul>
+
+<h3>B. Dangers of Uncertified / Grain-Bin Seed</h3>
+<ol>
+  <li><strong>Hybrid Segregation (F2 generation):</strong> Saved seed from hybrid crops (like F1 maize) loses genetic vigor, yielding 30% to 50% less and segregating into weak, non-uniform plants.</li>
+  <li><strong>Low Vigor & Seedling Rot:</strong> Uncertified seed often has micro-cracks or fungal infection. If dry soil delays germination by 3 days, uncertified seed rots underground, forcing expensive replanting.</li>
+</ol>
+
+<h3>C. Seed Priming & Hydration Techniques</h3>
+<p>To speed up emergence in dry seedbeds, practice <strong>on-farm seed priming:</strong></p>
+<ul>
+  <li>Soak cereal seeds (sorghum, millet, maize) in clean water for 8 to 10 hours (overnight) before sowing.</li>
+  <li>Remove seeds, drain thoroughly, surface-dry in the shade for 1 hour, and plant immediately into moist soil beds.</li>
+  <li>Primed seeds absorb initial water, accelerating germination by 2 to 3 days and giving crops a head start against weeds.</li>
+</ul>
+
+<h2 id="crop-rotation">6. Crop Rotation & Legume Intercropping Systems</h2>
+<p>Monoculture (planting the same crop on the same field year after year) depletes soil nutrients, increases parasitic weeds like Striga (witchweed), and worsens drought damage.</p>
+
+<h3>A. The Cereal-Legume Rotation Cycle</h3>
+<p>Rotate heavy-feeding cereal crops with nitrogen-fixing legumes over a 3 to 4-year cycle:</p>
+
+<table>
+  <thead>
+    <tr>
+      <th>Year / Season</th>
+      <th>Field Block A</th>
+      <th>Field Block B</th>
+      <th>Field Block C</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td><strong>Year 1</strong></td>
+      <td>Legumes (Cowpea / Groundnut)</td>
+      <td>Sorghum / Pearl Millet</td>
+      <td>Cassava / Sweet Potato</td>
+    </tr>
+    <tr>
+      <td><strong>Year 2</strong></td>
+      <td>Sorghum / Pearl Millet</td>
+      <td>Cassava / Sweet Potato</td>
+      <td>Legumes (Cowpea / Groundnut)</td>
+    </tr>
+    <tr>
+      <td><strong>Year 3</strong></td>
+      <td>Cassava / Sweet Potato</td>
+      <td>Legumes (Cowpea / Groundnut)</td>
+      <td>Sorghum / Pearl Millet</td>
+    </tr>
+  </tbody>
+</table>
+
+<h3>B. Legume Intercropping & Biological Cover</h3>
+<p>Planting legumes (e.g. Cowpeas, Groundnuts, or Pigeon Pea) between rows of Sorghum or Maize provides multiple benefits:</p>
+<ul>
+  <li><strong>Ground Cover:</strong> Legume foliage creates a living green carpet that shades the soil, suppressing weeds and lowering soil evaporation.</li>
+  <li><strong>Nitrogen Fixation:</strong> Legume root nodules convert air nitrogen into plant food, benefiting current and subsequent cereal crops.</li>
+  <li><strong>Push-Pull Pest Management:</strong> Intercropping cereals with Desmodium legume repels stem borer moths ("push") while attraction borders of Napier grass trap pests ("pull").</li>
+</ul>
+
+<h2 id="soil-fertility">7. Organic Matter, Biochar & Micro-Dosing Fertilization</h2>
+<p>Fertilizer applied incorrectly in dry soils can "burn" crops. Dryland soil fertility requires building organic matter and placing fertilizer with surgical precision.</p>
+
+<h3>A. Building Soil Organic Matter & Pit Composting</h3>
+<p>Soil organic matter acts like a giant underground sponge. Every 1% increase in soil organic matter enables soil to hold an extra 150,000 litres of water per hectare!</p>
+<ul>
+  <li><strong>Dry-Zone Pit Composting:</strong> Excavate compost pits 1 metre deep under shade. Layer crop stalks, animal dung, ash, green leaves, and soil. Add water during building and cover with a 10 cm soil cap to trap heat and moisture. Turn the heap after 4 weeks; mature compost is ready in 8 to 12 weeks.</li>
+  <li>Apply 5 to 10 tonnes of well-rotted manure or compost per hectare during bed preparation.</li>
+</ul>
+
+<h3>B. Biochar Application</h3>
+<p>Biochar (crushed charcoal produced by low-oxygen burning of agricultural residues) is porous and permanent:</p>
+<ul>
+  <li>Incorporate finely crushed biochar (mixed with compost or manure) into planting basins or root zones.</li>
+  <li>Biochar holds water and nutrient ions in its microscopic pores for decades, preventing fertilizer leaching and improving drought resilience in sandy soils.</li>
+</ul>
+
+<h3>C. Micro-Dosing Fertilization</h3>
+<p>Broadcasting granular fertilizer across dry fields wastes money and damages crops if rain fails. Practice <strong>fertilizer micro-dosing:</strong></p>
+<ol>
+  <li><strong>Basal Micro-Dosing:</strong> Apply a measured bottle-cap dose (approx. 3g to 5g per plant) of Compound NPK fertilizer directly into the planting basin or furrow, 5 cm beside and below the seed.</li>
+  <li><strong>Top-Dressing Micro-Dosing:</strong> Apply a measured cap of Ammonium Nitrate or CAN directly at the base of established plants only when soil is moist following a rain event.</li>
+  <li><strong>Efficiency Gain:</strong> Micro-dosing uses 50% to 60% less total fertilizer while delivering higher yields than traditional broadcasting.</li>
+</ol>
+
+<h2 id="mixed-farming">8. Mixed Farming & Enterprise Diversification</h2>
+<p>Commercial survival in dry regions depends on combining crops with livestock and alternative income enterprises. If a severe mid-season drought reduces crop grain yield, livestock and alternative enterprises secure household income.</p>
+
+<h3>A. Small Livestock Integration</h3>
+<p>Small ruminants and poultry thrive in dry environments where large cattle struggle:</p>
+<ul>
+  <li><strong>Indigenous Goats & Sheep:</strong> Goats browse on deep-rooted acacia bushes and drought shrubs. They reproduce rapidly and provide quick cash sales, milk, and valuable kraal manure.</li>
+  <li><strong>Indigenous Poultry & Turkeys:</strong> Hardy local chicken breeds (e.g. Boschveld, Roadrunner) forage for insects and seeds, requiring minimal expensive commercial feed.</li>
+  <li><strong>Rabbit Production:</strong> Quiet, fast-breeding small stock that consume weeds and produce nutrient-rich manure for vegetable beds.</li>
+</ul>
+
+<h3>B. Fodder Production & Emergency Feed Storage</h3>
+<p>Never allow livestock to starve during the dry season. Preserve green fodder when feed is abundant:</p>
+<ul>
+  <li><strong>Hay Making:</strong> Cut natural grasses (e.g. Rhodes grass, Star grass) at early flowering stage. Sun-cure for 1-2 days in thin layers, bale or stack under a dry shed.</li>
+  <li><strong>Pit Silage:</strong> Chop green maize stover, sorghum, or Bana grass into 2 cm pieces. Pack tightly in underground plastic-lined trench pits, compact thoroughly to exclude air, and seal with soil. Silage provides succulent green feed 6 months later during peak drought.</li>
+  <li><strong>Fodder Trees:</strong> Plant drought-hardy fodder trees (e.g. <em>Leucaena leucocephala</em>, <em>Calliandra</em>, <em>Gliricidia</em>, or spineless cactus) along fence lines for green protein browse.</li>
+</ul>
+
+<h3>C. Apiculture (Beekeeping)</h3>
+<p>Beekeeping requires no land ownership, zero daily feeding costs, and generates high-value honey and beeswax in dry acacia bushlands. Bees also improve crop pollination and increase pulse/seed yields.</p>
+
+<h2 id="pest-weed">9. Weed, Pest & Disease Management under Thermal Stress</h2>
+
+<h3>A. Early & Aggressive Weeding</h3>
+<p>Weeds are water thieves! A single large pigweed or blackjack consumes up to 4 times more soil water than a young sorghum plant. Weed your field during the first 14 to 21 days after emergence when weeds are small. Never allow weeds to flowering stage.</p>
+
+<h3>B. Managing Drought-Favored Pests</h3>
+<p>Hot, dry weather triggers severe outbreaks of specific sap-sucking and leaf-eating pests:</p>
+<table>
+  <thead>
+    <tr>
+      <th>Pest</th>
+      <th>Drought Damage Symptom</th>
+      <th>Practical Control Strategy</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td><strong>Red Spider Mite</strong></td>
+      <td>Fine webbing, yellow stippling on leaf undersides; leaves turn bronze and dry up.</td>
+      <td>Avoid dusty field edges; spray overhead water or neem oil/soapy water sprays early in morning.</td>
+    </tr>
+    <tr>
+      <td><strong>Aphids</strong></td>
+      <td>Curled leaf tips, sticky honeydew, black sooty mold growth.</td>
+      <td>Preserve natural predators (ladybirds, lacewings); spray wood ash water or botanical insecticidal soaps.</td>
+    </tr>
+    <tr>
+      <td><strong>Fall Armyworm & Stem Borer</strong></td>
+      <td>Window-pane feeding marks and frass in crop whorls.</td>
+      <td>Drop fine sand mixed with wood ash or dry Bacillus thuringiensis (Bt) dust directly into plant whorls.</td>
+    </tr>
+    <tr>
+      <td><strong>Termites</strong></td>
+      <td>Severed plant stems at ground level during dry spells.</td>
+      <td>Keep organic mulch on soil surface (termites eat mulch instead of living stems); locate and destroy queen mounds.</td>
+    </tr>
+  </tbody>
+</table>
+
+<h2 id="post-harvest">10. Post-Harvest Preservation & Market Timing</h2>
+<p>Growing a crop in dry conditions is only half the battle. Losing 30% of harvested grain to grain borers and weevils in storage destroys farm profits.</p>
+
+<h3>A. Proper Field Drying & Curing</h3>
+<ul>
+  <li>Harvest grain heads (sorghum, millet, maize) when fully mature and cobs/panicles turn dry.</li>
+  <li>Dry harvested grain on clean raised drying racks or tarpaulins off the bare ground until grain moisture drops below 12% (kernel snaps crisply when bitten).</li>
+</ul>
+
+<h3>B. Hermetic Storage Bags & Zero-Chemical Protection</h3>
+<p>Traditional chemical dusts can lose potency or pose health risks if consumed early. Use **Hermetic Triple-Layer Storage Bags (e.g. PICS bags):**</p>
+<ol>
+  <li>Pack clean, dry grain into the inner high-density polyethylene liner bags and tie tightly.</li>
+  <li>Hermetic sealing starves insects and weevils of oxygen. Within 5 days, all insects and eggs suffocate naturally without any chemical dust.</li>
+  <li>Grain remains pristine for 1 to 2 years, allowing you to hold grain safely until market prices rise.</li>
+</ol>
+
+<h3>C. Market Timing & Value Addition</h3>
+<p>Never sell all your grain at harvest peak (May to July) when local supply is high and prices are lowest. Store grain safely until the dry season (October to January) when grain prices double or triple. Add value by milling sorghum/millet into packaged flour or pressing oilseeds (sunflower/sesame) for local sales.</p>
+
+<h2 id="checklist">11. Dryland Farmer Action Checklist</h2>
+
+<div class="notice">
+  <h3>Pre-Season Planning (2 Months Before Rains)</h3>
+  <ul>
+    <li>[ ] I mapped my field contours and laid out dead-level ridges or stone lines.</li>
+    <li>[ ] I dug planting basins (Zai/Pfumvudza) or constructed tie ridges across all crop rows.</li>
+    <li>[ ] I collected and applied mature compost/manure into planting basins or beds.</li>
+    <li>[ ] I purchased certified short-season or drought-resistant seeds (sorghum, millet, cowpea, early hybrid maize).</li>
+    <li>[ ] I cleaned water gutters, roof tanks, and desilted farm water ponds.</li>
+  </ul>
+
+  <h3>In-Season Management (Planting through Harvest)</h3>
+  <ul>
+    <li>[ ] I primed seeds (soaked overnight) where suitable before sowing into moist soil.</li>
+    <li>[ ] I applied fertilizer via precise micro-dosing directly near plant root zones.</li>
+    <li>[ ] I weeded early (within 14–21 days) to prevent weeds from stealing soil water.</li>
+    <li>[ ] I applied organic mulch (5–10 cm) to cover bare soil and cut evaporation.</li>
+    <li>[ ] I scouted weekly for red spider mites, aphids, and armyworms.</li>
+  </ul>
+
+  <h3>Post-Harvest & Marketing</h3>
+  <ul>
+    <li>[ ] I dried grain thoroughly on raised racks to &lt;12% moisture content.</li>
+    <li>[ ] I stored grain in hermetic PICS bags to prevent weevil damage without chemicals.</li>
+    <li>[ ] I preserved crop stover, made hay, or sealed silage for livestock dry-season feed.</li>
+    <li>[ ] I stored a portion of grain for strategic sale during dry-season peak prices.</li>
+  </ul>
+</div>
+
+<p><strong>Final Message:</strong> Farming in dry conditions is not a curse—it is a specialized business system. By harvesting every drop of rainwater, building soil organic matter, planting certified drought-resistant crops, and combining livestock with crops, your farm will remain productive, profitable, and resilient every season.</p>
+`);
+
 })();
