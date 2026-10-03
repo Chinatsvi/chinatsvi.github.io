@@ -20,6 +20,297 @@ window.AGRIBASE_CONTENT.articles.push(
 ,{slug:'understanding-your-soil',title:'Understanding Your Soil: A Practical Guide for Better Farming',category:'Soil & Fertility',description:'A complete field guide to soil texture, structure, fertility, pH, water, slope, erosion and practical soil conservation.',body:'<p>Use this complete practical guide to investigate soil and connect observations and soil tests to crop, fertilizer, irrigation and conservation decisions.</p><p><a href="/guides/understanding-your-soil.html">Open the full soil guide.</a></p>'}
 );
 
+window.AGRIBASE_CONTENT.articles.push({
+  slug: 'farming-sandy-soil',
+  title: 'How to Farm Sandy Soil: A Practical Guide to Making It Productive',
+  category: 'Soil & Fertility',
+  description: 'A field-ready guide to crops, soil tests, organic matter, fertilizer placement, irrigation, moisture conservation, cover crops and rotation on sandy land.',
+  body: `
+<div class="notice"><strong>Farmer, sandy soil is not useless soil.</strong> It warms early, is easy to work and drains quickly. The challenge is that water and dissolved nutrients can move below the roots before crops use them. Your job is to build soil cover and organic matter, keep roots growing, apply nutrients in well-timed doses and irrigate to the crop rather than to a calendar. Adapt every crop and input decision to your local climate, soil test, water supply and market.</div>
+
+<h2>Contents</h2>
+<ol>
+  <li><a href="#sand-recognize">Know your sandy soil and its limits</a></li>
+  <li><a href="#sand-first-steps">Start with a field check and soil test</a></li>
+  <li><a href="#sand-build-soil">Build organic matter and protect the surface</a></li>
+  <li><a href="#sand-crops">Choose crops that fit your water and market</a></li>
+  <li><a href="#sand-fertilizer">Fertilize in the right place and at the right time</a></li>
+  <li><a href="#sand-irrigation">Irrigate little and often, guided by the root zone</a></li>
+  <li><a href="#sand-conserve">Conserve moisture and control erosion</a></li>
+  <li><a href="#sand-rotation">Rotate crops and use cover crops carefully</a></li>
+  <li><a href="#sand-calendar">A practical first-year improvement plan</a></li>
+  <li><a href="#sand-mistakes">Mistakes to avoid and field checklist</a></li>
+</ol>
+
+<h2 id="sand-recognize">1. Know your sandy soil and its limits</h2>
+<p>Sandy soil feels gritty when rubbed between damp fingers. A handful usually falls apart instead of forming a firm ball. But fields are not always uniformly sandy: a sandy loam may hold more water than coarse sand, while a compacted layer or shallow topsoil can change how crops behave. Check different parts of the field rather than giving the whole farm one label.</p>
+<p>Large sand particles leave relatively large spaces between them. Rain or irrigation often enters quickly, which can reduce surface ponding, but the soil also stores less plant-available water than a finer-textured soil. Crops may wilt soon after the surface looks wet, especially in hot, windy weather. Nitrate and potassium can also move down with drainage water, and low organic matter means weaker nutrient and water holding.</p>
+<p>These are management challenges, not proof that crops cannot grow. Sandy soil can suit many crops when water is reliable and the farmer protects the soil. Its drainage can be useful for root crops and crops that dislike waterlogging. The best choice still depends on temperature, rainfall, frost risk, variety, local pests, labour, available buyers and the cost of irrigation.</p>
+
+<h2 id="sand-first-steps">2. Start with a field check and soil test</h2>
+<h3>Walk the field before buying inputs</h3>
+<p>After a rain or irrigation, note where water runs off, where it soaks in, and how long the root zone stays moist. Dig a small inspection hole in several representative places. Check topsoil depth, roots, stones, hard layers, signs of erosion and whether water is draining away rapidly. A simple squeeze test helps compare areas, but it does not replace a laboratory test.</p>
+<h3>Sample correctly</h3>
+<ol>
+  <li>Separate areas with visibly different soil, slope, management or crop history; sample each area separately.</li>
+  <li>For a cultivated field, collect about 10 to 15 small samples from the usual rooting zone (commonly the top 15 to 20 cm) in a zigzag pattern. Follow the laboratory's instructions, especially for orchards, deep-rooted crops or subsoil testing.</li>
+  <li>Avoid manure heaps, field edges, wet patches, fertilizer bands and recently burned spots unless testing that specific problem.</li>
+  <li>Mix the samples from one uniform area in a clean bucket, label the sample and send it to a reliable laboratory.</li>
+</ol>
+<p>Ask for pH and locally relevant nutrient and organic matter tests. If irrigation water is used, test its quality where salinity, sodicity or crop injury is a concern. Use the laboratory or local extension service to interpret results and calculate rates for the crop; sandy soils do not have one universal fertilizer recipe. Keep a copy and repeat tests at an interval advised locally so you can see whether the soil is improving.</p>
+
+<h2 id="sand-build-soil">3. Build organic matter and protect the surface</h2>
+<p>Organic matter improves aggregation, helps the soil hold more water and nutrients, feeds soil organisms and protects the surface from raindrop impact. Improvement takes repeated additions and good management; one load of manure will not permanently change a sandy field.</p>
+<ul>
+  <li><strong>Return safe crop residues:</strong> leave healthy stalks, leaves and roots in the field, chop coarse residues where practical, or use them as surface mulch. Remove or manage diseased material according to local crop advice.</li>
+  <li><strong>Use mature compost or well-rotted manure:</strong> apply a known, clean material and incorporate it shallowly only where needed, or place it as a surface mulch. Fresh manure can injure seedlings, carry weed seeds and create food-safety risks in vegetables. Follow local rules and appropriate intervals before harvest.</li>
+  <li><strong>Add organic inputs where they pay:</strong> when compost is scarce or expensive, prioritize vegetable beds, planting rows, tree basins or the most degraded field sections instead of spreading too thinly over a large area.</li>
+  <li><strong>Keep living roots when possible:</strong> cover crops and forage phases add roots and residue, but choose species and termination dates that do not use water needed by the next crop.</li>
+  <li><strong>Reduce unnecessary disturbance:</strong> avoid repeated, deep tillage that leaves soil bare and accelerates organic matter loss. Prepare only the seedbed or planting line that is needed; do not plant into a compacted layer without diagnosing it.</li>
+</ul>
+<p>Do not try to turn sandy soil into clay by adding small amounts of clay. That is unreliable and can make a poor structure. Do not add lime, gypsum, biochar or other amendments simply because the soil is sandy: use them only when a soil or water test, crop need and locally recommended method justify them. Biochar quality and application method matter, and it is not a substitute for compost, fertilizer or water management.</p>
+
+<h2 id="sand-crops">4. Choose crops that fit your water and market</h2>
+<p>First decide how much water you can reliably supply through the driest critical growth stage. Then compare crop duration, rooting depth, heat tolerance, market demand and expected return. A potentially high-value crop is not a good choice if water, labour, transport or a buyer is missing.</p>
+<table>
+  <thead><tr><th>Crop group</th><th>Examples to consider</th><th>What to check</th></tr></thead>
+  <tbody>
+    <tr><td>Hardy grains</td><td>Sorghum, millet or locally adapted maize</td><td>Rainfall and growing-season length; use recommended varieties and timely planting. Sandy fields still need adequate nutrition and weed control.</td></tr>
+    <tr><td>Legumes</td><td>Cowpea, groundnut, common bean or other locally adapted pulses</td><td>Species and variety must suit rainfall, soil pH and disease pressure. Inoculant helps only when the correct compatible product is used and stored properly.</td></tr>
+    <tr><td>Root and tuber crops</td><td>Sweet potato, cassava or groundnut where locally suited</td><td>Match the crop to temperature, season length, planting material, soil depth and market. Not every sandy site suits every root crop.</td></tr>
+    <tr><td>Irrigated vegetables</td><td>Tomato, onion, leafy vegetables, cucurbits or carrots</td><td>Use only where water, nutrients, labour and a dependable market support intensive management. Frequent monitoring is essential on coarse sand.</td></tr>
+    <tr><td>Perennial or forage options</td><td>Locally adapted fruit trees, fodder grasses or legumes</td><td>Check establishment water, rooting depth, wind exposure, fencing and long-term market or livestock use.</td></tr>
+  </tbody>
+</table>
+<p>These are options to investigate, not a universal ranking. Try a manageable area first, keep a field record and compare saleable yield and costs. Under rain-fed conditions, early-maturing, locally recommended varieties can reduce exposure to a late dry spell, but planting should still wait for a locally advised planting window and adequate soil moisture.</p>
+
+<h2 id="sand-fertilizer">5. Fertilize in the right place and at the right time</h2>
+<p>Because water drains quickly through coarse soil, applying all soluble fertilizer long before the crop needs it can waste money and increase nutrient losses. Base the total rate on a soil test, crop recommendation, expected yield and fertilizer analysis. Then plan timing and placement so young roots can reach nutrients without fertilizer touching or burning seed.</p>
+<ul>
+  <li><strong>Place basal fertilizer near, not on, the seed:</strong> band or place it to the side and slightly below the seed according to the crop and local recommendation, then cover it with soil. Follow product guidance for safe separation.</li>
+  <li><strong>Split mobile nutrients:</strong> where local crop recommendations call for it, apply nitrogen in smaller portions at planting and during active growth rather than one large dose. Potassium timing may also need attention on very coarse, low-holding soils. Do not split blindly if the crop, soil test or product recommendation says otherwise.</li>
+  <li><strong>Apply when moisture can move nutrients into the root zone:</strong> avoid broadcasting soluble fertilizer onto very dry soil or just before heavy rain that may wash it away. If irrigating, use a measured amount after application; never allow runoff.</li>
+  <li><strong>Keep fertilizer away from stems and leaves:</strong> side-dress beside the crop row, lightly cover where suitable and irrigate if the product recommendation requires it. Do not pile granules against stems.</li>
+  <li><strong>Use fertigation only with control:</strong> drip fertigation can deliver small doses to roots, but requires a compatible fertilizer, filtration, calibrated equipment and flushing. Prevent backflow into the water source and follow product and food-safety rules.</li>
+  <li><strong>Check pH before correcting it:</strong> sandy soils can be acidic, but lime rate depends on measured pH, crop, buffer capacity and the material. Apply only a recommended rate and allow time for it to react.</li>
+</ul>
+<p>Yellow leaves or poor growth do not automatically mean “add more fertilizer.” Check moisture, roots, pH, pests, disease, salinity and application history. A crop under water stress cannot use nutrients well, and extra fertilizer can worsen losses or salt injury.</p>
+
+<h2 id="sand-irrigation">6. Irrigate little and often, guided by the root zone</h2>
+<p>On sandy soil, smaller and more frequent irrigations are often more effective than a large, infrequent watering, especially for shallow-rooted vegetables and seedlings. But the correct interval and amount depend on soil depth, crop roots, weather, irrigation output and growth stage. A fixed daily schedule is not a substitute for checking the field.</p>
+<ol>
+  <li><strong>Check moisture below the surface:</strong> inspect soil at several points in the active root zone, not just the dry-looking surface. A small spade or soil auger is useful. Compare moisture near the emitter or row and farther away.</li>
+  <li><strong>Water to the current root depth:</strong> young seedlings need a small, shallow wet zone; established crops need water reaching a larger root area. Avoid applying so much at once that water drains below the roots.</li>
+  <li><strong>Choose a suitable system:</strong> drip or well-managed drip tape can deliver water close to rows with less evaporation, but emitters must be filtered, checked and flushed. Low-volume sprinklers can suit some fields; wind, evaporation and distribution uniformity affect performance. Furrow irrigation may be familiar and low-cost but can lose water to deep percolation and uneven flow on coarse sand. Choose based on measured performance, cost and maintenance capacity.</li>
+  <li><strong>Measure delivery:</strong> check pump output, pressure and emitter flow with a container and stopwatch or a suitable flow meter. Repair leaks and blocked emitters; one blocked line can leave a sandy patch stressed quickly.</li>
+  <li><strong>Prioritize sensitive stages:</strong> protect establishment, flowering and fruit or grain filling when water is limited. Use local crop guidance to decide which stage and field deserves priority.</li>
+  <li><strong>Keep records:</strong> note date, duration or volume, rainfall, soil moisture and crop response. Adjust after observing the wetting depth and plant condition.</li>
+</ol>
+<p>Water early in the day when practical, particularly with overhead irrigation, to reduce avoidable evaporation and allow foliage to dry. Mulch can reduce surface evaporation, but leave the crop base appropriately clear where dampness or pests are a concern. Use the <a href="/calculators/irrigation.html">irrigation calculator</a> as a planning aid, not a replacement for field measurements.</p>
+
+<h2 id="sand-conserve">7. Conserve moisture and control erosion</h2>
+<ul>
+  <li><strong>Mulch the soil:</strong> use clean, locally available straw, dry grass or crop residues in a loose layer. Start with a moderate cover and add more if it remains practical; avoid burying seedlings or using material with mature weed seeds. Keep mulch away from stems if it encourages pests or disease.</li>
+  <li><strong>Control weeds early:</strong> weeds compete for water and nutrients before crop canopy closes. Remove them while small, using shallow cultivation so crop roots are not damaged and moist soil is not repeatedly exposed.</li>
+  <li><strong>Keep soil covered between crops:</strong> maintain residues or a suitable cover crop where possible. Bare sandy soil is vulnerable to wind erosion, crusting and rapid drying.</li>
+  <li><strong>Manage slope and runoff:</strong> plant and establish rows across the slope on gentle land where safe and appropriate. Use stable grass strips, contour barriers or locally approved runoff-control structures. On steep land, avoid structures that could concentrate water and cause a breach; get local technical advice.</li>
+  <li><strong>Capture water safely:</strong> small basins or tied ridges may help in dry areas if rainfall, slope and drainage suit them. On flat or wet sites, they can waterlog crops; on intense storms, poorly designed barriers can wash out. Choose a proven local design and provide a safe overflow route.</li>
+  <li><strong>Protect field edges:</strong> establish perennial grass or other suitable vegetation on exposed boundaries, drainage lines and erosion-prone patches. Do not obstruct natural drainage or plant invasive species.</li>
+</ul>
+<p>Conservation means keeping rain where crops can use it while safely moving excess water away. Do not assume that trapping every drop in the field is suitable for every sandy field, slope or storm pattern.</p>
+
+<h2 id="sand-rotation">8. Rotate crops and use cover crops carefully</h2>
+<p>A practical rotation changes crop families and rooting patterns, spreads workload and helps maintain soil cover. For example, a locally adapted cereal can be followed by a suitable legume, then a vegetable or root crop if water, fertility and market allow. In a vegetable block, separate related families such as tomato, pepper and potato; rotating between those crops is not a true break.</p>
+<p>Legumes can fix nitrogen when the right crop, compatible soil bacteria, pH and growing conditions allow effective nodulation. They do not automatically fertilize the next crop with a guaranteed amount. Keep suitable residues where healthy, and use a soil test or extension recommendation to decide how much fertilizer the following crop still needs.</p>
+<h3>Cover crop choices and timing</h3>
+<p>Choose a cover crop for a clear purpose: a locally adapted grass or cereal can provide biomass and cover; a suitable legume can contribute nitrogen; a mixture can provide several benefits. Check seed availability, water demand, livestock use, pest or disease hosts and whether the species could become a weed.</p>
+<ul>
+  <li>Sow only when there is enough moisture for establishment and the cover crop will not jeopardize the main crop or household water supply.</li>
+  <li>Terminate or cut it before it competes strongly for moisture needed by the next crop, and before it produces unwanted seed.</li>
+  <li>Leave residues on the surface where practical. If incorporating high-carbon residues, allow time and follow local nutrient advice because decomposition can temporarily affect available nitrogen.</li>
+  <li>Use forage or grazing covers only with managed stocking; overgrazing removes cover and can compact or expose the soil.</li>
+</ul>
+<p>For related planning, see the <a href="/guides/crop-rotation-guide.html">crop rotation guide</a>, <a href="/guides/understanding-your-soil.html">soil guide</a>, <a href="/guides/plan-fertilizer-application.html">fertilizer guide</a> and <a href="/guides/reduce-water-waste.html">water-saving guide</a>.</p>
+
+<h2 id="sand-calendar">9. A practical first-year improvement plan</h2>
+<ol>
+  <li><strong>Before the season:</strong> map soil differences, inspect a few pits, test soil and irrigation water where appropriate, identify a buyer and make a realistic water and input budget.</li>
+  <li><strong>Before planting:</strong> clear perennial weeds without leaving the whole field bare, repair irrigation, prepare only the required seedbed, add available mature compost to priority areas and mark rows or basins according to crop and local recommendations.</li>
+  <li><strong>At planting:</strong> use viable seed of a locally adapted variety, place fertilizer safely according to the crop plan, and irrigate only enough to establish an even stand.</li>
+  <li><strong>During establishment:</strong> inspect moisture and emitters frequently, control weeds while small, replace gaps only when timely and scout for pests, disease and nutrient symptoms.</li>
+  <li><strong>During active growth:</strong> apply planned split nutrients at the recommended crop stages, irrigate to measured root-zone need and maintain mulch without smothering plants.</li>
+  <li><strong>After harvest:</strong> record yield, saleable quality, water, fertilizer, labour, costs and problem patches. Return healthy residues or establish an appropriate cover. Use the evidence to adjust the next crop and input plan.</li>
+</ol>
+<p>Improve a manageable block first if money, compost or irrigation is limited. Compare it with a similar untreated block using the same crop and record inputs and harvest. This helps you learn which investment actually pays on your farm.</p>
+
+<h2 id="sand-mistakes">10. Mistakes to avoid and field checklist</h2>
+<ul>
+  <li>Planting a water-demanding crop over a large area before checking water supply and market.</li>
+  <li>Applying the whole season's nitrogen early, or spreading fertilizer on dry soil without a crop-based plan.</li>
+  <li>Flooding a sandy field and assuming the wet surface means the full root zone is supplied.</li>
+  <li>Leaving soil bare after harvest, burning useful residues or repeatedly cultivating the field to dust.</li>
+  <li>Using fresh manure around seedlings, or applying lime, gypsum or other amendments without a test-based reason.</li>
+  <li>Sowing a cover crop that consumes scarce water or is not terminated before the next crop.</li>
+  <li>Assuming all sandy fields need identical crops, fertilizer rates or irrigation intervals.</li>
+</ul>
+<div class="notice"><strong>Before planting, ask yourself:</strong>
+<ul>
+  <li>Have I confirmed the soil type, rooting depth, pH and main nutrient needs?</li>
+  <li>Can my water source meet the crop's needs during its critical stages?</li>
+  <li>Is the crop suited to my local climate, rotation, labour and likely buyer?</li>
+  <li>Are fertilizer type, rate, placement and timing based on a recommendation?</li>
+  <li>Will the soil remain covered, and do I have a plan for weeds and excess runoff?</li>
+  <li>Will I record water, inputs, costs and harvest so I can improve next season?</li>
+</ul>
+</div>
+<p><strong>Final message:</strong> Productive sandy land is built through steady improvements: protect the surface, add organic matter where it counts, keep living roots when practical, irrigate according to the root zone, and apply nutrients in measured, crop-timed doses. Start with a test and a manageable field block, observe what happens, keep records and adjust with local agronomic advice.</p>
+`
+});
+
+window.AGRIBASE_CONTENT.articles.push({
+  slug: 'productive-uses-of-uncultivable-land',
+  title: 'How to Make Uncultivable Land Productive: A Practical Land-Use Guide',
+  category: 'Farm Planning',
+  description: 'Assess why land cannot be cropped, then plan safe and realistic uses such as managed grazing, beekeeping, agroforestry, conservation, farm buildings or approved housing.',
+  body: `
+<div class="notice"><strong>Farmer, land that cannot be ploughed is not automatically useless.</strong> It may be better suited to grazing, trees, beekeeping, water protection, recreation or carefully sited farm infrastructure. But first find out <em>why</em> it is called uncultivable. Steep slopes, seasonal flooding, shallow rock, poor drainage, contamination, legal restrictions and lack of water require very different decisions. Do not force a use that damages the land or puts people, animals or water at risk. Plan the whole property, keep the most sensitive areas protected and invest only after checking local laws, markets and costs.</div>
+
+<h2>Contents</h2>
+<ol>
+  <li><a href="#land-diagnose">Diagnose the land before choosing a use</a></li>
+  <li><a href="#land-plan">Make a simple whole-farm land-use plan</a></li>
+  <li><a href="#land-options">Compare practical uses for difficult land</a></li>
+  <li><a href="#land-grazing">Manage grazing without degrading the land</a></li>
+  <li><a href="#land-bees">Use suitable areas for beekeeping</a></li>
+  <li><a href="#land-trees">Consider trees, agroforestry and restoration</a></li>
+  <li><a href="#land-buildings">Site homes and farm buildings responsibly</a></li>
+  <li><a href="#land-water">Protect water, wetlands and erosion-prone areas</a></li>
+  <li><a href="#land-business">Check whether the enterprise will pay</a></li>
+  <li><a href="#land-action">A step-by-step land-use action plan</a></li>
+</ol>
+
+<h2 id="land-diagnose">1. Diagnose the land before choosing a use</h2>
+<p>“Uncultivable” describes a limitation, not a land-use plan. Walk the property in both wet and dry seasons if possible. Mark boundaries, slopes, gullies, rock outcrops, water points, flood marks, existing vegetation, access routes, power lines, neighbouring activities and any areas where people or livestock have had problems.</p>
+<p>Ask a local extension officer, land surveyor or relevant specialist to help identify the main limitation. A shallow stony ridge might support hardy trees or controlled browsing but not a house foundation. A wetland may be valuable for water storage and biodiversity but unsuitable for draining, building, cultivation or grazing during wet periods. Contaminated or mine-affected ground should not be grazed, farmed or developed until a qualified authority has assessed it.</p>
+<table>
+  <thead><tr><th>What you observe</th><th>Questions to answer</th><th>First planning response</th></tr></thead>
+  <tbody>
+    <tr><td>Steep slope, bare patches or active gullies</td><td>Where does runoff start and where is soil being lost?</td><td>Stabilize runoff and restore cover before considering grazing, roads or buildings. Get technical help for serious erosion.</td></tr>
+    <tr><td>Seasonal standing water or flood marks</td><td>How deep, how often and for how long does water remain?</td><td>Keep buildings and people out of flood-prone areas; protect drainage and wetland functions. Do not drain or fill without required approval.</td></tr>
+    <tr><td>Shallow soil, rock or very dry ground</td><td>How much rooting depth and reliable water are available?</td><td>Investigate locally adapted trees, carefully managed grazing, bees or conservation before costly earthworks.</td></tr>
+    <tr><td>Salty, damaged or unusually bare patches</td><td>Could salts, chemicals, mine waste or other contamination be present?</td><td>Test through an accredited service; restrict access where a hazard is suspected and follow authority guidance.</td></tr>
+    <tr><td>Protected habitat, stream, spring or culturally important site</td><td>What legal, community or customary protections apply?</td><td>Confirm boundaries and permissions first. Protection or low-impact use may be the most productive long-term choice.</td></tr>
+  </tbody>
+</table>
+<p>Do not use a quick visual inspection as a substitute for a geotechnical assessment for construction, a water-quality test where contamination is possible, or legal advice where land status or protected areas are uncertain.</p>
+
+<h2 id="land-plan">2. Make a simple whole-farm land-use plan</h2>
+<p>Draw a map, even if it is only a clear sketch. Divide the property into zones according to capability and risk, not just convenient field boundaries:</p>
+<ol>
+  <li><strong>Production zone:</strong> the better-drained, safer, accessible ground for crops, pasture, livestock handling, orchards or farm infrastructure.</li>
+  <li><strong>Managed-use zone:</strong> suitable difficult areas for controlled grazing, apiaries, timber, fruit or nut trees, silvopasture, recreation or another locally viable enterprise.</li>
+  <li><strong>Protection and restoration zone:</strong> wetlands, stream banks, springs, steep eroding slopes, gullies, fragile habitats and any contaminated area requiring restricted access.</li>
+  <li><strong>Access and service zone:</strong> tracks, firebreaks, water points, fencing and approved utilities, routed to minimize erosion, habitat disturbance and conflict with neighbours.</li>
+</ol>
+<p>On the map, show slope direction, seasonal water flow, flood-prone ground, existing trees, access and proposed improvements. Mark setbacks or buffer strips required by local rules around rivers, wells, roads, boundaries and buildings. Keep copies and update the map after changes. If neighbouring farms share a stream, grazing boundary or fire risk, discuss the plan with them before work starts.</p>
+<p>Choose one main use for each zone and avoid stacking incompatible activities. For example, an apiary may conflict with a busy path or livestock handling area; grazing animals can damage young tree guards; a road may concentrate water into a gully. Put the right use in the right place and plan safe routes between zones.</p>
+
+<h2 id="land-options">3. Compare practical uses for difficult land</h2>
+<p>Possible uses depend on the reason crops fail, local demand, water, labour, permits and capital. The options below are starting points for discussion with local advisers, not a guarantee that a site is suitable.</p>
+<table>
+  <thead><tr><th>Possible use</th><th>Land conditions that may suit it</th><th>What makes it work</th><th>Main caution</th></tr></thead>
+  <tbody>
+    <tr><td>Controlled grazing or seasonal pasture</td><td>Grass or browse is available and animals can reach safe water</td><td>Set stocking limits, rotate access, protect young plants and keep records of forage and animal condition</td><td>Overgrazing quickly exposes soil and can worsen erosion; hazardous or contaminated ground is not safe pasture.</td></tr>
+    <tr><td>Beekeeping</td><td>Forage plants flower across the season, with safe hive access</td><td>Reliable water, hive security, suitable equipment, colony care and a route to sell honey or wax</td><td>Pesticide exposure, fire, theft, livestock, neighbours and public paths must be managed.</td></tr>
+    <tr><td>Agroforestry, woodlots or restoration</td><td>Crop production is limited by slope, erosion, shallow soil or exposure</td><td>Choose locally appropriate, non-invasive species for timber, fruit, fodder, shade, wind protection or soil stabilization</td><td>Trees take time to return income; protect water resources and avoid species that become invasive or use scarce water excessively.</td></tr>
+    <tr><td>Fodder reserve or silvopasture</td><td>Some areas support grasses, shrubs or fodder trees</td><td>Establish cover, plan harvest or grazing, and store feed for the dry season</td><td>Do not clear native habitat or graze wet soils until they are damaged.</td></tr>
+    <tr><td>Farm storage, handling or livestock facilities</td><td>Stable, accessible ground outside floodways and sensitive buffers</td><td>Match facility size to a real farm need; plan drainage, waste management, access and services</td><td>Check planning permission, building safety, foundation conditions and environmental requirements before construction.</td></tr>
+    <tr><td>Housing or worker accommodation</td><td>Only a legally developable site with safe access, stable ground, services and low flood risk</td><td>Land-use approval, title and boundary checks, professional site assessment, sanitation and a realistic service plan</td><td>Not every privately owned parcel can legally or safely be built on. Avoid wetlands, unstable slopes, floodways and protected land.</td></tr>
+    <tr><td>Nature-based recreation or education</td><td>Scenic or ecologically valuable ground with safe access</td><td>Confirm demand, liability cover, sanitation, visitor management and conservation-compatible routes</td><td>Visitors, vehicles, waste and fire can damage habitat or create safety risks if unmanaged.</td></tr>
+    <tr><td>Renewable energy or other leased use</td><td>A suitable site with access and the required grid or service connection</td><td>Independent review of lease terms, permits, site impacts and payment obligations</td><td>Check land rights, community impacts, decommissioning and contract risks; do not sign under pressure.</td></tr>
+  </tbody>
+</table>
+<p>In some places a sustainable return comes from protecting a spring, repairing a gully, maintaining indigenous vegetation or preventing damage to productive fields elsewhere. Productive land use does not always mean putting a building or livestock on every hectare.</p>
+
+<h2 id="land-grazing">4. Manage grazing without degrading the land</h2>
+<p>Grazing may be a good use where nutritious grass or browse grows but ploughing is risky. The first question is not “How many animals can I put here?” It is “How much usable forage does this area produce through the whole year, and what share can animals use without leaving the soil bare?” Ask local livestock or extension staff to estimate carrying capacity for your vegetation, rainfall and animal type. A generic animals-per-hectare figure can cause serious overstocking.</p>
+<ul>
+  <li><strong>Start conservatively:</strong> begin with fewer animals than the apparent maximum, observe forage recovery and adjust only after a full seasonal assessment.</li>
+  <li><strong>Rest pasture:</strong> divide grazing into manageable paddocks if fencing and water make it practical. Move animals before plants are grazed too short, and allow recovery that matches growth and rainfall.</li>
+  <li><strong>Keep a drought plan:</strong> decide in advance when to reduce numbers, move animals, provide stored feed or stop grazing a recovering area.</li>
+  <li><strong>Protect weak ground:</strong> fence gullies, stream edges, wet soils, steep slopes and newly planted trees until vegetation is established. Avoid grazing saturated soil, which is easily pugged and compacted.</li>
+  <li><strong>Distribute water and minerals carefully:</strong> place troughs and mineral points where they will not create bare, muddy congregation sites or contaminate streams. Provide clean, reliable water.</li>
+  <li><strong>Monitor the land as well as the animals:</strong> record ground cover, bare patches, plant recovery, erosion, animal body condition and water availability at regular intervals.</li>
+</ul>
+<p>Identify poisonous plants and local livestock hazards before introducing animals. Provide secure fencing and handling facilities, and seek veterinary guidance for animal health and parasite control. If ground may be contaminated, keep livestock off it until testing and competent advice confirm it is safe.</p>
+
+<h2 id="land-bees">5. Use suitable areas for beekeeping</h2>
+<p>Beekeeping can use land that is difficult to crop because bees forage over a wide landscape rather than depending on crops grown exactly where the hives stand. It still needs planning, investment and skilled management; hives do not produce reliably just because they are placed in the bush.</p>
+<ul>
+  <li><strong>Check forage through the year:</strong> identify which trees, shrubs and crops flower in each season and whether there is a gap when colonies may lack nectar or pollen. Keep or plant locally appropriate flowering species where permitted.</li>
+  <li><strong>Provide clean water:</strong> place a dependable water source near the apiary before colonies need it, with safe landing points so bees do not drown.</li>
+  <li><strong>Select a safe site:</strong> use secure, accessible ground away from busy paths, houses, livestock handling areas, schools and public gathering places. Follow local setbacks and obtain landowner or community permission.</li>
+  <li><strong>Plan pesticide communication:</strong> speak with nearby farmers about spray timing and products, avoid exposing bees to pesticide drift and follow local pollinator-protection rules and product labels.</li>
+  <li><strong>Budget for the whole enterprise:</strong> include hives, protective clothing, smoker, tools, colony sourcing, inspections, harvest equipment, storage, packaging and transport to buyers.</li>
+  <li><strong>Learn colony care:</strong> get hands-on training from an experienced beekeeper or local association, use hygienic methods and arrange secure storage to deter theft, fire and animal damage.</li>
+</ul>
+<p>Start with a small number of hives and keep records of inspections, flowering, colony condition, harvest and sales. Increase only when you can manage colonies well and have a market. Bee forage plantings should be locally appropriate and non-invasive; protect native vegetation rather than clearing it to plant a monoculture.</p>
+
+<h2 id="land-trees">6. Consider trees, agroforestry and restoration</h2>
+<p>On steep, stony or eroding land, perennial cover can be more suitable than annual ploughing. Options may include locally adapted fruit or nut trees, timber, fuelwood, fodder shrubs, windbreaks, living contour strips or assisted natural regeneration. The correct species and spacing depend on rainfall, soil depth, water rights, fire risk, livestock and the intended product.</p>
+<ul>
+  <li>Retain healthy existing trees and natural regeneration where possible; protecting established roots can be cheaper than replanting.</li>
+  <li>Choose species with a known local use and a buyer, and check that they are not invasive or prohibited.</li>
+  <li>Plant on the contour or use other locally designed erosion controls on slopes; do not excavate trenches or swales without understanding the water flow and safe overflow route.</li>
+  <li>Protect seedlings from browsing, fire and drought with guards, mulch and establishment watering where feasible.</li>
+  <li>Mix trees with pasture or crops only where light, water and management needs are compatible. Competing trees can reduce crop yield or dry out limited water supplies.</li>
+  <li>Plan for fire breaks, access for maintenance and a realistic harvest timeline before investing in a woodlot or orchard.</li>
+</ul>
+<p>Where land is severely degraded, prioritize stabilization and recovery first: keep livestock and vehicles out of active gullies, slow runoff safely, restore ground cover and seek local conservation advice. Do not fill a wetland, divert a stream or plant trees in a way that blocks a natural drainage path without the required technical and legal approval.</p>
+
+<h2 id="land-buildings">7. Site homes and farm buildings responsibly</h2>
+<p>Homes, worker accommodation, sheds, livestock housing and processing areas can add value to a farm—but only on ground that is safe, legally available for development and properly serviced. “Nothing grows here” is not proof that a site is suitable for a building.</p>
+<ol>
+  <li><strong>Confirm land rights and permitted use:</strong> check title, boundaries, easements, zoning, planning permission and any community or customary rights with the relevant local authority before committing money.</li>
+  <li><strong>Avoid hazard zones:</strong> do not site homes in floodways, wetlands, unstable slopes, active gullies, fire corridors or areas with known contamination. Respect required river, well, road and neighbour setbacks.</li>
+  <li><strong>Commission the right checks:</strong> use qualified local professionals for a boundary survey, geotechnical or foundation assessment, drainage design and any environmental review required for the proposed structure.</li>
+  <li><strong>Plan water and sanitation:</strong> confirm a legal and reliable water source, safe wastewater treatment, stormwater management, solid-waste disposal, power and all-season access before building.</li>
+  <li><strong>Keep buildings compact:</strong> put facilities near existing access and services where safe, rather than fragmenting the farm with unnecessary roads and hard surfaces.</li>
+  <li><strong>Manage runoff:</strong> roofs and paved areas concentrate water. Direct it through a professionally or locally approved system to a safe outlet, without sending erosion or floodwater to neighbours or streams.</li>
+</ol>
+<p>If residential development is not permitted or infrastructure is unaffordable, consider a lower-impact use instead. Do not sell, lease or begin construction based on verbal assurances alone; understand the written approvals, responsibilities and full cost.</p>
+
+<h2 id="land-water">8. Protect water, wetlands and erosion-prone areas</h2>
+<p>Wet places, stream banks, springs and steep slopes often look “wasted” because they are difficult to farm, but they can protect water quality, reduce downstream flooding, support wildlife and supply water to the rest of the farm. Keep a vegetated buffer required by local regulations and avoid cultivation, waste dumping, chemical storage, vehicle access or uncontrolled livestock in sensitive areas.</p>
+<p>Where erosion is active, first identify where runoff enters, where it concentrates and where it can safely leave. Small changes upslope can sometimes prevent a gully, but poorly placed barriers, dams or excavated channels may divert floodwater onto a neighbour or cause a sudden washout. Get local soil-and-water conservation advice for major works. Maintain ground cover, stabilize tracks and drainage crossings, and inspect after heavy rain.</p>
+<p>Use fencing or alternative water points to keep animals from trampling stream banks. Store fuel, chemicals and manure away from watercourses and wells, with secondary containment where appropriate. Follow local rules for water abstraction, dam construction, wetland work and burning.</p>
+
+<h2 id="land-business">9. Check whether the enterprise will pay</h2>
+<p>Before building, fencing a large area or buying animals and hives, make a simple enterprise budget. Compare options using the same questions:</p>
+<ul>
+  <li><strong>Market:</strong> Who will buy the product or service, how much can they take, when do they pay, and what quality or permits do they require?</li>
+  <li><strong>Setup cost:</strong> What are the costs of water, fencing, access, equipment, seedlings or stock, professional assessments, permits and training?</li>
+  <li><strong>Annual costs:</strong> Include labour, repairs, veterinary or hive care, feed, transport, packaging, insurance, rates, taxes and replacement of equipment.</li>
+  <li><strong>Time to return:</strong> Grazing, honey, fruit trees, timber and housing have different timelines. Can you carry the costs until income starts?</li>
+  <li><strong>Risk:</strong> Consider drought, fire, theft, pests, disease, market failure, access disputes, regulation changes and damage to other parts of the farm.</li>
+  <li><strong>Opportunity cost:</strong> Compare the expected return with protecting the land, leasing it responsibly or investing in a smaller, better-suited area.</li>
+</ul>
+<p>Use conservative prices and yields, include your own labour, and prepare a low-income scenario. If the numbers only work under best-case assumptions, reduce the scale or test a small pilot first. Written lease terms should state permitted activities, access, maintenance, water use, liability, payment, duration and what happens when the agreement ends.</p>
+
+<h2 id="land-action">10. A step-by-step land-use action plan</h2>
+<ol>
+  <li><strong>Walk and map the property:</strong> mark productive ground, limitations, water, hazards, access and neighbouring uses.</li>
+  <li><strong>Find out why each difficult area is difficult:</strong> get soil, water, contamination, slope or drainage assessments where needed.</li>
+  <li><strong>Check the rules and rights:</strong> confirm title, permitted uses, environmental protections, community agreements and required approvals.</li>
+  <li><strong>Zone by capability:</strong> keep productive fields in production, match difficult areas to low-impact uses and protect sensitive or hazardous areas.</li>
+  <li><strong>Compare two or three enterprise options:</strong> check market, setup cost, labour, water, timeline and risks for grazing, bees, trees, facilities or other locally realistic uses.</li>
+  <li><strong>Start with a pilot:</strong> try one paddock, a small apiary, a limited tree strip or a modest restoration project before expanding.</li>
+  <li><strong>Monitor and adjust:</strong> record costs, income, soil cover, erosion, water, wildlife or livestock condition and any neighbour concerns. Review after each season.</li>
+</ol>
+<div class="notice"><strong>Final advice from your agronomist:</strong> Do not measure a parcel’s value only by how many hectares can be ploughed. Good land-use planning puts each part of the farm to its safest and most suitable purpose. Grazing, bees, trees, farm facilities, approved housing and conservation can all contribute—but only when the land capability, legal permissions, water, market and management plan support them. Protect what should not be disturbed, test ideas on a small scale and expand only when the evidence is good.</div>
+`
+});
+
 const fertilizerHandbook = window.AGRIBASE_CONTENT.articles.find(article => article.slug === 'plan-fertilizer-application');
 if (fertilizerHandbook) {
 	fertilizerHandbook.title = 'Fertilizer and Nutrient Management: A Practical Farmer Handbook';
