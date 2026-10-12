@@ -1,0 +1,1394 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="theme-color" content="#1F4D2C">
+
+  <meta name="description"
+      content="Free farm calculators for African farmers: fertilizer calculator, plant population calculator, crop spacing calculator and farm profit calculator. Fast, mobile-friendly, no signup needed.">
+
+  <title>Farmer Tools | AgriBase</title>
+
+  <link rel="icon" type="image/png" href="/farmers-community/favicon-256.png">
+  <link rel="apple-touch-icon" href="/farmers-community/favicon-256.png">
+    <link rel="icon" type="image/png" href="/farmers-community/favicon-256.png">
+    <link rel="apple-touch-icon" href="/farmers-community/favicon-256.png">
+
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,400;0,9..144,600;0,9..144,700;0,9..144,900;1,9..144,500;1,9..144,600&family=Karla:wght@400;500;600;700;800&family=JetBrains+Mono:wght@500;600&display=swap" rel="stylesheet">
+
+  <meta name="google-adsense-account" content="ca-pub-2606126305565597">
+  <script async
+          src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-2606126305565597"
+          crossorigin="anonymous"></script>
+
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "WebPage",
+    "name": "AgriBase Farmer Tools",
+    "description": "Free farm calculators: fertilizer, plant population, crop spacing and farm profit calculators for African farmers.",
+    "author": { "@type": "Person", "name": "Enock Chinatsvi", "url": "https://github.com/Chinatsvi" },
+    "publisher": { "@type": "Organization", "name": "AgriBase" },
+    "mainEntityOfPage": "https://chinatsvi.github.io/farmer-calculators/"
+  }
+  </script>
+
+  <style>
+    :root {
+      --soil: #A63A1F;
+      --soil-dark: #7A2A16;
+      --field: #1F4D2C;
+      --field-dark: #163A20;
+      --field-mid: #2E6B3E;
+      --gold: #E3A72E;
+      --gold-dark: #C4881B;
+      --cream: #FBF3E6;
+      --paper: #F3E7D2;
+      --ink: #2A2620;
+      --muted: #6E6152;
+      --border: #E4D3B8;
+      --field-tint: #E3EEE4;
+      --soil-tint: #F3E0D6;
+      --gold-tint: #FBEBC8;
+      --ink-tint: #ECE6DA;
+      --shadow: 0 18px 46px rgba(42,38,32,.16);
+      --shadow-sm: 0 8px 22px rgba(42,38,32,.10);
+      --font-display: "Fraunces", Georgia, serif;
+      --font-body: "Karla", -apple-system, BlinkMacSystemFont, "Segoe UI", Arial, sans-serif;
+      --font-mono: "JetBrains Mono", ui-monospace, Menlo, monospace;
+    }
+
+    * { box-sizing: border-box; }
+    html { scroll-behavior: smooth; }
+
+    body {
+      margin: 0;
+      font-family: var(--font-body);
+      color: var(--ink);
+      background: var(--cream);
+      line-height: 1.6;
+    }
+
+    a { color: inherit; }
+
+    .eyebrow {
+      font-family: var(--font-mono);
+      text-transform: uppercase;
+      letter-spacing: .14em;
+      font-size: 12px;
+      font-weight: 600;
+    }
+
+    /* ===== Nav (universal — identical across all AgriBase pages) ===== */
+    .nav {
+      position: sticky;
+      top: 0;
+      z-index: 40;
+      background: linear-gradient(90deg, var(--field-dark), var(--field));
+      color: var(--cream);
+      box-shadow: 0 3px 18px rgba(0,0,0,.18);
+    }
+
+    .nav-inner {
+      position: relative;
+      width: min(1160px, calc(100% - 40px));
+      margin: auto;
+      min-height: 72px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 20px;
+    }
+
+    .brand {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      text-decoration: none;
+      font-family: var(--font-display);
+      font-weight: 700;
+      font-size: 21px;
+    }
+
+    .brand-icon {
+      flex: none;
+      width: 40px;
+      height: 40px;
+      border-radius: 50%;
+      display: grid;
+      place-items: center;
+      background: var(--cream);
+      color: var(--field);
+      overflow: hidden;
+      border: 2px solid rgba(255,255,255,.35);
+    }
+
+    .brand-icon img { width: 100%; height: 100%; object-fit: cover; }
+
+    .nav-links {
+      display: flex;
+      align-items: center;
+      gap: 24px;
+      font-size: 14px;
+      font-weight: 600;
+    }
+
+    .nav-links a { text-decoration: none; opacity: .92; }
+    .nav-links a:hover { opacity: 1; }
+    .nav-links a.active { opacity: 1; border-bottom: 2px solid var(--gold); padding-bottom: 4px; }
+
+    .nav-toggle-input { display: none; }
+    .nav-toggle { display: none; cursor: pointer; }
+
+    /* ===== Page header ===== */
+    .page-hero {
+      position: relative;
+      background:
+        repeating-linear-gradient(115deg, rgba(255,255,255,.05) 0 2px, transparent 2px 26px),
+        linear-gradient(160deg, var(--field-dark) 0%, var(--field) 55%, var(--field-mid) 100%);
+      color: var(--cream);
+      overflow: hidden;
+      padding: 56px 20px 72px;
+    }
+
+    .page-hero-inner {
+      position: relative;
+      z-index: 1;
+      width: min(880px, calc(100% - 40px));
+      margin: auto;
+    }
+
+    .breadcrumb {
+      font-family: var(--font-mono);
+      font-size: 12.5px;
+      opacity: .78;
+      margin-bottom: 18px;
+    }
+
+    .breadcrumb a { text-decoration: none; }
+    .breadcrumb a:hover { text-decoration: underline; }
+
+    .page-hero-badge {
+      display: inline-flex;
+      align-items: center;
+      gap: 9px;
+      padding: 7px 14px 7px 8px;
+      border-radius: 999px;
+      background: rgba(255,255,255,.12);
+      border: 1px solid rgba(255,255,255,.3);
+      font-size: 12.5px;
+      font-weight: 600;
+      margin-bottom: 20px;
+    }
+
+    .page-hero h1 {
+      margin: 0 0 16px;
+      font-family: var(--font-display);
+      font-weight: 700;
+      font-size: clamp(30px, 4.4vw, 46px);
+      line-height: 1.1;
+      letter-spacing: -.8px;
+    }
+
+    .page-hero p.lead {
+      max-width: 620px;
+      margin: 0;
+      font-size: clamp(15px, 1.7vw, 17px);
+      color: rgba(251,243,230,.92);
+    }
+
+    .page-hero-divider {
+      position: absolute;
+      left: 0; right: 0; bottom: -1px;
+      width: 100%; height: 40px;
+    }
+
+    /* ===== Ad slot ===== */
+    .ad-slot-wrap { background: var(--cream); padding: 0 20px; }
+    .ad-slot {
+      width: min(1100px, calc(100% - 32px));
+      margin: 0 auto 10px;
+      padding: 14px;
+      text-align: center;
+      overflow: hidden;
+      min-height: 90px;
+      border: 1px dashed var(--border);
+      border-radius: 14px;
+    }
+    .ad-slot .label {
+      display: block;
+      font-family: var(--font-mono);
+      font-size: 10.5px;
+      letter-spacing: .1em;
+      text-transform: uppercase;
+      color: var(--muted);
+      margin-bottom: 8px;
+    }
+
+    /* ===== Tool index (jump nav) ===== */
+    .tool-index-wrap { padding: 46px 20px 10px; }
+    .tool-index {
+      width: min(900px, 100%);
+      margin: auto;
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 12px;
+    }
+    .tool-index a {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 6px;
+      text-align: center;
+      text-decoration: none;
+      background: var(--paper);
+      border: 1px solid var(--border);
+      border-radius: 14px;
+      padding: 16px 10px;
+      font-size: 12.5px;
+      font-weight: 700;
+      color: var(--field);
+      transition: transform .2s ease, box-shadow .2s ease;
+    }
+    .tool-index a:hover { transform: translateY(-3px); box-shadow: var(--shadow-sm); }
+    .tool-index span.emoji { font-size: 24px; }
+
+    /* ===== Calculator sections ===== */
+    .calc-section { padding: 50px 20px; }
+    .calc-wrap { width: min(720px, 100%); margin: auto; }
+
+    .calc-card {
+      background: var(--paper);
+      border: 1px solid var(--border);
+      border-radius: 20px;
+      padding: 32px 28px;
+      box-shadow: var(--shadow-sm);
+      scroll-margin-top: 90px;
+    }
+
+    .calc-head {
+      display: flex;
+      align-items: center;
+      gap: 14px;
+      margin-bottom: 8px;
+    }
+
+    .calc-icon {
+      flex: none;
+      width: 48px;
+      height: 48px;
+      border-radius: 13px;
+      background: var(--field-tint);
+      border: 2px solid rgba(31,77,44,.25);
+      display: grid;
+      place-items: center;
+      font-size: 22px;
+    }
+
+    .calc-card h2 {
+      margin: 0;
+      font-family: var(--font-display);
+      color: var(--field);
+      font-weight: 700;
+      font-size: clamp(20px, 2.6vw, 24px);
+      letter-spacing: -.3px;
+    }
+
+    .calc-desc {
+      color: var(--muted);
+      font-size: 14.5px;
+      margin: 0 0 24px;
+    }
+
+    .field-row {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 14px;
+      margin-bottom: 14px;
+    }
+
+    .field {
+      display: flex;
+      flex-direction: column;
+      gap: 6px;
+    }
+
+    .field label {
+      font-size: 12.5px;
+      font-weight: 700;
+      color: var(--field);
+    }
+
+    .field input, .field select {
+      font-family: var(--font-body);
+      font-size: 15px;
+      padding: 11px 12px;
+      border-radius: 9px;
+      border: 1.5px solid var(--border);
+      background: var(--cream);
+      color: var(--ink);
+    }
+
+    .field input:focus, .field select:focus {
+      outline: none;
+      border-color: var(--field-mid);
+    }
+
+    .calc-button {
+      margin-top: 8px;
+      width: 100%;
+      padding: 14px 22px;
+      border-radius: 11px;
+      border: none;
+      background: var(--gold);
+      color: var(--ink);
+      font-weight: 800;
+      font-size: 15px;
+      cursor: pointer;
+      transition: background .2s ease, transform .2s ease;
+    }
+
+    .calc-button:hover { background: var(--gold-dark); transform: translateY(-1px); }
+
+    .calc-result {
+      display: none;
+      margin-top: 20px;
+      background: var(--cream);
+      border: 1px dashed var(--soil);
+      border-radius: 12px;
+      padding: 18px 20px;
+    }
+
+    .calc-result.show { display: block; }
+
+    .calc-result .result-label {
+      font-family: var(--font-mono);
+      text-transform: uppercase;
+      letter-spacing: .06em;
+      font-size: 11px;
+      color: var(--soil);
+      margin: 0 0 6px;
+    }
+
+    .calc-result .result-value {
+      font-family: var(--font-display);
+      font-size: clamp(22px, 3vw, 28px);
+      font-weight: 700;
+      color: var(--field);
+      margin: 0 0 4px;
+    }
+
+    .calc-result .result-sub {
+      font-size: 13.5px;
+      color: var(--muted);
+      margin: 0;
+    }
+
+    .calc-note {
+      margin-top: 18px;
+      font-size: 12.5px;
+      color: var(--muted);
+      border-top: 1px dashed var(--border);
+      padding-top: 14px;
+    }
+
+    /* ===== Coming soon ===== */
+    .coming-soon { background: var(--paper); padding: 60px 20px; }
+    .coming-soon-inner { width: min(1000px, 100%); margin: auto; }
+
+    .section-title {
+      text-align: center;
+      margin: 0 0 10px;
+      color: var(--field);
+      font-family: var(--font-display);
+      font-weight: 700;
+      font-size: clamp(24px, 3vw, 30px);
+      letter-spacing: -.5px;
+    }
+
+    .section-intro {
+      max-width: 560px;
+      margin: 0 auto 36px;
+      text-align: center;
+      color: var(--muted);
+      font-size: 15px;
+    }
+
+    .soon-grid {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 14px;
+    }
+
+    .soon-card {
+      background: var(--cream);
+      border: 1px solid var(--border);
+      border-radius: 14px;
+      padding: 20px 16px;
+      text-align: center;
+      opacity: .75;
+    }
+
+    .soon-card .emoji { font-size: 26px; margin-bottom: 8px; display: block; }
+    .soon-card .name { font-weight: 700; font-size: 13.5px; color: var(--field); margin-bottom: 6px; }
+    .soon-card .badge {
+      display: inline-block;
+      font-family: var(--font-mono);
+      font-size: 10px;
+      letter-spacing: .06em;
+      text-transform: uppercase;
+      background: var(--gold-tint);
+      color: var(--gold-dark);
+      padding: 3px 8px;
+      border-radius: 999px;
+    }
+
+    /* ===== CTA ===== */
+    .cta { background: var(--cream); text-align: center; padding: 90px 20px; }
+    .cta-frame {
+      max-width: 640px;
+      margin: 0 auto;
+      border: 2px dashed var(--field);
+      border-radius: 20px;
+      padding: 48px 36px;
+    }
+    .cta h2 {
+      color: var(--field);
+      font-family: var(--font-display);
+      font-weight: 700;
+      margin: 6px 0 14px;
+      font-size: clamp(24px, 3.2vw, 32px);
+    }
+    .button {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      padding: 14px 26px;
+      border-radius: 11px;
+      text-decoration: none;
+      font-weight: 800;
+      font-size: 15px;
+      background: var(--gold);
+      color: var(--ink);
+      box-shadow: var(--shadow-sm);
+      transition: transform .2s ease, box-shadow .2s ease, background .2s ease;
+      margin-top: 8px;
+    }
+    .button:hover { background: var(--gold-dark); transform: translateY(-2px); box-shadow: var(--shadow); }
+
+    /* ===== Footer (universal — identical across all AgriBase pages) ===== */
+    footer {
+      position: relative;
+      background: linear-gradient(180deg, #1E2B18, #141F11);
+      color: rgba(251,243,230,.88);
+      padding: 60px 20px 30px;
+    }
+    .footer-top-edge { position: absolute; top: -1px; left: 0; right: 0; width: 100%; height: 40px; }
+    .footer-inner {
+      width: min(1120px, calc(100% - 40px));
+      margin: auto;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      flex-wrap: wrap;
+      gap: 18px;
+    }
+    .footer-brand { display: flex; align-items: center; gap: 12px; font-family: var(--font-display); font-weight: 700; font-size: 18px; }
+    .footer-brand .brand-icon { width: 36px; height: 36px; }
+    .footer-tagline { font-size: 13px; opacity: .75; margin-top: 3px; font-family: var(--font-mono); }
+    .footer-links { display: flex; gap: 20px; font-size: 13px; flex-wrap: wrap; }
+    .footer-links a { text-decoration: none; opacity: .85; }
+    .footer-links a:hover { opacity: 1; }
+    .footer-bottom {
+      width: min(1120px, calc(100% - 40px));
+      margin: 30px auto 0;
+      padding-top: 22px;
+      border-top: 1px solid rgba(255,255,255,.12);
+      text-align: center;
+      font-size: 12.5px;
+      opacity: .65;
+      font-family: var(--font-mono);
+    }
+
+    /* ===== Responsive ===== */
+    @media (max-width: 720px) {
+      .tool-index { grid-template-columns: 1fr 1fr; }
+      .soon-grid { grid-template-columns: 1fr 1fr; }
+    }
+    @media (max-width: 560px) {
+      .nav-links {
+        position: absolute;
+        top: 100%;
+        left: 0;
+        right: 0;
+        flex-direction: column;
+        align-items: flex-start;
+        gap: 6px;
+        background: linear-gradient(180deg, var(--field-dark), var(--field));
+        padding: 18px 20px 22px;
+        box-shadow: var(--shadow);
+        opacity: 0;
+        transform: translateY(-8px);
+        pointer-events: none;
+        transition: opacity .25s ease, transform .25s ease;
+      }
+      .nav-toggle-input:checked ~ .nav-links {
+        opacity: 1;
+        transform: translateY(0);
+        pointer-events: auto;
+      }
+      .nav-toggle {
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        gap: 5px;
+        width: 30px;
+        height: 30px;
+      }
+      .nav-toggle span {
+        display: block;
+        height: 2px;
+        background: var(--cream);
+        border-radius: 2px;
+        transition: transform .25s ease, opacity .25s ease;
+      }
+      .nav-toggle-input:checked ~ .nav-toggle span:nth-child(1){ transform: translateY(7px) rotate(45deg); }
+      .nav-toggle-input:checked ~ .nav-toggle span:nth-child(2){ opacity: 0; }
+      .nav-toggle-input:checked ~ .nav-toggle span:nth-child(3){ transform: translateY(-7px) rotate(-45deg); }
+
+      .field-row { grid-template-columns: 1fr; }
+      .calc-card { padding: 26px 20px; }
+      .page-hero { padding: 44px 18px 56px; }
+      .footer-inner { justify-content: center; text-align: center; }
+    }
+  </style>
+  <link rel="canonical" href="https://chinatsvi.github.io/farmer-calculators/">
+</head>
+<body>
+
+  <!-- Navigation (universal — keep identical across all AgriBase pages) -->
+  <nav class="nav">
+    <div class="nav-inner">
+      <a class="brand" href="https://chinatsvi.github.io/farmers-community/">
+        <span class="brand-icon"><img src="/favicon-256.png" alt="AgriBase icon"></span>
+        <span>AgriBase</span>
+      </a>
+
+      <input type="checkbox" id="navToggle" class="nav-toggle-input">
+      <label for="navToggle" class="nav-toggle" aria-label="Open menu">
+        <span></span><span></span><span></span>
+      </label>
+
+      <div class="nav-links">
+        <a href="https://chinatsvi.github.io/farmers-community/">🏠 Home</a>
+        <a href="https://chinatsvi.github.io/planting/">🌱 Planting</a>
+        <a href="https://chinatsvi.github.io/weather/">🌦️ Weather</a>
+        <a href="https://chinatsvi.github.io/pests/">🐛 Pests</a>
+        <a href="https://chinatsvi.github.io/agribase-farm-tools/">🧰 Farm Tools</a>
+        <a href="https://chinatsvi.github.io/farmer-calculators/" class="active">🧮 Calculators</a>
+        <a href="https://chinatsvi.github.io/market/">💰 Market</a>
+        <a href="https://chinatsvi.github.io/farmers-community/#features">📚 Knowledge</a>
+      </div>
+    </div>
+  </nav>
+
+  <!-- Page hero -->
+  <header class="page-hero">
+    <div class="page-hero-inner">
+      <div class="breadcrumb">
+        <a href="https://chinatsvi.github.io/farmers-community/">AgriBase</a> /
+        <a href="https://chinatsvi.github.io/agribase-farm-tools/">Farm Tools</a> /
+        Farmer Tools
+      </div>
+      <span class="page-hero-badge">🧮 Free Farm Calculators</span>
+      <h1>AgriBase Farmer Tools</h1>
+      <p class="lead">
+        Quick, free calculators for everyday farm decisions — how much
+        fertilizer to buy, how many plants to order, how to space your rows,
+        and whether this season will turn a profit. No signup, works on any phone.
+      </p>
+    </div>
+    <svg class="page-hero-divider" viewBox="0 0 1200 40" preserveAspectRatio="none" xmlns="http://www.w3.org/2000/svg">
+      <path fill="#FBF3E6" d="M0,6 L40,22 L80,3 L120,30 L160,10 L200,34 L240,4 L280,26 L320,14 L360,32 L400,2 L440,20 L480,36 L520,8 L560,24 L600,12 L640,30 L680,4 L720,18 L760,34 L800,6 L840,28 L880,2 L920,22 L960,32 L1000,10 L1040,26 L1080,4 L1120,20 L1160,34 L1200,8 L1200,40 L0,40 Z"></path>
+    </svg>
+  </header>
+
+  <!-- ================= GOOGLE ADSENSE AD ================= -->
+  <div class="ad-slot-wrap">
+    <div class="ad-slot">
+      <span class="label">Advertisement</span>
+      <ins class="adsbygoogle"
+           style="display:block"
+           data-ad-client="ca-pub-2606126305565597"
+           data-ad-slot="7638324548"
+           data-ad-format="horizontal"
+           data-full-width-responsive="false"></ins>
+    </div>
+  </div>
+  <script>(adsbygoogle = window.adsbygoogle || []).push({});</script>
+  <!-- ===================================================== -->
+
+  <!-- Quick jump nav -->
+  <div class="tool-index-wrap">
+    <div class="tool-index">
+      <a href="#fertilizer"><span class="emoji">🧪</span>Fertilizer</a>
+      <a href="#plant-population"><span class="emoji">🌽</span>Plant Population</a>
+      <a href="#crop-spacing"><span class="emoji">📏</span>Crop Spacing</a>
+      <a href="#farm-profit"><span class="emoji">💰</span>Farm Profit</a>
+    </div>
+  </div>
+
+  <!-- Fertilizer Calculator -->
+  <section class="calc-section">
+    <div class="calc-wrap">
+      <div class="calc-card" id="fertilizer">
+        <div class="calc-head">
+          <div class="calc-icon">🧪</div>
+          <h2>Fertilizer Recommendation</h2>
+        </div>
+        <p class="calc-desc">Location-aware agronomic nutrient &amp; fertilizer decision support, mirroring the recommendation logic used in the AgriBase app.</p>
+
+        <div class="field-row">
+          <div class="field">
+            <label for="fert-country">Country</label>
+            <select id="fert-country" onchange="fertCountryChanged()"></select>
+          </div>
+          <div class="field">
+            <label for="fert-region">Region</label>
+            <select id="fert-region"></select>
+          </div>
+        </div>
+
+        <div class="field-row">
+          <div class="field">
+            <label for="fert-district">District / County / Farm (optional)</label>
+            <input type="text" id="fert-district" placeholder="e.g. Masvingo">
+          </div>
+          <div class="field">
+            <label for="fert-category">Crop category</label>
+            <select id="fert-category" onchange="fertCategoryChanged()">
+              <option value="fieldCrop">Field Crops</option>
+              <option value="vegetable">Vegetables</option>
+              <option value="fruit">Fruit</option>
+              <option value="treePerennial">Tree / Perennial</option>
+              <option value="herbSpecialty">Herbs / Specialty</option>
+            </select>
+          </div>
+        </div>
+
+        <div class="field-row">
+          <div class="field">
+            <label for="fert-crop">Crop</label>
+            <select id="fert-crop" onchange="fertCropChanged()"></select>
+          </div>
+          <div class="field">
+            <label for="fert-stage">Application stage</label>
+            <select id="fert-stage"></select>
+          </div>
+        </div>
+
+        <div class="field-row">
+          <div class="field">
+            <label for="fert-system">Production system</label>
+            <select id="fert-system">
+              <option>Rain-fed</option>
+              <option>Irrigated</option>
+            </select>
+          </div>
+          <div class="field">
+            <label for="fert-yield">Target yield (optional)</label>
+            <input type="number" id="fert-yield" placeholder="Enter if required for your crop" min="0" step="any">
+          </div>
+        </div>
+
+        <div class="field-row">
+          <div class="field">
+            <label for="fert-size">Field size</label>
+            <input type="number" id="fert-size" placeholder="e.g. 2" min="0" step="any">
+          </div>
+          <div class="field">
+            <label for="fert-unit">Unit</label>
+            <select id="fert-unit"></select>
+          </div>
+        </div>
+
+        <div class="field-row">
+          <div class="field" style="grid-column:1 / -1;">
+            <label>
+              <input type="checkbox" id="fert-has-soil" onchange="toggleSoilTest()" style="width:auto; margin-right:8px;">
+              I have soil test results
+            </label>
+          </div>
+        </div>
+
+        <div id="fert-soil-fields" style="display:none;">
+          <div class="field-row">
+            <div class="field">
+              <label for="fert-ph">Soil pH</label>
+              <input type="number" id="fert-ph" placeholder="e.g. 6.2" step="0.1">
+            </div>
+            <div class="field">
+              <label for="fert-n">Soil N (ppm, optional)</label>
+              <input type="number" id="fert-n" placeholder="e.g. 20" step="any">
+            </div>
+          </div>
+          <div class="field-row">
+            <div class="field">
+              <label for="fert-p">Soil P (ppm, optional)</label>
+              <input type="number" id="fert-p" placeholder="e.g. 15" step="any">
+            </div>
+            <div class="field">
+              <label for="fert-k">Soil K (ppm, optional)</label>
+              <input type="number" id="fert-k" placeholder="e.g. 120" step="any">
+            </div>
+          </div>
+          <div class="field-row">
+            <div class="field" style="grid-column:1 / -1;">
+              <label for="fert-om">Organic matter (%) (optional)</label>
+              <input type="number" id="fert-om" placeholder="e.g. 3.0" step="0.1" min="0">
+            </div>
+          </div>
+        </div>
+
+        <button class="calc-button" onclick="calcFertilizer()">Calculate fertilizer recommendation</button>
+
+        <div class="calc-result" id="fert-result">
+          <p class="result-label">Recommendation</p>
+          <div id="fert-value" class="result-value">—</div>
+          <div id="fert-sub" class="result-sub"></div>
+        </div>
+
+        <p class="calc-note">The web calculator follows the supplied AgriBase engine: field area is normalized to hectares; recommendations match crop + stage, then prefer region, country and finally GLOBAL rules. Soil adjustments are applied only when soil-test values are supplied.</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- Plant Population Calculator -->
+  <section class="calc-section" style="padding-top:0;">
+    <div class="calc-wrap">
+      <div class="calc-card" id="plant-population">
+        <div class="calc-head">
+          <div class="calc-icon">🌽</div>
+          <h2>Plant Population Calculator</h2>
+        </div>
+        <p class="calc-desc">Find out how many plants (or how much seed) you need for your field, based on row and plant spacing.</p>
+
+        <div class="field-row">
+          <div class="field">
+            <label for="pop-size">Field size</label>
+            <input type="number" id="pop-size" placeholder="e.g. 1" min="0" step="any">
+          </div>
+          <div class="field">
+            <label for="pop-unit">Unit</label>
+            <select id="pop-unit">
+              <option value="ha">Hectares</option>
+              <option value="acre">Acres</option>
+            </select>
+          </div>
+        </div>
+
+        <div class="field-row">
+          <div class="field">
+            <label for="pop-row">Row spacing (cm)</label>
+            <input type="number" id="pop-row" placeholder="e.g. 75" min="0" step="any">
+          </div>
+          <div class="field">
+            <label for="pop-plant">Plant spacing (cm)</label>
+            <input type="number" id="pop-plant" placeholder="e.g. 25" min="0" step="any">
+          </div>
+        </div>
+
+        <button class="calc-button" onclick="calcPopulation()">Calculate plant population</button>
+
+        <div class="calc-result" id="pop-result">
+          <p class="result-label">You need</p>
+          <p class="result-value" id="pop-value">—</p>
+          <p class="result-sub" id="pop-sub"></p>
+        </div>
+
+        <p class="calc-note">This gives a theoretical maximum population — actual germination rate and thinning will reduce your final stand count somewhat.</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- ================= GOOGLE ADSENSE AD ================= -->
+  <div class="ad-slot-wrap">
+    <div class="ad-slot">
+      <span class="label">Advertisement</span>
+      <ins class="adsbygoogle"
+           style="display:block"
+           data-ad-client="ca-pub-2606126305565597"
+           data-ad-slot="7638324548"
+           data-ad-format="horizontal"
+           data-full-width-responsive="false"></ins>
+    </div>
+  </div>
+  <script>(adsbygoogle = window.adsbygoogle || []).push({});</script>
+  <!-- ===================================================== -->
+
+  <!-- Crop Spacing Calculator -->
+  <section class="calc-section">
+    <div class="calc-wrap">
+      <div class="calc-card" id="crop-spacing">
+        <div class="calc-head">
+          <div class="calc-icon">📏</div>
+          <h2>Crop Spacing Calculator</h2>
+        </div>
+        <p class="calc-desc">Pick a crop for typical recommended spacing, or enter your own — see the resulting plant density per hectare and per acre.</p>
+
+        <div class="field-row">
+          <div class="field" style="grid-column: 1 / -1;">
+            <label for="spacing-crop">Crop</label>
+            <select id="spacing-crop" onchange="applyCropPreset()">
+              <option value="custom">Custom (enter your own below)</option>
+              <option value="maize" data-row="75" data-plant="25">Maize</option>
+              <option value="beans" data-row="50" data-plant="10">Beans</option>
+              <option value="groundnuts" data-row="45" data-plant="15">Groundnuts</option>
+              <option value="soybean" data-row="45" data-plant="5">Soybean</option>
+              <option value="sorghum" data-row="75" data-plant="20">Sorghum</option>
+              <option value="tomato" data-row="90" data-plant="45">Tomato</option>
+              <option value="cabbage" data-row="60" data-plant="45">Cabbage</option>
+            </select>
+          </div>
+        </div>
+
+        <div class="field-row">
+          <div class="field">
+            <label for="spacing-row">Row spacing (cm)</label>
+            <input type="number" id="spacing-row" placeholder="e.g. 75" min="0" step="any">
+          </div>
+          <div class="field">
+            <label for="spacing-plant">Plant spacing (cm)</label>
+            <input type="number" id="spacing-plant" placeholder="e.g. 25" min="0" step="any">
+          </div>
+        </div>
+
+        <button class="calc-button" onclick="calcSpacing()">Calculate density</button>
+
+        <div class="calc-result" id="spacing-result">
+          <p class="result-label">Plant density</p>
+          <p class="result-value" id="spacing-value">—</p>
+          <p class="result-sub" id="spacing-sub"></p>
+        </div>
+
+        <p class="calc-note">Presets are general starting points — adjust for your specific variety, soil fertility and local recommendations.</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- Farm Profit Calculator -->
+  <section class="calc-section" style="padding-top:0;">
+    <div class="calc-wrap">
+      <div class="calc-card" id="farm-profit">
+        <div class="calc-head">
+          <div class="calc-icon">💰</div>
+          <h2>Farm Profit Calculator</h2>
+        </div>
+        <p class="calc-desc">Estimate your revenue, total costs and profit for a season, plus your profit margin.</p>
+
+        <div class="field-row">
+          <div class="field">
+            <label for="profit-yield">Expected yield (units)</label>
+            <input type="number" id="profit-yield" placeholder="e.g. 4000" min="0" step="any">
+          </div>
+          <div class="field">
+            <label for="profit-price">Price per unit</label>
+            <input type="number" id="profit-price" placeholder="e.g. 0.35" min="0" step="any">
+          </div>
+        </div>
+
+        <div class="field-row">
+          <div class="field" style="grid-column: 1 / -1;">
+            <label for="profit-costs">Total production costs</label>
+            <input type="number" id="profit-costs" placeholder="e.g. 900" min="0" step="any">
+          </div>
+        </div>
+
+        <button class="calc-button" onclick="calcProfit()">Calculate profit</button>
+
+        <div class="calc-result" id="profit-result">
+          <p class="result-label">Estimated profit</p>
+          <p class="result-value" id="profit-value">—</p>
+          <p class="result-sub" id="profit-sub"></p>
+        </div>
+
+        <p class="calc-note">Use consistent units throughout (e.g. all in kilograms, or all in bags) — the calculator doesn't convert between units for you.</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- Coming soon -->
+  <section class="coming-soon">
+    <div class="coming-soon-inner">
+      <h2 class="section-title">More Tools Coming Soon</h2>
+      <p class="section-intro">We're building these next — check back, or download the app to get notified when they launch.</p>
+      <div class="soon-grid">
+        <div class="soon-card">
+          <span class="emoji">📒</span>
+          <div class="name">Farm Budget Calculator</div>
+          <span class="badge">Phase 2</span>
+        </div>
+        <div class="soon-card">
+          <span class="emoji">📉</span>
+          <div class="name">Break-Even Calculator</div>
+          <span class="badge">Phase 2</span>
+        </div>
+        <div class="soon-card">
+          <span class="emoji">🐔</span>
+          <div class="name">Feed Calculator</div>
+          <span class="badge">Phase 2</span>
+        </div>
+        <div class="soon-card">
+          <span class="emoji">🐄</span>
+          <div class="name">Livestock Feed Calculator</div>
+          <span class="badge">Phase 2</span>
+        </div>
+        <div class="soon-card">
+          <span class="emoji">💧</span>
+          <div class="name">Irrigation Calculator</div>
+          <span class="badge">Phase 3</span>
+        </div>
+        <div class="soon-card">
+          <span class="emoji">📥</span>
+          <div class="name">Farm Record Templates</div>
+          <span class="badge">Phase 3</span>
+        </div>
+        <div class="soon-card">
+          <span class="emoji">📊</span>
+          <div class="name">Advanced Farm Tools</div>
+          <span class="badge">Phase 3</span>
+        </div>
+        <div class="soon-card">
+          <span class="emoji">📘</span>
+          <div class="name">Premium Guides</div>
+          <span class="badge">Phase 3</span>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- CTA -->
+  <section class="cta">
+    <div class="cta-frame">
+      <span class="eyebrow" style="color:var(--soil); display:block; text-align:center; margin-bottom:12px;">Want more?</span>
+      <h2>Get Farming Tools On Your Phone</h2>
+      <p class="section-intro" style="margin-bottom:0;">
+        Download AgriBase for record keeping, an AI farming assistant,
+        weather info and the full marketplace — all in one place.
+      </p>
+      <a class="button"
+         href="https://www.mediafire.com/file/mg78viqjikkerc1/farmers.v1.0.1.apk/file"
+         target="_blank"
+         rel="noopener noreferrer">
+        📲 Download the App
+      </a>
+    </div>
+  </section>
+
+  <!-- Footer (universal — keep identical across all AgriBase pages) -->
+  <footer>
+    <svg class="footer-top-edge" viewBox="0 0 1200 40" preserveAspectRatio="none" xmlns="http://www.w3.org/2000/svg">
+      <path fill="#1E2B18" d="M0,34 L40,18 L80,37 L120,10 L160,30 L200,6 L240,36 L280,14 L320,26 L360,8 L400,38 L440,20 L480,4 L520,32 L560,16 L600,28 L640,10 L680,36 L720,22 L760,6 L800,34 L840,12 L880,38 L920,18 L960,8 L1000,30 L1040,14 L1080,36 L1120,20 L1160,6 L1200,32 L1200,0 L0,0 Z"></path>
+    </svg>
+    <div class="footer-inner">
+      <div>
+        <div class="footer-brand">
+          <span class="brand-icon"><img src="/favicon-256.png" alt="Farmer Community icon"></span>
+          <span>Farmer Community</span>
+        </div>
+        <div class="footer-tagline">Connect. Learn. Farm Better.</div>
+      </div>
+      <div class="footer-links">
+        <a href="https://chinatsvi.github.io/farmer-community-Help-FAQ/" target="_blank" rel="noopener noreferrer">Help &amp; FAQ</a>
+        <a href="https://chinatsvi.github.io/farmer-community-privacy-policy/" target="_blank" rel="noopener noreferrer">Privacy Policy</a>
+        <a href="https://chinatsvi.github.io/farmer-community-terms/" target="_blank" rel="noopener noreferrer">Terms &amp; Conditions</a>
+        <a href="https://chinatsvi.github.io/farmer-community-contact-us/" target="_blank" rel="noopener noreferrer">Contact Us</a>
+      </div>
+    </div>
+    <div class="footer-bottom">© 2026 Farmer Community. All rights reserved.</div>
+  </footer>
+
+  <script>
+    // ---- Unit conversion helpers ----
+    const HA_TO_ACRE = 2.47105;
+    const ACRE_TO_HA = 0.404686;
+
+    function toHectares(value, unit) {
+      return unit === 'acre' ? value * ACRE_TO_HA : value;
+    }
+
+    function formatNumber(n, decimals = 0) {
+      return n.toLocaleString(undefined, { maximumFractionDigits: decimals, minimumFractionDigits: decimals });
+    }
+
+    // ---- Fertilizer Recommendation Calculator ----
+    // Static browser mirror of the supplied AgriBase fertilizer seed/recommendation data.
+    // The app can also receive admin-managed data from Firestore; this standalone GitHub Pages
+    // version uses the supplied seed catalogue so it works without a backend configuration.
+
+    const FERT_COUNTRIES = [
+      {code:'ZW',name:'Zimbabwe',unit:'Hectares',regions:['Natural Regions I','Natural Region II','Natural Regions III','Natural Regions IV','Natural Regions V','Harare Metropolitan','Bulawayo Metropolitan','Manicaland','Mashonaland Central','Mashonaland East','Mashonaland West','Masvingo','Matabeleland North','Matabeleland South','Midlands']},
+      {code:'KE',name:'Kenya',unit:'Acres',regions:['Rift Valley','Western','Central Highlands','Eastern','Nyanza','Coast']},
+      {code:'ZA',name:'South Africa',unit:'Hectares',regions:['Highveld','Free State','Mpumalanga','Limpopo','KZN','Western Cape','Eastern Cape','North West','Northern Cape']},
+      {code:'BR',name:'Brazil',unit:'Hectares',regions:['Centro-Oeste / Cerrado','Sul','Sudeste','Nordeste / Matopiba','Norte']},
+      {code:'NG',name:'Nigeria',unit:'Hectares',regions:['North Central','North West','North East','South West','South East','South South']},
+      {code:'ZM',name:'Zambia',unit:'Hectares',regions:['Region I','Region IIa','Region IIb','Region III']},
+      {code:'GH',name:'Ghana',unit:'Acres',regions:['Forest','Transitional','Guinea Savanna','Sudan Savanna','Coastal Savanna']},
+      {code:'TZ',name:'Tanzania',unit:'Acres',regions:['Southern Highlands','Northern','Lake','Central','Coastal']},
+      {code:'ET',name:'Ethiopia',unit:'Hectares',regions:['Oromia Highlands','Amhara','SNNPR','Sidama','Tigray','Rift Valley Lowlands']},
+      {code:'UG',name:'Uganda',unit:'Acres',regions:['Central','Western','Eastern','Northern']},
+      {code:'US',name:'United States',unit:'Acres',regions:['Corn Belt / Midwest','Great Plains','Southeast','Delta','California Central Valley / West Coast','Northeast / Mid-Atlantic']},
+      {code:'IN',name:'India',unit:'Acres',regions:['Indo-Gangetic Plains','Deccan Plateau','Western Coastal / Gujarat','Eastern Coastal / West Bengal / Odisha','Southern Zone','Central Zone']}
+    ];
+
+    const FERT_CROPS = [
+      {id:'crop_maize',name:'Maize',category:'fieldCrop',stages:['Basal / Planting','Early Vegetative V4-V6','All Season Total'],systems:['Rain-fed','Irrigated']},
+      {id:'crop_sorghum',name:'Sorghum',category:'fieldCrop',stages:['Basal / Planting','Early Vegetative','All Season Total'],systems:['Rain-fed','Irrigated']},
+      {id:'crop_pearl_millet',name:'Pearl Millet',category:'fieldCrop',stages:['Basal / Planting','Early Vegetative','All Season Total'],systems:['Rain-fed','Irrigated']},
+      {id:'crop_wheat',name:'Wheat',category:'fieldCrop',stages:['Basal / Planting','Early Vegetative','All Season Total'],systems:['Rain-fed','Irrigated']},
+      {id:'crop_barley',name:'Barley',category:'fieldCrop',stages:['Basal / Planting','Early Vegetative','All Season Total'],systems:['Rain-fed','Irrigated']},
+      {id:'crop_rice',name:'Rice',category:'fieldCrop',stages:['Basal / Planting','Vegetative','All Season Total'],systems:['Rain-fed','Irrigated']},
+      {id:'crop_soybean',name:'Soybean',category:'fieldCrop',stages:['Basal / Planting','Vegetative','All Season Total'],systems:['Rain-fed','Irrigated']},
+      {id:'crop_groundnuts',name:'Groundnuts',category:'fieldCrop',stages:['Basal / Planting','Vegetative','All Season Total'],systems:['Rain-fed','Irrigated']},
+      {id:'crop_cotton',name:'Cotton',category:'fieldCrop',stages:['Basal / Planting','Vegetative','All Season Total'],systems:['Rain-fed','Irrigated']},
+      {id:'crop_sunflower',name:'Sunflower',category:'fieldCrop',stages:['Basal / Planting','Vegetative','All Season Total'],systems:['Rain-fed','Irrigated']},
+      {id:'crop_tobacco',name:'Tobacco',category:'fieldCrop',stages:['Basal / Planting','Vegetative','All Season Total'],systems:['Irrigated','Rain-fed']},
+      {id:'crop_sugarcane',name:'Sugarcane',category:'fieldCrop',stages:['Planting','Vegetative','All Season Total'],systems:['Irrigated','Rain-fed']},
+      {id:'crop_cassava',name:'Cassava',category:'fieldCrop',stages:['Planting','Vegetative','All Season Total'],systems:['Rain-fed','Irrigated']},
+      {id:'crop_irish_potato',name:'Irish Potato',category:'fieldCrop',stages:['Planting','Vegetative','All Season Total'],systems:['Irrigated','Rain-fed']},
+      {id:'crop_sweet_potato',name:'Sweet Potato',category:'fieldCrop',stages:['Planting','Vegetative','All Season Total'],systems:['Rain-fed','Irrigated']},
+      {id:'crop_tomato',name:'Tomato',category:'vegetable',stages:['Basal / Transplanting','Vegetative','All Season Total'],systems:['Irrigated','Rain-fed']},
+      {id:'crop_cabbage',name:'Cabbage / Brassicas',category:'vegetable',stages:['Basal / Transplanting','Vegetative','All Season Total'],systems:['Irrigated','Rain-fed']},
+      {id:'crop_onion',name:'Onion / Garlic',category:'vegetable',stages:['Basal / Planting','Vegetative','All Season Total'],systems:['Irrigated','Rain-fed']},
+      {id:'crop_pepper',name:'Bell Pepper / Chilli',category:'vegetable',stages:['Basal / Transplanting','Vegetative','All Season Total'],systems:['Irrigated','Rain-fed']},
+      {id:'crop_carrot',name:'Carrot / Root Crops',category:'vegetable',stages:['Basal / Planting','Vegetative','All Season Total'],systems:['Irrigated','Rain-fed']},
+      {id:'crop_cucumber',name:'Cucumber / Squash',category:'vegetable',stages:['Basal / Planting','Vegetative','All Season Total'],systems:['Irrigated','Rain-fed']},
+      {id:'crop_green_beans',name:'Green Beans',category:'vegetable',stages:['Basal / Planting','Vegetative','All Season Total'],systems:['Irrigated','Rain-fed']},
+      {id:'crop_spinach',name:'Spinach / Chard',category:'vegetable',stages:['Basal / Planting','Vegetative','All Season Total'],systems:['Irrigated','Rain-fed']},
+      {id:'crop_watermelon',name:'Watermelon / Melons',category:'vegetable',stages:['Basal / Planting','Vegetative','All Season Total'],systems:['Irrigated','Rain-fed']},
+      {id:'crop_banana',name:'Banana / Plantain',category:'fruit',stages:['Annual / All Season Total'],systems:['Irrigated','Rain-fed']},
+      {id:'crop_avocado',name:'Avocado',category:'fruit',stages:['Establishment','Annual / All Season Total'],systems:['Irrigated','Rain-fed']},
+      {id:'crop_citrus',name:'Citrus',category:'fruit',stages:['Establishment','Annual / All Season Total'],systems:['Irrigated','Rain-fed']},
+      {id:'crop_mango',name:'Mango',category:'fruit',stages:['Establishment','Annual / All Season Total'],systems:['Rain-fed','Irrigated']},
+      {id:'crop_coffee',name:'Coffee',category:'treePerennial',stages:['Establishment','Annual / All Season Total'],systems:['Rain-fed','Irrigated']},
+      {id:'crop_macadamia',name:'Macadamia',category:'treePerennial',stages:['Establishment','Annual / All Season Total'],systems:['Rain-fed','Irrigated']},
+      {id:'crop_tea',name:'Tea',category:'treePerennial',stages:['Establishment','Annual / All Season Total'],systems:['Rain-fed','Irrigated']},
+      {id:'crop_basil',name:'Sweet Basil / Culinary Herbs',category:'herbSpecialty',stages:['Basal / Planting','Vegetative','All Season Total'],systems:['Irrigated','Rain-fed']}
+    ];
+
+    const FERT_PRODUCTS = {
+      'Compound D':{grade:'7-14-7+6S',packageSize:50},
+      'Compound C':{grade:'6-15-12+6S',packageSize:50},
+      'Compound S':{grade:'7-21-7+9S',packageSize:50},
+      'Compound J':{grade:'15-5-20+4S',packageSize:50},
+      'AN':{grade:'34.5% N',packageSize:50},
+      'Urea':{grade:'46-0-0',packageSize:50},
+      'DAP':{grade:'18-46-0',packageSize:50},
+      'MAP':{grade:'11-52-0',packageSize:50},
+      'CAN':{grade:'27-0-0+8Ca',packageSize:50},
+      'MOP':{grade:'0-0-60',packageSize:50},
+      'SOP':{grade:'0-0-50+18S',packageSize:50},
+      'NPK 17-17-17':{grade:'17-17-17',packageSize:50},
+      'NPK 15-15-15':{grade:'15-15-15',packageSize:50},
+      'NPK 05-25-15':{grade:'05-25-15',packageSize:50},
+      'NPK 20-00-20':{grade:'20-00-20',packageSize:50},
+      'Mavuno Planting':{grade:'10-26-10+micros',packageSize:50},
+      'Mavuno Topdress':{grade:'26-0-0+micros',packageSize:50},
+      '2:3:4 (30)+0.5% Zn':{grade:'2:3:4 (30)+0.5% Zn',packageSize:50},
+      'LAN 28%':{grade:'28% N',packageSize:50},
+      'NPK 10-10-10':{grade:'10-10-10',packageSize:22.68},
+      'UAN 32':{grade:'32% N',packageSize:50},
+      'Neem Urea':{grade:'46% N',packageSize:45},
+      'IFFCO NPK 10-26-26':{grade:'10-26-26',packageSize:45}
+    };
+
+    const FERT_RULES = [
+      {country:'ZW',region:'Natural Region II',crop:'crop_maize',stage:'Basal / Planting',N:28,P:56,K:28,S:24,Ca:0,Mg:0,product:'Compound D',min:350,max:450,rec:400,confidence:'Verified',source:'Zimbabwe DR&SS, 2022',method:'Basal application at planting'},
+      {country:'ZW',region:null,crop:'crop_maize',stage:'Early Vegetative V4-V6',N:103.5,P:0,K:0,S:0,Ca:0,Mg:0,product:'AN',min:250,max:350,rec:300,confidence:'Verified',source:'Zimbabwe DR&SS, 2022',method:'Topdress during V4-V6'},
+      {country:'ZW',region:null,crop:'crop_maize',stage:'All Season Total',N:131.5,P:56,K:28,S:24,Ca:0,Mg:0,product:'Compound D + AN',min:0,max:0,rec:700,confidence:'Verified',source:'Zimbabwe DR&SS, 2022',splits:[{product:'Compound D',stage:'Basal / Planting',pct:57,method:'Basal application at planting'},{product:'AN',stage:'Early Vegetative V4-V6',pct:43,method:'Topdress during V4-V6'}]},
+      {country:'BR',region:'Centro-Oeste / Cerrado',crop:'crop_maize',stage:'Basal / Planting',N:20,P:100,K:60,S:20,Ca:0,Mg:0,product:'NPK 05-25-15',min:350,max:450,rec:400,confidence:'Verified',source:'EMBRAPA Brazil, 2024',method:'Basal application at planting'},
+      {country:'BR',region:null,crop:'crop_maize',stage:'Early Vegetative V4-V6',N:120,P:0,K:60,S:0,Ca:0,Mg:0,product:'NPK 20-00-20',min:250,max:350,rec:300,confidence:'Verified',source:'EMBRAPA Brazil, 2024',method:'Topdress during V4-V6'},
+      {country:'KE',region:'Rift Valley',crop:'crop_maize',stage:'Basal / Planting',N:25,P:65,K:25,S:10,Ca:20,Mg:0,product:'Mavuno Planting',min:200,max:300,rec:250,confidence:'Verified',source:'KALRO Kenya, 2023',method:'Basal application at planting'},
+      {country:'KE',region:null,crop:'crop_maize',stage:'Early Vegetative V4-V6',N:65,P:0,K:0,S:0,Ca:0,Mg:0,product:'CAN',min:200,max:300,rec:250,confidence:'Verified',source:'KALRO Kenya, 2023',method:'Topdress during early vegetative growth'},
+      {country:'ZA',region:'Limpopo',crop:'crop_tomato',stage:'Basal / Transplanting',N:40,P:60,K:80,S:0,Ca:0,Mg:0,product:'2:3:4 (30)+0.5% Zn',min:500,max:700,rec:600,confidence:'Verified',source:'ARC South Africa, 2023',method:'Basal/transplanting application'},
+      {country:'US',region:null,crop:'crop_maize',stage:'All Season Total',N:180,P:70,K:90,S:0,Ca:0,Mg:0,product:'DAP + Potash + UAN 32',min:0,max:0,rec:450,confidence:'Verified',source:'USDA-NIFA / Land Grant Extension, 2023',splits:[{product:'DAP',stage:'Basal / Planting',pct:35,method:'Basal application'},{product:'UAN 32',stage:'All Season Total',pct:65,method:'Split nitrogen application'}]},
+      {country:'IN',region:null,crop:'crop_wheat',stage:'All Season Total',N:120,P:60,K:40,S:0,Ca:0,Mg:0,product:'DAP + Neem Urea + MOP',min:0,max:0,rec:350,confidence:'Verified',source:'ICAR India, 2023',splits:[{product:'DAP',stage:'Basal / Planting',pct:30,method:'Basal application'},{product:'Neem Urea',stage:'All Season Total',pct:55,method:'Split nitrogen application'},{product:'MOP',stage:'All Season Total',pct:15,method:'Potassium application'}]},
+      {country:'GLOBAL',region:null,crop:'crop_tomato',stage:'Basal / Transplanting',N:50,P:80,K:80,S:0,Ca:0,Mg:0,product:'NPK 17-17-17',min:400,max:550,rec:470,confidence:'Verified',source:'FAO global, 2023',method:'Basal application'},
+      {country:'GLOBAL',region:null,crop:'crop_cabbage',stage:'Basal / Transplanting',N:60,P:90,K:60,S:0,Ca:0,Mg:0,product:'NPK 15-15-15',min:450,max:600,rec:500,confidence:'Verified',source:'FAO global, 2023',method:'Basal application'},
+      {country:'GLOBAL',region:null,crop:'crop_onion',stage:'Basal / Planting',N:40,P:80,K:80,S:0,Ca:0,Mg:0,product:'NPK 17-17-17',min:400,max:500,rec:470,confidence:'Verified',source:'FAO global, 2023',method:'Basal application'},
+      {country:'GLOBAL',region:null,crop:'crop_banana',stage:'Annual / All Season Total',N:200,P:60,K:300,S:0,Ca:0,Mg:0,product:'NPK 17-17-17 + MOP',min:800,max:1200,rec:1000,confidence:'Verified',source:'FAO global, 2023',splits:[{product:'NPK 17-17-17',stage:'Annual / All Season Total',pct:70,method:'Apply in split doses'},{product:'MOP',stage:'Annual / All Season Total',pct:30,method:'Apply in split doses'}]}
+    ];
+
+    const ACRE_TO_HA_ENGINE = 0.40468564224;
+
+    function toHectaresEngine(area, unit) {
+      if (area <= 0) return 0;
+      const u = String(unit || '').toLowerCase().trim();
+      if (u === 'acres' || u === 'acre') return area * ACRE_TO_HA_ENGINE;
+      if (['square metres','square meters','sqm','m2','m²'].includes(u)) return area / 10000;
+      if (['square feet','sq ft','sqft','ft2','ft²'].includes(u)) return area * 0.000009290304;
+      return area;
+    }
+
+    function fertCountryChanged() {
+      const country = FERT_COUNTRIES.find(c => c.code === document.getElementById('fert-country').value) || FERT_COUNTRIES[0];
+      const region = document.getElementById('fert-region');
+      region.innerHTML = country.regions.map(r => `<option>${escapeHtml(r)}</option>`).join('');
+      document.getElementById('fert-unit').value = country.unit;
+      renderFertCrops();
+    }
+
+    function fertCategoryChanged() { renderFertCrops(); }
+
+    function renderFertCrops() {
+      const cat = document.getElementById('fert-category').value;
+      const cropSelect = document.getElementById('fert-crop');
+      const crops = FERT_CROPS.filter(c => c.category === cat);
+      cropSelect.innerHTML = crops.map(c => `<option value="${c.id}">${escapeHtml(c.name)}</option>`).join('');
+      fertCropChanged();
+    }
+
+    function fertCropChanged() {
+      const crop = FERT_CROPS.find(c => c.id === document.getElementById('fert-crop').value);
+      const stage = document.getElementById('fert-stage');
+      const system = document.getElementById('fert-system');
+      if (!crop) return;
+      stage.innerHTML = crop.stages.map(s => `<option>${escapeHtml(s)}</option>`).join('');
+      system.innerHTML = crop.systems.map(s => `<option>${escapeHtml(s)}</option>`).join('');
+    }
+
+    function toggleSoilTest() {
+      document.getElementById('fert-soil-fields').style.display = document.getElementById('fert-has-soil').checked ? 'block' : 'none';
+    }
+
+    function escapeHtml(value) {
+      return String(value).replace(/[&<>'"]/g, ch => ({'&':'&amp;','<':'&lt;','>':'&gt;',"'":'&#39;','"':'&quot;'}[ch]));
+    }
+
+    function firstMatchingRule(cropId, stage, countryCode, region) {
+      const stageLower = stage.toLowerCase();
+      const matches = FERT_RULES.filter(r => {
+        const cropMatches = r.crop === cropId;
+        const rStage = r.stage.toLowerCase();
+        const stageMatches = rStage === stageLower || rStage.includes(stageLower) || stageLower.includes(rStage);
+        return cropMatches && stageMatches;
+      });
+      if (!matches.length) return null;
+
+      const code = countryCode.toUpperCase();
+      const regionRule = matches.find(r => r.country === code && r.region &&
+        (r.region.toLowerCase().includes(region.toLowerCase()) || region.toLowerCase().includes(r.region.toLowerCase())));
+      if (regionRule) return regionRule;
+      const countryRule = matches.find(r => r.country === code);
+      if (countryRule) return countryRule;
+      return matches.find(r => r.country === 'GLOBAL') || null;
+    }
+
+    function calcFertilizer() {
+      const country = FERT_COUNTRIES.find(c => c.code === document.getElementById('fert-country').value) || FERT_COUNTRIES[0];
+      const region = document.getElementById('fert-region').value;
+      const district = document.getElementById('fert-district').value.trim();
+      const crop = FERT_CROPS.find(c => c.id === document.getElementById('fert-crop').value);
+      const stage = document.getElementById('fert-stage').value;
+      const productionSystem = document.getElementById('fert-system').value;
+      const fieldSize = parseFloat(document.getElementById('fert-size').value);
+      const fieldUnit = document.getElementById('fert-unit').value;
+      const targetYield = parseFloat(document.getElementById('fert-yield').value);
+      const resultBox = document.getElementById('fert-result');
+      const valueEl = document.getElementById('fert-value');
+      const subEl = document.getElementById('fert-sub');
+
+      if (!crop) { showFertError('Please select a crop.'); return; }
+      if (!stage) { showFertError('Please select an application stage.'); return; }
+      if (!fieldSize || fieldSize <= 0) { showFertError('Please enter a valid field size greater than zero.'); return; }
+
+      const hectares = toHectaresEngine(fieldSize, fieldUnit);
+      const location = [district, region, country.name].filter(Boolean).join(', ');
+      const rule = firstMatchingRule(crop.id, stage, country.code, region);
+
+      if (!rule) {
+        valueEl.textContent = 'No verified recommendation available';
+        subEl.textContent = `No verified recommendation for ${crop.name} at "${stage}" in ${location}. The AgriBase engine does not manufacture unverified rates.`;
+        resultBox.classList.add('show');
+        return;
+      }
+
+      let nRate = rule.N || 0, pRate = rule.P || 0, kRate = rule.K || 0;
+      const sRate = rule.S || 0, caRate = rule.Ca || 0, mgRate = rule.Mg || 0;
+      const soilNotes = [];
+      const hasSoil = document.getElementById('fert-has-soil').checked;
+      if (hasSoil) {
+        const ph = parseFloat(document.getElementById('fert-ph').value);
+        const p = parseFloat(document.getElementById('fert-p').value);
+        const k = parseFloat(document.getElementById('fert-k').value);
+        const om = parseFloat(document.getElementById('fert-om').value);
+
+        if (!isNaN(ph)) {
+          if (ph < 5.2) soilNotes.push(`Soil pH ${ph.toFixed(1)} is low. Consider lime at 500–1000 kg/ha.`);
+          else if (ph > 7.8) soilNotes.push(`Soil pH ${ph.toFixed(1)} is high/alkaline or calcareous.`);
+        }
+        if (!isNaN(p)) {
+          if (p < 10) { pRate *= 1.25; soilNotes.push(`Soil P is Low (${p.toFixed(0)} ppm). P requirement increased by +25%.`); }
+          else if (p > 30) { pRate *= 0.65; soilNotes.push(`Soil P is High (${p.toFixed(0)} ppm). P requirement reduced by -35%.`); }
+        }
+        if (!isNaN(k)) {
+          if (k < 80) { kRate *= 1.25; soilNotes.push(`Exchangeable K is Low (${k.toFixed(0)} ppm). Potash requirement increased by +25%.`); }
+          else if (k > 220) { kRate *= 0.70; soilNotes.push(`Exchangeable K is High (${k.toFixed(0)} ppm). Potash requirement reduced by -30%.`); }
+        }
+        if (!isNaN(om) && om >= 3.5) { nRate = Math.max(0, nRate - 15); soilNotes.push(`High Organic Matter (${om.toFixed(1)}%). Mineral nitrogen credit of 15 kg N/ha applied.`); }
+      }
+
+      const products = [];
+      if (rule.splits && rule.splits.length) {
+        rule.splits.forEach(split => {
+          const product = FERT_PRODUCTS[split.product] || {grade:'',packageSize:50};
+          const fraction = Math.min(1, Math.max(0.05, split.pct / 100));
+          const ratePerHa = rule.rec * fraction;
+          const totalKg = ratePerHa * hectares;
+          const exactBags = totalKg / product.packageSize;
+          products.push({name:split.product,grade:product.grade,stage:split.stage,rate:ratePerHa,total:totalKg,packageSize:product.packageSize,bags:Math.ceil(exactBags),exactBags,method:split.method});
+        });
+      } else {
+        const product = FERT_PRODUCTS[rule.product] || {grade:'',packageSize:50};
+        const totalKg = rule.rec * hectares;
+        const exactBags = totalKg / product.packageSize;
+        products.push({name:rule.product,grade:product.grade,stage:stage,rate:rule.rec,total:totalKg,packageSize:product.packageSize,bags:Math.ceil(exactBags),exactBags,method:rule.method});
+      }
+
+      const nutrientText = `N ${fmt(nRate,1)} · P₂O₅ ${fmt(pRate,1)} · K₂O ${fmt(kRate,1)} · S ${fmt(sRate,1)} · Ca ${fmt(caRate,1)} · Mg ${fmt(mgRate,1)} kg/ha`;
+      const productHtml = products.map(p => `<div style="margin-top:12px;"><strong>${escapeHtml(p.name)}</strong> <span>(${escapeHtml(p.grade)})</span><br>${fmt(p.total,1)} kg total · ${p.bags} bag${p.bags===1?'':'s'} of ${fmt(p.packageSize,2)} kg · ${fmt(p.rate,1)} kg/ha<br><span style="font-size:12px;">${escapeHtml(p.stage)} · ${escapeHtml(p.method)}</span></div>`).join('');
+      const soilHtml = soilNotes.length ? `<br><strong>Soil adjustment</strong><br>${soilNotes.map(escapeHtml).join('<br>')}` : '<br><strong>Soil adjustment</strong><br>No soil-test adjustment applied.';
+
+      valueEl.innerHTML = `${escapeHtml(rule.product)}<div style="font-family:var(--font-body);font-size:14px;font-weight:600;margin-top:8px;">${fmt(rule.rec,1)} kg/ha recommended rate</div>`;
+      subEl.innerHTML = `<strong>Location:</strong> ${escapeHtml(location)}<br><strong>Crop:</strong> ${escapeHtml(crop.name)} · <strong>Stage:</strong> ${escapeHtml(stage)} · <strong>System:</strong> ${escapeHtml(productionSystem)}<br><strong>Field:</strong> ${fmt(fieldSize,2)} ${escapeHtml(fieldUnit)} = ${fmt(hectares,4)} ha<br><strong>Nutrient targets:</strong> ${nutrientText}<br><strong>Recommended products:</strong>${productHtml}${soilHtml}<br><strong>Source:</strong> ${escapeHtml(rule.source)} · <strong>Confidence:</strong> ${escapeHtml(rule.confidence)}${!isNaN(targetYield) ? `<br><strong>Target yield entered:</strong> ${fmt(targetYield,2)}` : ''}<br><span style="font-size:12px;">This is decision support. Follow local extension guidance and your soil test before application.</span>`;
+      resultBox.classList.add('show');
+    }
+
+    function showFertError(message) {
+      const resultBox = document.getElementById('fert-result');
+      document.getElementById('fert-value').textContent = message;
+      document.getElementById('fert-sub').textContent = '';
+      resultBox.classList.add('show');
+    }
+
+    function fmt(n, decimals=0) {
+      return Number(n).toLocaleString(undefined,{maximumFractionDigits:decimals,minimumFractionDigits:decimals});
+    }
+
+    function initFertilizer() {
+      const countrySelect = document.getElementById('fert-country');
+      countrySelect.innerHTML = FERT_COUNTRIES.map(c => `<option value="${c.code}">${escapeHtml(c.name)}</option>`).join('');
+      countrySelect.value = 'ZW';
+      document.getElementById('fert-category').value = 'fieldCrop';
+      fertCountryChanged();
+      document.getElementById('fert-crop').value = 'crop_maize';
+      fertCropChanged();
+      document.getElementById('fert-stage').value = 'Basal / Planting';
+    }
+
+    initFertilizer();
+
+    // ---- Plant Population Calculator ----
+    function calcPopulation() {
+      const size = parseFloat(document.getElementById('pop-size').value);
+      const unit = document.getElementById('pop-unit').value;
+      const rowCm = parseFloat(document.getElementById('pop-row').value);
+      const plantCm = parseFloat(document.getElementById('pop-plant').value);
+
+      const resultBox = document.getElementById('pop-result');
+      const valueEl = document.getElementById('pop-value');
+      const subEl = document.getElementById('pop-sub');
+
+      if (!size || size <= 0 || !rowCm || rowCm <= 0 || !plantCm || plantCm <= 0) {
+        valueEl.textContent = 'Please fill in all fields with valid numbers';
+        subEl.textContent = '';
+        resultBox.classList.add('show');
+        return;
+      }
+
+      const sizeHa = toHectares(size, unit);
+      const areaM2 = sizeHa * 10000;
+      const rowM = rowCm / 100;
+      const plantM = plantCm / 100;
+      const plantsPerM2 = 1 / (rowM * plantM);
+      const totalPlants = areaM2 * plantsPerM2;
+
+      valueEl.textContent = formatNumber(totalPlants, 0) + ' plants';
+      subEl.textContent = `About ${formatNumber(plantsPerM2 * 10000, 0)} plants/ha, for a ${formatNumber(sizeHa, 2)} ha field.`;
+
+      resultBox.classList.add('show');
+    }
+
+    // ---- Crop Spacing Calculator ----
+    function applyCropPreset() {
+      const select = document.getElementById('spacing-crop');
+      const option = select.options[select.selectedIndex];
+      const row = option.getAttribute('data-row');
+      const plant = option.getAttribute('data-plant');
+      if (row && plant) {
+        document.getElementById('spacing-row').value = row;
+        document.getElementById('spacing-plant').value = plant;
+      }
+    }
+
+    function calcSpacing() {
+      const rowCm = parseFloat(document.getElementById('spacing-row').value);
+      const plantCm = parseFloat(document.getElementById('spacing-plant').value);
+
+      const resultBox = document.getElementById('spacing-result');
+      const valueEl = document.getElementById('spacing-value');
+      const subEl = document.getElementById('spacing-sub');
+
+      if (!rowCm || rowCm <= 0 || !plantCm || plantCm <= 0) {
+        valueEl.textContent = 'Please enter valid row and plant spacing';
+        subEl.textContent = '';
+        resultBox.classList.add('show');
+        return;
+      }
+
+      const rowM = rowCm / 100;
+      const plantM = plantCm / 100;
+      const perHa = (1 / (rowM * plantM)) * 10000;
+      const perAcre = perHa * ACRE_TO_HA;
+
+      valueEl.textContent = formatNumber(perHa, 0) + ' plants/ha';
+      subEl.textContent = `About ${formatNumber(perAcre, 0)} plants per acre, at ${rowCm}cm x ${plantCm}cm spacing.`;
+
+      resultBox.classList.add('show');
+    }
+
+    // ---- Farm Profit Calculator ----
+    function calcProfit() {
+      const yieldUnits = parseFloat(document.getElementById('profit-yield').value);
+      const price = parseFloat(document.getElementById('profit-price').value);
+      const costs = parseFloat(document.getElementById('profit-costs').value);
+
+      const resultBox = document.getElementById('profit-result');
+      const valueEl = document.getElementById('profit-value');
+      const subEl = document.getElementById('profit-sub');
+      const labelEl = resultBox.querySelector('.result-label');
+
+      if (!yieldUnits || yieldUnits <= 0 || !price || price <= 0 || costs === undefined || isNaN(costs) || costs < 0) {
+        valueEl.textContent = 'Please fill in all fields with valid numbers';
+        subEl.textContent = '';
+        resultBox.classList.add('show');
+        return;
+      }
+
+      const revenue = yieldUnits * price;
+      const profit = revenue - costs;
+      const margin = revenue > 0 ? (profit / revenue) * 100 : 0;
+
+      labelEl.textContent = profit >= 0 ? 'Estimated profit' : 'Estimated loss';
+      valueEl.textContent = (profit >= 0 ? '' : '-') + formatNumber(Math.abs(profit), 2);
+      subEl.textContent = `Revenue: ${formatNumber(revenue, 2)} · Costs: ${formatNumber(costs, 2)} · Margin: ${formatNumber(margin, 1)}%`;
+
+      resultBox.classList.add('show');
+    }
+  </script>
+
+</body>
+</html>

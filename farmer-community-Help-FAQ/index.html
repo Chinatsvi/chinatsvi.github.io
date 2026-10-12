@@ -1,0 +1,962 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Farmer Community — Help & FAQ</title>
+
+  <meta name="description" content="Help center and frequently asked questions for Farmer Community — the feed, marketplace, AI farming assistant, moderation and privacy.">
+
+<!-- Google AdSense account verification -->
+<meta name="google-adsense-account" content="ca-pub-2606126305565597">
+<script async
+        src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-2606126305565597"
+        crossorigin="anonymous"></script>
+
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Zilla+Slab:wght@400;500;600;700&family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@500&display=swap" rel="stylesheet">
+
+<style>
+:root{
+  --soil-ink:#2A2417;
+  --field-green:#1F3D2B;
+  --field-green-2:#295239;
+  --parchment:#F6EFD8;
+  --parchment-2:#EFE5C5;
+  --gold:#C88A2E;
+  --gold-soft:#E4B15B;
+  --line:rgba(42,36,23,0.14);
+  --line-strong:rgba(42,36,23,0.28);
+  --white-ish:#FFFDF6;
+  --max:860px;
+  --shadow: 0 14px 34px rgba(31,61,43,.10);
+}
+
+*{ box-sizing:border-box; }
+html{ scroll-behavior:smooth; }
+
+body{
+  margin:0;
+  background:var(--parchment);
+  color:var(--soil-ink);
+  font-family:'Inter',sans-serif;
+  -webkit-font-smoothing:antialiased;
+  background-image:
+    repeating-linear-gradient(
+      180deg,
+      rgba(42,36,23,0.035) 0px,
+      rgba(42,36,23,0.035) 1px,
+      transparent 1px,
+      transparent 46px
+    );
+}
+
+a{ color:inherit; }
+
+/* ---------- HEADER ---------- */
+
+header.top{
+  background:linear-gradient(165deg, var(--field-green), #16301f);
+  color:var(--white-ish);
+  padding:0;
+  position:relative;
+  overflow:hidden;
+}
+
+.top-inner{
+  max-width:var(--max);
+  margin:0 auto;
+  padding:64px 24px 56px;
+  position:relative;
+  z-index:2;
+  display:flex;
+  align-items:center;
+  gap:26px;
+}
+
+.top-mark{
+  flex:none;
+  width:58px;
+  height:58px;
+  border-radius:16px;
+  background:rgba(255,253,246,0.12);
+  border:1px solid rgba(255,253,246,0.28);
+  display:grid;
+  place-items:center;
+  font-size:27px;
+  overflow:hidden;
+}
+
+.top-mark img{
+  width:100%;
+  height:100%;
+  object-fit:cover;
+  display:block;
+}
+
+.top-text{ flex:1; min-width:0; }
+
+.eyebrow{
+  font-family:'JetBrains Mono',monospace;
+  font-size:12.5px;
+  letter-spacing:0.14em;
+  text-transform:uppercase;
+  color:var(--gold-soft);
+  margin:0 0 18px;
+  display:flex;
+  align-items:center;
+  gap:10px;
+}
+
+.eyebrow::before{
+  content:"";
+  width:22px;
+  height:1px;
+  background:var(--gold-soft);
+  display:inline-block;
+}
+
+h1{
+  font-family:'Zilla Slab',serif;
+  font-weight:700;
+  font-size:clamp(2.3rem,5.2vw,3.4rem);
+  line-height:1.05;
+  margin:0 0 16px;
+  letter-spacing:-0.01em;
+}
+
+.top-inner p.lead{
+  font-size:17px;
+  line-height:1.6;
+  max-width:56ch;
+  color:rgba(255,253,246,0.82);
+  margin:0 0 26px;
+}
+
+.search-box{
+  position:relative;
+  max-width:420px;
+}
+
+.search-box input{
+  width:100%;
+  padding:13px 16px 13px 42px;
+  border-radius:12px;
+  border:1px solid rgba(255,253,246,0.3);
+  background:rgba(255,253,246,0.1);
+  color:var(--white-ish);
+  font-family:'Inter',sans-serif;
+  font-size:14.5px;
+  outline:none;
+  transition:background .15s ease, border-color .15s ease;
+}
+
+.search-box input::placeholder{ color:rgba(255,253,246,0.55); }
+
+.search-box input:focus{
+  background:rgba(255,253,246,0.16);
+  border-color:var(--gold-soft);
+}
+
+.search-box svg{
+  position:absolute;
+  left:14px;
+  top:50%;
+  transform:translateY(-50%);
+  width:16px;
+  height:16px;
+  opacity:.7;
+}
+
+/* ---------- HEADER FURROWS ---------- */
+
+.furrows{
+  position:absolute;
+  right:-6%;
+  bottom:-40px;
+  width:56%;
+  height:220px;
+  z-index:1;
+  opacity:0.9;
+  pointer-events:none;
+}
+
+.furrows svg{ width:100%; height:100%; }
+
+/* ---------- NAVIGATION ---------- */
+
+nav.rail{
+  background:var(--field-green-2);
+  border-top:1px solid rgba(255,253,246,0.12);
+  position:sticky;
+  top:0;
+  z-index:10;
+  box-shadow:0 4px 16px rgba(0,0,0,.10);
+}
+
+.rail-inner{
+  max-width:var(--max);
+  margin:0 auto;
+  padding:14px 24px;
+  display:flex;
+  flex-wrap:wrap;
+  gap:8px 10px;
+  overflow-x:auto;
+}
+
+.site-nav{
+  background:var(--field-green);
+  border-bottom:1px solid rgba(255,253,246,0.1);
+}
+
+.site-nav-inner{
+  max-width:var(--max);
+  margin:0 auto;
+  padding:9px 24px;
+  display:flex;
+  gap:16px;
+  flex-wrap:wrap;
+}
+
+.site-nav-inner a{
+  font-size:12.5px;
+  font-weight:600;
+  color:rgba(255,253,246,0.75);
+  text-decoration:none;
+}
+
+.site-nav-inner a:hover{ color:var(--gold-soft); }
+.site-nav-inner a.current{ color:var(--gold-soft); font-weight:700; }
+
+.rail a{
+  font-size:13px;
+  font-weight:500;
+  text-decoration:none;
+  color:rgba(255,253,246,0.88);
+  padding:6px 12px;
+  border:1px solid rgba(255,253,246,0.25);
+  border-radius:999px;
+  transition:all .15s ease;
+  white-space:nowrap;
+}
+
+.rail a:hover,
+.rail a.active{
+  background:var(--gold);
+  border-color:var(--gold);
+  color:var(--soil-ink);
+  font-weight:600;
+}
+
+/* ---------- AD SLOT (styled to match theme) ---------- */
+
+.ad-wrap{
+  max-width:var(--max);
+  margin:34px auto;
+  padding:0 24px;
+}
+
+.ad-slot{
+  background:var(--parchment-2);
+  border:1px dashed var(--line-strong);
+  border-radius:14px;
+  padding:14px;
+  text-align:center;
+  overflow:hidden;
+  min-height:90px;
+}
+
+.ad-slot .label{
+  display:block;
+  font-family:'JetBrains Mono',monospace;
+  font-size:10.5px;
+  letter-spacing:.1em;
+  text-transform:uppercase;
+  color:var(--soil-ink);
+  opacity:.5;
+  margin-bottom:8px;
+}
+
+/* ---------- MAIN CONTENT ---------- */
+
+main{
+  max-width:var(--max);
+  margin:0 auto;
+  padding:16px 24px 40px;
+}
+
+section.category{ margin-bottom:52px; }
+section.category:last-child{ margin-bottom:0; }
+section.category.is-hidden{ display:none; }
+
+.category-head{
+  display:flex;
+  align-items:baseline;
+  gap:14px;
+  margin-bottom:6px;
+}
+
+.category-tag{
+  font-family:'JetBrains Mono',monospace;
+  font-size:11px;
+  letter-spacing:0.1em;
+  text-transform:uppercase;
+  color:var(--gold);
+  background:rgba(200,138,46,0.12);
+  border:1px solid rgba(200,138,46,0.35);
+  padding:3px 9px;
+  border-radius:5px;
+  white-space:nowrap;
+}
+
+.category h2{
+  font-family:'Zilla Slab',serif;
+  font-size:1.5rem;
+  font-weight:600;
+  margin:0;
+  color:var(--field-green);
+}
+
+.category-rule{
+  height:1px;
+  background:
+    repeating-linear-gradient(
+      90deg,
+      var(--line-strong) 0 8px,
+      transparent 8px 14px
+    );
+  margin:16px 0 4px;
+}
+
+/* ---------- ACCORDION ---------- */
+
+.qa{ border-bottom:1px solid var(--line); }
+.qa:first-of-type{ border-top:1px solid var(--line); }
+.qa.is-hidden{ display:none; }
+
+.qa summary{
+  list-style:none;
+  cursor:pointer;
+  display:flex;
+  justify-content:space-between;
+  align-items:center;
+  gap:20px;
+  padding:19px 2px;
+  font-family:'Zilla Slab',serif;
+  font-weight:500;
+  font-size:1.05rem;
+  color:var(--soil-ink);
+  transition:color .15s ease;
+}
+
+.qa summary:hover{ color:var(--field-green); }
+.qa summary::-webkit-details-marker{ display:none; }
+
+.qa summary .plus{
+  flex:none;
+  width:24px;
+  height:24px;
+  border-radius:50%;
+  border:1.5px solid var(--field-green);
+  position:relative;
+  transition:transform .2s ease, background .2s ease;
+}
+
+.qa summary .plus::before,
+.qa summary .plus::after{
+  content:"";
+  position:absolute;
+  background:var(--field-green);
+  left:50%;
+  top:50%;
+  transform:translate(-50%,-50%);
+}
+
+.qa summary .plus::before{ width:10px; height:1.6px; }
+.qa summary .plus::after{ width:1.6px; height:10px; transition:opacity .15s ease; }
+
+.qa[open] summary .plus{ background:var(--field-green); }
+.qa[open] summary .plus::before,
+.qa[open] summary .plus::after{ background:var(--white-ish); }
+.qa[open] summary .plus::after{ opacity:0; }
+
+.qa .answer{
+  padding:0 2px 22px;
+  max-width:66ch;
+  font-size:15px;
+  line-height:1.65;
+  color:rgba(42,36,23,0.86);
+}
+
+.qa .answer p{ margin:0 0 10px; }
+.qa .answer p:last-child{ margin-bottom:0; }
+
+.qa .answer code{
+  font-family:'JetBrains Mono',monospace;
+  font-size:13px;
+  background:var(--parchment-2);
+  border:1px solid var(--line);
+  padding:1px 6px;
+  border-radius:4px;
+}
+
+.qa .answer .note{
+  margin-top:12px;
+  padding:12px 14px;
+  background:var(--parchment-2);
+  border-left:3px solid var(--gold);
+  border-radius:0 6px 6px 0;
+  font-size:13.5px;
+  color:var(--soil-ink);
+}
+
+.no-results{
+  display:none;
+  text-align:center;
+  padding:60px 20px;
+  color:rgba(42,36,23,0.55);
+  font-size:15px;
+}
+
+.no-results.show{ display:block; }
+
+/* ---------- FOOTER ---------- */
+
+footer{
+  background:var(--field-green);
+  color:rgba(255,253,246,0.75);
+}
+
+.footer-inner{
+  max-width:var(--max);
+  margin:0 auto;
+  padding:40px 24px 48px;
+  display:flex;
+  flex-wrap:wrap;
+  justify-content:space-between;
+  align-items:center;
+  gap:20px;
+}
+
+.footer-brand{
+  display:flex;
+  align-items:center;
+  gap:10px;
+  font-family:'Zilla Slab',serif;
+  font-weight:600;
+  font-size:1.1rem;
+  color:var(--white-ish);
+}
+
+.footer-brand .mark{
+  width:30px;
+  height:30px;
+  border-radius:9px;
+  background:rgba(255,253,246,0.12);
+  border:1px solid rgba(255,253,246,0.28);
+  display:grid;
+  place-items:center;
+  font-size:15px;
+  overflow:hidden;
+}
+
+.footer-brand .mark img{
+  width:100%;
+  height:100%;
+  object-fit:cover;
+  display:block;
+}
+
+.footer-links{ display:flex; gap:22px; flex-wrap:wrap; }
+
+.footer-links a{
+  text-decoration:none;
+  font-size:13.5px;
+  font-weight:500;
+  color:rgba(255,253,246,0.85);
+  border-bottom:1px solid rgba(255,253,246,0.35);
+  padding-bottom:2px;
+  transition:border-color .15s ease, color .15s ease;
+}
+
+.footer-links a:hover{
+  color:var(--gold-soft);
+  border-color:var(--gold-soft);
+}
+
+.footer-note{
+  width:100%;
+  font-size:12px;
+  color:rgba(255,253,246,0.5);
+  padding-top:12px;
+  border-top:1px solid rgba(255,253,246,0.14);
+}
+
+/* ---------- ACCESSIBILITY ---------- */
+
+::selection{ background:var(--gold-soft); color:var(--soil-ink); }
+
+a:focus-visible,
+summary:focus-visible,
+input:focus-visible{
+  outline:2px solid var(--gold);
+  outline-offset:2px;
+  border-radius:3px;
+}
+
+@media (prefers-reduced-motion:reduce){
+  html{ scroll-behavior:auto; }
+  *{ transition:none !important; }
+}
+
+/* ---------- MOBILE ---------- */
+
+@media (max-width:600px){
+  .top-inner{ padding:48px 20px 44px; flex-direction:column; align-items:flex-start; }
+  main{ padding:16px 20px 32px; }
+  .furrows{ display:none; }
+  .ad-wrap{ padding:0 20px; }
+}
+</style>
+  <link rel="canonical" href="https://chinatsvi.github.io/farmer-community-Help-FAQ/">
+</head>
+
+<body>
+
+<!-- ================= HEADER ================= -->
+
+<header class="top">
+
+  <div class="top-inner">
+
+    <div class="top-mark" aria-hidden="true"><img src="favicon-256.png" alt="AgriBase logo"></div>
+
+    <div class="top-text">
+
+      <p class="eyebrow">Farmer Community · Help Center</p>
+
+      <h1>
+        Frequently asked<br>
+        questions
+      </h1>
+
+      <p class="lead">
+        Answers for the AgriBase website and Farmer Community app: the feed,
+        marketplace, AI farming assistant, and keeping your farm and
+        account safe.
+      </p>
+
+      <div class="search-box">
+        <svg viewBox="0 0 24 24" fill="none" stroke="#FFFDF6" stroke-width="2" stroke-linecap="round">
+          <circle cx="11" cy="11" r="7"></circle>
+          <line x1="21" y1="21" x2="16.65" y2="16.65"></line>
+        </svg>
+        <input type="text" id="faqSearch" placeholder="Search the FAQ…" autocomplete="off">
+      </div>
+
+    </div>
+
+  </div>
+
+  <div class="furrows" aria-hidden="true">
+    <svg viewBox="0 0 400 220" preserveAspectRatio="none">
+      <g stroke="#E4B15B" stroke-opacity="0.35" fill="none" stroke-width="1.5">
+        <path d="M-20 20 C 120 20, 280 60, 420 20"/>
+        <path d="M-20 55 C 120 55, 280 95, 420 55"/>
+        <path d="M-20 90 C 120 90, 280 130, 420 90"/>
+        <path d="M-20 125 C 120 125, 280 165, 420 125"/>
+        <path d="M-20 160 C 120 160, 280 200, 420 160"/>
+        <path d="M-20 195 C 120 195, 280 235, 420 195"/>
+      </g>
+    </svg>
+  </div>
+
+</header>
+
+
+<!-- ================= SITE NAV ================= -->
+
+<nav class="site-nav" aria-label="Farmer Community site">
+  <div class="site-nav-inner">
+    <a href="https://chinatsvi.github.io/farmers-community/">Home</a>
+    <a class="current" href="https://chinatsvi.github.io/farmer-community-Help-FAQ/">Help</a>
+    <a href="https://chinatsvi.github.io/farmer-community-privacy-policy/">Privacy</a>
+    <a href="https://chinatsvi.github.io/farmer-community-terms/">Terms</a>
+    <a href="https://chinatsvi.github.io/farmer-community-contact-us/">Contact</a>
+  </div>
+</nav>
+
+<!-- ================= NAVIGATION ================= -->
+
+<nav class="rail" aria-label="FAQ categories">
+  <div class="rail-inner">
+    <a href="#general">General</a>
+    <a href="#account">Account &amp; Profile</a>
+    <a href="#feed">Community Feed</a>
+    <a href="#marketplace">Marketplace</a>
+    <a href="#assistant">AI Assistant</a>
+    <a href="#moderation">Moderation &amp; Safety</a>
+    <a href="#privacy">Privacy &amp; Data</a>
+  </div>
+</nav>
+
+<!-- ============ AD SLOT #1 — top of content, after nav ============ -->
+<div class="ad-wrap">
+  <div class="ad-slot">
+    <span class="label">Advertisement</span>
+    <ins class="adsbygoogle"
+         style="display:block"
+         data-ad-client="ca-pub-2606126305565597"
+         data-ad-slot="7638324548"
+         data-ad-format="horizontal"
+         data-full-width-responsive="false"></ins>
+  </div>
+</div>
+<script>(adsbygoogle = window.adsbygoogle || []).push({});</script>
+
+
+<!-- ================= MAIN ================= -->
+
+<main>
+
+  <p class="no-results" id="noResults">No questions matched your search. Try a different word.</p>
+
+  <!-- ================= GENERAL ================= -->
+  <section class="category" id="general">
+    <div class="category-head">
+      <span class="category-tag">01</span>
+      <h2>General</h2>
+    </div>
+    <div class="category-rule"></div>
+
+    <details class="qa" open>
+      <summary><span>What is Farmer Community?</span><span class="plus"></span></summary>
+      <div class="answer">
+        <p>Farmer Community is a community app built for farmers — a place to share what's happening on your farm, ask questions, buy and sell in the marketplace, and get quick advice from an AI farming assistant.</p>
+      </div>
+    </details>
+
+    <details class="qa">
+      <summary><span>Which features are available on the website and which are in the app?</span><span class="plus"></span></summary>
+      <div class="answer">
+        <p>The website provides farming guides, calculators, resources, help, contact, and account information. The mobile app provides account-based features such as farm records, community activity, messaging, marketplace tools, weather, AI assistance, and supported camera or sensor features. Availability can change as Farmer Community develops.</p>
+      </div>
+    </details>
+
+    <details class="qa">
+      <summary><span>Who is it for?</span><span class="plus"></span></summary>
+      <div class="answer">
+        <p>Any farmer or agriculture enthusiast — smallholder, commercial, or hobbyist — looking to connect with a wider farming community.</p>
+      </div>
+    </details>
+
+    <details class="qa">
+      <summary><span>Is the app free to use?</span><span class="plus"></span></summary>
+      <div class="answer">
+        <p>Yes. Farmer Community is free, supported by small ads shown in the community feed.</p>
+      </div>
+    </details>
+
+    <details class="qa">
+      <summary><span>Does it work without internet?</span><span class="plus"></span></summary>
+      <div class="answer">
+        <p>Recently loaded content — your feed, chats, and messages — is cached on your device so you can keep browsing offline. Posting, messaging, and marketplace actions need a live connection to sync.</p>
+      </div>
+    </details>
+  </section>
+
+
+  <!-- ================= ACCOUNT ================= -->
+  <section class="category" id="account">
+    <div class="category-head">
+      <span class="category-tag">02</span>
+      <h2>Account &amp; Profile</h2>
+    </div>
+    <div class="category-rule"></div>
+
+    <details class="qa">
+      <summary><span>How do I sign up?</span><span class="plus"></span></summary>
+      <div class="answer">
+        <p>Sign in with your Google account or an email address. Your display name inside Farmer Community comes from what you set in your profile, not from your Google account name.</p>
+      </div>
+    </details>
+
+    <details class="qa">
+      <summary><span>I signed in with Google again and my profile changed. What happened?</span><span class="plus"></span></summary>
+      <div class="answer">
+        <p>Your account is matched by your Google sign-in, so re-authenticating never creates a duplicate account. If something on your profile looks off after signing in again, reopen <strong>Edit Profile</strong> and update it — your posts, chats, and marketplace listings stay attached to the same account.</p>
+      </div>
+    </details>
+
+    <details class="qa">
+      <summary><span>How do I delete my account?</span><span class="plus"></span></summary>
+      <div class="answer">
+        <p>Go to the three-dot menu in the app bar → <strong>Privacy &amp; Settings</strong> → <strong>Delete Account</strong>. This permanently removes your account and cannot be undone.</p>
+      </div>
+    </details>
+  </section>
+
+
+  <!-- ================= COMMUNITY FEED ================= -->
+  <section class="category" id="feed">
+    <div class="category-head">
+      <span class="category-tag">03</span>
+      <h2>Community Feed</h2>
+    </div>
+    <div class="category-rule"></div>
+
+    <details class="qa">
+      <summary><span>What can I post?</span><span class="plus"></span></summary>
+      <div class="answer">
+        <p>Farming tips, questions, photos of crops or livestock, market updates, and general discussion with other farmers.</p>
+      </div>
+    </details>
+
+    <details class="qa">
+      <summary><span>Why is my feed stuck loading?</span><span class="plus"></span></summary>
+      <div class="answer">
+        <p>If posts don't appear right away, pull down to refresh. On a slow connection the app shows cached posts first while it fetches the latest ones in the background — if it's still empty after a refresh, check your connection and try again.</p>
+      </div>
+    </details>
+
+    <details class="qa">
+      <summary><span>What do the numbers on a post mean?</span><span class="plus"></span></summary>
+      <div class="answer">
+        <p>Each post shows view and engagement counts so you can see how far your post has reached in the community.</p>
+      </div>
+    </details>
+  </section>
+
+
+  <!-- ================= MARKETPLACE ================= -->
+  <section class="category" id="marketplace">
+    <div class="category-head">
+      <span class="category-tag">04</span>
+      <h2>Marketplace</h2>
+    </div>
+    <div class="category-rule"></div>
+
+    <details class="qa">
+      <summary><span>How do I list something for sale?</span><span class="plus"></span></summary>
+      <div class="answer">
+        <p>From the Marketplace tab, tap <strong>Create Listing</strong> and add a price, description, photos, and your location. Buyers can browse and contact you directly.</p>
+      </div>
+    </details>
+
+    <details class="qa">
+      <summary><span>Why is the currency symbol on an old listing wrong?</span><span class="plus"></span></summary>
+      <div class="answer">
+        <p>We've fixed an issue where older listings could show an inconsistent currency symbol. If you spot one on your own listing, edit and re-save it to refresh the symbol.</p>
+      </div>
+    </details>
+  </section>
+
+
+  <!-- ============ AD SLOT #2 — mid-page, between long sections ============ -->
+  <div class="ad-wrap">
+    <div class="ad-slot">
+      <span class="label">Advertisement</span>
+      <ins class="adsbygoogle"
+           style="display:block"
+           data-ad-client="ca-pub-2606126305565597"
+           data-ad-slot="7638324548"
+           data-ad-format="horizontal"
+           data-full-width-responsive="false"></ins>
+    </div>
+  </div>
+  <script>(adsbygoogle = window.adsbygoogle || []).push({});</script>
+
+
+  <!-- ================= AI ASSISTANT ================= -->
+  <section class="category" id="assistant">
+    <div class="category-head">
+      <span class="category-tag">05</span>
+      <h2>AI Assistant</h2>
+    </div>
+    <div class="category-rule"></div>
+
+    <details class="qa">
+      <summary><span>What can I ask the AI assistant?</span><span class="plus"></span></summary>
+      <div class="answer">
+        <p>Crop care, animal health, pest management, feed formulation, and general farming questions. It's built to give you a quick, practical starting point — always confirm critical decisions with a local agronomist or vet where it matters.</p>
+      </div>
+    </details>
+
+    <details class="qa">
+      <summary><span>Why does it take a moment to respond?</span><span class="plus"></span></summary>
+      <div class="answer">
+        <p>The assistant is thinking through your question before answering — you'll see a short animated indicator while it works.</p>
+      </div>
+    </details>
+  </section>
+
+
+  <!-- ============ AD SLOT #3 — before Moderation ============ -->
+  <div class="ad-wrap">
+    <div class="ad-slot">
+      <span class="label">Advertisement</span>
+      <ins class="adsbygoogle"
+           style="display:block"
+           data-ad-client="ca-pub-2606126305565597"
+           data-ad-slot="7638324548"
+           data-ad-format="horizontal"
+           data-full-width-responsive="false"></ins>
+    </div>
+  </div>
+  <script>(adsbygoogle = window.adsbygoogle || []).push({});</script>
+
+
+  <!-- ================= MODERATION ================= -->
+  <section class="category" id="moderation">
+    <div class="category-head">
+      <span class="category-tag">07</span>
+      <h2>Moderation &amp; Safety</h2>
+    </div>
+    <div class="category-rule"></div>
+
+    <details class="qa">
+      <summary><span>How is content moderated?</span><span class="plus"></span></summary>
+      <div class="answer">
+        <p>Posts and reports are reviewed automatically to keep the community safe and on-topic. Repeated violations affect a farmer's reputation status.</p>
+      </div>
+    </details>
+
+    <details class="qa">
+      <summary><span>How do I report something inappropriate?</span><span class="plus"></span></summary>
+      <div class="answer">
+        <p>Use the report button on any post. Flagged content is reviewed, and you'll get a notification once it's resolved.</p>
+      </div>
+    </details>
+
+    <details class="qa">
+      <summary><span>Can I appeal a moderation decision?</span><span class="plus"></span></summary>
+      <div class="answer">
+        <p>Yes — you can appeal within 7 days of a moderation decision. Open the notification about the decision and follow the appeal link.</p>
+      </div>
+    </details>
+  </section>
+
+
+  <!-- ================= PRIVACY ================= -->
+  <section class="category" id="privacy">
+    <div class="category-head">
+      <span class="category-tag">08</span>
+      <h2>Privacy &amp; Data</h2>
+    </div>
+    <div class="category-rule"></div>
+
+    <details class="qa">
+      <summary><span>Is my data safe?</span><span class="plus"></span></summary>
+      <div class="answer">
+        <p>Your data is stored securely via Firebase. We don't share your personal information with other users beyond what you choose to show on your profile.</p>
+      </div>
+    </details>
+
+    <details class="qa">
+      <summary><span>Where can I read the full privacy policy and terms?</span><span class="plus"></span></summary>
+      <div class="answer">
+        <p>Full details are on our dedicated pages, linked below in the footer.</p>
+      </div>
+    </details>
+  </section>
+
+
+  <!-- ============ AD SLOT #4 — end of content, before footer ============ -->
+  <div class="ad-wrap">
+    <div class="ad-slot">
+      <span class="label">Advertisement</span>
+      <ins class="adsbygoogle"
+           style="display:block"
+           data-ad-client="ca-pub-2606126305565597"
+           data-ad-slot="7638324548"
+           data-ad-format="horizontal"
+           data-full-width-responsive="false"></ins>
+    </div>
+  </div>
+  <script>(adsbygoogle = window.adsbygoogle || []).push({});</script>
+
+</main>
+
+
+<!-- ================= FOOTER ================= -->
+
+<footer>
+  <div class="footer-inner">
+
+    <div class="footer-brand">
+      <span class="mark" aria-hidden="true"><img src="favicon-256.png" alt="AgriBase logo"></span>
+      Farmer Community
+    </div>
+
+    <div class="footer-links">
+      <a href="https://chinatsvi.github.io/farmers-community/" target="_blank" rel="noopener">Home</a>
+      <a href="https://chinatsvi.github.io/farmer-community-privacy-policy/" target="_blank" rel="noopener">Privacy Policy</a>
+      <a href="https://chinatsvi.github.io/farmer-community-terms/" target="_blank" rel="noopener">Terms of Service</a>
+      <a href="https://chinatsvi.github.io/farmer-community-contact-us/" target="_blank" rel="noopener">Contact Us</a>
+    </div>
+
+    <div class="footer-note">
+      Still need help? Reach out from within the app via Privacy &amp; Settings.
+    </div>
+
+  </div>
+</footer>
+
+<script>
+  // Active nav link highlight on scroll
+  (function () {
+    var links = Array.prototype.slice.call(document.querySelectorAll('.rail a'));
+    var sections = links.map(function (l) {
+      return document.querySelector(l.getAttribute('href'));
+    });
+
+    function onScroll() {
+      var pos = window.scrollY + 140;
+      var current = sections[0];
+      sections.forEach(function (sec) {
+        if (sec && sec.offsetTop <= pos) current = sec;
+      });
+      links.forEach(function (l) {
+        l.classList.toggle('active', current && l.getAttribute('href') === '#' + current.id);
+      });
+    }
+
+    window.addEventListener('scroll', onScroll, { passive: true });
+    onScroll();
+  })();
+
+  // Simple client-side FAQ search
+  (function () {
+    var input = document.getElementById('faqSearch');
+    var categories = Array.prototype.slice.call(document.querySelectorAll('.category'));
+    var noResults = document.getElementById('noResults');
+
+    input.addEventListener('input', function () {
+      var q = input.value.trim().toLowerCase();
+      var anyVisible = false;
+
+      categories.forEach(function (cat) {
+        var items = Array.prototype.slice.call(cat.querySelectorAll('.qa'));
+        var catHasMatch = false;
+
+        items.forEach(function (item) {
+          var text = item.textContent.toLowerCase();
+          var match = q === '' || text.indexOf(q) !== -1;
+          item.classList.toggle('is-hidden', !match);
+          if (match) catHasMatch = true;
+          if (q !== '' && match) item.open = true;
+          if (q === '') item.open = item === items[0] && cat.id === 'general';
+        });
+
+        cat.classList.toggle('is-hidden', !catHasMatch);
+        if (catHasMatch) anyVisible = true;
+      });
+
+      noResults.classList.toggle('show', !anyVisible);
+    });
+  })();
+</script>
+
+</body>
+</html>

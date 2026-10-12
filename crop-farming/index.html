@@ -1,0 +1,1004 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="theme-color" content="#1F4D2C">
+
+  <meta name="description"
+      content="Practical crop farming guidance for African farmers: soil preparation, planting, fertilization, pest and weed management, irrigation, harvesting and improving yields.">
+
+<title>Crop Farming | AgriBase</title>
+
+  <link rel="icon" type="image/png" href="/farmers-community/favicon-256.png">
+  <link rel="apple-touch-icon" href="/farmers-community/favicon-256.png">
+    <link rel="icon" type="image/png" href="/farmers-community/favicon-256.png">
+    <link rel="apple-touch-icon" href="/farmers-community/favicon-256.png">
+
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,400;0,9..144,600;0,9..144,700;0,9..144,900;1,9..144,500;1,9..144,600&family=Karla:wght@400;500;600;700;800&family=JetBrains+Mono:wght@500;600&display=swap" rel="stylesheet">
+
+  <!-- Google AdSense account verification -->
+  <meta name="google-adsense-account" content="ca-pub-2606126305565597">
+
+  <!-- Google AdSense -->
+  <script async
+          src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-2606126305565597"
+          crossorigin="anonymous"></script>
+
+  <style>
+    :root {
+      --soil: #A63A1F;
+      --soil-dark: #7A2A16;
+      --field: #1F4D2C;
+      --field-dark: #163A20;
+      --field-mid: #2E6B3E;
+      --field-light: #4F8F5E;
+      --gold: #E3A72E;
+      --gold-dark: #C4881B;
+      --cream: #FBF3E6;
+      --paper: #F3E7D2;
+      --ink: #2A2620;
+      --muted: #6E6152;
+      --border: #E4D3B8;
+      --field-tint: #E3EEE4;
+      --soil-tint: #F3E0D6;
+      --gold-tint: #FBEBC8;
+      --ink-tint: #ECE6DA;
+      --shadow: 0 18px 46px rgba(42,38,32,.16);
+      --shadow-sm: 0 8px 22px rgba(42,38,32,.10);
+      --font-display: "Fraunces", Georgia, serif;
+      --font-body: "Karla", -apple-system, BlinkMacSystemFont, "Segoe UI", Arial, sans-serif;
+      --font-mono: "JetBrains Mono", ui-monospace, Menlo, monospace;
+    }
+
+    * { box-sizing: border-box; }
+    html { scroll-behavior: smooth; }
+
+    body {
+      margin: 0;
+      font-family: var(--font-body);
+      color: var(--ink);
+      background: var(--cream);
+      line-height: 1.65;
+    }
+
+    a { color: inherit; }
+    img { max-width: 100%; display: block; }
+
+    .eyebrow {
+      font-family: var(--font-mono);
+      text-transform: uppercase;
+      letter-spacing: .14em;
+      font-size: 12px;
+      font-weight: 600;
+    }
+
+    /* ===== Nav ===== */
+    .nav {
+      position: sticky;
+      top: 0;
+      z-index: 40;
+      background: linear-gradient(90deg, var(--field-dark), var(--field));
+      color: var(--cream);
+      box-shadow: 0 3px 18px rgba(0,0,0,.18);
+    }
+
+    .nav-inner {
+      position: relative;
+      width: min(1160px, calc(100% - 40px));
+      margin: auto;
+      min-height: 72px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 20px;
+    }
+
+    .brand {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      text-decoration: none;
+      font-family: var(--font-display);
+      font-weight: 700;
+      font-size: 21px;
+      letter-spacing: -.2px;
+    }
+
+    .brand-icon {
+      flex: none;
+      width: 40px;
+      height: 40px;
+      border-radius: 50%;
+      display: grid;
+      place-items: center;
+      background: var(--cream);
+      color: var(--field);
+      font-size: 21px;
+      overflow: hidden;
+      border: 2px solid rgba(255,255,255,.35);
+    }
+
+    .brand-icon img { width: 100%; height: 100%; object-fit: cover; }
+
+    .nav-links {
+      display: flex;
+      align-items: center;
+      gap: 28px;
+      font-size: 14px;
+      font-weight: 600;
+    }
+
+    .nav-links a {
+      text-decoration: none;
+      opacity: .92;
+      transition: opacity .2s ease;
+    }
+
+    .nav-links a:hover { opacity: 1; }
+
+    .nav-cta {
+      background: var(--gold);
+      color: var(--ink) !important;
+      padding: 9px 18px;
+      border-radius: 999px;
+      font-weight: 800;
+      opacity: 1 !important;
+      transition: transform .2s ease, box-shadow .2s ease, background .2s ease;
+    }
+
+    .nav-cta:hover {
+      background: var(--gold-dark);
+      transform: translateY(-1px);
+      box-shadow: 0 6px 16px rgba(0,0,0,.22);
+    }
+
+    .nav-toggle-input { display: none; }
+    .nav-toggle { display: none; cursor: pointer; }
+
+    /* ===== Page header ===== */
+    .page-hero {
+      position: relative;
+      background:
+        repeating-linear-gradient(115deg, rgba(255,255,255,.05) 0 2px, transparent 2px 26px),
+        linear-gradient(160deg, var(--field-dark) 0%, var(--field) 55%, var(--field-mid) 100%);
+      color: var(--cream);
+      overflow: hidden;
+      padding: 56px 20px 76px;
+    }
+
+    .page-hero-inner {
+      position: relative;
+      z-index: 1;
+      width: min(880px, calc(100% - 40px));
+      margin: auto;
+    }
+
+    .breadcrumb {
+      font-family: var(--font-mono);
+      font-size: 12.5px;
+      letter-spacing: .04em;
+      opacity: .78;
+      margin-bottom: 18px;
+    }
+
+    .breadcrumb a { text-decoration: none; }
+    .breadcrumb a:hover { text-decoration: underline; }
+
+    .page-hero-badge {
+      display: inline-flex;
+      align-items: center;
+      gap: 9px;
+      padding: 7px 14px 7px 8px;
+      border-radius: 999px;
+      background: rgba(255,255,255,.12);
+      border: 1px solid rgba(255,255,255,.3);
+      font-size: 12.5px;
+      font-weight: 600;
+      margin-bottom: 20px;
+    }
+
+    .page-hero h1 {
+      margin: 0 0 18px;
+      font-family: var(--font-display);
+      font-weight: 700;
+      font-size: clamp(32px, 4.6vw, 48px);
+      line-height: 1.08;
+      letter-spacing: -.9px;
+    }
+
+    .page-hero p.lead {
+      max-width: 620px;
+      margin: 0;
+      font-size: clamp(15.5px, 1.7vw, 17.5px);
+      color: rgba(251,243,230,.92);
+    }
+
+    .page-hero-divider {
+      position: absolute;
+      left: 0;
+      right: 0;
+      bottom: -1px;
+      width: 100%;
+      height: 40px;
+      display: block;
+    }
+
+    /* ===== Article layout ===== */
+    .article-wrap { background: var(--cream); padding: 70px 20px 30px; }
+    .article { width: min(760px, 100%); margin: auto; }
+
+    .toc {
+      background: var(--paper);
+      border: 1px solid var(--border);
+      border-radius: 16px;
+      padding: 24px 26px;
+      margin-bottom: 54px;
+      box-shadow: var(--shadow-sm);
+    }
+
+    .toc-title {
+      font-family: var(--font-mono);
+      text-transform: uppercase;
+      letter-spacing: .1em;
+      font-size: 11.5px;
+      color: var(--soil);
+      margin: 0 0 14px;
+    }
+
+    .toc ol {
+      margin: 0;
+      padding-left: 22px;
+      columns: 2;
+      column-gap: 28px;
+      font-size: 14px;
+    }
+
+    .toc li { margin-bottom: 9px; break-inside: avoid; }
+    .toc a { text-decoration: none; font-weight: 600; color: var(--field); }
+    .toc a:hover { text-decoration: underline; }
+
+    .topic {
+      padding: 40px 0;
+      border-bottom: 1px solid var(--border);
+      scroll-margin-top: 90px;
+    }
+
+    .topic:last-child { border-bottom: none; }
+
+    .topic-number {
+      font-family: var(--font-mono);
+      font-size: 12.5px;
+      color: var(--soil);
+      letter-spacing: .06em;
+      margin-bottom: 8px;
+    }
+
+    .topic h2 {
+      font-family: var(--font-display);
+      color: var(--field);
+      font-weight: 700;
+      font-size: clamp(22px, 2.8vw, 27px);
+      margin: 0 0 16px;
+      letter-spacing: -.4px;
+    }
+
+    .topic p { color: var(--ink); font-size: 15.5px; margin: 0 0 14px; }
+    .topic p:last-child { margin-bottom: 0; }
+
+    .topic ul { margin: 0 0 14px; padding-left: 20px; color: var(--ink); font-size: 15.5px; }
+    .topic ul li { margin-bottom: 7px; }
+    .topic ul:last-child { margin-bottom: 0; }
+
+    .callout {
+      background: var(--paper);
+      border: 1px dashed var(--soil);
+      border-radius: 12px;
+      padding: 20px 22px;
+      margin: 20px 0 0;
+      font-size: 14.5px;
+    }
+
+    .callout strong {
+      display: block;
+      font-family: var(--font-mono);
+      text-transform: uppercase;
+      letter-spacing: .06em;
+      font-size: 11px;
+      color: var(--soil);
+      margin-bottom: 8px;
+    }
+
+    /* ===== Ad slot ===== */
+    .ad-slot-wrap { background: var(--cream); padding: 0 20px; }
+    .ad-slot {
+      width: min(1100px, calc(100% - 32px));
+      margin: 0 auto 10px;
+      padding: 14px;
+      text-align: center;
+      overflow: hidden;
+      min-height: 90px;
+      border: 1px dashed var(--border);
+      border-radius: 14px;
+    }
+
+    .ad-slot .label {
+      display: block;
+      font-family: var(--font-mono);
+      font-size: 10.5px;
+      letter-spacing: .1em;
+      text-transform: uppercase;
+      color: var(--muted);
+      margin-bottom: 8px;
+    }
+
+    /* ===== Related pages ===== */
+    .related { background: var(--paper); padding: 70px 20px; }
+    .related-inner { width: min(1120px, 100%); margin: auto; }
+
+    .section-title {
+      text-align: center;
+      margin: 0 0 40px;
+      color: var(--field);
+      font-family: var(--font-display);
+      font-weight: 700;
+      font-size: clamp(24px, 3vw, 30px);
+      letter-spacing: -.5px;
+    }
+
+    .related-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 20px;
+    }
+
+    .card {
+      background: var(--cream);
+      border: 1px solid var(--border);
+      border-radius: 16px;
+      padding: 26px 24px;
+      box-shadow: var(--shadow-sm);
+      transition: transform .25s ease, box-shadow .25s ease, border-color .25s ease;
+      text-decoration: none;
+      display: block;
+    }
+
+    .card:hover {
+      transform: translateY(-6px);
+      box-shadow: var(--shadow);
+      border-color: rgba(31,77,44,.3);
+    }
+
+    .icon {
+      width: 50px;
+      height: 50px;
+      display: grid;
+      place-items: center;
+      border-radius: 13px;
+      font-size: 23px;
+      margin-bottom: 16px;
+      border: 2px solid transparent;
+    }
+
+    .icon-field { background: var(--field-tint); border-color: rgba(31,77,44,.25); }
+    .icon-soil  { background: var(--soil-tint);  border-color: rgba(166,58,31,.25); }
+    .icon-gold  { background: var(--gold-tint);  border-color: rgba(196,136,27,.3); }
+    .icon-ink   { background: var(--ink-tint);   border-color: rgba(42,38,32,.2); }
+
+    .card h3 {
+      margin: 0 0 8px;
+      color: var(--field);
+      font-family: var(--font-display);
+      font-weight: 700;
+      font-size: 17.5px;
+    }
+
+    .card p { margin: 0; color: var(--muted); font-size: 14px; }
+
+    .card-link {
+      display: inline-flex;
+      align-items: center;
+      gap: 5px;
+      margin-top: 12px;
+      font-family: var(--font-mono);
+      font-size: 11.5px;
+      font-weight: 600;
+      text-transform: uppercase;
+      letter-spacing: .05em;
+      color: var(--soil);
+    }
+
+    .card:hover .card-link { text-decoration: underline; }
+
+    /* ===== CTA ===== */
+    .cta { background: var(--cream); text-align: center; padding: 90px 20px; }
+
+    .cta-frame {
+      max-width: 640px;
+      margin: 0 auto;
+      border: 2px dashed var(--field);
+      border-radius: 20px;
+      padding: 48px 36px;
+    }
+
+    .cta h2 {
+      color: var(--field);
+      font-family: var(--font-display);
+      font-weight: 700;
+      margin: 6px 0 14px;
+      font-size: clamp(24px, 3.2vw, 32px);
+    }
+
+    .section-intro {
+      max-width: 560px;
+      margin: 0 auto;
+      text-align: center;
+      color: var(--muted);
+      font-size: 15.5px;
+    }
+
+    .button {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      padding: 14px 26px;
+      border-radius: 11px;
+      text-decoration: none;
+      font-weight: 800;
+      font-size: 15px;
+      background: var(--gold);
+      color: var(--ink);
+      box-shadow: var(--shadow-sm);
+      transition: transform .2s ease, box-shadow .2s ease, background .2s ease;
+      border: none;
+      cursor: pointer;
+      margin-top: 22px;
+    }
+
+    .button:hover { background: var(--gold-dark); transform: translateY(-2px); box-shadow: var(--shadow); }
+
+    /* ===== Footer ===== */
+    footer {
+      position: relative;
+      background: linear-gradient(180deg, #1E2B18, #141F11);
+      color: rgba(251,243,230,.88);
+      padding: 60px 20px 30px;
+    }
+
+    .footer-top-edge {
+      position: absolute;
+      top: -1px;
+      left: 0;
+      right: 0;
+      width: 100%;
+      height: 40px;
+    }
+
+    .footer-inner {
+      width: min(1120px, calc(100% - 40px));
+      margin: auto;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      flex-wrap: wrap;
+      gap: 18px;
+    }
+
+    .footer-brand {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      font-family: var(--font-display);
+      font-weight: 700;
+      font-size: 18px;
+    }
+
+    .footer-brand .brand-icon { width: 36px; height: 36px; }
+    .footer-tagline { font-size: 13px; opacity: .75; margin-top: 3px; font-family: var(--font-mono); }
+
+    .footer-links { display: flex; gap: 20px; font-size: 13px; flex-wrap: wrap; }
+    .footer-links a { text-decoration: none; opacity: .85; }
+    .footer-links a:hover { opacity: 1; }
+
+    .footer-bottom {
+      width: min(1120px, calc(100% - 40px));
+      margin: 30px auto 0;
+      padding-top: 22px;
+      border-top: 1px solid rgba(255,255,255,.12);
+      text-align: center;
+      font-size: 12.5px;
+      opacity: .65;
+      font-family: var(--font-mono);
+    }
+
+    /* Scroll reveal */
+    .reveal { opacity: 0; transform: translateY(18px); transition: opacity .6s ease, transform .6s ease; }
+    .reveal.in-view { opacity: 1; transform: translateY(0); }
+
+    @media (prefers-reduced-motion: reduce) {
+      html { scroll-behavior: auto; }
+      .reveal { opacity: 1 !important; transform: none !important; transition: none !important; }
+      .card:hover, .button:hover { transform: none !important; }
+    }
+
+    /* ===== Responsive ===== */
+    @media (max-width: 900px) {
+      .related-grid { grid-template-columns: 1fr 1fr; }
+    }
+
+    @media (max-width: 640px) {
+      .toc ol { columns: 1; }
+    }
+
+    @media (max-width: 560px) {
+      .nav-links {
+        position: absolute;
+        top: 100%;
+        left: 0;
+        right: 0;
+        flex-direction: column;
+        align-items: flex-start;
+        gap: 6px;
+        background: linear-gradient(180deg, var(--field-dark), var(--field));
+        padding: 18px 20px 22px;
+        box-shadow: var(--shadow);
+        opacity: 0;
+        transform: translateY(-8px);
+        pointer-events: none;
+        transition: opacity .25s ease, transform .25s ease;
+      }
+      .nav-toggle-input:checked ~ .nav-links {
+        opacity: 1;
+        transform: translateY(0);
+        pointer-events: auto;
+      }
+      .nav-toggle {
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        gap: 5px;
+        width: 30px;
+        height: 30px;
+      }
+      .nav-toggle span {
+        display: block;
+        height: 2px;
+        background: var(--cream);
+        border-radius: 2px;
+        transition: transform .25s ease, opacity .25s ease;
+      }
+      .nav-toggle-input:checked ~ .nav-toggle span:nth-child(1){ transform: translateY(7px) rotate(45deg); }
+      .nav-toggle-input:checked ~ .nav-toggle span:nth-child(2){ opacity: 0; }
+      .nav-toggle-input:checked ~ .nav-toggle span:nth-child(3){ transform: translateY(-7px) rotate(-45deg); }
+
+      .related-grid { grid-template-columns: 1fr; }
+      .page-hero { padding: 44px 18px 60px; }
+      .article-wrap { padding: 48px 18px 10px; }
+      .cta-frame { padding: 36px 22px; }
+      .footer-inner { justify-content: center; text-align: center; }
+    }
+  </style>
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "Article",
+    "headline": "Growing Better Crops, Season After Season",
+    "description": "A practical crop farming guide covering soil preparation, choosing crops and varieties, planting, fertilization, pest and disease management, weed control, irrigation, harvesting and improving yields.",
+    "author": { "@type": "Person", "name": "Enock Chinatsvi", "url": "https://github.com/Chinatsvi" },
+    "image": "https://chinatsvi.github.io/farmers_community_feature_graphic.png",
+    "publisher": { "@type": "Organization", "name": "AgriBase" },
+    "mainEntityOfPage": "https://chinatsvi.github.io/crop-farming/"
+  }
+  </script>
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "FAQPage",
+    "mainEntity": [
+      {
+        "@type": "Question",
+        "name": "How deep should I plant seeds?",
+        "acceptedAnswer": {
+          "@type": "Answer",
+          "text": "As a general rule, plant seeds two to three times their own width deep. Too shallow and they dry out; too deep and they use up energy reserves before reaching the surface."
+        }
+      },
+      {
+        "@type": "Question",
+        "name": "When is the best time to control weeds in a crop field?",
+        "acceptedAnswer": {
+          "@type": "Answer",
+          "text": "The first four to six weeks after planting are the most critical window. Keeping a field weed-free during this period generally protects most of the potential yield, even if some weeds return later."
+        }
+      },
+      {
+        "@type": "Question",
+        "name": "How can I improve soil fertility without buying more fertilizer?",
+        "acceptedAnswer": {
+          "@type": "Answer",
+          "text": "Incorporate crop residue, compost or well-rotted manure to build organic matter, rotate cereals with legumes like beans or groundnuts to add nitrogen back into the soil, and correct soil pH with agricultural lime where needed."
+        }
+      },
+      {
+        "@type": "Question",
+        "name": "Why are my crops losing yield after harvest even though the field looked fine?",
+        "acceptedAnswer": {
+          "@type": "Answer",
+          "text": "A large share of yield loss happens after harvest through poor drying and storage, not in the field. Grain that feels dry to the hand can still be too wet to store safely, and storage pests like weevils cause major losses if bags or granaries aren't cleaned and protected."
+        }
+      },
+      {
+        "@type": "Question",
+        "name": "How do I know if my crop has a nutrient deficiency?",
+        "acceptedAnswer": {
+          "@type": "Answer",
+          "text": "Pale yellowing of older leaves often signals nitrogen shortage, while a purplish tinge on leaves can indicate phosphorus deficiency, especially in cold or wet soils."
+        }
+      }
+    ]
+  }
+  </script>
+  <link rel="canonical" href="https://chinatsvi.github.io/crop-farming/">
+</head>
+<body>
+
+  <!-- Navigation (universal — keep identical across all AgriBase pages) -->
+  <nav class="nav">
+    <div class="nav-inner">
+      <a class="brand" href="https://chinatsvi.github.io/farmers-community/">
+        <span class="brand-icon">
+          <img src="/favicon-256.png" alt="AgriBase icon">
+        </span>
+        <span>AgriBase</span>
+      </a>
+
+      <input type="checkbox" id="navToggle" class="nav-toggle-input">
+      <label for="navToggle" class="nav-toggle" aria-label="Open menu">
+        <span></span><span></span><span></span>
+      </label>
+
+      <div class="nav-links">
+        <a href="https://chinatsvi.github.io/farmers-community/">🏠 Home</a>
+        <a href="https://chinatsvi.github.io/planting/">🌱 Planting</a>
+        <a href="https://chinatsvi.github.io/weather/">🌦️ Weather</a>
+        <a href="https://chinatsvi.github.io/pests/">🐛 Pests</a>
+        <a href="https://chinatsvi.github.io/agribase-farm-tools/">🧰 Farm Tools</a>
+        <a href="https://chinatsvi.github.io/farmer-calculators/">🧮 Calculators</a>
+        <a href="https://chinatsvi.github.io/market/">💰 Market</a>
+        <a href="https://chinatsvi.github.io/farmers-community/#features">📚 Knowledge</a>
+      </div>
+    </div>
+  </nav>
+
+  <!-- Page hero -->
+  <header class="page-hero">
+    <div class="page-hero-inner">
+      <div class="breadcrumb"><a href="https://chinatsvi.github.io/farmers-community/">AgriBase</a> / Crop Farming</div>
+      <span class="page-hero-badge">🌱 Crop Farming Guide</span>
+      <h1>Growing Better Crops, Season After Season</h1>
+      <p class="lead">
+        From preparing the soil to storing your harvest, this guide covers the
+        practical steps that help crops establish well, resist pests and
+        deliver a better yield at the end of the season.
+      </p>
+    </div>
+    <svg class="page-hero-divider" viewBox="0 0 1200 40" preserveAspectRatio="none" xmlns="http://www.w3.org/2000/svg">
+      <path fill="#FBF3E6" d="M0,6 L40,22 L80,3 L120,30 L160,10 L200,34 L240,4 L280,26 L320,14 L360,32 L400,2 L440,20 L480,36 L520,8 L560,24 L600,12 L640,30 L680,4 L720,18 L760,34 L800,6 L840,28 L880,2 L920,22 L960,32 L1000,10 L1040,26 L1080,4 L1120,20 L1160,34 L1200,8 L1200,40 L0,40 Z"></path>
+    </svg>
+  </header>
+
+  <!-- ================= GOOGLE ADSENSE AD ================= -->
+  <div class="ad-slot-wrap">
+    <div class="ad-slot">
+      <span class="label">Advertisement</span>
+      <ins class="adsbygoogle"
+           style="display:block"
+           data-ad-client="ca-pub-2606126305565597"
+           data-ad-slot="7638324548"
+           data-ad-format="horizontal"
+           data-full-width-responsive="false"></ins>
+    </div>
+  </div>
+  <script>
+    (adsbygoogle = window.adsbygoogle || []).push({});
+  </script>
+  <!-- ===================================================== -->
+
+  <!-- Article -->
+  <div class="article-wrap">
+    <div class="article">
+
+      <nav class="toc reveal" aria-label="Table of contents">
+        <p class="toc-title">In this guide</p>
+        <ol>
+          <li><a href="#soil-preparation">1. Soil Preparation</a></li>
+          <li><a href="#choosing-crops">2. Choosing Crops &amp; Varieties</a></li>
+          <li><a href="#planting">3. Planting</a></li>
+          <li><a href="#fertilization">4. Fertilization</a></li>
+          <li><a href="#pest-disease">5. Pest &amp; Disease Management</a></li>
+          <li><a href="#weed-control">6. Weed Control</a></li>
+          <li><a href="#irrigation">7. Irrigation &amp; Water Management</a></li>
+          <li><a href="#harvesting">8. Harvesting &amp; Storage</a></li>
+          <li><a href="#better-yields">9. Improving Yields Over Time</a></li>
+        </ol>
+      </nav>
+
+      <section class="topic reveal" id="soil-preparation">
+        <p class="topic-number">01</p>
+        <h2>Soil Preparation</h2>
+        <p>
+          Healthy crops start below the ground. Before planting, take time to
+          understand and prepare your soil rather than working it the same
+          way every season out of habit.
+        </p>
+        <ul>
+          <li><strong>Test before you till.</strong> A basic soil test (or even a simple visual and texture check) tells you pH, drainage and roughly how much organic matter is present, so you're not guessing at fertilizer rates later.</li>
+          <li><strong>Time your tillage.</strong> Work the soil when it's moist but not waterlogged — tilling wet clay compacts it, and tilling bone-dry soil breaks structure and invites erosion.</li>
+          <li><strong>Build organic matter.</strong> Incorporating crop residue, compost or well-rotted manure improves water retention and feeds soil biology, especially on sandy soils that drain quickly.</li>
+          <li><strong>Correct pH where needed.</strong> Most staple crops do best between pH 5.5 and 7. Agricultural lime raises pH on acidic soils; this is worth doing well ahead of planting since lime takes time to act.</li>
+          <li><strong>Level and shape the field.</strong> Ridges, basins or contour bunds—matched to your rainfall pattern—reduce runoff and help water soak in rather than wash topsoil away.</li>
+        </ul>
+        <div class="callout">
+          <strong>In the field</strong>
+          If you've had poor germination or stunted growth in the same patch of a field for more than one season, suspect the soil before the seed — compaction, poor drainage or nutrient depletion are common culprits.
+        </div>
+      </section>
+
+      <section class="topic reveal" id="choosing-crops">
+        <p class="topic-number">02</p>
+        <h2>Choosing Crops &amp; Varieties</h2>
+        <p>
+          The right crop for your neighbor's field isn't automatically the
+          right crop for yours. Matching variety to conditions does more for
+          yield than almost any input you can buy.
+        </p>
+        <ul>
+          <li><strong>Match to your rainfall and season length.</strong> Short-season, drought-tolerant varieties reduce risk in areas with unreliable or shorter rains; longer-season varieties can outyield them where rainfall is more dependable.</li>
+          <li><strong>Use certified seed where possible.</strong> Certified seed is tested for germination rate and freedom from seed-borne disease — recycled grain from a previous harvest often germinates unevenly and carries more disease pressure.</li>
+          <li><strong>Rotate crop families.</strong> Alternating cereals (maize, sorghum) with legumes (beans, groundnuts, cowpeas) breaks pest and disease cycles and legumes add nitrogen back into the soil for the next crop.</li>
+          <li><strong>Consider the market, not just the yield.</strong> A high-yielding crop with no nearby buyer is less valuable than a moderate-yielding crop you can reliably sell — check demand before committing a season's inputs.</li>
+        </ul>
+      </section>
+
+      <section class="topic reveal" id="planting">
+        <p class="topic-number">03</p>
+        <h2>Planting</h2>
+        <p>
+          Good planting technique gives every seed the best possible start —
+          poor spacing or timing can't be corrected later in the season.
+        </p>
+        <ul>
+          <li><strong>Plant at the right depth.</strong> As a rule of thumb, plant seeds two to three times their own width deep; too shallow and they dry out, too deep and they use up energy reserves before reaching the surface.</li>
+          <li><strong>Get spacing right for the crop.</strong> Overcrowding causes competition for light, water and nutrients and lowers yield per plant even though more seed was used; too wide a spacing wastes land and lets weeds fill the gaps.</li>
+          <li><strong>Plant with the season, not the calendar.</strong> Local rainfall onset varies year to year — planting at the first reliable rains (rather than a fixed date) reduces the risk of a false start followed by dry spell.</li>
+          <li><strong>Consider intercropping.</strong> Pairing a cereal with a low-growing legume can raise total output per unit of land and provide ground cover that suppresses weeds.</li>
+        </ul>
+      </section>
+
+      <section class="topic reveal" id="fertilization">
+        <p class="topic-number">04</p>
+        <h2>Fertilization</h2>
+        <p>
+          Fertilizer is most effective when it matches what the crop needs at
+          each growth stage, rather than being applied once and forgotten.
+        </p>
+        <ul>
+          <li><strong>Know the big three.</strong> Nitrogen (N) drives leafy growth, phosphorus (P) supports root and flower development, and potassium (K) strengthens overall plant health and disease resistance.</li>
+          <li><strong>Split nitrogen applications.</strong> Applying nitrogen in two or three smaller doses — at planting, at knee-height, and around flowering for cereals — reduces losses to leaching and matches uptake to growth stage.</li>
+          <li><strong>Don't neglect organic sources.</strong> Compost and manure release nutrients more slowly than mineral fertilizer but improve soil structure over time, making them a good complement rather than a substitute.</li>
+          <li><strong>Watch for deficiency signs.</strong> Pale yellowing of older leaves often signals nitrogen shortage; purplish leaf tinges can indicate phosphorus deficiency, especially in cold or wet soils.</li>
+        </ul>
+        <div class="callout">
+          <strong>In the field</strong>
+          Applying fertilizer to dry soil right before rain is more effective than applying it into standing water — nutrients can wash away before roots take them up.
+        </div>
+      </section>
+
+      <section class="topic reveal" id="pest-disease">
+        <p class="topic-number">05</p>
+        <h2>Pest &amp; Disease Management</h2>
+        <p>
+          Catching a problem early, while it's still confined to a few
+          plants, is far cheaper and less damaging than treating a field-wide
+          outbreak.
+        </p>
+        <ul>
+          <li><strong>Scout regularly.</strong> Walk your field at least weekly, checking the undersides of leaves and growing points where pests like aphids and fall armyworm often hide first.</li>
+          <li><strong>Identify before you treat.</strong> Not every insect is a pest — many are beneficial predators. Confirm what you're seeing before spraying, so you don't remove the pests' natural enemies along with them.</li>
+          <li><strong>Use integrated methods.</strong> Combine cultural controls (crop rotation, resistant varieties, field sanitation), biological controls (beneficial insects) and chemical controls, using the least disruptive option that works.</li>
+          <li><strong>Follow label rates and timing.</strong> Over-applying pesticide doesn't improve control, increases cost, harms beneficial insects and can lead to resistance building up in the pest population over time.</li>
+          <li><strong>Manage disease through the environment.</strong> Many fungal diseases spread fastest in dense, poorly ventilated canopies — correct spacing and removing infected plant debris reduces pressure without a single spray.</li>
+        </ul>
+      </section>
+
+    </div>
+  </div>
+
+  <!-- ================= GOOGLE ADSENSE AD ================= -->
+  <div class="ad-slot-wrap">
+    <div class="ad-slot">
+      <span class="label">Advertisement</span>
+      <ins class="adsbygoogle"
+           style="display:block"
+           data-ad-client="ca-pub-2606126305565597"
+           data-ad-slot="7638324548"
+           data-ad-format="horizontal"
+           data-full-width-responsive="false"></ins>
+    </div>
+  </div>
+  <script>
+    (adsbygoogle = window.adsbygoogle || []).push({});
+  </script>
+  <!-- ===================================================== -->
+
+  <div class="article-wrap" style="padding-top:10px;">
+    <div class="article">
+
+      <section class="topic reveal" id="weed-control">
+        <p class="topic-number">06</p>
+        <h2>Weed Control</h2>
+        <p>
+          Weeds compete directly with your crop for water, light and
+          nutrients — the first four to six weeks after planting are the
+          most critical window to keep a field clean.
+        </p>
+        <ul>
+          <li><strong>Prioritize the early window.</strong> A field kept weed-free for the first month after emergence generally protects most of the potential yield, even if some weeds return later.</li>
+          <li><strong>Combine methods.</strong> Hand weeding, hoeing, mulching and, where appropriate, herbicide each have a place — relying on just one method is usually more labor-intensive or less effective than combining two.</li>
+          <li><strong>Mulch to suppress and conserve.</strong> A layer of crop residue or straw between rows blocks light to weed seedlings while also reducing soil moisture loss.</li>
+          <li><strong>Don't let weeds go to seed.</strong> Removing weeds before they flower and set seed reduces the weed seed bank in your soil for future seasons, not just the current one.</li>
+        </ul>
+      </section>
+
+      <section class="topic reveal" id="irrigation">
+        <p class="topic-number">07</p>
+        <h2>Irrigation &amp; Water Management</h2>
+        <p>
+          Whether you rely on rainfall or have access to irrigation, the goal
+          is the same: water reaching the roots when the crop needs it most,
+          without waste.
+        </p>
+        <ul>
+          <li><strong>Know the critical stages.</strong> Water stress does the most damage during germination, flowering and grain-fill — if you can only irrigate at limited times, prioritize these windows.</li>
+          <li><strong>Water deeply, less often.</strong> Frequent shallow watering encourages roots to stay near the surface, making plants more vulnerable to dry spells; deeper, less frequent watering encourages roots to grow down toward stored moisture.</li>
+          <li><strong>Conserve with mulch and basins.</strong> Mulching reduces evaporation from the soil surface, and planting basins or tied ridges capture rainfall that would otherwise run off.</li>
+          <li><strong>Check soil moisture directly.</strong> A simple finger or probe check 10–15cm down tells you more about whether it's time to irrigate than the number of days since it last rained.</li>
+        </ul>
+      </section>
+
+      <section class="topic reveal" id="harvesting">
+        <p class="topic-number">08</p>
+        <h2>Harvesting &amp; Storage</h2>
+        <p>
+          A season's work can still be lost after a good harvest if timing,
+          handling or storage go wrong — this stage deserves as much
+          attention as planting.
+        </p>
+        <ul>
+          <li><strong>Harvest at the right maturity.</strong> Grain crops are generally ready when kernels are hard and moisture content has dropped sufficiently; harvesting too early increases spoilage risk, too late increases losses to shattering, pests and weather.</li>
+          <li><strong>Dry thoroughly before storage.</strong> Most grains need to be dried to a safe moisture level before storage — grain that feels dry to the hand can still be too wet to store safely, so where possible use a moisture meter or a simple salt test.</li>
+          <li><strong>Clean and inspect storage containers.</strong> Residue and pests from the previous season's stock can infest a new harvest within weeks if storage bags, bins or granaries aren't cleaned out first.</li>
+          <li><strong>Protect against storage pests.</strong> Weevils and grain borers cause some of the largest post-harvest losses — hermetic (airtight) bags, appropriate storage chemicals, or traditional smoke-cured granaries all reduce this risk.</li>
+        </ul>
+        <div class="callout">
+          <strong>In the field</strong>
+          Post-harvest losses from poor drying and storage can rival losses from pests in the field — a lot of the "yield" farmers lose is lost after harvest, not before.
+        </div>
+      </section>
+
+      <section class="topic reveal" id="better-yields">
+        <p class="topic-number">09</p>
+        <h2>Improving Yields Over Time</h2>
+        <p>
+          The biggest yield gains usually come from small, consistent
+          improvements season after season rather than one dramatic change.
+        </p>
+        <ul>
+          <li><strong>Keep records.</strong> Note planting dates, varieties, input quantities, weather and final yield each season — over a few years, this reveals what actually works on your specific land.</li>
+          <li><strong>Compare a small test plot.</strong> Before switching your whole field to a new variety, fertilizer program or spacing, trial it on a small section alongside your usual practice.</li>
+          <li><strong>Rotate and rest strategically.</strong> Continuous cropping of the same species depletes specific nutrients and builds up pest and disease pressure — rotation and occasional fallow periods restore soil health.</li>
+          <li><strong>Use available tools.</strong> Weather forecasts, soil sensors and farming apps can't replace field judgment, but they help you make better-timed decisions with less guesswork.</li>
+        </ul>
+      </section>
+
+    </div>
+  </div>
+
+  <!-- Related pages -->
+  <section class="related">
+    <div class="related-inner">
+      <h2 class="section-title">Explore More</h2>
+      <div class="related-grid">
+        <a href="https://chinatsvi.github.io/livestock/" class="card reveal">
+          <div class="icon icon-gold">🐄</div>
+          <h3>Livestock Farming</h3>
+          <p>Feeding, breeding, health and management for poultry, cattle, goats, pigs and fish.</p>
+          <span class="card-link">Click here →</span>
+        </a>
+        <a href="https://chinatsvi.github.io/Agribusiness/" class="card reveal">
+          <div class="icon icon-soil">💰</div>
+          <h3>Agribusiness</h3>
+          <p>Budgeting, production costs, marketing and building a sustainable farm business.</p>
+          <span class="card-link">Click here →</span>
+        </a>
+        <a href="https://chinatsvi.github.io/digital-farming/" class="card reveal">
+          <div class="icon icon-ink">📱</div>
+          <h3>Digital Farming</h3>
+          <p>Weather tools, farm records, sensors and AI support for modern agriculture.</p>
+          <span class="card-link">Click here →</span>
+        </a>
+      </div>
+    </div>
+  </section>
+
+  <!-- CTA -->
+  <section class="cta">
+    <div class="cta-frame reveal">
+      <span class="eyebrow" style="color:var(--soil); display:block; text-align:center; margin-bottom:12px;">Put it into practice</span>
+      <h2>Track Your Crops in AgriBase</h2>
+      <p class="section-intro">
+        Keep records of your crops, expenses and yields, connect with other
+        farmers, and get AI-powered farming guidance whenever you need it.
+      </p>
+      <a class="button"
+         href="https://chinatsvi.github.io/farmer-community-contact-us/"
+         target="_blank"
+         rel="noopener noreferrer">
+        Get Started
+      </a>
+    </div>
+  </section>
+
+  <!-- Footer (universal — keep identical across all AgriBase pages) -->
+  <footer>
+    <svg class="footer-top-edge" viewBox="0 0 1200 40" preserveAspectRatio="none" xmlns="http://www.w3.org/2000/svg">
+      <path fill="#1E2B18" d="M0,34 L40,18 L80,37 L120,10 L160,30 L200,6 L240,36 L280,14 L320,26 L360,8 L400,38 L440,20 L480,4 L520,32 L560,16 L600,28 L640,10 L680,36 L720,22 L760,6 L800,34 L840,12 L880,38 L920,18 L960,8 L1000,30 L1040,14 L1080,36 L1120,20 L1160,6 L1200,32 L1200,0 L0,0 Z"></path>
+    </svg>
+
+    <div class="footer-inner">
+      <div>
+        <div class="footer-brand">
+          <span class="brand-icon">
+            <img src="/favicon-256.png" alt="Farmer Community icon">
+          </span>
+          <span>Farmer Community</span>
+        </div>
+        <div class="footer-tagline">Connect. Learn. Farm Better.</div>
+      </div>
+
+      <div class="footer-links">
+        <a href="https://chinatsvi.github.io/farmer-community-Help-FAQ/" target="_blank" rel="noopener noreferrer">Help &amp; FAQ</a>
+        <a href="https://chinatsvi.github.io/farmer-community-privacy-policy/" target="_blank" rel="noopener noreferrer">Privacy Policy</a>
+        <a href="https://chinatsvi.github.io/farmer-community-terms/" target="_blank" rel="noopener noreferrer">Terms &amp; Conditions</a>
+        <a href="https://chinatsvi.github.io/farmer-community-contact-us/" target="_blank" rel="noopener noreferrer">Contact Us</a>
+      </div>
+    </div>
+
+    <div class="footer-bottom">
+      © 2026 Farmer Community. All rights reserved.
+    </div>
+  </footer>
+
+  <script>
+    (function () {
+      var els = document.querySelectorAll('.reveal');
+      if (window.matchMedia('(prefers-reduced-motion: reduce)').matches || !('IntersectionObserver' in window)) {
+        els.forEach(function (el) { el.classList.add('in-view'); });
+        return;
+      }
+      var io = new IntersectionObserver(function (entries) {
+        entries.forEach(function (entry) {
+          if (entry.isIntersecting) {
+            entry.target.classList.add('in-view');
+            io.unobserve(entry.target);
+          }
+        });
+      }, { threshold: 0.15 });
+      els.forEach(function (el) { io.observe(el); });
+    })();
+  </script>
+
+</body>
+</html>

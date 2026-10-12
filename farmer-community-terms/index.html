@@ -1,0 +1,763 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="theme-color" content="#388E3C">
+
+  <title>Farmer Community - Terms & Conditions</title>
+
+  <meta
+    name="description"
+    content="Terms and Conditions for Farmer Community, a farming application for agricultural record keeping, crop and animal management, AI assistance, weather information, soil sensors, community interaction, jobs, and marketplace activities."
+  >
+
+  <!-- Google AdSense: site verification + Auto ads -->
+  <meta name="google-adsense-account" content="ca-pub-2606126305565597">
+  <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-2606126305565597"
+    crossorigin="anonymous"></script>
+
+  <style>
+    :root {
+      --green: #388E3C;
+      --green-dark: #2E7D32;
+      --green-darker: #1B5E20;
+      --green-light: #E8F5E9;
+      --green-soft: #F4FBF4;
+      --amber: #F9A825;
+      --amber-soft: #FFF8E1;
+      --text: #202124;
+      --muted: #66706a;
+      --border: #dfe5e1;
+      --white: #ffffff;
+      --shadow: 0 10px 30px rgba(46, 125, 50, 0.10);
+      --shadow-lg: 0 20px 50px rgba(46, 125, 50, 0.14);
+      --radius: 18px;
+    }
+
+    * { box-sizing: border-box; }
+    html { scroll-behavior: smooth; }
+
+    body {
+      margin: 0;
+      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Arial, sans-serif;
+      color: var(--text);
+      background: #f4f8f4;
+      line-height: 1.7;
+    }
+
+    a { color: var(--green-dark); text-decoration: none; font-weight: 600; }
+    a:hover { text-decoration: underline; }
+
+    /* ===== App bar ===== */
+    .app-bar {
+      background: linear-gradient(100deg, var(--green-darker), var(--green));
+      color: white;
+      min-height: 76px;
+      display: flex;
+      align-items: center;
+      box-shadow: 0 3px 12px rgba(0, 0, 0, 0.12);
+      position: sticky;
+      top: 0;
+      z-index: 100;
+    }
+
+    .app-bar-inner {
+      width: min(1160px, calc(100% - 36px));
+      margin: auto;
+      display: flex;
+      align-items: center;
+      gap: 14px;
+    }
+
+    .back-button {
+      width: 44px;
+      height: 44px;
+      border-radius: 50%;
+      display: grid;
+      place-items: center;
+      font-size: 28px;
+      transition: background 0.2s ease, transform 0.2s ease;
+      color: white;
+      flex: none;
+    }
+
+    .back-button:hover { background: rgba(255, 255, 255, 0.16); transform: translateX(-2px); }
+
+    .app-icon {
+      flex: none;
+      width: 38px;
+      height: 38px;
+      border-radius: 11px;
+      background: rgba(255,255,255,.16);
+      border: 1px solid rgba(255,255,255,.3);
+      overflow: hidden;
+    }
+
+    .app-icon img { width: 100%; height: 100%; object-fit: cover; display: block; }
+
+    .app-title-group { display: flex; flex-direction: column; gap: 1px; min-width: 0; }
+    .app-title { margin: 0; font-size: 20px; font-weight: 700; letter-spacing: -0.3px; color: white; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+    .app-subtitle { margin: 0; font-size: 12.5px; font-weight: 500; color: rgba(255, 255, 255, 0.85); }
+
+    /* ===== Site nav strip ===== */
+    .site-nav { background: var(--green-darker); border-top: 1px solid rgba(255,255,255,.12); }
+
+    .site-nav-inner {
+      width: min(1160px, calc(100% - 36px));
+      margin: auto;
+      padding: 9px 0;
+      display: flex;
+      gap: 16px;
+      flex-wrap: wrap;
+    }
+
+    .site-nav-inner a { font-size: 12.5px; font-weight: 600; color: rgba(255,255,255,.75); text-decoration: none; }
+    .site-nav-inner a:hover { color: white; }
+    .site-nav-inner a.current { color: #d9f2da; font-weight: 700; }
+
+    /* ===== Progress bar ===== */
+    .progress-track { height: 3px; background: rgba(255,255,255,.18); }
+    .progress-bar { height: 100%; width: 0%; background: #fff; transition: width .1s linear; }
+
+    /* ===== Ad slot ===== */
+    .ad-slot {
+      background: var(--green-soft);
+      border: 1px dashed #cfe3cf;
+      border-radius: 14px;
+      padding: 14px;
+      text-align: center;
+      overflow: hidden;
+      min-height: 90px;
+    }
+
+    .ad-slot .label {
+      display: block;
+      font-size: 10.5px;
+      letter-spacing: .08em;
+      text-transform: uppercase;
+      color: var(--muted);
+      margin-bottom: 8px;
+    }
+
+    .ad-slot.top { width: min(1160px, calc(100% - 36px)); margin: 26px auto 0; }
+    .ad-slot.mid { margin: 34px 0; }
+
+    /* ===== Layout ===== */
+    .page {
+      width: min(1160px, calc(100% - 36px));
+      margin: 40px auto;
+      display: grid;
+      grid-template-columns: 250px 1fr;
+      gap: 30px;
+      align-items: start;
+    }
+
+    /* ===== TOC ===== */
+    .toc {
+      position: sticky;
+      top: 130px;
+      background: var(--white);
+      border: 1px solid var(--border);
+      border-radius: 16px;
+      padding: 20px;
+      box-shadow: var(--shadow);
+    }
+
+    .toc-title { font-size: 11px; text-transform: uppercase; letter-spacing: .08em; font-weight: 800; color: var(--green-dark); margin: 0 0 12px; }
+
+    .toc ol { list-style: none; margin: 0; padding: 0; display: flex; flex-direction: column; gap: 2px; counter-reset: toc; }
+
+    .toc a {
+      display: block;
+      font-size: 13px;
+      font-weight: 500;
+      color: var(--muted);
+      text-decoration: none;
+      padding: 6px 9px;
+      border-radius: 8px;
+      transition: background .15s ease, color .15s ease;
+    }
+
+    .toc a:hover { background: var(--green-soft); color: var(--green-dark); }
+    .toc a.active { background: var(--green-light); color: var(--green-dark); font-weight: 700; }
+
+    /* ===== Container ===== */
+    .container {
+      padding: clamp(24px, 5vw, 44px);
+      background: var(--white);
+      border: 1px solid var(--border);
+      border-radius: var(--radius);
+      box-shadow: var(--shadow-lg);
+    }
+
+    .intro p { color: var(--muted); }
+
+    .notice {
+      background: var(--green-soft);
+      border-left: 5px solid var(--green-dark);
+      padding: 20px;
+      margin: 25px 0;
+      border-radius: 6px 12px 12px 6px;
+    }
+
+    .warning {
+      background: var(--amber-soft);
+      border-left: 5px solid var(--amber);
+      padding: 20px;
+      margin: 25px 0;
+      border-radius: 6px 12px 12px 6px;
+    }
+
+    section.tc-section {
+      padding-top: 30px;
+      margin-top: 30px;
+      border-top: 1px solid var(--border);
+      scroll-margin-top: 150px;
+    }
+
+    section.tc-section:first-of-type { border-top: none; margin-top: 8px; padding-top: 8px; }
+
+    .section-head { display: flex; align-items: center; gap: 12px; margin-bottom: 4px; }
+
+    .section-num {
+      flex: none;
+      width: 32px;
+      height: 32px;
+      border-radius: 10px;
+      background: var(--green-light);
+      color: var(--green-dark);
+      display: grid;
+      place-items: center;
+      font-size: 13px;
+      font-weight: 800;
+    }
+
+    h2 { color: var(--green-dark); margin: 0; font-size: 19px; }
+    h3 { color: var(--green-dark); margin-top: 25px; font-size: 16px; }
+
+    p { margin: 13px 0; color: var(--text); }
+    ul { padding-left: 22px; margin: 13px 0; }
+    li { margin-bottom: 8px; }
+
+    .contact-box {
+      background: var(--green-soft);
+      border: 1px solid #d5e8d7;
+      border-left: 4px solid var(--green-dark);
+      padding: 18px 20px;
+      margin-top: 15px;
+      border-radius: 12px;
+    }
+
+    .contact-box p { margin-bottom: 8px; }
+    .contact-box p:last-child { margin-bottom: 0; }
+
+    /* ===== Footer ===== */
+    footer { background: #1c2a1f; color: #dfe7e1; padding: 40px 18px 30px; }
+
+    .footer-inner {
+      max-width: 1160px;
+      margin: auto;
+      display: flex;
+      justify-content: space-between;
+      align-items: flex-start;
+      flex-wrap: wrap;
+      gap: 26px;
+    }
+
+    footer .brand { display: flex; align-items: center; gap: 10px; color: white; font-size: 19px; font-weight: 800; margin-bottom: 8px; }
+    footer .brand-mark { width: 30px; height: 30px; border-radius: 9px; background: rgba(255,255,255,.1); border: 1px solid rgba(255,255,255,.22); overflow: hidden; flex: none; }
+    footer .brand-mark img { width: 100%; height: 100%; object-fit: cover; display: block; }
+    footer p { margin: 5px 0; font-size: 14px; max-width: 320px; color: rgba(223,231,225,.8); }
+
+    .footer-links-group h3 { margin: 0 0 12px; font-size: 12px; text-transform: uppercase; letter-spacing: .08em; color: rgba(223,231,225,.55); }
+    .footer-links-group { display: flex; flex-direction: column; gap: 8px; }
+    .footer-links-group a { color: #b9dfbc; font-weight: 600; font-size: 14px; text-decoration: none; }
+    .footer-links-group a:hover { text-decoration: underline; }
+
+    .footer-bottom {
+      max-width: 1160px;
+      margin: 28px auto 0;
+      padding-top: 18px;
+      border-top: 1px solid rgba(255,255,255,.1);
+      font-size: 12.5px;
+      color: rgba(223,231,225,.5);
+      text-align: center;
+    }
+
+    /* ===== Mobile ===== */
+    @media (max-width: 900px) {
+      .page { grid-template-columns: 1fr; }
+      .toc { position: static; }
+    }
+
+    @media (max-width: 430px) {
+      .container { border-radius: 14px; padding: 22px 18px; }
+      .app-title { font-size: 17px; }
+      .page { margin: 24px auto; }
+    }
+  </style>
+  <link rel="canonical" href="https://chinatsvi.github.io/farmer-community-terms/">
+</head>
+
+<body>
+
+  <header class="app-bar">
+    <div class="app-bar-inner">
+      <a class="back-button" href="javascript:history.back()" aria-label="Go back" title="Go back">‹</a>
+      <span class="app-icon"><img src="favicon-256.png" alt="AgriBase logo"></span>
+      <div class="app-title-group">
+        <h1 class="app-title">Farmer Community — Terms &amp; Conditions</h1>
+        <p class="app-subtitle">Last Updated: September 12, 2026</p>
+      </div>
+    </div>
+  </header>
+
+  <nav class="site-nav" aria-label="Farmer Community site">
+    <div class="site-nav-inner">
+      <a href="https://chinatsvi.github.io/farmers-community/">Home</a>
+      <a href="https://chinatsvi.github.io/farmer-community-Help-FAQ/">Help</a>
+      <a href="https://chinatsvi.github.io/farmer-community-privacy-policy/">Privacy</a>
+      <a class="current" href="https://chinatsvi.github.io/farmer-community-terms/">Terms</a>
+      <a href="https://chinatsvi.github.io/farmer-community-contact-us/">Contact</a>
+    </div>
+  </nav>
+  <div class="progress-track"><div class="progress-bar" id="progressBar"></div></div>
+
+  <!-- ============ AD SLOT — top, below nav ============ -->
+  <div class="ad-slot top">
+    <span class="label">Advertisement</span>
+    <ins class="adsbygoogle"
+         style="display:block"
+         data-ad-client="ca-pub-2606126305565597"
+         data-ad-slot="7638324548"
+         data-ad-format="horizontal"
+         data-full-width-responsive="false"></ins>
+  </div>
+  <script>(adsbygoogle = window.adsbygoogle || []).push({});</script>
+
+  <div class="page">
+
+    <!-- ===== Table of contents ===== -->
+    <nav class="toc" aria-label="Table of contents">
+      <p class="toc-title">Contents</p>
+      <ol id="tocList">
+        <li><a href="#s1">1. About Farmer Community</a></li>
+        <li><a href="#s2">2. Acceptance of These Terms</a></li>
+        <li><a href="#s3">3. Eligibility</a></li>
+        <li><a href="#s4">4. User Accounts</a></li>
+        <li><a href="#s5">5. Farm Records &amp; Data Accuracy</a></li>
+        <li><a href="#s6">6. Crop Management</a></li>
+        <li><a href="#s7">7. Animal Management</a></li>
+        <li><a href="#s8">8. Soil Sensor Features</a></li>
+        <li><a href="#s10">10. AI Farming Assistance</a></li>
+        <li><a href="#s11">11. Weather Information</a></li>
+        <li><a href="#s12">12. Books &amp; Educational Materials</a></li>
+        <li><a href="#s13">13. Community Content</a></li>
+        <li><a href="#s14">14. Messaging &amp; Communication</a></li>
+        <li><a href="#s15">15. Buying &amp; Selling</a></li>
+        <li><a href="#s16">16. Payments &amp; Hand-to-Hand</a></li>
+        <li><a href="#s17">17. Jobs &amp; Employment Listings</a></li>
+        <li><a href="#s18">18. External Websites &amp; Services</a></li>
+        <li><a href="#s19">19. Prohibited Activities</a></li>
+        <li><a href="#s20">20. Reporting Content &amp; Users</a></li>
+        <li><a href="#s21">21. Account Suspension &amp; Termination</a></li>
+        <li><a href="#s22">22. Intellectual Property</a></li>
+        <li><a href="#s23">23. Third-Party Services</a></li>
+        <li><a href="#s24">24. Availability of the Service</a></li>
+        <li><a href="#s25">25. Disclaimer</a></li>
+        <li><a href="#s26">26. Limitation of Liability</a></li>
+        <li><a href="#s27">27. User Responsibility</a></li>
+        <li><a href="#s28">28. Privacy</a></li>
+        <li><a href="#s29">29. Changes to These Terms</a></li>
+        <li><a href="#s30">30. Governing Law</a></li>
+        <li><a href="#s31">31. Contact Information</a></li>
+      </ol>
+    </nav>
+
+    <div class="container">
+
+      <div class="intro">
+        <p>
+          Welcome to AgriBase and Farmer Community. These Terms &amp; Conditions
+          govern your access to and use of the AgriBase website, the Farmer
+          Community mobile application, and related services.
+        </p>
+
+        <p>
+          By creating an account, accessing, or using Farmer Community, you
+          acknowledge that you have read, understood, and agree to be bound by
+          these Terms &amp; Conditions.
+        </p>
+      </div>
+
+      <div class="notice">
+        <strong>Important:</strong>
+        Farmer Community provides website and app tools and information to assist farmers with
+        record keeping, farm management, education, communication, employment,
+        marketplace activities, weather information, soil sensor readings,
+        soil sensor readings, and general agricultural information.
+        Users remain responsible for their own decisions, records, activities,
+        transactions, and use of information provided through the application.
+      </div>
+
+      <section class="tc-section" id="s1">
+        <div class="section-head"><span class="section-num">1</span><h2>About Farmer Community</h2></div>
+        <p>Farmer Community is a farming-focused website and mobile application designed to provide farmers with digital tools and resources for managing agricultural activities.</p>
+        <p>Features may include account and profile management, farm record keeping, crop management, animal management, budgets, feed and diagnosis tools, soil sensor readings, AI-powered agricultural assistance, weather information, educational books and materials, community interaction, groups, follows, messaging, notifications, agricultural product listings, carts, orders, ratings, employment listings, verification badges, paid listing boosts, moderation, and links to external services.</p>
+        <p>Features may be added, modified, suspended, or removed as the application develops.</p>
+      </section>
+
+      <section class="tc-section" id="s2">
+        <div class="section-head"><span class="section-num">2</span><h2>Acceptance of These Terms</h2></div>
+        <p>By using Farmer Community, you agree to comply with these Terms, applicable laws, and any additional rules or instructions presented on the website or in the application.</p>
+        <p>If you do not agree with these Terms, you should stop using the website and application.</p>
+      </section>
+
+      <section class="tc-section" id="s3">
+        <div class="section-head"><span class="section-num">3</span><h2>Eligibility</h2></div>
+        <p>You must provide accurate information when creating and using an account.</p>
+        <p>If you are not legally permitted to use the application or enter into agreements in your jurisdiction, you should not use Farmer Community without appropriate permission from a parent, guardian, or other legally authorized person where applicable.</p>
+        <p>You are responsible for ensuring that your use of the application complies with the laws applicable to you.</p>
+      </section>
+
+      <section class="tc-section" id="s4">
+        <div class="section-head"><span class="section-num">4</span><h2>User Accounts</h2></div>
+        <p>Certain features may require you to create an account.</p>
+        <p>You agree to provide information that is accurate, complete, and reasonably current.</p>
+        <p>You are responsible for maintaining the confidentiality of your account credentials and for activities conducted through your account.</p>
+        <p>If you believe that someone has accessed your account without authorization, you should contact us as soon as reasonably possible.</p>
+        <p>The app may support secure device storage, authentication tokens, cached profile information, biometric authentication, or offline sign-in support. You are responsible for securing the device and credentials used to access your account.</p>
+      </section>
+
+      <section class="tc-section" id="s5">
+        <div class="section-head"><span class="section-num">5</span><h2>Farm Records and Data Accuracy</h2></div>
+        <p>Farmer Community is designed in significant part to help farmers keep agricultural records.</p>
+        <div class="warning"><strong>Accuracy is important.</strong> The usefulness of the application's record-keeping and management features depends on the accuracy and completeness of information entered by the farmer.</div>
+        <p>Users are responsible for entering correct, complete, and up-to-date information into the application.</p>
+        <p>Incorrect, incomplete, outdated, duplicated, or misleading records may cause calculations, summaries, reports, reminders, recommendations, or other features to produce inaccurate or less useful results.</p>
+        <p>Farmer Community does not independently verify every record entered by users and does not guarantee that user-entered information is accurate.</p>
+        <p>Users should maintain appropriate backup records for information that is important to their farming operations.</p>
+      </section>
+
+      <section class="tc-section" id="s6">
+        <div class="section-head"><span class="section-num">6</span><h2>Crop Management</h2></div>
+        <p>Farmer Community may provide crop management features that allow users to record and manage information about crops, planting, production, activities, treatments, harvesting, yields, expenses, or other agricultural information.</p>
+        <p>Farmers are responsible for entering accurate information into crop management features.</p>
+        <p>The application may use information entered by the user to organize, calculate, display, summarize, or otherwise process agricultural records.</p>
+        <p>We do not guarantee that calculations, summaries, reminders, or recommendations will be accurate if the underlying information entered by the user is incorrect or incomplete.</p>
+      </section>
+
+      <section class="tc-section" id="s7">
+        <div class="section-head"><span class="section-num">7</span><h2>Animal Management</h2></div>
+        <p>Farmer Community may provide animal management features that allow farmers to record information about livestock, animals, health-related records, breeding, feeding, production, identification, expenses, activities, or other animal-related information.</p>
+        <p>Users are responsible for entering correct and current information.</p>
+        <p>Animal management information provided through the application should not be considered a replacement for advice from a qualified veterinarian or other appropriate animal-health professional.</p>
+        <p>Users remain responsible for decisions involving the health, treatment, feeding, breeding, welfare, or management of their animals.</p>
+      </section>
+
+      <section class="tc-section" id="s8">
+        <div class="section-head"><span class="section-num">8</span><h2>Soil Sensor Features</h2></div>
+        <p>Farmer Community may support soil sensor functionality that allows users to receive or view readings from compatible soil sensors connected to the application using technologies such as Bluetooth or Wi-Fi.</p>
+        <p>Soil sensor readings depend on the sensor, its calibration, condition, placement, connection, environmental conditions, software, and other technical factors.</p>
+        <p>Farmer Community does not guarantee that sensor readings are always accurate, complete, current, or available.</p>
+        <p>Users are responsible for ensuring that compatible sensors are properly installed, maintained, configured, and used according to the manufacturer's instructions.</p>
+        <p>Sensor readings should be considered informational and should not be treated as guaranteed professional agricultural, environmental, or scientific measurements.</p>
+      </section>
+
+      <!-- ============ AD SLOT — mid document ============ -->
+      <div class="ad-slot mid">
+        <span class="label">Advertisement</span>
+        <ins class="adsbygoogle"
+             style="display:block"
+             data-ad-client="ca-pub-2606126305565597"
+             data-ad-slot="7638324548"
+             data-ad-format="horizontal"
+             data-full-width-responsive="false"></ins>
+      </div>
+      <script>(adsbygoogle = window.adsbygoogle || []).push({});</script>
+
+      <section class="tc-section" id="s10">
+        <div class="section-head"><span class="section-num">10</span><h2>AI Farming Assistance</h2></div>
+        <p>Farmer Community may provide an AI-powered feature that allows users to ask questions and receive responses relating to farming, agriculture, crops, animals, soil, weather, or other subjects supported by the application.</p>
+        <div class="warning"><strong>AI responses may be incorrect.</strong> Artificial intelligence systems can produce inaccurate, incomplete, outdated, misleading, or inappropriate information.</div>
+        <p>AI-generated information is provided for general informational and educational purposes and should not automatically be treated as professional agricultural, veterinary, financial, legal, medical, or other professional advice.</p>
+        <p>Users should independently verify important information and seek advice from appropriately qualified professionals where a decision could materially affect crops, animals, health, safety, finances, property, or other important interests.</p>
+        <p>Users remain responsible for decisions and actions taken based on AI-generated responses.</p>
+      </section>
+
+      <section class="tc-section" id="s11">
+        <div class="section-head"><span class="section-num">11</span><h2>Weather Information</h2></div>
+        <p>Farmer Community may provide weather information, forecasts, alerts, or related information to assist farmers with general planning.</p>
+        <p>Weather information may be obtained from third-party weather services and may change over time.</p>
+        <p>Farmer Community does not guarantee the accuracy, completeness, reliability, availability, or timeliness of weather information.</p>
+        <p>Weather conditions can change rapidly. Users should consult appropriate official weather sources when weather information is important to safety, travel, farming operations, livestock, or other significant decisions.</p>
+      </section>
+
+      <section class="tc-section" id="s12">
+        <div class="section-head"><span class="section-num">12</span><h2>Books and Educational Materials</h2></div>
+        <p>Farmer Community may provide books, articles, guides, educational resources, or other reading materials for farmers.</p>
+        <p>These materials are provided for general educational and informational purposes.</p>
+        <p>Educational materials should not automatically be considered professional agricultural, veterinary, financial, legal, or other professional advice.</p>
+        <p>Where materials are provided by third parties or link to third-party resources, the third party may have its own terms and conditions and intellectual property rights.</p>
+      </section>
+
+      <section class="tc-section" id="s13">
+        <div class="section-head"><span class="section-num">13</span><h2>Community Content</h2></div>
+        <p>Farmer Community may allow users to create profiles and publish content including text, photographs, videos, comments, agricultural information, listings, and other materials.</p>
+        <p>You are responsible for content that you upload, publish, send, or otherwise make available through Farmer Community.</p>
+        <p>You must have the necessary rights or permissions to share content that you upload.</p>
+        <p>You must not publish content that:</p>
+        <ul>
+          <li>Is illegal or fraudulent.</li>
+          <li>Is intentionally false or misleading.</li>
+          <li>Infringes copyright, trademarks, privacy, or other rights.</li>
+          <li>Contains threats, harassment, abuse, or intimidation.</li>
+          <li>Promotes scams or fraudulent activities.</li>
+          <li>Contains malicious software or harmful code.</li>
+          <li>Creates an unreasonable risk to other users.</li>
+          <li>Violates applicable laws or regulations.</li>
+        </ul>
+      </section>
+
+      <section class="tc-section" id="s14">
+        <div class="section-head"><span class="section-num">14</span><h2>Messaging and Communication</h2></div>
+        <p>Farmer Community may provide messaging or communication features that allow users to communicate directly with each other.</p>
+        <p>Users are responsible for their own communications and interactions.</p>
+        <p>You must not use messaging features for harassment, threats, fraud, scams, impersonation, spam, or other unlawful activities.</p>
+        <p>Users should exercise caution when communicating with people they do not personally know.</p>
+      </section>
+
+      <section class="tc-section" id="s15">
+        <div class="section-head"><span class="section-num">15</span><h2>Buying and Selling</h2></div>
+        <p>Farmer Community may allow users to post, discover, discuss, or advertise agricultural products or other goods for sale.</p>
+        <p>Sellers are responsible for the accuracy of their listings, including descriptions, quantities, prices, condition, availability, and other relevant information.</p>
+        <p>Buyers are responsible for evaluating products and sellers before completing a transaction.</p>
+        <p>Farmer Community does not guarantee the quality, safety, legality, authenticity, ownership, availability, or condition of products listed by users.</p>
+      </section>
+
+      <section class="tc-section" id="s16">
+        <div class="section-head"><span class="section-num">16</span><h2>Payments and Hand-to-Hand Transactions</h2></div>
+        <p>Transactions between buyers and sellers may take place outside the Farmer Community application. The application may also provide carts, orders, seller dashboards, ratings, and order records for marketplace workflows.</p>
+        <p>This may include cash-on-delivery, cash payments, hand-to-hand transactions, or other arrangements made directly between users.</p>
+        <p>Farmer Community is not a bank, escrow service, or guaranteed payment processor for user-to-user transactions. Some separate features may record or process payments for verification badges or listing boosts through an available payment flow. Prices, approval, duration, refunds, availability, and payment-provider terms will be shown in that feature and may change.</p>
+        <p>Farmer Community is not a party to transactions between users.</p>
+        <p>We are not responsible for non-payment, non-delivery, counterfeit goods, damaged goods, incorrect products, disputes, fraud, theft, or other losses resulting from transactions between users.</p>
+        <p>Users should take reasonable safety precautions when arranging face-to-face meetings or exchanging goods and money.</p>
+      </section>
+
+      <section class="tc-section" id="s17">
+        <div class="section-head"><span class="section-num">17</span><h2>Jobs and Employment Listings</h2></div>
+        <p>Farmer Community may allow users to post employment opportunities, agricultural jobs, requests for workers, or information indicating that they are looking for employment.</p>
+        <p>Users are responsible for the accuracy and legality of job-related information they post.</p>
+        <p>Farmer Community does not guarantee that a job, employer, worker, opportunity, salary, working condition, or employment-related claim is genuine, suitable, safe, available, or lawful.</p>
+        <p>Users are responsible for conducting their own checks before accepting employment, hiring workers, sharing personal information, or travelling to a workplace.</p>
+      </section>
+
+      <section class="tc-section" id="s18">
+        <div class="section-head"><span class="section-num">18</span><h2>External Websites and Services</h2></div>
+        <p>Farmer Community may provide links, buttons, or connections to external websites and services, including employment websites, agricultural resources, weather services, educational resources, or other third-party platforms.</p>
+        <p>These external services are not controlled by Farmer Community.</p>
+        <p>We are not responsible for the content, accuracy, availability, security, privacy practices, terms, products, services, employment opportunities, or other activities of third-party websites.</p>
+        <p>Your use of an external website may be subject to that website's own terms and privacy policy.</p>
+      </section>
+
+      <section class="tc-section" id="s19">
+        <div class="section-head"><span class="section-num">19</span><h2>Prohibited Activities</h2></div>
+        <p>You must not use Farmer Community to:</p>
+        <ul>
+          <li>Commit, promote, or facilitate illegal activities.</li>
+          <li>Defraud, scam, deceive, or exploit other users.</li>
+          <li>Impersonate another person, farmer, business, or organization.</li>
+          <li>Publish deliberately false or misleading information.</li>
+          <li>Upload malicious software, viruses, or harmful code.</li>
+          <li>Attempt unauthorized access to accounts or systems.</li>
+          <li>Harass, threaten, abuse, or intimidate other users.</li>
+          <li>Distribute spam or abusive promotional material.</li>
+          <li>Infringe another person's intellectual property or privacy rights.</li>
+          <li>Interfere with the operation or security of the application.</li>
+          <li>Use the service in a manner that creates unreasonable risk to others.</li>
+        </ul>
+      </section>
+
+      <section class="tc-section" id="s20">
+        <div class="section-head"><span class="section-num">20</span><h2>Reporting Content and Users</h2></div>
+        <p>If you encounter content, listings, messages, or behavior that you believe violates these Terms, you should use any reporting feature available within the application or contact us by email.</p>
+        <p>We may review reports and may remove content, restrict functionality, suspend accounts, or take other appropriate action where we consider it necessary.</p>
+        <p>We cannot guarantee that every report will result in removal or other action.</p>
+      </section>
+
+      <section class="tc-section" id="s21">
+        <div class="section-head"><span class="section-num">21</span><h2>Account Suspension and Termination</h2></div>
+        <p>We may suspend, restrict, or terminate access to an account if we reasonably believe that the user has violated these Terms, applicable laws, or created a risk to the application or other users.</p>
+        <p>We may take action against accounts involved in scams, fraud, harassment, abuse, malicious activity, privacy violations, or other harmful conduct.</p>
+        <p>Where appropriate, we may also remove content that violates these Terms.</p>
+      </section>
+
+      <section class="tc-section" id="s22">
+        <div class="section-head"><span class="section-num">22</span><h2>Intellectual Property</h2></div>
+        <p>The Farmer Community name, application, software, design, logos, graphics, and original materials may be protected by intellectual property laws.</p>
+        <p>You may not copy, reproduce, modify, distribute, reverse engineer, sell, or commercially exploit protected parts of the application without appropriate authorization, except where permitted by law.</p>
+        <p>You retain responsibility for content that you submit to the service and must have the necessary rights to submit that content.</p>
+      </section>
+
+      <section class="tc-section" id="s23">
+        <div class="section-head"><span class="section-num">23</span><h2>Third-Party Services</h2></div>
+        <p>Some features of Farmer Community may depend on Firebase authentication, Firestore and storage, secure device storage, image or file hosting services, notification systems, APIs, sensors, connectivity providers, weather providers, artificial intelligence systems, payment providers, employment websites, or other external services.</p>
+        <p>Availability and performance of third-party services may be outside our control.</p>
+        <p>Changes, interruptions, restrictions, or failures of third-party services may affect certain features of Farmer Community.</p>
+      </section>
+
+      <section class="tc-section" id="s24">
+        <div class="section-head"><span class="section-num">24</span><h2>Availability of the Service</h2></div>
+        <p>We will make reasonable efforts to maintain Farmer Community, but we do not guarantee that the application will always be available, uninterrupted, secure, or error-free.</p>
+        <p>Features may occasionally be unavailable because of maintenance, updates, technical problems, connectivity issues, device compatibility, sensor problems, third-party service interruptions, or other circumstances.</p>
+      </section>
+
+      <section class="tc-section" id="s25">
+        <div class="section-head"><span class="section-num">25</span><h2>Disclaimer</h2></div>
+        <p>Farmer Community is provided as a tool to assist farmers and other users.</p>
+        <p>Information provided through the application, including AI responses, weather information, soil sensor readings, educational materials, community posts, records, job listings, product listings, and other information, may contain errors or omissions.</p>
+        <p>Farmer Community does not guarantee that information available through the application is accurate, complete, current, reliable, or suitable for a particular purpose.</p>
+        <p>The application should not be treated as a replacement for qualified agricultural, veterinary, financial, legal, medical, employment, security, or other professional advice.</p>
+      </section>
+
+      <section class="tc-section" id="s26">
+        <div class="section-head"><span class="section-num">26</span><h2>Limitation of Liability</h2></div>
+        <p>To the maximum extent permitted by applicable law, Farmer Community and its owner will not be responsible for losses or damages arising from or related to:</p>
+        <ul>
+          <li>Incorrect, incomplete, or lost farm records.</li>
+          <li>Incorrect crop or animal management information.</li>
+          <li>AI-generated information or recommendations.</li>
+          <li>Weather information or weather-related decisions.</li>
+          <li>Soil sensor readings or sensor connectivity.</li>
+          <li>User-generated content.</li>
+          <li>Messages or interactions between users.</li>
+          <li>Buying or selling transactions.</li>
+          <li>Cash-on-delivery or hand-to-hand transactions.</li>
+          <li>Job listings or employment arrangements.</li>
+          <li>Verification applications, listing boosts, payment records, or payment-provider failures.</li>
+          <li>Notifications, moderation decisions, account deactivation, or data deletion.</li>
+          <li>Third-party websites or services.</li>
+          <li>Temporary or permanent unavailability of the application.</li>
+          <li>Unauthorized access resulting from circumstances outside our reasonable control.</li>
+        </ul>
+        <p>Nothing in these Terms is intended to exclude or limit liability where such exclusion or limitation is prohibited by applicable law.</p>
+      </section>
+
+      <section class="tc-section" id="s27">
+        <div class="section-head"><span class="section-num">27</span><h2>User Responsibility</h2></div>
+        <p>You are responsible for your use of Farmer Community and for decisions made based on information obtained through the application.</p>
+        <p>You should verify important information before relying on it, especially where it concerns crops, livestock, pesticides, fertilizers, animal health, soil conditions, weather, employment, financial matters, transactions, security, or personal safety.</p>
+        <p>You are also responsible for complying with applicable laws and regulations when farming, selling products, hiring workers, accepting employment, operating sensors, or conducting other activities through or as a result of using the application.</p>
+      </section>
+
+      <section class="tc-section" id="s28">
+        <div class="section-head"><span class="section-num">28</span><h2>Privacy</h2></div>
+        <p>Your use of Farmer Community is also subject to our Privacy Policy, which explains how information is collected, used, stored, and handled.</p>
+        <p><a href="https://chinatsvi.github.io/farmer-community-privacy-policy/">View the Farmer Community Privacy Policy</a></p>
+      </section>
+
+      <section class="tc-section" id="s29">
+        <div class="section-head"><span class="section-num">29</span><h2>Changes to These Terms</h2></div>
+        <p>We may update these Terms &amp; Conditions from time to time to reflect changes to Farmer Community, new features, legal requirements, security considerations, or changes to our services.</p>
+        <p>When changes are made, the updated version will be published on this webpage and the "Last Updated" date may be changed.</p>
+        <p>Your continued use of Farmer Community after updated Terms are published constitutes acceptance of the updated Terms to the extent permitted by applicable law.</p>
+      </section>
+
+      <section class="tc-section" id="s30">
+        <div class="section-head"><span class="section-num">30</span><h2>Governing Law</h2></div>
+        <p>These Terms &amp; Conditions are intended to be governed by and interpreted in accordance with the applicable laws of Zimbabwe, subject to any mandatory rights or protections that apply to users under applicable law.</p>
+      </section>
+
+      <section class="tc-section" id="s31">
+        <div class="section-head"><span class="section-num">31</span><h2>Contact Information</h2></div>
+
+        <div class="contact-box">
+          <p><strong>Farmer Community</strong></p>
+          <p><strong>Owner:</strong> Enock Chinatsvi</p>
+          <p><strong>Country:</strong> Zimbabwe</p>
+          <p><strong>Email:</strong> <a href="mailto:chinatsvieno@gmail.com">chinatsvieno@gmail.com</a></p>
+        </div>
+
+        <div class="notice" style="margin-top:25px;">
+          <strong>Thank you for using Farmer Community.</strong>
+          By using the application, you agree to use the platform responsibly,
+          provide accurate information where required, respect other members of
+          the farming community, and comply with applicable laws.
+        </div>
+      </section>
+
+    </div>
+  </div>
+
+  <footer>
+    <div class="footer-inner">
+
+      <div>
+        <div class="brand">
+          <span class="brand-mark"><img src="favicon-256.png" alt="AgriBase logo"></span>
+          Farmer Community
+        </div>
+        <p>Empowering farmers with knowledge, connections and practical tools.</p>
+      </div>
+
+      <div class="footer-links-group">
+        <h3>Site</h3>
+        <a href="https://chinatsvi.github.io/farmers-community/">Home</a>
+        <a href="https://chinatsvi.github.io/farmer-community-Help-FAQ/">Help &amp; FAQ</a>
+      </div>
+
+      <div class="footer-links-group">
+        <h3>Legal</h3>
+        <a href="https://chinatsvi.github.io/farmer-community-privacy-policy/">Privacy Policy</a>
+        <a href="https://chinatsvi.github.io/farmer-community-terms/">Terms &amp; Conditions</a>
+      </div>
+
+      <div class="footer-links-group">
+        <h3>Reach us</h3>
+        <a href="https://chinatsvi.github.io/farmer-community-contact-us/">Contact Us</a>
+        <a href="mailto:chinatsvieno@gmail.com">Email</a>
+      </div>
+
+    </div>
+
+    <div class="footer-bottom">© 2026 Farmer Community. All rights reserved.</div>
+  </footer>
+
+  <script>
+    // Reading progress bar
+    (function () {
+      var bar = document.getElementById('progressBar');
+      function onScroll() {
+        var h = document.documentElement;
+        var scrolled = h.scrollTop;
+        var height = h.scrollHeight - h.clientHeight;
+        bar.style.width = (height > 0 ? (scrolled / height) * 100 : 0) + '%';
+      }
+      window.addEventListener('scroll', onScroll, { passive: true });
+      onScroll();
+    })();
+
+    // Active TOC link on scroll
+    (function () {
+      var links = Array.prototype.slice.call(document.querySelectorAll('#tocList a'));
+      var sections = links.map(function (l) { return document.querySelector(l.getAttribute('href')); });
+
+      function onScroll() {
+        var pos = window.scrollY + 160;
+        var current = sections[0];
+        sections.forEach(function (sec) {
+          if (sec && sec.offsetTop <= pos) current = sec;
+        });
+        links.forEach(function (l) {
+          l.classList.toggle('active', current && l.getAttribute('href') === '#' + current.id);
+        });
+      }
+      window.addEventListener('scroll', onScroll, { passive: true });
+      onScroll();
+    })();
+  </script>
+
+</body>
+</html>

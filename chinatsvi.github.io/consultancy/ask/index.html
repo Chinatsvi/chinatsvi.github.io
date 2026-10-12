@@ -1,0 +1,314 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1">
+  <meta name="theme-color" content="#1f4d2c">
+  <meta name="description" content="Ask a farming question to D & C – AgriBase agricultural consultancy. Submit details and photos about your crop, soil, or livestock problem.">
+  <title>Ask a Farming Question | D & C – AgriBase Consultancy</title>
+  <link rel="stylesheet" href="/assets/site.css">
+  <link rel="stylesheet" href="/assets/consultancy.css">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link href="https://fonts.googleapis.com/css2?family=Fraunces:wght@600;700;900&family=Karla:wght@400;700;800&display=swap" rel="stylesheet">
+  <link rel="canonical" href="https://chinatsvi.github.io/consultancy/ask/">
+</head>
+<body>
+  <div data-site-header></div>
+
+  <header class="page-hero">
+    <div class="container">
+      <div class="breadcrumb"><a href="/">Home</a> / <a href="/consultancy/">Consultancy</a> / Ask a Farming Question</div>
+      <div class="eyebrow">Direct Agronomic Review</div>
+      <h1>Tell Us About Your Farming Problem</h1>
+      <p class="lead">Submit your farming enquiry with as much practical context as you have available. Photographs of foliage, stems, roots, or affected animals significantly assist our team in providing actionable feedback.</p>
+    </div>
+  </header>
+
+  <main class="section">
+    <div class="container">
+      
+      <div class="consult-form-wrap">
+        
+        <!-- Success State View -->
+        <div id="enquiry-success" style="display:none;text-align:center;padding:24px 10px;">
+          <div style="width:64px;height:64px;background:#dcfce7;color:#166534;border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:32px;margin:0 auto 18px;">✓</div>
+          <h2 style="color:var(--field-dark);margin-bottom:8px;">Enquiry Successfully Received!</h2>
+          <p class="lead" style="margin-bottom:16px;">Your reference number is: <strong id="res-ref" style="color:var(--soil);font-size:22px;letter-spacing:1px;"></strong></p>
+          
+          <div class="notice humility" style="text-align:left;margin-bottom:24px;">
+            <strong>Important Next Steps:</strong>
+            <p>Our principal consultant Enock Chinatsvi will review your details within 24 to 48 business hours. Please note that this initial acknowledgment does not constitute a confirmed agronomic diagnosis until full review has taken place.</p>
+          </div>
+
+          <div style="background:var(--cream);padding:18px;border-radius:8px;border:1px solid var(--border);margin-bottom:24px;">
+            <p style="margin:0 0 10px;font-weight:700;">Would you like to send an instant copy to our WhatsApp advisory line?</p>
+            <a id="whatsapp-send-link" href="#" target="_blank" rel="noopener" class="button" style="background:#25D366;color:#ffffff;display:inline-flex;align-items:center;gap:8px;">
+              <span>💬</span> Send via WhatsApp to Consultant
+            </a>
+          </div>
+
+          <div style="display:flex;gap:12px;justify-content:center;flex-wrap:wrap;">
+            <a class="button secondary" href="/consultancy/portal/">View in Farmer Portal</a>
+            <a class="button secondary" href="/consultancy/">Back to Consultancy Home</a>
+          </div>
+        </div>
+
+        <!-- Form View -->
+        <form id="farming-question-form" onsubmit="submitFarmingQuestion(event)">
+          
+          <div style="border-bottom:2px solid var(--field-light);padding-bottom:12px;margin-bottom:20px;">
+            <h3 style="margin:0;font-size:20px;color:var(--field-dark);">1. Your Contact Information</h3>
+            <p style="margin:4px 0 0;font-size:14px;color:var(--muted);">We use these details strictly to reply to your enquiry.</p>
+          </div>
+
+          <div class="form-row">
+            <div class="form-group">
+              <label for="farmer-name">Your Full Name <span class="required">*</span></label>
+              <input type="text" id="farmer-name" class="form-control" required placeholder="e.g. Tendai Moyo">
+            </div>
+            <div class="form-group">
+              <label for="farmer-phone">Telephone / WhatsApp Number <span class="required">*</span></label>
+              <input type="tel" id="farmer-phone" class="form-control" required placeholder="e.g. +263 77 123 4567">
+              <span class="form-hint">Used for WhatsApp feedback or call-back.</span>
+            </div>
+          </div>
+
+          <div class="form-row">
+            <div class="form-group">
+              <label for="farmer-email">Email Address (Optional)</label>
+              <input type="email" id="farmer-email" class="form-control" placeholder="e.g. tendai@example.com">
+            </div>
+            <div class="form-group">
+              <label for="farmer-country">Country <span class="required">*</span></label>
+              <select id="farmer-country" class="form-control" required>
+                <option value="Zimbabwe" selected>Zimbabwe</option>
+                <option value="South Africa">South Africa</option>
+                <option value="Zambia">Zambia</option>
+                <option value="Botswana">Botswana</option>
+                <option value="Mozambique">Mozambique</option>
+                <option value="Namibia">Namibia</option>
+                <option value="Other">Other African Country</option>
+              </select>
+            </div>
+          </div>
+
+          <div class="form-row">
+            <div class="form-group">
+              <label for="farmer-location">Farm Location / District <span class="required">*</span></label>
+              <input type="text" id="farmer-location" class="form-control" required placeholder="e.g. Marondera, Mashonaland East">
+            </div>
+            <div class="form-group">
+              <label for="farmer-farm-name">Farm / Plot Name (Optional)</label>
+              <input type="text" id="farmer-farm-name" class="form-control" placeholder="e.g. Greenfield Homestead Plot 4">
+            </div>
+          </div>
+
+          <div style="border-bottom:2px solid var(--field-light);padding-bottom:12px;margin:28px 0 20px;">
+            <h3 style="margin:0;font-size:20px;color:var(--field-dark);">2. Farming Challenge Details</h3>
+            <p style="margin:4px 0 0;font-size:14px;color:var(--muted);">Tell us about the crops, animals, or field conditions involved.</p>
+          </div>
+
+          <div class="form-row">
+            <div class="form-group">
+              <label for="enterprise-type">Enterprise Type <span class="required">*</span></label>
+              <select id="enterprise-type" class="form-control" required onchange="onEnterpriseChange()">
+                <option value="crop">Crop Production / Horticulture</option>
+                <option value="livestock">Livestock / Poultry / Aquaculture</option>
+                <option value="soil">Soil Fertility & Fertiliser Issue</option>
+                <option value="water">Irrigation & Water Problem</option>
+                <option value="other">General Farm Management</option>
+              </select>
+            </div>
+            <div class="form-group" id="crop-livestock-group">
+              <label for="crop-livestock-name" id="crop-livestock-label">Crop or Livestock Species <span class="required">*</span></label>
+              <input type="text" id="crop-livestock-name" class="form-control" required placeholder="e.g. Tomatoes (Rodade) or Broilers">
+            </div>
+          </div>
+
+          <div class="form-row">
+            <div class="form-group">
+              <label for="farm-size">Area or Population Size (Optional)</label>
+              <input type="text" id="farm-size" class="form-control" placeholder="e.g. 1.5 Hectares / 500 birds">
+            </div>
+            <div class="form-group">
+              <label for="date-observed">When did you first notice this problem?</label>
+              <input type="date" id="date-observed" class="form-control">
+            </div>
+          </div>
+
+          <div class="form-group">
+            <label for="question-description">Describe the Problem or Question in Detail <span class="required">*</span></label>
+            <textarea id="question-description" class="form-control" required placeholder="Describe what you see: leaf discoloration, stunted growth, wilting, insect damage, abnormal animal behavior, or feeding concerns. Include previous sprays or fertilisers applied."></textarea>
+          </div>
+
+          <div class="form-group">
+            <label for="previous-actions">Previous Actions Taken (Optional)</label>
+            <input type="text" id="previous-actions" class="form-control" placeholder="e.g. Sprayed Copper Oxychloride 5 days ago; applied Ammonium Nitrate basal.">
+          </div>
+
+          <div style="border-bottom:2px solid var(--field-light);padding-bottom:12px;margin:28px 0 20px;">
+            <h3 style="margin:0;font-size:20px;color:var(--field-dark);">3. Supporting Photographs & Documents</h3>
+            <p style="margin:4px 0 0;font-size:14px;color:var(--muted);">Clear photos of both the overall field and close-ups of damaged leaves or stems help accurate assessment.</p>
+          </div>
+
+          <div class="form-group">
+            <label for="enquiry-files">Upload Photographs or Documents (Max 3 files, PNG/JPG/PDF, up to 5MB each)</label>
+            <input type="file" id="enquiry-files" class="form-control" multiple accept=".jpg,.jpeg,.png,.pdf" onchange="handleFileUpload(event)">
+            <span class="form-hint">Files are processed safely in your browser. Executable files are strictly blocked.</span>
+            <div id="file-preview-list" style="margin-top:10px;display:flex;flex-wrap:wrap;gap:10px;"></div>
+          </div>
+
+          <div class="form-row">
+            <div class="form-group">
+              <label for="preferred-contact">Preferred Feedback Channel <span class="required">*</span></label>
+              <select id="preferred-contact" class="form-control" required>
+                <option value="WhatsApp" selected>WhatsApp Message / Voice Note</option>
+                <option value="Phone Call">Direct Phone Call</option>
+                <option value="Email">Email Message</option>
+              </select>
+            </div>
+          </div>
+
+          <div class="notice humility" style="margin:20px 0;font-size:13px;">
+            <strong>Confidentiality & Privacy:</strong> Your contact details and farm data will be stored safely and used solely to address your farming enquiry. We do not sell or publish farmer details. Review our <a href="/privacy/" target="_blank">Privacy Policy</a>.
+          </div>
+
+          <div style="margin-top:24px;">
+            <button type="submit" id="submit-btn" class="button" style="width:100%;font-size:17px;padding:14px;">
+              Submit Farming Enquiry →
+            </button>
+          </div>
+
+        </form>
+
+      </div>
+
+    </div>
+  </main>
+
+  <div data-site-footer></div>
+
+  <script src="/assets/consultancy.js"></script>
+  <script src="/assets/content.js"></script>
+  <script src="/assets/site.js"></script>
+  <script>
+    var uploadedAttachments = [];
+
+    function onEnterpriseChange() {
+      var type = document.getElementById('enterprise-type').value;
+      var label = document.getElementById('crop-livestock-label');
+      var input = document.getElementById('crop-livestock-name');
+
+      if (type === 'crop') {
+        label.innerHTML = 'Crop Species & Variety <span class="required">*</span>';
+        input.placeholder = 'e.g. Tomatoes (Rodade) or Maize (SC 719)';
+      } else if (type === 'livestock') {
+        label.innerHTML = 'Livestock Species / Breed <span class="required">*</span>';
+        input.placeholder = 'e.g. Broiler Chickens (Ross 308) or Boer Goats';
+      } else if (type === 'soil') {
+        label.innerHTML = 'Target Crop Planned <span class="required">*</span>';
+        input.placeholder = 'e.g. Cabbage or Butternut';
+      } else {
+        label.innerHTML = 'Farming Enterprise / Topic <span class="required">*</span>';
+        input.placeholder = 'e.g. Drip Irrigation / Nursery Management';
+      }
+    }
+
+    function handleFileUpload(e) {
+      var files = e.target.files;
+      var preview = document.getElementById('file-preview-list');
+      preview.innerHTML = '';
+      uploadedAttachments = [];
+
+      var maxAllowed = 3;
+      var count = Math.min(files.length, maxAllowed);
+
+      for (var i = 0; i < count; i++) {
+        var file = files[i];
+        
+        // Security check: reject executable files
+        var allowedExts = ['jpg', 'jpeg', 'png', 'pdf'];
+        var ext = file.name.split('.').pop().toLowerCase();
+        if (allowedExts.indexOf(ext) === -1) {
+          alert('Security Alert: File type "' + ext + '" is not supported. Please upload JPG, PNG, or PDF.');
+          continue;
+        }
+
+        if (file.size > 5 * 1024 * 1024) {
+          alert('File ' + file.name + ' exceeds 5MB limit.');
+          continue;
+        }
+
+        (function(f) {
+          var reader = new FileReader();
+          reader.onload = function(evt) {
+            uploadedAttachments.push({
+              name: f.name,
+              size: f.size,
+              type: f.type,
+              dataUrl: evt.target.result
+            });
+            var pill = document.createElement('div');
+            pill.style.cssText = 'background:var(--cream);border:1px solid var(--border);border-radius:6px;padding:6px 12px;font-size:13px;display:flex;align-items:center;gap:6px;';
+            pill.innerHTML = '<span>📎 ' + f.name + ' (' + Math.round(f.size/1024) + ' KB)</span>';
+            preview.appendChild(pill);
+          };
+          reader.readAsDataURL(f);
+        })(file);
+      }
+    }
+
+    function submitFarmingQuestion(e) {
+      e.preventDefault();
+      var btn = document.getElementById('submit-btn');
+      btn.disabled = true;
+      btn.textContent = 'Submitting Enquiry...';
+
+      var data = {
+        farmerName: document.getElementById('farmer-name').value,
+        phone: document.getElementById('farmer-phone').value,
+        email: document.getElementById('farmer-email').value,
+        country: document.getElementById('farmer-country').value,
+        location: document.getElementById('farmer-location').value,
+        farmName: document.getElementById('farmer-farm-name').value,
+        category: document.getElementById('enterprise-type').value,
+        enterpriseType: document.getElementById('enterprise-type').value,
+        cropOrLivestock: document.getElementById('crop-livestock-name').value,
+        farmSize: document.getElementById('farm-size').value,
+        problemObservedDate: document.getElementById('date-observed').value,
+        questionDescription: document.getElementById('question-description').value,
+        previousActions: document.getElementById('previous-actions').value,
+        preferredContact: document.getElementById('preferred-contact').value,
+        attachments: uploadedAttachments
+      };
+
+      try {
+        var record = AgriConsult.saveEnquiry(data);
+        
+        document.getElementById('farming-question-form').style.display = 'none';
+        var successBox = document.getElementById('enquiry-success');
+        document.getElementById('res-ref').textContent = record.reference;
+
+        // WhatsApp direct link
+        var settings = AgriConsult.getSettings();
+        var waMsg = encodeURIComponent(
+          'Hello D & C – AgriBase, I have submitted a farming question.\n' +
+          'Ref: ' + record.reference + '\n' +
+          'Name: ' + record.farmerName + '\n' +
+          'Location: ' + record.location + '\n' +
+          'Enterprise: ' + record.cropOrLivestock + '\n' +
+          'Question: ' + record.questionDescription.substring(0, 140) + '...'
+        );
+        document.getElementById('whatsapp-send-link').href = 'https://wa.me/' + settings.whatsappNumber + '?text=' + waMsg;
+
+        successBox.style.display = 'block';
+        window.scrollTo({ top: 100, behavior: 'smooth' });
+      } catch (err) {
+        alert('An error occurred saving your enquiry. Please check your browser storage.');
+        btn.disabled = false;
+        btn.textContent = 'Submit Farming Enquiry →';
+      }
+    }
+  </script>
+</body>
+</html>

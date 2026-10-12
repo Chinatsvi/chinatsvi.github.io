@@ -1,0 +1,305 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1">
+  <meta name="theme-color" content="#1f4d2c">
+  <meta name="description" content="Request an on-farm consultation visit from D & C – AgriBase. In-person crop inspection, soil fertility review, and tailored agronomic recommendations.">
+  <title>Book a Farm Visit | D & C – AgriBase Agricultural Advisory</title>
+  <link rel="stylesheet" href="/assets/site.css">
+  <link rel="stylesheet" href="/assets/consultancy.css">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link href="https://fonts.googleapis.com/css2?family=Fraunces:wght@600;700;900&family=Karla:wght@400;700;800&display=swap" rel="stylesheet">
+  <link rel="canonical" href="https://chinatsvi.github.io/consultancy/farm-visit/">
+</head>
+<body>
+  <div data-site-header></div>
+
+  <header class="page-hero">
+    <div class="container">
+      <div class="breadcrumb"><a href="/">Home</a> / <a href="/consultancy/">Consultancy</a> / Book a Farm Visit</div>
+      <div class="eyebrow">On-Site Agronomic Assessment</div>
+      <h1>Request an On-Farm Advisory Visit</h1>
+      <p class="lead">Schedule a physical farm inspection with our principal consultant. We evaluate crop stands, soil condition, irrigation systems, and pest pressures directly in your field, followed by a written action report.</p>
+    </div>
+  </header>
+
+  <main class="section">
+    <div class="container">
+      
+      <div class="consult-form-wrap">
+        
+        <!-- Notice on how farm visit requests work -->
+        <div class="notice humility" style="margin-bottom:24px;">
+          <strong>Farm Visit Booking Policy:</strong>
+          <p style="margin:4px 0 0;">Submitting this request does not automatically confirm an appointment. Our team reviews your farm location, estimated travel distance, and consultant availability to issue a formal quotation. The appointment is officially confirmed upon your quotation acceptance and confirmation.</p>
+        </div>
+
+        <!-- Success State View -->
+        <div id="visit-success" style="display:none;text-align:center;padding:24px 10px;">
+          <div style="width:64px;height:64px;background:#dcfce7;color:#166534;border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:32px;margin:0 auto 18px;">✓</div>
+          <h2 style="color:var(--field-dark);margin-bottom:8px;">Farm Visit Request Received!</h2>
+          <p class="lead" style="margin-bottom:16px;">Booking Request Reference: <strong id="res-visit-ref" style="color:var(--soil);font-size:22px;letter-spacing:1px;"></strong></p>
+          
+          <div class="notice humility" style="text-align:left;margin-bottom:24px;">
+            <strong>What Happens Next?</strong>
+            <ol style="margin:8px 0 0;padding-left:20px;line-height:1.7;">
+              <li>Our operations team will review your location, access arrangements, and requested service.</li>
+              <li>You will receive an itemized quotation covering the service fee and transparent travel charges.</li>
+              <li>Once you approve the quotation, your preferred appointment date will be locked in the schedule.</li>
+            </ol>
+          </div>
+
+          <div style="background:var(--cream);padding:18px;border-radius:8px;border:1px solid var(--border);margin-bottom:24px;">
+            <p style="margin:0 0 10px;font-weight:700;">Have urgent questions regarding this visit?</p>
+            <a id="whatsapp-visit-link" href="#" target="_blank" rel="noopener" class="button" style="background:#25D366;color:#ffffff;display:inline-flex;align-items:center;gap:8px;">
+              <span>💬</span> Message Us on WhatsApp
+            </a>
+          </div>
+
+          <div style="display:flex;gap:12px;justify-content:center;flex-wrap:wrap;">
+            <a class="button secondary" href="/consultancy/portal/">Track Request Status</a>
+            <a class="button secondary" href="/consultancy/">Back to Consultancy Home</a>
+          </div>
+        </div>
+
+        <!-- Request Form -->
+        <form id="farm-visit-form" onsubmit="submitFarmVisit(event)">
+          
+          <div style="border-bottom:2px solid var(--field-light);padding-bottom:12px;margin-bottom:20px;">
+            <h3 style="margin:0;font-size:20px;color:var(--field-dark);">1. Farmer & Contact Details</h3>
+          </div>
+
+          <div class="form-row">
+            <div class="form-group">
+              <label for="visit-name">Farmer / Farm Manager Full Name <span class="required">*</span></label>
+              <input type="text" id="visit-name" class="form-control" required placeholder="e.g. Memory Chivasa">
+            </div>
+            <div class="form-group">
+              <label for="visit-phone">Primary Contact Phone / WhatsApp <span class="required">*</span></label>
+              <input type="tel" id="visit-phone" class="form-control" required placeholder="e.g. +263 77 456 7890">
+            </div>
+          </div>
+
+          <div class="form-row">
+            <div class="form-group">
+              <label for="visit-email">Email Address (Optional)</label>
+              <input type="email" id="visit-email" class="form-control" placeholder="e.g. memory@farm.co.zw">
+            </div>
+            <div class="form-group">
+              <label for="visit-farm-name">Farm / Estate / Plot Name <span class="required">*</span></label>
+              <input type="text" id="visit-farm-name" class="form-control" required placeholder="e.g. Fairview Farm (Plot 12)">
+            </div>
+          </div>
+
+          <div style="border-bottom:2px solid var(--field-light);padding-bottom:12px;margin:28px 0 20px;">
+            <h3 style="margin:0;font-size:20px;color:var(--field-dark);">2. Farm Location & Directions</h3>
+            <p style="margin:4px 0 0;font-size:14px;color:var(--muted);">Accurate location details are essential for calculating travel distances and quotations.</p>
+          </div>
+
+          <div class="form-row">
+            <div class="form-group">
+              <label for="visit-country">Country <span class="required">*</span></label>
+              <select id="visit-country" class="form-control" required>
+                <option value="Zimbabwe" selected>Zimbabwe</option>
+                <option value="South Africa">South Africa</option>
+                <option value="Zambia">Zambia</option>
+                <option value="Other">Other</option>
+              </select>
+            </div>
+            <div class="form-group">
+              <label for="visit-province">Province / Region <span class="required">*</span></label>
+              <input type="text" id="visit-province" class="form-control" required placeholder="e.g. Mashonaland East">
+            </div>
+          </div>
+
+          <div class="form-row">
+            <div class="form-group">
+              <label for="visit-district">District / Local Area <span class="required">*</span></label>
+              <input type="text" id="visit-district" class="form-control" required placeholder="e.g. Goromonzi District">
+            </div>
+            <div class="form-group">
+              <label for="visit-nearest-town">Nearest Town / Trading Centre <span class="required">*</span></label>
+              <input type="text" id="visit-nearest-town" class="form-control" required placeholder="e.g. Ruwa / Marondera">
+            </div>
+          </div>
+
+          <div class="form-group">
+            <label for="visit-directions">Farm Address & Driving Directions <span class="required">*</span></label>
+            <textarea id="visit-directions" class="form-control" required placeholder="Describe turnoffs, landmarks, road condition (tar, gravel, 4x4 needed), and distance from the main highway."></textarea>
+          </div>
+
+          <div class="form-group">
+            <label for="visit-gps">GPS Coordinates or Google Maps Pin Link (Optional)</label>
+            <input type="text" id="visit-gps" class="form-control" placeholder="e.g. -17.8252, 31.0335 or https://maps.app.goo.gl/...">
+          </div>
+
+          <div style="border-bottom:2px solid var(--field-light);padding-bottom:12px;margin:28px 0 20px;">
+            <h3 style="margin:0;font-size:20px;color:var(--field-dark);">3. Requested Service & Enterprise</h3>
+          </div>
+
+          <div class="form-row">
+            <div class="form-group">
+              <label for="visit-service">Select Consultancy Service <span class="required">*</span></label>
+              <select id="visit-service" class="form-control" required onchange="onServiceSelect()">
+                <option value="srv-crop-inspect">On-Farm Crop Inspection & Agronomic Health Check</option>
+                <option value="srv-soil-fert">Soil Fertility Assessment & Fertiliser Programme</option>
+                <option value="srv-pest-disease">Pest & Disease Field Assessment & IPM Strategy</option>
+                <option value="srv-irrigation">Irrigation & Farm Water Management Audit</option>
+                <option value="srv-farm-planning">Whole-Farm Production Planning & Crop Rotation</option>
+                <option value="srv-livestock">Livestock Production & Pasture/Feed Advisory</option>
+                <option value="srv-training">Practical Farm Worker & Supervisor Group Training</option>
+                <option value="other">Other Agricultural Consultation</option>
+              </select>
+            </div>
+            <div class="form-group">
+              <label for="visit-crop">Crop or Livestock Involved <span class="required">*</span></label>
+              <input type="text" id="visit-crop" class="form-control" required placeholder="e.g. 3ha Tomatoes, 10ha Maize, or 40 Cattle">
+            </div>
+          </div>
+
+          <div class="form-row">
+            <div class="form-group">
+              <label for="visit-farm-size">Total Farm Size / Area Under Production</label>
+              <input type="text" id="visit-farm-size" class="form-control" placeholder="e.g. 25 Hectares total (5ha cultivated)">
+            </div>
+            <div class="form-group">
+              <label for="visit-pref-time">Preferred Time of Day <span class="required">*</span></label>
+              <select id="visit-pref-time" class="form-control" required>
+                <option value="Morning (08:00 - 11:30)" selected>Morning (08:00 - 11:30)</option>
+                <option value="Early Afternoon (12:30 - 15:30)">Early Afternoon (12:30 - 15:30)</option>
+                <option value="Full Day Inspection">Full Day Inspection</option>
+              </select>
+            </div>
+          </div>
+
+          <div class="form-row">
+            <div class="form-group">
+              <label for="visit-pref-date">Preferred Visit Date <span class="required">*</span></label>
+              <input type="date" id="visit-pref-date" class="form-control" required>
+              <span class="form-hint">Please select a date at least 48 hours in advance.</span>
+            </div>
+            <div class="form-group">
+              <label for="visit-alt-date">Alternative Visit Date (Recommended)</label>
+              <input type="date" id="visit-alt-date" class="form-control">
+            </div>
+          </div>
+
+          <div class="form-group">
+            <label for="visit-description">Specific Challenges or Goals for this Visit <span class="required">*</span></label>
+            <textarea id="visit-description" class="form-control" required placeholder="Outline the main issues you want the consultant to inspect: e.g. severe wilting in block B, irregular fertilizer uptake, sprayer calibration review, or new land layout."></textarea>
+          </div>
+
+          <div class="form-group">
+            <label for="visit-access">Farm Access Arrangements</label>
+            <input type="text" id="visit-access" class="form-control" placeholder="e.g. Gate security code, manager on-site will receive consultant, 4WD vehicle required for stream crossing.">
+          </div>
+
+          <div class="notice humility" style="margin:20px 0;font-size:13px;">
+            <strong>Transparent Quotation Notice:</strong> Once submitted, we will prepare a complete quotation detailing professional inspection fees and applicable travel charges before any visit occurs.
+          </div>
+
+          <div style="margin-top:24px;">
+            <button type="submit" id="visit-submit-btn" class="button primary-action" style="width:100%;font-size:17px;padding:14px;">
+              Submit Farm Visit Request →
+            </button>
+          </div>
+
+        </form>
+
+      </div>
+
+    </div>
+  </main>
+
+  <div data-site-footer></div>
+
+  <script src="/assets/consultancy.js"></script>
+  <script src="/assets/content.js"></script>
+  <script src="/assets/site.js"></script>
+  <script>
+    // Enforce date picker minimum 2 days in advance
+    document.addEventListener('DOMContentLoaded', function() {
+      var d = new Date();
+      d.setDate(d.getDate() + 2);
+      var minDate = d.toISOString().split('T')[0];
+      var prefInput = document.getElementById('visit-pref-date');
+      var altInput = document.getElementById('visit-alt-date');
+      if (prefInput) prefInput.min = minDate;
+      if (altInput) altInput.min = minDate;
+
+      // Handle query param pre-selection
+      var params = new URLSearchParams(window.location.search);
+      var srvId = params.get('service');
+      if (srvId && document.getElementById('visit-service')) {
+        document.getElementById('visit-service').value = srvId;
+      }
+    });
+
+    function onServiceSelect() {
+      // Optional UI enhancements
+    }
+
+    function submitFarmVisit(e) {
+      e.preventDefault();
+      var btn = document.getElementById('visit-submit-btn');
+      btn.disabled = true;
+      btn.textContent = 'Submitting Request...';
+
+      var srvSelect = document.getElementById('visit-service');
+      var srvName = srvSelect.options[srvSelect.selectedIndex].text;
+
+      var data = {
+        type: 'farm-visit',
+        farmerName: document.getElementById('visit-name').value,
+        phone: document.getElementById('visit-phone').value,
+        email: document.getElementById('visit-email').value,
+        farmName: document.getElementById('visit-farm-name').value,
+        country: document.getElementById('visit-country').value,
+        province: document.getElementById('visit-province').value,
+        district: document.getElementById('visit-district').value,
+        nearestTown: document.getElementById('visit-nearest-town').value,
+        farmAddress: document.getElementById('visit-directions').value,
+        gpsCoordinates: document.getElementById('visit-gps').value,
+        serviceId: srvSelect.value,
+        serviceName: srvName,
+        cropOrEnterprise: document.getElementById('visit-crop').value,
+        farmSize: document.getElementById('visit-farm-size').value,
+        preferredTime: document.getElementById('visit-pref-time').value,
+        preferredDate: document.getElementById('visit-pref-date').value,
+        alternativeDate: document.getElementById('visit-alt-date').value,
+        description: document.getElementById('visit-description').value,
+        accessArrangements: document.getElementById('visit-access').value,
+        writtenSummaryRequested: true
+      };
+
+      try {
+        var record = AgriConsult.saveBooking(data);
+        
+        document.getElementById('farm-visit-form').style.display = 'none';
+        var successBox = document.getElementById('visit-success');
+        document.getElementById('res-visit-ref').textContent = record.reference;
+
+        var settings = AgriConsult.getSettings();
+        var waMsg = encodeURIComponent(
+          'Hello D & C – AgriBase, I have submitted a farm visit request.\n' +
+          'Ref: ' + record.reference + '\n' +
+          'Name: ' + record.farmerName + '\n' +
+          'Farm: ' + record.farmName + ' (' + record.district + ', near ' + record.nearestTown + ')\n' +
+          'Service: ' + record.serviceName + '\n' +
+          'Preferred Date: ' + record.preferredDate + '\n' +
+          'Enterprise: ' + record.cropOrEnterprise
+        );
+        document.getElementById('whatsapp-visit-link').href = 'https://wa.me/' + settings.whatsappNumber + '?text=' + waMsg;
+
+        successBox.style.display = 'block';
+        window.scrollTo({ top: 100, behavior: 'smooth' });
+      } catch (err) {
+        alert('An error occurred submitting your request. Please check your browser storage.');
+        btn.disabled = false;
+        btn.textContent = 'Submit Farm Visit Request →';
+      }
+    }
+  </script>
+</body>
+</html>

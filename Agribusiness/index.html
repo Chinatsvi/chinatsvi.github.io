@@ -1,0 +1,994 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="theme-color" content="#1F4D2C">
+
+  <meta name="description"
+      content="Practical agribusiness guidance for African farmers: budgeting, production costs, pricing, marketing, record keeping, credit and building a sustainable farm business.">
+
+<title>Agribusiness | AgriBase</title>
+
+  <link rel="icon" type="image/png" href="/farmers-community/favicon-256.png">
+  <link rel="apple-touch-icon" href="/farmers-community/favicon-256.png">
+    <link rel="icon" type="image/png" href="/farmers-community/favicon-256.png">
+    <link rel="apple-touch-icon" href="/farmers-community/favicon-256.png">
+
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,400;0,9..144,600;0,9..144,700;0,9..144,900;1,9..144,500;1,9..144,600&family=Karla:wght@400;500;600;700;800&family=JetBrains+Mono:wght@500;600&display=swap" rel="stylesheet">
+
+  <!-- Google AdSense account verification -->
+  <meta name="google-adsense-account" content="ca-pub-2606126305565597">
+
+  <!-- Google AdSense -->
+  <script async
+          src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-2606126305565597"
+          crossorigin="anonymous"></script>
+
+  <style>
+    :root {
+      --soil: #A63A1F;
+      --soil-dark: #7A2A16;
+      --field: #1F4D2C;
+      --field-dark: #163A20;
+      --field-mid: #2E6B3E;
+      --field-light: #4F8F5E;
+      --gold: #E3A72E;
+      --gold-dark: #C4881B;
+      --cream: #FBF3E6;
+      --paper: #F3E7D2;
+      --ink: #2A2620;
+      --muted: #6E6152;
+      --border: #E4D3B8;
+      --field-tint: #E3EEE4;
+      --soil-tint: #F3E0D6;
+      --gold-tint: #FBEBC8;
+      --ink-tint: #ECE6DA;
+      --shadow: 0 18px 46px rgba(42,38,32,.16);
+      --shadow-sm: 0 8px 22px rgba(42,38,32,.10);
+      --font-display: "Fraunces", Georgia, serif;
+      --font-body: "Karla", -apple-system, BlinkMacSystemFont, "Segoe UI", Arial, sans-serif;
+      --font-mono: "JetBrains Mono", ui-monospace, Menlo, monospace;
+    }
+
+    * { box-sizing: border-box; }
+    html { scroll-behavior: smooth; }
+
+    body {
+      margin: 0;
+      font-family: var(--font-body);
+      color: var(--ink);
+      background: var(--cream);
+      line-height: 1.65;
+    }
+
+    a { color: inherit; }
+    img { max-width: 100%; display: block; }
+
+    .eyebrow {
+      font-family: var(--font-mono);
+      text-transform: uppercase;
+      letter-spacing: .14em;
+      font-size: 12px;
+      font-weight: 600;
+    }
+
+    /* ===== Nav (universal — identical across all AgriBase pages) ===== */
+    .nav {
+      position: sticky;
+      top: 0;
+      z-index: 40;
+      background: linear-gradient(90deg, var(--field-dark), var(--field));
+      color: var(--cream);
+      box-shadow: 0 3px 18px rgba(0,0,0,.18);
+    }
+
+    .nav-inner {
+      position: relative;
+      width: min(1160px, calc(100% - 40px));
+      margin: auto;
+      min-height: 72px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 20px;
+    }
+
+    .brand {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      text-decoration: none;
+      font-family: var(--font-display);
+      font-weight: 700;
+      font-size: 21px;
+      letter-spacing: -.2px;
+    }
+
+    .brand-icon {
+      flex: none;
+      width: 40px;
+      height: 40px;
+      border-radius: 50%;
+      display: grid;
+      place-items: center;
+      background: var(--cream);
+      color: var(--field);
+      font-size: 21px;
+      overflow: hidden;
+      border: 2px solid rgba(255,255,255,.35);
+    }
+
+    .brand-icon img { width: 100%; height: 100%; object-fit: cover; }
+
+    .nav-links {
+      display: flex;
+      align-items: center;
+      gap: 28px;
+      font-size: 14px;
+      font-weight: 600;
+    }
+
+    .nav-links a {
+      text-decoration: none;
+      opacity: .92;
+      transition: opacity .2s ease;
+    }
+
+    .nav-links a:hover { opacity: 1; }
+
+    .nav-cta {
+      background: var(--gold);
+      color: var(--ink) !important;
+      padding: 9px 18px;
+      border-radius: 999px;
+      font-weight: 800;
+      opacity: 1 !important;
+      transition: transform .2s ease, box-shadow .2s ease, background .2s ease;
+    }
+
+    .nav-cta:hover {
+      background: var(--gold-dark);
+      transform: translateY(-1px);
+      box-shadow: 0 6px 16px rgba(0,0,0,.22);
+    }
+
+    .nav-toggle-input { display: none; }
+    .nav-toggle { display: none; cursor: pointer; }
+
+    /* ===== Page header ===== */
+    .page-hero {
+      position: relative;
+      background:
+        repeating-linear-gradient(115deg, rgba(255,255,255,.05) 0 2px, transparent 2px 26px),
+        linear-gradient(160deg, var(--field-dark) 0%, var(--field) 55%, var(--field-mid) 100%);
+      color: var(--cream);
+      overflow: hidden;
+      padding: 56px 20px 76px;
+    }
+
+    .page-hero-inner {
+      position: relative;
+      z-index: 1;
+      width: min(880px, calc(100% - 40px));
+      margin: auto;
+    }
+
+    .breadcrumb {
+      font-family: var(--font-mono);
+      font-size: 12.5px;
+      letter-spacing: .04em;
+      opacity: .78;
+      margin-bottom: 18px;
+    }
+
+    .breadcrumb a { text-decoration: none; }
+    .breadcrumb a:hover { text-decoration: underline; }
+
+    .page-hero-badge {
+      display: inline-flex;
+      align-items: center;
+      gap: 9px;
+      padding: 7px 14px 7px 8px;
+      border-radius: 999px;
+      background: rgba(255,255,255,.12);
+      border: 1px solid rgba(255,255,255,.3);
+      font-size: 12.5px;
+      font-weight: 600;
+      margin-bottom: 20px;
+    }
+
+    .page-hero h1 {
+      margin: 0 0 18px;
+      font-family: var(--font-display);
+      font-weight: 700;
+      font-size: clamp(32px, 4.6vw, 48px);
+      line-height: 1.08;
+      letter-spacing: -.9px;
+    }
+
+    .page-hero p.lead {
+      max-width: 620px;
+      margin: 0;
+      font-size: clamp(15.5px, 1.7vw, 17.5px);
+      color: rgba(251,243,230,.92);
+    }
+
+    .page-hero-divider {
+      position: absolute;
+      left: 0;
+      right: 0;
+      bottom: -1px;
+      width: 100%;
+      height: 40px;
+      display: block;
+    }
+
+    /* ===== Article layout ===== */
+    .article-wrap { background: var(--cream); padding: 70px 20px 30px; }
+    .article { width: min(760px, 100%); margin: auto; }
+
+    .toc {
+      background: var(--paper);
+      border: 1px solid var(--border);
+      border-radius: 16px;
+      padding: 24px 26px;
+      margin-bottom: 54px;
+      box-shadow: var(--shadow-sm);
+    }
+
+    .toc-title {
+      font-family: var(--font-mono);
+      text-transform: uppercase;
+      letter-spacing: .1em;
+      font-size: 11.5px;
+      color: var(--soil);
+      margin: 0 0 14px;
+    }
+
+    .toc ol {
+      margin: 0;
+      padding-left: 22px;
+      columns: 2;
+      column-gap: 28px;
+      font-size: 14px;
+    }
+
+    .toc li { margin-bottom: 9px; break-inside: avoid; }
+    .toc a { text-decoration: none; font-weight: 600; color: var(--field); }
+    .toc a:hover { text-decoration: underline; }
+
+    .topic {
+      padding: 40px 0;
+      border-bottom: 1px solid var(--border);
+      scroll-margin-top: 90px;
+    }
+
+    .topic:last-child { border-bottom: none; }
+
+    .topic-number {
+      font-family: var(--font-mono);
+      font-size: 12.5px;
+      color: var(--soil);
+      letter-spacing: .06em;
+      margin-bottom: 8px;
+    }
+
+    .topic h2 {
+      font-family: var(--font-display);
+      color: var(--field);
+      font-weight: 700;
+      font-size: clamp(22px, 2.8vw, 27px);
+      margin: 0 0 16px;
+      letter-spacing: -.4px;
+    }
+
+    .topic p { color: var(--ink); font-size: 15.5px; margin: 0 0 14px; }
+    .topic p:last-child { margin-bottom: 0; }
+
+    .topic ul { margin: 0 0 14px; padding-left: 20px; color: var(--ink); font-size: 15.5px; }
+    .topic ul li { margin-bottom: 7px; }
+    .topic ul:last-child { margin-bottom: 0; }
+
+    .callout {
+      background: var(--paper);
+      border: 1px dashed var(--soil);
+      border-radius: 12px;
+      padding: 20px 22px;
+      margin: 20px 0 0;
+      font-size: 14.5px;
+    }
+
+    .callout strong {
+      display: block;
+      font-family: var(--font-mono);
+      text-transform: uppercase;
+      letter-spacing: .06em;
+      font-size: 11px;
+      color: var(--soil);
+      margin-bottom: 8px;
+    }
+
+    /* ===== Ad slot ===== */
+    .ad-slot-wrap { background: var(--cream); padding: 0 20px; }
+    .ad-slot {
+      width: min(1100px, calc(100% - 32px));
+      margin: 0 auto 10px;
+      padding: 14px;
+      text-align: center;
+      overflow: hidden;
+      min-height: 90px;
+      border: 1px dashed var(--border);
+      border-radius: 14px;
+    }
+
+    .ad-slot .label {
+      display: block;
+      font-family: var(--font-mono);
+      font-size: 10.5px;
+      letter-spacing: .1em;
+      text-transform: uppercase;
+      color: var(--muted);
+      margin-bottom: 8px;
+    }
+
+    /* ===== Related pages ===== */
+    .related { background: var(--paper); padding: 70px 20px; }
+    .related-inner { width: min(1120px, 100%); margin: auto; }
+
+    .section-title {
+      text-align: center;
+      margin: 0 0 40px;
+      color: var(--field);
+      font-family: var(--font-display);
+      font-weight: 700;
+      font-size: clamp(24px, 3vw, 30px);
+      letter-spacing: -.5px;
+    }
+
+    .related-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 20px;
+    }
+
+    .card {
+      background: var(--cream);
+      border: 1px solid var(--border);
+      border-radius: 16px;
+      padding: 26px 24px;
+      box-shadow: var(--shadow-sm);
+      transition: transform .25s ease, box-shadow .25s ease, border-color .25s ease;
+      text-decoration: none;
+      display: block;
+    }
+
+    .card:hover {
+      transform: translateY(-6px);
+      box-shadow: var(--shadow);
+      border-color: rgba(31,77,44,.3);
+    }
+
+    .icon {
+      width: 50px;
+      height: 50px;
+      display: grid;
+      place-items: center;
+      border-radius: 13px;
+      font-size: 23px;
+      margin-bottom: 16px;
+      border: 2px solid transparent;
+    }
+
+    .icon-field { background: var(--field-tint); border-color: rgba(31,77,44,.25); }
+    .icon-soil  { background: var(--soil-tint);  border-color: rgba(166,58,31,.25); }
+    .icon-gold  { background: var(--gold-tint);  border-color: rgba(196,136,27,.3); }
+    .icon-ink   { background: var(--ink-tint);   border-color: rgba(42,38,32,.2); }
+
+    .card h3 {
+      margin: 0 0 8px;
+      color: var(--field);
+      font-family: var(--font-display);
+      font-weight: 700;
+      font-size: 17.5px;
+    }
+
+    .card p { margin: 0; color: var(--muted); font-size: 14px; }
+
+    .card-link {
+      display: inline-flex;
+      align-items: center;
+      gap: 5px;
+      margin-top: 12px;
+      font-family: var(--font-mono);
+      font-size: 11.5px;
+      font-weight: 600;
+      text-transform: uppercase;
+      letter-spacing: .05em;
+      color: var(--soil);
+    }
+
+    .card:hover .card-link { text-decoration: underline; }
+
+    /* ===== CTA ===== */
+    .cta { background: var(--cream); text-align: center; padding: 90px 20px; }
+
+    .cta-frame {
+      max-width: 640px;
+      margin: 0 auto;
+      border: 2px dashed var(--field);
+      border-radius: 20px;
+      padding: 48px 36px;
+    }
+
+    .cta h2 {
+      color: var(--field);
+      font-family: var(--font-display);
+      font-weight: 700;
+      margin: 6px 0 14px;
+      font-size: clamp(24px, 3.2vw, 32px);
+    }
+
+    .section-intro {
+      max-width: 560px;
+      margin: 0 auto;
+      text-align: center;
+      color: var(--muted);
+      font-size: 15.5px;
+    }
+
+    .button {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      padding: 14px 26px;
+      border-radius: 11px;
+      text-decoration: none;
+      font-weight: 800;
+      font-size: 15px;
+      background: var(--gold);
+      color: var(--ink);
+      box-shadow: var(--shadow-sm);
+      transition: transform .2s ease, box-shadow .2s ease, background .2s ease;
+      border: none;
+      cursor: pointer;
+      margin-top: 22px;
+    }
+
+    .button:hover { background: var(--gold-dark); transform: translateY(-2px); box-shadow: var(--shadow); }
+
+    /* ===== Footer (universal — identical across all AgriBase pages) ===== */
+    footer {
+      position: relative;
+      background: linear-gradient(180deg, #1E2B18, #141F11);
+      color: rgba(251,243,230,.88);
+      padding: 60px 20px 30px;
+    }
+
+    .footer-top-edge {
+      position: absolute;
+      top: -1px;
+      left: 0;
+      right: 0;
+      width: 100%;
+      height: 40px;
+    }
+
+    .footer-inner {
+      width: min(1120px, calc(100% - 40px));
+      margin: auto;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      flex-wrap: wrap;
+      gap: 18px;
+    }
+
+    .footer-brand {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      font-family: var(--font-display);
+      font-weight: 700;
+      font-size: 18px;
+    }
+
+    .footer-brand .brand-icon { width: 36px; height: 36px; }
+    .footer-tagline { font-size: 13px; opacity: .75; margin-top: 3px; font-family: var(--font-mono); }
+
+    .footer-links { display: flex; gap: 20px; font-size: 13px; flex-wrap: wrap; }
+    .footer-links a { text-decoration: none; opacity: .85; }
+    .footer-links a:hover { opacity: 1; }
+
+    .footer-bottom {
+      width: min(1120px, calc(100% - 40px));
+      margin: 30px auto 0;
+      padding-top: 22px;
+      border-top: 1px solid rgba(255,255,255,.12);
+      text-align: center;
+      font-size: 12.5px;
+      opacity: .65;
+      font-family: var(--font-mono);
+    }
+
+    /* Scroll reveal */
+    .reveal { opacity: 0; transform: translateY(18px); transition: opacity .6s ease, transform .6s ease; }
+    .reveal.in-view { opacity: 1; transform: translateY(0); }
+
+    @media (prefers-reduced-motion: reduce) {
+      html { scroll-behavior: auto; }
+      .reveal { opacity: 1 !important; transform: none !important; transition: none !important; }
+      .card:hover, .button:hover { transform: none !important; }
+    }
+
+    /* ===== Responsive ===== */
+    @media (max-width: 900px) {
+      .related-grid { grid-template-columns: 1fr 1fr; }
+    }
+
+    @media (max-width: 640px) {
+      .toc ol { columns: 1; }
+    }
+
+    @media (max-width: 560px) {
+      .nav-links {
+        position: absolute;
+        top: 100%;
+        left: 0;
+        right: 0;
+        flex-direction: column;
+        align-items: flex-start;
+        gap: 6px;
+        background: linear-gradient(180deg, var(--field-dark), var(--field));
+        padding: 18px 20px 22px;
+        box-shadow: var(--shadow);
+        opacity: 0;
+        transform: translateY(-8px);
+        pointer-events: none;
+        transition: opacity .25s ease, transform .25s ease;
+      }
+      .nav-toggle-input:checked ~ .nav-links {
+        opacity: 1;
+        transform: translateY(0);
+        pointer-events: auto;
+      }
+      .nav-toggle {
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        gap: 5px;
+        width: 30px;
+        height: 30px;
+      }
+      .nav-toggle span {
+        display: block;
+        height: 2px;
+        background: var(--cream);
+        border-radius: 2px;
+        transition: transform .25s ease, opacity .25s ease;
+      }
+      .nav-toggle-input:checked ~ .nav-toggle span:nth-child(1){ transform: translateY(7px) rotate(45deg); }
+      .nav-toggle-input:checked ~ .nav-toggle span:nth-child(2){ opacity: 0; }
+      .nav-toggle-input:checked ~ .nav-toggle span:nth-child(3){ transform: translateY(-7px) rotate(-45deg); }
+
+      .related-grid { grid-template-columns: 1fr; }
+      .page-hero { padding: 44px 18px 60px; }
+      .article-wrap { padding: 48px 18px 10px; }
+      .cta-frame { padding: 36px 22px; }
+      .footer-inner { justify-content: center; text-align: center; }
+    }
+  </style>
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "Article",
+    "headline": "Running Your Farm Like a Business",
+    "description": "A practical agribusiness guide covering farm budgeting, production costs, pricing and profitability, marketing, record keeping, credit access, value addition and managing risk.",
+    "author": { "@type": "Person", "name": "Enock Chinatsvi", "url": "https://github.com/Chinatsvi" },
+    "image": "https://chinatsvi.github.io/farmers_community_feature_graphic.png",
+    "publisher": { "@type": "Organization", "name": "AgriBase" },
+    "mainEntityOfPage": "https://chinatsvi.github.io/Agribusiness/"
+  }
+  </script>
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "FAQPage",
+    "mainEntity": [
+      {
+        "@type": "Question",
+        "name": "How do I know my true cost of production on the farm?",
+        "acceptedAnswer": {
+          "@type": "Answer",
+          "text": "Count your own labor at a fair local wage, include easy-to-forget costs like transport and spoilage, and track cost per unit (per kilogram, bird or liter) rather than just total spend, so you know your real breakeven price."
+        }
+      },
+      {
+        "@type": "Question",
+        "name": "When is the best time to sell my crops for a better price?",
+        "acceptedAnswer": {
+          "@type": "Answer",
+          "text": "Prices for most crops and livestock products fall at harvest or peak supply and rise in the off-season. Where storage is possible, timing sales around this pattern can meaningfully improve income."
+        }
+      },
+      {
+        "@type": "Question",
+        "name": "How can smallholder farmers get better prices from buyers?",
+        "acceptedAnswer": {
+          "@type": "Answer",
+          "text": "Sort and grade produce for consistency, build relationships with buyers who trust your quality, compare multiple buyers instead of relying on one, and consider group marketing to negotiate collectively."
+        }
+      },
+      {
+        "@type": "Question",
+        "name": "Should I borrow money to expand my farm?",
+        "acceptedAnswer": {
+          "@type": "Answer",
+          "text": "Credit is best used for productive investment that expands capacity, not to cover a shortfall with no repayment plan. Compare the full cost of credit, including interest and fees, and match repayment timing to when farm income actually arrives."
+        }
+      },
+      {
+        "@type": "Question",
+        "name": "How do farmers manage risk from bad weather or price crashes?",
+        "acceptedAnswer": {
+          "@type": "Answer",
+          "text": "Diversify across more than one crop or enterprise, keep a cash or grain reserve, consider weather-index or livestock insurance where available, and avoid depending on a single buyer or supplier."
+        }
+      }
+    ]
+  }
+  </script>
+  <link rel="canonical" href="https://chinatsvi.github.io/Agribusiness/">
+</head>
+<body>
+
+  <!-- Navigation (universal — keep identical across all AgriBase pages) -->
+  <nav class="nav">
+    <div class="nav-inner">
+      <a class="brand" href="https://chinatsvi.github.io/farmers-community/">
+        <span class="brand-icon">
+          <img src="/favicon-256.png" alt="AgriBase icon">
+        </span>
+        <span>AgriBase</span>
+      </a>
+
+      <input type="checkbox" id="navToggle" class="nav-toggle-input">
+      <label for="navToggle" class="nav-toggle" aria-label="Open menu">
+        <span></span><span></span><span></span>
+      </label>
+
+      <div class="nav-links">
+        <a href="https://chinatsvi.github.io/farmers-community/">🏠 Home</a>
+        <a href="https://chinatsvi.github.io/planting/">🌱 Planting</a>
+        <a href="https://chinatsvi.github.io/weather/">🌦️ Weather</a>
+        <a href="https://chinatsvi.github.io/pests/">🐛 Pests</a>
+        <a href="https://chinatsvi.github.io/agribase-farm-tools/">🧰 Farm Tools</a>
+        <a href="https://chinatsvi.github.io/farmer-calculators/">🧮 Calculators</a>
+        <a href="https://chinatsvi.github.io/market/">💰 Market</a>
+        <a href="https://chinatsvi.github.io/farmers-community/#features">📚 Knowledge</a>
+      </div>
+    </div>
+  </nav>
+
+  <!-- Page hero -->
+  <header class="page-hero">
+    <div class="page-hero-inner">
+      <div class="breadcrumb"><a href="https://chinatsvi.github.io/farmers-community/">AgriBase</a> / Agribusiness</div>
+      <span class="page-hero-badge">💰 Agribusiness Guide</span>
+      <h1>Running Your Farm Like a Business</h1>
+      <p class="lead">
+        Good farming and good business go together. This guide covers the
+        budgeting, costing, marketing and record-keeping practices that
+        turn a season's harvest into a sustainable, profitable operation.
+      </p>
+    </div>
+    <svg class="page-hero-divider" viewBox="0 0 1200 40" preserveAspectRatio="none" xmlns="http://www.w3.org/2000/svg">
+      <path fill="#FBF3E6" d="M0,6 L40,22 L80,3 L120,30 L160,10 L200,34 L240,4 L280,26 L320,14 L360,32 L400,2 L440,20 L480,36 L520,8 L560,24 L600,12 L640,30 L680,4 L720,18 L760,34 L800,6 L840,28 L880,2 L920,22 L960,32 L1000,10 L1040,26 L1080,4 L1120,20 L1160,34 L1200,8 L1200,40 L0,40 Z"></path>
+    </svg>
+  </header>
+
+  <!-- ================= GOOGLE ADSENSE AD ================= -->
+  <div class="ad-slot-wrap">
+    <div class="ad-slot">
+      <span class="label">Advertisement</span>
+      <ins class="adsbygoogle"
+           style="display:block"
+           data-ad-client="ca-pub-2606126305565597"
+           data-ad-slot="7638324548"
+           data-ad-format="horizontal"
+           data-full-width-responsive="false"></ins>
+    </div>
+  </div>
+  <script>
+    (adsbygoogle = window.adsbygoogle || []).push({});
+  </script>
+  <!-- ===================================================== -->
+
+  <!-- Article -->
+  <div class="article-wrap">
+    <div class="article">
+
+      <nav class="toc reveal" aria-label="Table of contents">
+        <p class="toc-title">In this guide</p>
+        <ol>
+          <li><a href="#budgeting">1. Farm Budgeting</a></li>
+          <li><a href="#production-costs">2. Understanding Production Costs</a></li>
+          <li><a href="#pricing-profitability">3. Pricing &amp; Profitability</a></li>
+          <li><a href="#marketing">4. Marketing Your Produce</a></li>
+          <li><a href="#record-keeping">5. Record Keeping &amp; Financial Management</a></li>
+          <li><a href="#credit-inputs">6. Access to Credit &amp; Inputs</a></li>
+          <li><a href="#value-addition">7. Value Addition</a></li>
+          <li><a href="#risk-management">8. Managing Risk</a></li>
+          <li><a href="#sustainability">9. Building for the Long Term</a></li>
+        </ol>
+      </nav>
+
+      <section class="topic reveal" id="budgeting">
+        <p class="topic-number">01</p>
+        <h2>Farm Budgeting</h2>
+        <p>
+          A budget turns "I think this season will work out" into a plan
+          you can actually check yourself against as the season unfolds.
+        </p>
+        <ul>
+          <li><strong>Budget before the season starts.</strong> Estimate input costs, labor, and expected yield and price before committing money — it's far easier to adjust plans on paper than after inputs are already bought.</li>
+          <li><strong>Separate fixed and variable costs.</strong> Fixed costs (land, major equipment) don't change with how much you plant; variable costs (seed, fertilizer, labor) scale with the size of your operation — knowing the difference helps you see your real breakeven point.</li>
+          <li><strong>Build in a buffer.</strong> Weather, pest outbreaks and price swings are normal parts of farming — a budget with no contingency is a budget that breaks at the first surprise.</li>
+          <li><strong>Compare planned versus actual.</strong> Reviewing your budget against what actually happened at the end of the season is where the real learning happens, more than the plan itself.</li>
+        </ul>
+      </section>
+
+      <section class="topic reveal" id="production-costs">
+        <p class="topic-number">02</p>
+        <h2>Understanding Production Costs</h2>
+        <p>
+          Many farmers know their revenue but not their true cost of
+          production — without that number, it's impossible to know if a
+          season was actually profitable.
+        </p>
+        <ul>
+          <li><strong>Count your own labor.</strong> Family or unpaid labor still has a cost — valuing it at a fair local wage gives you a more honest picture of whether an enterprise is truly profitable.</li>
+          <li><strong>Track cost per unit, not just total spend.</strong> Knowing your cost per kilogram, per bird or per liter lets you compare enterprises and seasons on equal footing, and tells you your minimum viable selling price.</li>
+          <li><strong>Include the costs that are easy to forget.</strong> Transport, storage losses, spoilage and your own time spent selling all reduce your real margin, even when they don't show up on a simple input receipt.</li>
+          <li><strong>Revisit costs each season.</strong> Input prices, transport costs and labor rates change — a cost estimate from two seasons ago can lead you to under- or over-price your produce today.</li>
+        </ul>
+        <div class="callout">
+          <strong>In the field</strong>
+          Two farmers can have the same yield and very different profit if one has a much lower cost of production — cost control is often a bigger lever than yield alone.
+        </div>
+      </section>
+
+      <section class="topic reveal" id="pricing-profitability">
+        <p class="topic-number">03</p>
+        <h2>Pricing &amp; Profitability</h2>
+        <p>
+          Setting a price isn't just about what the market is paying today
+          — it's about understanding your own costs and the value you're
+          offering.
+        </p>
+        <ul>
+          <li><strong>Know your breakeven price.</strong> Selling below your true cost of production feels like income but is actually a loss — always know the minimum price at which you're not losing money.</li>
+          <li><strong>Watch seasonal price patterns.</strong> Prices for most crops and livestock products fall at harvest or peak supply and rise in the off-season — where storage is possible, timing sales around this pattern can meaningfully improve income.</li>
+          <li><strong>Understand what buyers value.</strong> Grade, freshness, consistency of supply and reliability often matter as much as raw price to buyers — meeting these can justify a better price than the lowest-cost competitor gets.</li>
+          <li><strong>Don't rely on a single buyer.</strong> A single buyer has more power to dictate price — comparing multiple buyers or markets, even occasionally, keeps you informed about what fair value looks like.</li>
+        </ul>
+      </section>
+
+    </div>
+  </div>
+
+  <!-- ================= GOOGLE ADSENSE AD ================= -->
+  <div class="ad-slot-wrap">
+    <div class="ad-slot">
+      <span class="label">Advertisement</span>
+      <ins class="adsbygoogle"
+           style="display:block"
+           data-ad-client="ca-pub-2606126305565597"
+           data-ad-slot="7638324548"
+           data-ad-format="horizontal"
+           data-full-width-responsive="false"></ins>
+    </div>
+  </div>
+  <script>
+    (adsbygoogle = window.adsbygoogle || []).push({});
+  </script>
+  <!-- ===================================================== -->
+
+  <div class="article-wrap" style="padding-top:10px;">
+    <div class="article">
+
+      <section class="topic reveal" id="marketing">
+        <p class="topic-number">04</p>
+        <h2>Marketing Your Produce</h2>
+        <p>
+          Producing well is only half the job — getting your produce to the
+          right buyer, in the right condition, determines what you actually
+          earn from it.
+        </p>
+        <ul>
+          <li><strong>Sell where the demand is.</strong> Local markets, urban buyers, processors and aggregators often pay different prices for the same product — research a few outlets rather than defaulting to the nearest option.</li>
+          <li><strong>Grade and present your produce well.</strong> Sorting by size and quality, and presenting produce cleanly, often earns a noticeably better price than mixed, unsorted lots — buyers pay for predictability.</li>
+          <li><strong>Build relationships with buyers.</strong> A buyer who trusts your consistency and quality will often offer better terms and first refusal than one you're negotiating with for the first time.</li>
+          <li><strong>Consider group marketing.</strong> Pooling produce with other farmers to meet larger orders or negotiate collectively can secure better prices than any one smallholder could get alone.</li>
+        </ul>
+      </section>
+
+      <section class="topic reveal" id="record-keeping">
+        <p class="topic-number">05</p>
+        <h2>Record Keeping &amp; Financial Management</h2>
+        <p>
+          Records are what let you treat the farm as a business you can
+          analyze and improve, rather than a set of activities you simply
+          repeat each season.
+        </p>
+        <ul>
+          <li><strong>Track income and expenses separately by enterprise.</strong> If you run more than one enterprise — say, maize and poultry — separate records reveal which is actually driving your profit and which may be losing money.</li>
+          <li><strong>Keep it simple and consistent.</strong> A basic notebook or spreadsheet used every week beats an elaborate system abandoned after a month — consistency matters more than sophistication.</li>
+          <li><strong>Reconcile regularly.</strong> Checking that recorded sales match money received (and recorded expenses match money spent) catches errors and losses early.</li>
+          <li><strong>Use records to plan next season.</strong> Historical costs and yields are the best data you have for next season's budget — better than guesswork or general advice alone.</li>
+        </ul>
+      </section>
+
+      <section class="topic reveal" id="credit-inputs">
+        <p class="topic-number">06</p>
+        <h2>Access to Credit &amp; Inputs</h2>
+        <p>
+          Credit can help a farm grow faster, but it needs to be matched
+          carefully to what the farm can actually repay.
+        </p>
+        <ul>
+          <li><strong>Borrow for productive investment, not consumption.</strong> Credit used to expand production capacity or bridge a genuine input gap is different from credit used to cover a shortfall with no plan to repay it from farm income.</li>
+          <li><strong>Understand the full cost of credit.</strong> Interest rates, fees and repayment timing all affect whether a loan actually leaves you better off — compare these carefully, not just the amount offered.</li>
+          <li><strong>Explore group and cooperative options.</strong> Savings groups, cooperatives and farmer associations often provide more accessible credit and input-buying power than approaching a lender alone.</li>
+          <li><strong>Match repayment to your cash flow.</strong> A loan due before your harvest is sold creates unnecessary pressure — align repayment schedules with when farm income actually arrives.</li>
+        </ul>
+      </section>
+
+      <section class="topic reveal" id="value-addition">
+        <p class="topic-number">07</p>
+        <h2>Value Addition</h2>
+        <p>
+          Processing or packaging raw produce can capture more of the value
+          in the supply chain, rather than leaving it all with the next
+          buyer down the line.
+        </p>
+        <ul>
+          <li><strong>Look for simple, low-cost processing first.</strong> Cleaning, sorting, drying or basic packaging often earns a meaningfully better price for relatively little added investment.</li>
+          <li><strong>Match value addition to real demand.</strong> Before investing in processing equipment, confirm there's a buyer or market for the processed product — production capacity without a market is a cost, not an asset.</li>
+          <li><strong>Consider shelf life and storage.</strong> Some value-added products (dried, milled or preserved) can be sold months later at a better price, smoothing income across the year rather than concentrating it at harvest.</li>
+          <li><strong>Factor in the extra labor and cost.</strong> Value addition takes time and inputs — make sure the price premium actually covers these before assuming it's automatically more profitable.</li>
+        </ul>
+      </section>
+
+      <section class="topic reveal" id="risk-management">
+        <p class="topic-number">08</p>
+        <h2>Managing Risk</h2>
+        <p>
+          Weather, pests, disease and price swings are part of farming —
+          managing risk is about reducing how much any single shock can
+          hurt you.
+        </p>
+        <ul>
+          <li><strong>Diversify where practical.</strong> Growing more than one crop, or combining crops and livestock, means a single pest outbreak, disease or price crash doesn't wipe out your entire income.</li>
+          <li><strong>Keep some reserve.</strong> A cash or grain reserve, even a modest one, helps absorb a bad season without forcing you to sell assets or take on expensive debt.</li>
+          <li><strong>Consider insurance where available.</strong> Weather-index or livestock insurance products, where accessible, can protect against the most severe losses that a reserve alone can't cover.</li>
+          <li><strong>Don't over-commit to a single buyer or input supplier.</strong> Concentration risk applies to both your sales and your supply chain — a single point of failure on either side is a vulnerability.</li>
+        </ul>
+      </section>
+
+      <section class="topic reveal" id="sustainability">
+        <p class="topic-number">09</p>
+        <h2>Building for the Long Term</h2>
+        <p>
+          A profitable single season is good; a farm business that keeps
+          improving year after year is the real goal.
+        </p>
+        <ul>
+          <li><strong>Reinvest deliberately.</strong> Decide in advance what portion of profit goes back into the farm (better inputs, equipment, land improvement) versus what's needed for household expenses.</li>
+          <li><strong>Protect the resource base.</strong> Soil health, water sources and pasture condition are the foundation of future profitability — a short-term gain that degrades them is a long-term cost.</li>
+          <li><strong>Keep learning and adapting.</strong> Markets, climate and available technology change — farmers who treat each season as a chance to learn something new tend to out-improve those who repeat the same approach indefinitely.</li>
+          <li><strong>Plan succession and continuity.</strong> Thinking early about who will run the farm in future, and documenting key knowledge and practices, protects the business beyond any one season or person.</li>
+        </ul>
+      </section>
+
+    </div>
+  </div>
+
+  <!-- Related pages -->
+  <section class="related">
+    <div class="related-inner">
+      <h2 class="section-title">Explore More</h2>
+      <div class="related-grid">
+        <a href="https://chinatsvi.github.io/crop-farming/" class="card reveal">
+          <div class="icon icon-field">🌱</div>
+          <h3>Crop Farming</h3>
+          <p>Soil preparation, planting, fertilization, pest management and harvesting.</p>
+          <span class="card-link">Click here →</span>
+        </a>
+        <a href="https://chinatsvi.github.io/livestock/" class="card reveal">
+          <div class="icon icon-gold">🐄</div>
+          <h3>Livestock Farming</h3>
+          <p>Feeding, breeding, health and management for poultry, cattle, goats, pigs and fish.</p>
+          <span class="card-link">Click here →</span>
+        </a>
+        <a href="https://chinatsvi.github.io/digital-farming/" class="card reveal">
+          <div class="icon icon-ink">📱</div>
+          <h3>Digital Farming</h3>
+          <p>Weather tools, farm records, sensors and AI support for modern agriculture.</p>
+          <span class="card-link">Click here →</span>
+        </a>
+      </div>
+    </div>
+  </section>
+
+  <!-- CTA -->
+  <section class="cta">
+    <div class="cta-frame reveal">
+      <span class="eyebrow" style="color:var(--soil); display:block; text-align:center; margin-bottom:12px;">Put it into practice</span>
+      <h2>Track Costs &amp; Sales in AgriBase</h2>
+      <p class="section-intro">
+        Keep records of expenses, income and yields, browse the marketplace,
+        and get AI-powered farming guidance whenever you need it.
+      </p>
+      <a class="button"
+         href="https://chinatsvi.github.io/farmer-community-contact-us/"
+         target="_blank"
+         rel="noopener noreferrer">
+        Get Started
+      </a>
+    </div>
+  </section>
+
+  <!-- Footer (universal — keep identical across all AgriBase pages) -->
+  <footer>
+    <svg class="footer-top-edge" viewBox="0 0 1200 40" preserveAspectRatio="none" xmlns="http://www.w3.org/2000/svg">
+      <path fill="#1E2B18" d="M0,34 L40,18 L80,37 L120,10 L160,30 L200,6 L240,36 L280,14 L320,26 L360,8 L400,38 L440,20 L480,4 L520,32 L560,16 L600,28 L640,10 L680,36 L720,22 L760,6 L800,34 L840,12 L880,38 L920,18 L960,8 L1000,30 L1040,14 L1080,36 L1120,20 L1160,6 L1200,32 L1200,0 L0,0 Z"></path>
+    </svg>
+
+    <div class="footer-inner">
+      <div>
+        <div class="footer-brand">
+          <span class="brand-icon">
+            <img src="/favicon-256.png" alt="Farmer Community icon">
+          </span>
+          <span>Farmer Community</span>
+        </div>
+        <div class="footer-tagline">Connect. Learn. Farm Better.</div>
+      </div>
+
+      <div class="footer-links">
+        <a href="https://chinatsvi.github.io/farmer-community-Help-FAQ/" target="_blank" rel="noopener noreferrer">Help &amp; FAQ</a>
+        <a href="https://chinatsvi.github.io/farmer-community-privacy-policy/" target="_blank" rel="noopener noreferrer">Privacy Policy</a>
+        <a href="https://chinatsvi.github.io/farmer-community-terms/" target="_blank" rel="noopener noreferrer">Terms &amp; Conditions</a>
+        <a href="https://chinatsvi.github.io/farmer-community-contact-us/" target="_blank" rel="noopener noreferrer">Contact Us</a>
+      </div>
+    </div>
+
+    <div class="footer-bottom">
+      © 2026 Farmer Community. All rights reserved.
+    </div>
+  </footer>
+
+  <script>
+    (function () {
+      var els = document.querySelectorAll('.reveal');
+      if (window.matchMedia('(prefers-reduced-motion: reduce)').matches || !('IntersectionObserver' in window)) {
+        els.forEach(function (el) { el.classList.add('in-view'); });
+        return;
+      }
+      var io = new IntersectionObserver(function (entries) {
+        entries.forEach(function (entry) {
+          if (entry.isIntersecting) {
+            entry.target.classList.add('in-view');
+            io.unobserve(entry.target);
+          }
+        });
+      }, { threshold: 0.15 });
+      els.forEach(function (el) { io.observe(el); });
+    })();
+  </script>
+
+</body>
+</html>
