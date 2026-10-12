@@ -81,7 +81,8 @@
 .core-service-card h3 {
   font-size: 22px;
   margin-bottom: 10px;
-  color: var(--field-dark);
+  color: #174d28; /* Prominent rich agricultural green */
+  font-weight: 800;
 }
 
 .core-service-card p {
