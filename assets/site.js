@@ -9,7 +9,7 @@
   function renderHeader() {
     const host = document.querySelector('[data-site-header]');
     if (!host) return;
-    host.innerHTML = '<nav class="site-nav"><div class="nav-inner"><a class="brand" href="/" aria-label="AgriBase home"><img src="/favicon-256.png" alt="AgriBase logo">AgriBase</a><button class="nav-toggle" aria-label="Open navigation"><span></span><span></span><span></span></button><div class="nav-links">' +
+    host.innerHTML = '<nav class="site-nav"><div class="nav-inner"><a class="brand" href="/" aria-label="D & C – AgriBase home"><img src="/favicon-256.png" alt="D & C AgriBase logo"><span>D &amp; C – AgriBase</span></a><button class="nav-toggle" aria-label="Open navigation"><span></span><span></span><span></span></button><div class="nav-links">' +
       nav.map(item => '<a href="' + item[1] + '"' + (item[0].toLowerCase().includes('consultancy') ? ' class="nav-consultancy-link" style="color:var(--gold);font-weight:800;"' : '') + '>' + item[0] + '</a>').join('') +
       '</div></div></nav>';
     host.querySelector('.nav-toggle').onclick = () => host.querySelector('.nav-links').classList.toggle('open');
