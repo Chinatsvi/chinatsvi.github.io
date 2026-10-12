@@ -1,16 +1,16 @@
 (function () {
   const content = window.AGRIBASE_CONTENT || { articles: [] };
   const nav = [
-    ['Home', '/'], ['AgriBase Platform', '/'], ['Farming Guides', '/guides/'], ['Calculators', '/calculators/'],
-    ['Crop Calendar', '/calendar/'], ['Resources', '/resources/'], ['Academy', '/academy/'],
-    ['Farmer Community App', '/community/'], ['Questions', '/faq/'], ['About', '/about/'], ['Contact', '/contact/']
+    ['Home', '/'], ['Consultancy', '/consultancy/'], ['Farming Guides', '/guides/'], ['Calculators', '/calculators/'],
+    ['Crop Calendar', '/calendar/'], ['Ask Question', '/consultancy/ask/'], ['Book Visit', '/consultancy/farm-visit/'],
+    ['Farmer Community App', '/community/'], ['About Us', '/about/'], ['Contact', '/contact/']
   ];
 
   function renderHeader() {
     const host = document.querySelector('[data-site-header]');
     if (!host) return;
     host.innerHTML = '<nav class="site-nav"><div class="nav-inner"><a class="brand" href="/" aria-label="AgriBase home"><img src="/favicon-256.png" alt="AgriBase logo">AgriBase</a><button class="nav-toggle" aria-label="Open navigation"><span></span><span></span><span></span></button><div class="nav-links">' +
-      nav.map(item => '<a href="' + item[1] + '"' + (item[0].toLowerCase().includes('farmer community') ? ' aria-label="Farmer Community App"' : '') + '>' + item[0] + '</a>').join('') +
+      nav.map(item => '<a href="' + item[1] + '"' + (item[0].toLowerCase().includes('consultancy') ? ' class="nav-consultancy-link" style="color:var(--gold);font-weight:800;"' : '') + '>' + item[0] + '</a>').join('') +
       '</div></div></nav>';
     host.querySelector('.nav-toggle').onclick = () => host.querySelector('.nav-links').classList.toggle('open');
   }
@@ -18,7 +18,7 @@
   function renderFooter() {
     const host = document.querySelector('[data-site-footer]');
     if (!host) return;
-    host.innerHTML = '<footer><div class="container footer-grid"><div><h3>AgriBase</h3><p>AgriBase is the agricultural platform powering the Farmer Community App, with practical farming knowledge, decision tools, and community resources for farmers.</p><div class="footer-visitor-strip"><span class="footer-live-dot"></span><span class="footer-visitor-label">Platform Visits:</span><a href="https://hits.sh/chinatsvi.github.io/" target="_blank" rel="noopener" title="Live platform traffic counter" class="footer-visitor-badge"><img src="https://hits.sh/chinatsvi.github.io.svg?label=Visitors&color=2e7d32&labelColor=1a3b2b" alt="AgriBase Real Visitor Counter" loading="eager"></a></div></div><div><h3>Learn</h3><a href="/guides/">Farming Guides</a><a href="/academy/">Farming Academy</a><a href="/calendar/">Crop Calendar</a></div><div><h3>Tools</h3><a href="/calculators/">Farm Calculators</a><a href="/resources/">Resources</a><a href="/community/">Farmer Community App</a></div><div><h3>Trust</h3><a href="/about/">About</a><a href="/contact/">Contact</a><a href="/privacy/">Privacy Policy</a><a href="/terms/">Terms of Use</a><a href="/disclaimer/">Disclaimer</a></div></div><div class="container copyright">&copy; 2026 AgriBase. The agricultural platform powering the Farmer Community App. Educational information; adapt decisions to local conditions.</div></footer>';
+    host.innerHTML = '<footer><div class="container footer-grid"><div><h3>D & C – AgriBase</h3><p>Practical agricultural consultancy, on-farm advisory services, training and digital farming tools powering the Farmer Community App.</p><p style="margin-top:6px;font-size:13px;color:rgba(255,255,255,0.75);">Founder & Principal Consultant: Enock Chinatsvi</p><div class="footer-visitor-strip"><span class="footer-live-dot"></span><span class="footer-visitor-label">Platform Visits:</span><a href="https://hits.sh/chinatsvi.github.io/" target="_blank" rel="noopener" title="Live platform traffic counter" class="footer-visitor-badge"><img src="https://hits.sh/chinatsvi.github.io.svg?label=Visitors&color=2e7d32&labelColor=1a3b2b" alt="AgriBase Real Visitor Counter" loading="eager"></a></div></div><div><h3>Consultancy</h3><a href="/consultancy/">Consultancy Home</a><a href="/consultancy/services/">Services Catalogue</a><a href="/consultancy/ask/">Ask Farming Question</a><a href="/consultancy/farm-visit/">Book Farm Visit</a><a href="/consultancy/online-consultation/">Online Consultations</a><a href="/consultancy/portal/">Track My Enquiry</a><a href="/consultancy/admin/">Consultant Workspace</a></div><div><h3>Farming Tools</h3><a href="/guides/">Farming Guides</a><a href="/calculators/">Farm Calculators</a><a href="/decision-tools/">Decision Tools</a><a href="/calendar/">Crop Calendar</a><a href="/community/">Farmer Community App</a></div><div><h3>Company & Trust</h3><a href="/about/">About Us</a><a href="/contact/">Contact & Bookings</a><a href="/privacy/">Privacy Policy</a><a href="/terms/">Terms & Advisory Disclaimer</a><a href="/disclaimer/">Disclaimer</a></div></div><div class="container copyright">&copy; 2026 D & C – AgriBase. Practical Agricultural Knowledge. Professional Advice. Better Farming Decisions.</div></footer>';
   }
 
   function articleCards(items) {

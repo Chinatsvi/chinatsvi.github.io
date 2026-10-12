@@ -1,0 +1,146 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1">
+  <meta name="theme-color" content="#1f4d2c">
+  <meta name="description" content="Agricultural services catalogue of D & C – AgriBase. Crop inspection, soil fertility programmes, pest management, irrigation audits, and farm visits.">
+  <title>Agricultural Services Catalogue | D & C – AgriBase</title>
+  <link rel="stylesheet" href="/assets/site.css">
+  <link rel="stylesheet" href="/assets/consultancy.css">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link href="https://fonts.googleapis.com/css2?family=Fraunces:wght@600;700;900&family=Karla:wght@400;700;800&display=swap" rel="stylesheet">
+  <link rel="canonical" href="https://chinatsvi.github.io/consultancy/services/">
+</head>
+<body>
+  <div data-site-header></div>
+
+  <header class="page-hero">
+    <div class="container">
+      <div class="breadcrumb"><a href="/">Home</a> / <a href="/consultancy/">Consultancy</a> / Services Catalogue</div>
+      <div class="eyebrow">Professional Farm Advisory</div>
+      <h1>Agricultural Services Catalogue</h1>
+      <p class="lead">Explore our advisory offerings covering crop production, soil fertility, pest and disease scouting, water audits, farm planning, and practical worker training.</p>
+    </div>
+  </header>
+
+  <main class="section">
+    <div class="container">
+      
+      <!-- Filter and Search Bar -->
+      <div class="filter-bar">
+        <label for="category-filter" style="font-weight:700;font-size:14px;">Filter Category:</label>
+        <select id="category-filter" class="form-control" onchange="filterServices()">
+          <option value="all">All Service Categories (10)</option>
+          <option value="farm-visit">Physical Farm Visits</option>
+          <option value="online-consult">Online Consultations</option>
+          <option value="soil-fertility">Soil & Fertiliser Management</option>
+          <option value="pest-disease">Pest & Disease Management</option>
+          <option value="irrigation">Irrigation & Water</option>
+          <option value="livestock">Livestock Production</option>
+          <option value="farm-planning">Farm Planning & Enterprise</option>
+          <option value="training">Farmer & Worker Training</option>
+        </select>
+
+        <label for="pricing-filter" style="font-weight:700;font-size:14px;margin-left:12px;">Pricing Type:</label>
+        <select id="pricing-filter" class="form-control" onchange="filterServices()">
+          <option value="all">All Pricing Models</option>
+          <option value="free">Free Enquiry</option>
+          <option value="fixed">Fixed Price</option>
+          <option value="quote">Request Quotation</option>
+        </select>
+      </div>
+
+      <!-- Services List Container -->
+      <div id="services-grid" style="display:grid;grid-template-columns:repeat(auto-fit,minmax(320px,1fr));gap:24px;">
+        <!-- Injected via JavaScript from AgriConsult.getServices() -->
+      </div>
+
+      <!-- Notice regarding Pricing and Quotes -->
+      <div class="notice" style="margin-top:40px;">
+        <h3>Transparent Quotation Policy</h3>
+        <p>Prices listed above reflect base professional service fees. Physical on-farm visits may incur additional travel expenses based on verified road mileage from our nearest operational hub. All farm visit bookings are subject to an upfront formal quotation accepted by the farmer prior to confirmation.</p>
+      </div>
+
+    </div>
+  </main>
+
+  <div data-site-footer></div>
+
+  <script src="/assets/consultancy.js"></script>
+  <script src="/assets/content.js"></script>
+  <script src="/assets/site.js"></script>
+  <script>
+    function renderServices(list) {
+      var grid = document.getElementById('services-grid');
+      if (!list || !list.length) {
+        grid.innerHTML = '<div style="grid-column:1/-1;text-align:center;padding:40px;">No services match your selected filters.</div>';
+        return;
+      }
+
+      grid.innerHTML = list.map(function(s) {
+        var priceTag = '';
+        if (s.pricingType === 'free') {
+          priceTag = '<span style="color:var(--field);font-weight:800;font-size:16px;">Free Service</span>';
+        } else if (s.pricingType === 'fixed') {
+          priceTag = '<span style="color:var(--field);font-weight:800;font-size:16px;">Fixed: ' + AgriConsult.formatMoney(s.basePrice) + '</span>';
+        } else {
+          priceTag = '<span style="color:var(--soil);font-weight:800;font-size:15px;">By Quotation (from ' + AgriConsult.formatMoney(s.basePrice) + ')</span>';
+        }
+
+        var actionUrl = '/consultancy/farm-visit/?service=' + encodeURIComponent(s.id);
+        var actionText = 'Request Farm Visit';
+        if (s.categoryKey === 'ask-question') {
+          actionUrl = '/consultancy/ask/';
+          actionText = 'Ask Question';
+        } else if (s.categoryKey === 'online-consult') {
+          actionUrl = '/consultancy/online-consultation/?service=' + encodeURIComponent(s.id);
+          actionText = 'Book Consultation';
+        } else if (s.categoryKey === 'training') {
+          actionUrl = '/consultancy/farm-visit/?type=training&service=' + encodeURIComponent(s.id);
+          actionText = 'Request Training';
+        }
+
+        return '<article class="card" style="display:flex;flex-direction:column;justify-content:space-between;padding:24px;">' +
+          '<div>' +
+            '<div style="display:flex;justify-content:space-between;align-items:flex-start;margin-bottom:8px;">' +
+              '<span class="meta" style="margin:0;">' + s.category + '</span>' +
+              priceTag +
+            '</div>' +
+            '<h3 style="font-size:20px;margin:8px 0 10px;">' + s.name + '</h3>' +
+            '<p style="color:var(--muted);font-size:14.5px;margin-bottom:14px;">' + s.shortDesc + '</p>' +
+            '<p style="font-size:13.5px;color:var(--ink);line-height:1.5;margin-bottom:16px;">' + s.detailedDesc + '</p>' +
+            '<div style="font-size:13px;color:var(--muted);border-top:1px dashed var(--border);padding-top:12px;margin-bottom:16px;">' +
+              '<div><strong>Delivery:</strong> ' + s.deliveryMethod + '</div>' +
+              '<div><strong>Duration:</strong> ' + s.duration + '</div>' +
+              '<div><strong>Written Report:</strong> ' + (s.reportIncluded ? 'Yes, Included' : 'Not required') + '</div>' +
+              '<div><strong>Follow-up Support:</strong> ' + (s.followUpIncluded ? 'Included' : 'Ad-hoc') + '</div>' +
+            '</div>' +
+          '</div>' +
+          '<div>' +
+            '<a class="button" href="' + actionUrl + '" style="width:100%;text-align:center;">' + actionText + ' →</a>' +
+          '</div>' +
+        '</article>';
+      }).join('');
+    }
+
+    function filterServices() {
+      var cat = document.getElementById('category-filter').value;
+      var price = document.getElementById('pricing-filter').value;
+      var all = AgriConsult.getServices(true);
+
+      var filtered = all.filter(function(s) {
+        var matchCat = (cat === 'all' || s.categoryKey === cat || (cat === 'farm-visit' && s.deliveryMethod.toLowerCase().includes('farm visit')));
+        var matchPrice = (price === 'all' || s.pricingType === price);
+        return matchCat && matchPrice;
+      });
+
+      renderServices(filtered);
+    }
+
+    document.addEventListener('DOMContentLoaded', function() {
+      filterServices();
+    });
+  </script>
+</body>
+</html>

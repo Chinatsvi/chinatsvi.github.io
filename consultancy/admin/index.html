@@ -1,0 +1,1059 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1">
+  <meta name="theme-color" content="#1f4d2c">
+  <meta name="robots" content="noindex, nofollow">
+  <title>Administrative Dashboard | D & C – AgriBase</title>
+  <link rel="stylesheet" href="/assets/site.css">
+  <link rel="stylesheet" href="/assets/consultancy.css">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link href="https://fonts.googleapis.com/css2?family=Fraunces:wght@600;700;900&family=Karla:wght@400;700;800&display=swap" rel="stylesheet">
+  <style>
+    .admin-stat-card {
+      background: #ffffff;
+      border: 1px solid var(--border);
+      border-radius: 10px;
+      padding: 18px;
+      box-shadow: var(--shadow-sm);
+    }
+    .admin-stat-num {
+      font-size: 28px;
+      font-weight: 800;
+      font-family: var(--display);
+      color: var(--field);
+    }
+    .table-responsive {
+      overflow-x: auto;
+      background: #ffffff;
+      border-radius: 8px;
+      border: 1px solid var(--border);
+    }
+    table.admin-table {
+      width: 100%;
+      border-collapse: collapse;
+      font-size: 14px;
+      text-align: left;
+    }
+    table.admin-table th {
+      background: var(--cream);
+      padding: 12px 14px;
+      border-bottom: 2px solid var(--border);
+      color: var(--field-dark);
+      font-weight: 700;
+    }
+    table.admin-table td {
+      padding: 12px 14px;
+      border-bottom: 1px solid var(--border-light);
+    }
+    .action-btn-sm {
+      padding: 4px 8px;
+      font-size: 12px;
+      border-radius: 4px;
+      border: 1px solid var(--border);
+      background: var(--cream);
+      cursor: pointer;
+      font-weight: 700;
+    }
+    .action-btn-sm:hover {
+      background: var(--field);
+      color: #fff;
+    }
+  </style>
+</head>
+<body>
+  <div data-site-header></div>
+
+  <!-- Admin Login Security Shield -->
+  <div id="admin-auth-shield" style="display:block;min-height:70vh;padding:40px 16px;">
+    <div style="max-width:440px;margin:40px auto;background:#ffffff;border:1px solid var(--border);border-radius:12px;padding:32px;box-shadow:var(--shadow);">
+      <div style="text-align:center;margin-bottom:20px;">
+        <div style="width:50px;height:50px;background:var(--field-light);color:var(--field);border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:24px;margin:0 auto 10px;">🔐</div>
+        <h2 style="margin:0;font-size:22px;">Consultant Workspace</h2>
+        <p style="margin:4px 0 0;font-size:13.5px;color:var(--muted);">D & C – AgriBase Operational Management</p>
+      </div>
+
+      <form id="admin-login-form" onsubmit="handleAdminLogin(event)">
+        <div class="form-group">
+          <label for="admin-role">Select Operational Role:</label>
+          <select id="admin-role" class="form-control">
+            <option value="principal">Founder & Principal Consultant (Enock Chinatsvi)</option>
+            <option value="assistant">Client Services & Operations Assistant</option>
+          </select>
+        </div>
+
+        <div class="form-group">
+          <label for="admin-passcode">Staff Access Passcode:</label>
+          <input type="password" id="admin-passcode" class="form-control" required placeholder="Enter security passcode">
+          <span class="form-hint">Default initial access code: <strong>agribase2026</strong></span>
+        </div>
+
+        <button type="submit" class="button" style="width:100%;margin-top:10px;">Access Workspace →</button>
+      </form>
+    </div>
+  </div>
+
+  <!-- Main Authenticated Admin Workspace -->
+  <div id="admin-app" style="display:none;">
+    <header class="page-hero" style="padding:28px 0;">
+      <div class="container" style="display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:16px;">
+        <div>
+          <div class="eyebrow" style="margin-bottom:4px;">Operations Workspace</div>
+          <h1 style="font-size:28px;margin:0;">D & C – AgriBase Administration</h1>
+          <div style="font-size:13.5px;color:var(--muted);margin-top:4px;">
+            Logged in as: <strong id="current-user-role-label">Principal Consultant</strong> | 
+            <a href="#" onclick="logoutAdmin()" style="color:#b91c1c;font-weight:700;">Sign Out</a>
+          </div>
+        </div>
+        <div style="display:flex;gap:10px;">
+          <button class="button secondary" onclick="exportDataBackup()" style="font-size:13px;padding:8px 14px;">📥 Export Backup (JSON)</button>
+          <button class="button" onclick="openNewQuotationModal()" style="font-size:13px;padding:8px 14px;">+ Create Quotation</button>
+        </div>
+      </div>
+    </header>
+
+    <main class="section" style="padding-top:24px;">
+      <div class="container">
+        
+        <!-- Navigation Tabs -->
+        <div class="tabs-nav">
+          <button class="tab-btn active" onclick="switchAdminTab('overview')">Overview</button>
+          <button class="tab-btn" onclick="switchAdminTab('enquiries')">Enquiries (<span id="tab-cnt-enq">0</span>)</button>
+          <button class="tab-btn" onclick="switchAdminTab('bookings')">Bookings (<span id="tab-cnt-bkg">0</span>)</button>
+          <button class="tab-btn" onclick="switchAdminTab('quotations')">Quotations (<span id="tab-cnt-qt">0</span>)</button>
+          <button class="tab-btn" onclick="switchAdminTab('reports')">Farm Reports</button>
+          <button class="tab-btn" onclick="switchAdminTab('customers')">Customers</button>
+          <button class="tab-btn" onclick="switchAdminTab('services')">Services & Pricing</button>
+          <button class="tab-btn" onclick="switchAdminTab('settings')">Company Settings</button>
+        </div>
+
+        <!-- TAB: OVERVIEW -->
+        <div id="tab-overview" class="admin-tab-pane">
+          <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(200px,1fr));gap:16px;margin-bottom:28px;">
+            <div class="admin-stat-card">
+              <div style="font-size:13px;font-weight:700;color:var(--muted);">NEW ENQUIRIES</div>
+              <div class="admin-stat-num" id="stat-new-enquiries">0</div>
+              <div style="font-size:12px;color:var(--muted);">Awaiting initial review</div>
+            </div>
+            <div class="admin-stat-card">
+              <div style="font-size:13px;font-weight:700;color:var(--muted);">PENDING FARM VISITS</div>
+              <div class="admin-stat-num" id="stat-pending-visits">0</div>
+              <div style="font-size:12px;color:var(--muted);">Requests needing quote/review</div>
+            </div>
+            <div class="admin-stat-card">
+              <div style="font-size:13px;font-weight:700;color:var(--muted);">UPCOMING APPOINTMENTS</div>
+              <div class="admin-stat-num" id="stat-confirmed-appts">0</div>
+              <div style="font-size:12px;color:var(--muted);">Confirmed farm visits & calls</div>
+            </div>
+            <div class="admin-stat-card">
+              <div style="font-size:13px;font-weight:700;color:var(--muted);">OUTSTANDING QUOTES</div>
+              <div class="admin-stat-num" id="stat-open-quotes">0</div>
+              <div style="font-size:12px;color:var(--muted);">Sent & awaiting acceptance</div>
+            </div>
+          </div>
+
+          <!-- Quick Action Work Queue -->
+          <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(340px,1fr));gap:24px;">
+            <div style="background:#ffffff;border:1px solid var(--border);border-radius:10px;padding:20px;">
+              <h3 style="margin-top:0;font-size:18px;">Recent Unanswered Enquiries</h3>
+              <div id="overview-recent-enquiries"></div>
+            </div>
+            <div style="background:#ffffff;border:1px solid var(--border);border-radius:10px;padding:20px;">
+              <h3 style="margin-top:0;font-size:18px;">Pending Visit Requests & Action Items</h3>
+              <div id="overview-recent-bookings"></div>
+            </div>
+          </div>
+        </div>
+
+        <!-- TAB: ENQUIRIES -->
+        <div id="tab-enquiries" class="admin-tab-pane" style="display:none;">
+          <div class="filter-bar">
+            <input type="text" id="filter-enq-search" class="form-control" placeholder="Search by name, phone, crop..." oninput="renderEnquiriesTable()">
+            <select id="filter-enq-status" class="form-control" onchange="renderEnquiriesTable()">
+              <option value="all">All Statuses</option>
+              <option value="NEW">NEW</option>
+              <option value="UNDER_REVIEW">UNDER_REVIEW</option>
+              <option value="AWAITING_INFO">AWAITING_INFO</option>
+              <option value="ANSWERED">ANSWERED</option>
+              <option value="CLOSED">CLOSED</option>
+            </select>
+          </div>
+          <div class="table-responsive">
+            <table class="admin-table">
+              <thead>
+                <tr>
+                  <th>Ref</th>
+                  <th>Date</th>
+                  <th>Farmer</th>
+                  <th>Location</th>
+                  <th>Enterprise</th>
+                  <th>Status</th>
+                  <th>Actions</th>
+                </tr>
+              </thead>
+              <tbody id="enquiries-table-body"></tbody>
+            </table>
+          </div>
+        </div>
+
+        <!-- TAB: BOOKINGS -->
+        <div id="tab-bookings" class="admin-tab-pane" style="display:none;">
+          <div class="filter-bar">
+            <input type="text" id="filter-bkg-search" class="form-control" placeholder="Search bookings..." oninput="renderBookingsTable()">
+            <select id="filter-bkg-status" class="form-control" onchange="renderBookingsTable()">
+              <option value="all">All Statuses</option>
+              <option value="REQUEST_RECEIVED">REQUEST_RECEIVED</option>
+              <option value="QUOTATION_SENT">QUOTATION_SENT</option>
+              <option value="AWAITING_PAYMENT">AWAITING_PAYMENT</option>
+              <option value="CONFIRMED">CONFIRMED</option>
+              <option value="COMPLETED">COMPLETED</option>
+              <option value="CANCELLED">CANCELLED</option>
+            </select>
+          </div>
+          <div class="table-responsive">
+            <table class="admin-table">
+              <thead>
+                <tr>
+                  <th>Ref</th>
+                  <th>Type</th>
+                  <th>Farmer</th>
+                  <th>Location / District</th>
+                  <th>Service</th>
+                  <th>Pref Date</th>
+                  <th>Status</th>
+                  <th>Actions</th>
+                </tr>
+              </thead>
+              <tbody id="bookings-table-body"></tbody>
+            </table>
+          </div>
+        </div>
+
+        <!-- TAB: QUOTATIONS -->
+        <div id="tab-quotations" class="admin-tab-pane" style="display:none;">
+          <div class="filter-bar">
+            <input type="text" id="filter-qt-search" class="form-control" placeholder="Search quotations..." oninput="renderQuotationsTable()">
+            <button class="button" onclick="openNewQuotationModal()">+ Create Quotation</button>
+          </div>
+          <div class="table-responsive">
+            <table class="admin-table">
+              <thead>
+                <tr>
+                  <th>Ref</th>
+                  <th>Date</th>
+                  <th>Client</th>
+                  <th>Service</th>
+                  <th>Distance</th>
+                  <th>Total</th>
+                  <th>Status</th>
+                  <th>Actions</th>
+                </tr>
+              </thead>
+              <tbody id="quotations-table-body"></tbody>
+            </table>
+          </div>
+        </div>
+
+        <!-- TAB: REPORTS -->
+        <div id="tab-reports" class="admin-tab-pane" style="display:none;">
+          <div class="filter-bar">
+            <button class="button" onclick="openNewReportModal()">+ Create Farm Visit Report</button>
+          </div>
+          <div class="table-responsive">
+            <table class="admin-table">
+              <thead>
+                <tr>
+                  <th>Ref</th>
+                  <th>Inspection Date</th>
+                  <th>Customer / Farm</th>
+                  <th>Enterprise</th>
+                  <th>Status</th>
+                  <th>Actions</th>
+                </tr>
+              </thead>
+              <tbody id="reports-table-body"></tbody>
+            </table>
+          </div>
+        </div>
+
+        <!-- TAB: CUSTOMERS -->
+        <div id="tab-customers" class="admin-tab-pane" style="display:none;">
+          <div class="table-responsive">
+            <table class="admin-table">
+              <thead>
+                <tr>
+                  <th>Name</th>
+                  <th>Phone</th>
+                  <th>Email</th>
+                  <th>Location</th>
+                  <th>Farm Name</th>
+                  <th>Interactions</th>
+                  <th>Last Active</th>
+                </tr>
+              </thead>
+              <tbody id="customers-table-body"></tbody>
+            </table>
+          </div>
+        </div>
+
+        <!-- TAB: SERVICES -->
+        <div id="tab-services" class="admin-tab-pane" style="display:none;">
+          <div style="margin-bottom:20px;">
+            <p style="color:var(--muted);">Manage published advisory services, delivery methods, and pricing structure.</p>
+          </div>
+          <div id="services-admin-list"></div>
+        </div>
+
+        <!-- TAB: SETTINGS -->
+        <div id="tab-settings" class="admin-tab-pane" style="display:none;">
+          <div class="consult-form-wrap" style="max-width:760px;margin:0;">
+            <h3 style="margin-top:0;">Company Operational Settings</h3>
+            <form id="settings-form" onsubmit="saveCompanySettings(event)">
+              <div class="form-row">
+                <div class="form-group">
+                  <label for="set-company-name">Company Name</label>
+                  <input type="text" id="set-company-name" class="form-control">
+                </div>
+                <div class="form-group">
+                  <label for="set-tagline">Tagline</label>
+                  <input type="text" id="set-tagline" class="form-control">
+                </div>
+              </div>
+              <div class="form-row">
+                <div class="form-group">
+                  <label for="set-founder-name">Principal Consultant Name</label>
+                  <input type="text" id="set-founder-name" class="form-control">
+                </div>
+                <div class="form-group">
+                  <label for="set-phone">Phone / WhatsApp Number</label>
+                  <input type="text" id="set-phone" class="form-control">
+                </div>
+              </div>
+              <div class="form-row">
+                <div class="form-group">
+                  <label for="set-travel-rate">Travel Rate ($ per km)</label>
+                  <input type="number" step="0.05" id="set-travel-rate" class="form-control">
+                  <span class="form-hint">Used for auto-calculating farm visit round-trip vehicle travel charges.</span>
+                </div>
+                <div class="form-group">
+                  <label for="set-currency">Operational Currency</label>
+                  <select id="set-currency" class="form-control">
+                    <option value="USD">USD ($)</option>
+                    <option value="ZAR">ZAR (R)</option>
+                    <option value="ZWG">ZWG</option>
+                  </select>
+                </div>
+              </div>
+              <div class="form-group">
+                <label for="set-service-area">Service Geographic Coverage Area</label>
+                <input type="text" id="set-service-area" class="form-control">
+              </div>
+              <div class="form-group">
+                <label for="set-hours">Business Operational Hours</label>
+                <input type="text" id="set-hours" class="form-control">
+              </div>
+              <div class="form-group">
+                <label for="set-reg-note">Company Status Disclosure Notice</label>
+                <textarea id="set-reg-note" class="form-control"></textarea>
+              </div>
+              <button type="submit" class="button">Save Operational Settings →</button>
+            </form>
+          </div>
+        </div>
+
+      </div>
+    </main>
+  </div>
+
+  <!-- Detail Modal (Generic for Enquiry, Booking, etc.) -->
+  <div id="admin-detail-modal" class="consult-modal">
+    <div class="consult-modal-content">
+      <button onclick="closeModal()" style="position:absolute;top:16px;right:16px;background:none;border:none;font-size:24px;cursor:pointer;">&times;</button>
+      <div id="modal-body-content"></div>
+    </div>
+  </div>
+
+  <div data-site-footer></div>
+
+  <script src="/assets/consultancy.js"></script>
+  <script src="/assets/content.js"></script>
+  <script src="/assets/site.js"></script>
+  <script>
+    var currentRole = 'principal';
+
+    function handleAdminLogin(e) {
+      e.preventDefault();
+      var pass = document.getElementById('admin-passcode').value.trim();
+      var role = document.getElementById('admin-role').value;
+
+      // Safe client side authentication for small founder & assistant team
+      if (pass === 'agribase2026' || pass === 'enock2026') {
+        currentRole = role;
+        AgriConsult.setAdminSession({ role: role, loggedInAt: new Date().toISOString() });
+        showAdminApp();
+      } else {
+        alert('Incorrect passcode. Please check your credentials.');
+      }
+    }
+
+    function checkAdminSession() {
+      var sess = AgriConsult.getAdminSession();
+      if (sess) {
+        currentRole = sess.role;
+        showAdminApp();
+      }
+    }
+
+    function logoutAdmin() {
+      AgriConsult.clearAdminSession();
+      document.getElementById('admin-app').style.display = 'none';
+      document.getElementById('admin-auth-shield').style.display = 'block';
+    }
+
+    function showAdminApp() {
+      document.getElementById('admin-auth-shield').style.display = 'none';
+      document.getElementById('admin-app').style.display = 'block';
+      document.getElementById('current-user-role-label').textContent = 
+        currentRole === 'principal' ? 'Principal Consultant (Enock Chinatsvi)' : 'Operations Assistant';
+      refreshAllData();
+    }
+
+    function switchAdminTab(tabName) {
+      document.querySelectorAll('.tab-btn').forEach(function(btn) { btn.classList.remove('active'); });
+      document.querySelectorAll('.admin-tab-pane').forEach(function(pane) { pane.style.display = 'none'; });
+
+      event.target.classList.add('active');
+      var target = document.getElementById('tab-' + tabName);
+      if (target) target.style.display = 'block';
+
+      if (tabName === 'enquiries') renderEnquiriesTable();
+      if (tabName === 'bookings') renderBookingsTable();
+      if (tabName === 'quotations') renderQuotationsTable();
+      if (tabName === 'reports') renderReportsTable();
+      if (tabName === 'customers') renderCustomersTable();
+      if (tabName === 'services') renderServicesAdmin();
+      if (tabName === 'settings') loadSettingsForm();
+    }
+
+    function refreshAllData() {
+      var enqs = AgriConsult.getEnquiries();
+      var bkgs = AgriConsult.getBookings();
+      var qts = AgriConsult.getQuotations();
+
+      document.getElementById('tab-cnt-enq').textContent = enqs.length;
+      document.getElementById('tab-cnt-bkg').textContent = bkgs.length;
+      document.getElementById('tab-cnt-qt').textContent = qts.length;
+
+      // Stats
+      var newEnqs = enqs.filter(function(e) { return e.status === 'NEW'; }).length;
+      var pendingVisits = bkgs.filter(function(b) { return b.status === 'REQUEST_RECEIVED' || b.status === 'UNDER_REVIEW'; }).length;
+      var confirmed = bkgs.filter(function(b) { return b.status === 'CONFIRMED'; }).length;
+      var openQuotes = qts.filter(function(q) { return q.status === 'SENT'; }).length;
+
+      document.getElementById('stat-new-enquiries').textContent = newEnqs;
+      document.getElementById('stat-pending-visits').textContent = pendingVisits;
+      document.getElementById('stat-confirmed-appts').textContent = confirmed;
+      document.getElementById('stat-open-quotes').textContent = openQuotes;
+
+      // Render Overview Quick Lists
+      renderOverviewLists(enqs, bkgs);
+    }
+
+    function renderOverviewLists(enqs, bkgs) {
+      var enqBox = document.getElementById('overview-recent-enquiries');
+      var recentEnqs = enqs.slice(0, 4);
+      if (recentEnqs.length === 0) {
+        enqBox.innerHTML = '<p style="color:var(--muted);font-size:13px;">No enquiries submitted yet.</p>';
+      } else {
+        enqBox.innerHTML = recentEnqs.map(function(e) {
+          return '<div style="border-bottom:1px solid var(--border-light);padding:10px 0;display:flex;justify-content:space-between;align-items:center;">' +
+            '<div>' +
+              '<strong>' + e.farmerName + '</strong> (' + e.reference + ')<br>' +
+              '<small style="color:var(--muted);">' + e.cropOrLivestock + ' • ' + e.location + '</small>' +
+            '</div>' +
+            '<div>' +
+              '<span class="badge badge-' + e.status + '">' + e.status + '</span> ' +
+              '<button class="action-btn-sm" onclick="openEnquiryModal(\'' + e.reference + '\')">Review</button>' +
+            '</div>' +
+          '</div>';
+        }).join('');
+      }
+
+      var bkgBox = document.getElementById('overview-recent-bookings');
+      var recentBkgs = bkgs.slice(0, 4);
+      if (recentBkgs.length === 0) {
+        bkgBox.innerHTML = '<p style="color:var(--muted);font-size:13px;">No bookings submitted yet.</p>';
+      } else {
+        bkgBox.innerHTML = recentBkgs.map(function(b) {
+          return '<div style="border-bottom:1px solid var(--border-light);padding:10px 0;display:flex;justify-content:space-between;align-items:center;">' +
+            '<div>' +
+              '<strong>' + b.farmerName + '</strong> (' + b.reference + ')<br>' +
+              '<small style="color:var(--muted);">' + b.serviceName + ' • ' + b.preferredDate + '</small>' +
+            '</div>' +
+            '<div>' +
+              '<span class="badge badge-' + b.status + '">' + b.status + '</span> ' +
+              '<button class="action-btn-sm" onclick="openBookingModal(\'' + b.reference + '\')">Manage</button>' +
+            '</div>' +
+          '</div>';
+        }).join('');
+      }
+    }
+
+    // Modal Operations
+    function closeModal() {
+      document.getElementById('admin-detail-modal').classList.remove('active');
+    }
+
+    function openEnquiryModal(ref) {
+      var enquiry = AgriConsult.getEnquiries().find(function(e) { return e.reference === ref; });
+      if (!enquiry) return;
+
+      var attachmentsHtml = '';
+      if (enquiry.attachments && enquiry.attachments.length) {
+        attachmentsHtml = '<div style="margin-top:10px;"><strong>Attachments:</strong><div style="display:flex;gap:10px;margin-top:6px;flex-wrap:wrap;">' +
+          enquiry.attachments.map(function(att) {
+            return '<div style="background:var(--cream);padding:6px 10px;border-radius:4px;border:1px solid var(--border);font-size:12px;">' +
+              '📎 <a href="' + att.dataUrl + '" download="' + att.name + '" target="_blank">' + att.name + '</a>' +
+            '</div>';
+          }).join('') + '</div></div>';
+      }
+
+      var html = '<h3 style="margin-top:0;">Enquiry Review: ' + enquiry.reference + '</h3>' +
+        '<div style="font-size:14px;line-height:1.6;margin-bottom:16px;">' +
+          '<p><strong>Farmer:</strong> ' + enquiry.farmerName + ' | <strong>Phone:</strong> ' + enquiry.phone + ' | <strong>Email:</strong> ' + (enquiry.email || 'N/A') + '</p>' +
+          '<p><strong>Location:</strong> ' + enquiry.location + ', ' + enquiry.country + ' | <strong>Farm:</strong> ' + (enquiry.farmName || 'N/A') + '</p>' +
+          '<p><strong>Enterprise:</strong> ' + enquiry.cropOrLivestock + ' (' + enquiry.category + ')</p>' +
+          '<p><strong>Problem Description:</strong><br>' + enquiry.questionDescription + '</p>' +
+          (enquiry.previousActions ? '<p><strong>Previous Actions:</strong> ' + enquiry.previousActions + '</p>' : '') +
+          attachmentsHtml +
+        '</div>' +
+        '<div style="border-top:1.5px solid var(--border);padding-top:16px;">' +
+          '<div class="form-group">' +
+            '<label>Status:</label>' +
+            '<select id="modal-enq-status" class="form-control">' +
+              ['NEW','UNDER_REVIEW','AWAITING_INFO','ANSWERED','CLOSED'].map(function(st) {
+                return '<option value="' + st + '"' + (enquiry.status === st ? ' selected' : '') + '>' + st + '</option>';
+              }).join('') +
+            '</select>' +
+          '</div>' +
+          '<div class="form-group">' +
+            '<label>Official Agronomic Response (Sent to farmer):</label>' +
+            '<textarea id="modal-enq-response" class="form-control">' + (enquiry.officialResponse || '') + '</textarea>' +
+          '</div>' +
+          '<div class="form-group">' +
+            '<label>Internal Consultant Notes:</label>' +
+            '<textarea id="modal-enq-notes" class="form-control">' + (enquiry.internalNotes || '') + '</textarea>' +
+          '</div>' +
+          '<div style="display:flex;gap:10px;justify-content:flex-end;">' +
+            '<button class="button secondary" onclick="closeModal()">Cancel</button>' +
+            '<button class="button" onclick="saveEnquiryModalChanges(\'' + enquiry.reference + '\')">Save & Update Status</button>' +
+          '</div>' +
+        '</div>';
+
+      document.getElementById('modal-body-content').innerHTML = html;
+      document.getElementById('admin-detail-modal').classList.add('active');
+    }
+
+    function saveEnquiryModalChanges(ref) {
+      var status = document.getElementById('modal-enq-status').value;
+      var response = document.getElementById('modal-enq-response').value;
+      var notes = document.getElementById('modal-enq-notes').value;
+
+      AgriConsult.updateEnquiry(ref, {
+        status: status,
+        officialResponse: response,
+        internalNotes: notes
+      });
+
+      closeModal();
+      refreshAllData();
+      renderEnquiriesTable();
+      alert('Enquiry updated successfully.');
+    }
+
+    function openBookingModal(ref) {
+      var booking = AgriConsult.getBookings().find(function(b) { return b.reference === ref; });
+      if (!booking) return;
+
+      var html = '<h3 style="margin-top:0;">Booking Management: ' + booking.reference + '</h3>' +
+        '<div style="font-size:14px;line-height:1.6;margin-bottom:16px;">' +
+          '<p><strong>Farmer:</strong> ' + booking.farmerName + ' | <strong>Phone:</strong> ' + booking.phone + '</p>' +
+          '<p><strong>Farm Location:</strong> ' + booking.farmAddress + ' (' + booking.district + ', ' + booking.nearestTown + ')</p>' +
+          '<p><strong>Service:</strong> ' + booking.serviceName + ' (' + booking.type + ')</p>' +
+          '<p><strong>Preferred Date:</strong> ' + booking.preferredDate + ' | <strong>Time:</strong> ' + booking.preferredTime + '</p>' +
+          '<p><strong>Directions / Access:</strong> ' + (booking.accessArrangements || 'None') + '</p>' +
+          '<p><strong>Challenges:</strong> ' + booking.description + '</p>' +
+          (booking.quotationRef ? '<p><strong>Linked Quotation:</strong> <a href="/consultancy/quotation/?ref=' + booking.quotationRef + '" target="_blank">' + booking.quotationRef + '</a></p>' : '') +
+        '</div>' +
+        '<div style="border-top:1.5px solid var(--border);padding-top:16px;">' +
+          '<div class="form-row">' +
+            '<div class="form-group">' +
+              '<label>Status:</label>' +
+              '<select id="modal-bkg-status" class="form-control">' +
+                ['REQUEST_RECEIVED','UNDER_REVIEW','AWAITING_INFO','QUOTATION_PENDING','QUOTATION_SENT','AWAITING_PAYMENT','CONFIRMED','RESCHEDULED','COMPLETED','CANCELLED','DECLINED'].map(function(st) {
+                  return '<option value="' + st + '"' + (booking.status === st ? ' selected' : '') + '>' + st + '</option>';
+                }).join('') +
+              '</select>' +
+            '</div>' +
+            '<div class="form-group">' +
+              '<label>Confirmed Appointment Date:</label>' +
+              '<input type="date" id="modal-bkg-conf-date" class="form-control" value="' + (booking.confirmedDate || booking.preferredDate) + '">' +
+            '</div>' +
+          '</div>' +
+          '<div class="form-group">' +
+            '<label>Internal Operational Notes:</label>' +
+            '<textarea id="modal-bkg-notes" class="form-control">' + (booking.internalNotes || '') + '</textarea>' +
+          '</div>' +
+          '<div style="display:flex;justify-content:space-between;flex-wrap:wrap;gap:10px;">' +
+            '<div>' +
+              '<button class="button secondary" onclick="prepareQuoteFromBooking(\'' + booking.reference + '\')">Generate Quotation for this Visit →</button>' +
+            '</div>' +
+            '<div style="display:flex;gap:10px;">' +
+              '<button class="button secondary" onclick="closeModal()">Close</button>' +
+              '<button class="button" onclick="saveBookingModalChanges(\'' + booking.reference + '\')">Save Booking</button>' +
+            '</div>' +
+          '</div>' +
+        '</div>';
+
+      document.getElementById('modal-body-content').innerHTML = html;
+      document.getElementById('admin-detail-modal').classList.add('active');
+    }
+
+    function saveBookingModalChanges(ref) {
+      var status = document.getElementById('modal-bkg-status').value;
+      var confDate = document.getElementById('modal-bkg-conf-date').value;
+      var notes = document.getElementById('modal-bkg-notes').value;
+
+      AgriConsult.updateBooking(ref, {
+        status: status,
+        confirmedDate: confDate,
+        internalNotes: notes
+      });
+
+      closeModal();
+      refreshAllData();
+      renderBookingsTable();
+      alert('Booking updated.');
+    }
+
+    function prepareQuoteFromBooking(bkgRef) {
+      closeModal();
+      openNewQuotationModal(bkgRef);
+    }
+
+    // Quotation Creation Modal
+    function openNewQuotationModal(linkedBkgRef) {
+      var bkg = linkedBkgRef ? AgriConsult.getBookings().find(function(b) { return b.reference === linkedBkgRef; }) : null;
+      var settings = AgriConsult.getSettings();
+
+      var defaultName = bkg ? bkg.farmerName : '';
+      var defaultPhone = bkg ? bkg.phone : '';
+      var defaultEmail = bkg ? bkg.email : '';
+      var defaultFarm = bkg ? bkg.farmName : '';
+      var defaultLoc = bkg ? (bkg.nearestTown || bkg.district || '') : '';
+      var defaultService = bkg ? bkg.serviceName : 'On-Farm Crop Inspection & Agronomic Health Check';
+      var defaultDate = bkg ? bkg.preferredDate : '';
+
+      var html = '<h3 style="margin-top:0;">Prepare Official Quotation</h3>' +
+        '<form id="admin-create-quote-form" onsubmit="saveNewQuotation(event)">' +
+          '<input type="hidden" id="q-modal-bkg-ref" value="' + (linkedBkgRef || '') + '">' +
+          '<div class="form-row">' +
+            '<div class="form-group">' +
+              '<label>Client Name:</label>' +
+              '<input type="text" id="q-modal-name" class="form-control" required value="' + defaultName + '">' +
+            '</div>' +
+            '<div class="form-group">' +
+              '<label>Client Phone:</label>' +
+              '<input type="tel" id="q-modal-phone" class="form-control" required value="' + defaultPhone + '">' +
+            '</div>' +
+          '</div>' +
+          '<div class="form-row">' +
+            '<div class="form-group">' +
+              '<label>Farm Name:</label>' +
+              '<input type="text" id="q-modal-farm" class="form-control" value="' + defaultFarm + '">' +
+            '</div>' +
+            '<div class="form-group">' +
+              '<label>Farm Location / District:</label>' +
+              '<input type="text" id="q-modal-loc" class="form-control" value="' + defaultLoc + '">' +
+            '</div>' +
+          '</div>' +
+          '<div class="form-row">' +
+            '<div class="form-group">' +
+              '<label>Consultancy Service:</label>' +
+              '<input type="text" id="q-modal-service" class="form-control" required value="' + defaultService + '">' +
+            '</div>' +
+            '<div class="form-group">' +
+              '<label>Proposed Appointment Date:</label>' +
+              '<input type="date" id="q-modal-date" class="form-control" value="' + defaultDate + '">' +
+            '</div>' +
+          '</div>' +
+          '<div class="form-row">' +
+            '<div class="form-group">' +
+              '<label>Professional Service Fee ($):</label>' +
+              '<input type="number" step="1" id="q-modal-fee" class="form-control" required value="60" oninput="calcQuotePreview()">' +
+            '</div>' +
+            '<div class="form-group">' +
+              '<label>Travel Distance (Round-trip km):</label>' +
+              '<input type="number" step="1" id="q-modal-dist" class="form-control" value="40" oninput="calcQuotePreview()">' +
+            '</div>' +
+          '</div>' +
+          '<div class="form-row">' +
+            '<div class="form-group">' +
+              '<label>Travel Rate ($ per km):</label>' +
+              '<input type="number" step="0.05" id="q-modal-rate" class="form-control" value="' + settings.travelRatePerKm + '" oninput="calcQuotePreview()">' +
+            '</div>' +
+            '<div class="form-group">' +
+              '<label>Additional Charges / Tests ($):</label>' +
+              '<input type="number" step="1" id="q-modal-add" class="form-control" value="0" oninput="calcQuotePreview()">' +
+            '</div>' +
+          '</div>' +
+          '<div class="form-row">' +
+            '<div class="form-group">' +
+              '<label>Discount ($):</label>' +
+              '<input type="number" step="1" id="q-modal-discount" class="form-control" value="0" oninput="calcQuotePreview()">' +
+            '</div>' +
+            '<div class="form-group">' +
+              '<label>Total Calculated Quotation:</label>' +
+              '<div id="q-modal-preview-total" style="font-size:22px;font-weight:800;color:var(--field);padding-top:8px;">$86.00 USD</div>' +
+            '</div>' +
+          '</div>' +
+          '<div class="form-group">' +
+            '<label>Payment Terms:</label>' +
+            '<input type="text" id="q-modal-terms" class="form-control" value="50% deposit to confirm appointment, balance upon delivery of farm report.">' +
+          '</div>' +
+          '<div style="display:flex;gap:10px;justify-content:flex-end;margin-top:20px;">' +
+            '<button type="button" class="button secondary" onclick="closeModal()">Cancel</button>' +
+            '<button type="submit" class="button">Create & Issue Quotation →</button>' +
+          '</div>' +
+        '</form>';
+
+      document.getElementById('modal-body-content').innerHTML = html;
+      document.getElementById('admin-detail-modal').classList.add('active');
+      calcQuotePreview();
+    }
+
+    function calcQuotePreview() {
+      var fee = parseFloat(document.getElementById('q-modal-fee').value) || 0;
+      var dist = parseFloat(document.getElementById('q-modal-dist').value) || 0;
+      var rate = parseFloat(document.getElementById('q-modal-rate').value) || 0;
+      var add = parseFloat(document.getElementById('q-modal-add').value) || 0;
+      var disc = parseFloat(document.getElementById('q-modal-discount').value) || 0;
+
+      var travel = dist * rate;
+      var total = Math.max(0, fee + travel + add - disc);
+      document.getElementById('q-modal-preview-total').textContent = '$' + total.toFixed(2) + ' USD';
+    }
+
+    function saveNewQuotation(e) {
+      e.preventDefault();
+      var fee = parseFloat(document.getElementById('q-modal-fee').value) || 0;
+      var dist = parseFloat(document.getElementById('q-modal-dist').value) || 0;
+      var rate = parseFloat(document.getElementById('q-modal-rate').value) || 0;
+      var add = parseFloat(document.getElementById('q-modal-add').value) || 0;
+      var disc = parseFloat(document.getElementById('q-modal-discount').value) || 0;
+
+      var data = {
+        bookingRef: document.getElementById('q-modal-bkg-ref').value,
+        farmerName: document.getElementById('q-modal-name').value,
+        phone: document.getElementById('q-modal-phone').value,
+        farmName: document.getElementById('q-modal-farm').value,
+        farmLocation: document.getElementById('q-modal-loc').value,
+        serviceName: document.getElementById('q-modal-service').value,
+        proposedDate: document.getElementById('q-modal-date').value,
+        serviceFee: fee,
+        travelDistanceKm: dist,
+        travelRate: rate,
+        travelFee: dist * rate,
+        additionalCharges: add,
+        discount: disc,
+        paymentTerms: document.getElementById('q-modal-terms').value
+      };
+
+      var quote = AgriConsult.saveQuotation(data);
+      closeModal();
+      refreshAllData();
+      renderQuotationsTable();
+      alert('Quotation ' + quote.reference + ' generated! You can now send it to the farmer.');
+    }
+
+    // Report Creation Modal
+    function openNewReportModal() {
+      var html = '<h3 style="margin-top:0;">Create Farm Visit Inspection Report</h3>' +
+        '<form id="admin-create-report-form" onsubmit="saveNewReport(event)">' +
+          '<div class="form-row">' +
+            '<div class="form-group">' +
+              '<label>Client Name:</label>' +
+              '<input type="text" id="r-modal-name" class="form-control" required placeholder="Farmer name">' +
+            '</div>' +
+            '<div class="form-group">' +
+              '<label>Farm Name & Location:</label>' +
+              '<input type="text" id="r-modal-farm" class="form-control" required placeholder="Plot / Location">' +
+            '</div>' +
+          '</div>' +
+          '<div class="form-row">' +
+            '<div class="form-group">' +
+              '<label>Inspection Date:</label>' +
+              '<input type="date" id="r-modal-date" class="form-control" required>' +
+            '</div>' +
+            '<div class="form-group">' +
+              '<label>Enterprise / Crop Inspected:</label>' +
+              '<input type="text" id="r-modal-enterprise" class="form-control" required placeholder="e.g. Tomatoes (Rodade)">' +
+            '</div>' +
+          '</div>' +
+          '<div class="form-group">' +
+            '<label>Purpose of Assessment:</label>' +
+            '<input type="text" id="r-modal-purpose" class="form-control" value="Agronomic crop inspection and disease diagnosis">' +
+          '</div>' +
+          '<div class="form-group">' +
+            '<label>In-Field Observations:</label>' +
+            '<textarea id="r-modal-obs" class="form-control" required placeholder="Describe physical stand conditions, soil moisture at root depth, symptoms seen..."></textarea>' +
+          '</div>' +
+          '<div class="form-group">' +
+            '<label>Evidence-Based Findings:</label>' +
+            '<textarea id="r-modal-findings" class="form-control" required placeholder="Root cause diagnosis based on symptoms and evidence..."></textarea>' +
+          '</div>' +
+          '<div class="form-group">' +
+            '<label>Corrective Recommendations:</label>' +
+            '<textarea id="r-modal-recs" class="form-control" required placeholder="Step 1: ...\nStep 2: ..."></textarea>' +
+          '</div>' +
+          '<div class="form-group">' +
+            '<label>Action Priorities & Timeline:</label>' +
+            '<input type="text" id="r-modal-priorities" class="form-control" value="Immediate spray intervention within 24 hours; adjust irrigation schedule.">' +
+          '</div>' +
+          '<div style="display:flex;gap:10px;justify-content:flex-end;margin-top:20px;">' +
+            '<button type="button" class="button secondary" onclick="closeModal()">Cancel</button>' +
+            '<button type="submit" class="button">Publish Report →</button>' +
+          '</div>' +
+        '</form>';
+
+      document.getElementById('modal-body-content').innerHTML = html;
+      document.getElementById('admin-detail-modal').classList.add('active');
+    }
+
+    function saveNewReport(e) {
+      e.preventDefault();
+      var data = {
+        customerName: document.getElementById('r-modal-name').value,
+        farmName: document.getElementById('r-modal-farm').value,
+        farmLocation: document.getElementById('r-modal-farm').value,
+        visitDate: document.getElementById('r-modal-date').value,
+        enterprise: document.getElementById('r-modal-enterprise').value,
+        purposeOfAssessment: document.getElementById('r-modal-purpose').value,
+        observations: document.getElementById('r-modal-obs').value,
+        findingsEvidence: document.getElementById('r-modal-findings').value,
+        recommendations: document.getElementById('r-modal-recs').value,
+        actionPriorities: document.getElementById('r-modal-priorities').value,
+        status: 'FINALISED'
+      };
+
+      var rep = AgriConsult.saveReport(data);
+      closeModal();
+      refreshAllData();
+      renderReportsTable();
+      alert('Report ' + rep.reference + ' generated!');
+    }
+
+    // Tables Rendering
+    function renderEnquiriesTable() {
+      var query = (document.getElementById('filter-enq-search').value || '').toLowerCase();
+      var status = document.getElementById('filter-enq-status').value;
+      var list = AgriConsult.getEnquiries();
+
+      var filtered = list.filter(function(e) {
+        var matchQ = (e.farmerName + e.phone + e.cropOrLivestock + e.reference).toLowerCase().includes(query);
+        var matchSt = (status === 'all' || e.status === status);
+        return matchQ && matchSt;
+      });
+
+      var tbody = document.getElementById('enquiries-table-body');
+      if (!filtered.length) {
+        tbody.innerHTML = '<tr><td colspan="7" style="text-align:center;padding:20px;">No enquiries found.</td></tr>';
+        return;
+      }
+
+      tbody.innerHTML = filtered.map(function(e) {
+        return '<tr>' +
+          '<td><strong>' + e.reference + '</strong></td>' +
+          '<td>' + AgriConsult.formatDate(e.createdAt) + '</td>' +
+          '<td>' + e.farmerName + '<br><small>' + e.phone + '</small></td>' +
+          '<td>' + e.location + '</td>' +
+          '<td>' + e.cropOrLivestock + '</td>' +
+          '<td><span class="badge badge-' + e.status + '">' + e.status + '</span></td>' +
+          '<td><button class="action-btn-sm" onclick="openEnquiryModal(\'' + e.reference + '\')">Review</button></td>' +
+        '</tr>';
+      }).join('');
+    }
+
+    function renderBookingsTable() {
+      var query = (document.getElementById('filter-bkg-search').value || '').toLowerCase();
+      var status = document.getElementById('filter-bkg-status').value;
+      var list = AgriConsult.getBookings();
+
+      var filtered = list.filter(function(b) {
+        var matchQ = (b.farmerName + b.phone + b.serviceName + b.reference).toLowerCase().includes(query);
+        var matchSt = (status === 'all' || b.status === status);
+        return matchQ && matchSt;
+      });
+
+      var tbody = document.getElementById('bookings-table-body');
+      if (!filtered.length) {
+        tbody.innerHTML = '<tr><td colspan="8" style="text-align:center;padding:20px;">No bookings found.</td></tr>';
+        return;
+      }
+
+      tbody.innerHTML = filtered.map(function(b) {
+        return '<tr>' +
+          '<td><strong>' + b.reference + '</strong></td>' +
+          '<td>' + b.type + '</td>' +
+          '<td>' + b.farmerName + '<br><small>' + b.phone + '</small></td>' +
+          '<td>' + (b.nearestTown || b.district || b.location || 'N/A') + '</td>' +
+          '<td>' + b.serviceName + '</td>' +
+          '<td>' + b.preferredDate + '</td>' +
+          '<td><span class="badge badge-' + b.status + '">' + b.status + '</span></td>' +
+          '<td><button class="action-btn-sm" onclick="openBookingModal(\'' + b.reference + '\')">Manage</button></td>' +
+        '</tr>';
+      }).join('');
+    }
+
+    function renderQuotationsTable() {
+      var query = (document.getElementById('filter-qt-search').value || '').toLowerCase();
+      var list = AgriConsult.getQuotations();
+
+      var filtered = list.filter(function(q) {
+        return (q.farmerName + q.phone + q.serviceName + q.reference).toLowerCase().includes(query);
+      });
+
+      var tbody = document.getElementById('quotations-table-body');
+      if (!filtered.length) {
+        tbody.innerHTML = '<tr><td colspan="8" style="text-align:center;padding:20px;">No quotations found.</td></tr>';
+        return;
+      }
+
+      tbody.innerHTML = filtered.map(function(q) {
+        return '<tr>' +
+          '<td><strong>' + q.reference + '</strong></td>' +
+          '<td>' + AgriConsult.formatDate(q.createdAt) + '</td>' +
+          '<td>' + q.farmerName + '</td>' +
+          '<td>' + q.serviceName + '</td>' +
+          '<td>' + (q.travelDistanceKm ? q.travelDistanceKm + ' km' : '-') + '</td>' +
+          '<td><strong>' + AgriConsult.formatMoney(q.totalAmount, q.currency) + '</strong></td>' +
+          '<td><span class="badge badge-' + (q.status === 'ACCEPTED' ? 'CONFIRMED' : 'QUOTATION_SENT') + '">' + q.status + '</span></td>' +
+          '<td>' +
+            '<a class="action-btn-sm" href="/consultancy/quotation/?ref=' + q.reference + '" target="_blank">View</a> ' +
+            '<a class="action-btn-sm" href="https://wa.me/' + (q.phone || '').replace(/[^0-9]/g, '') + '?text=' + encodeURIComponent('Hi ' + q.farmerName + ', your D & C AgriBase quotation ' + q.reference + ' is ready: https://chinatsvi.github.io/consultancy/quotation/?ref=' + q.reference) + '" target="_blank">WhatsApp</a>' +
+          '</td>' +
+        '</tr>';
+      }).join('');
+    }
+
+    function renderReportsTable() {
+      var list = AgriConsult.getReports();
+      var tbody = document.getElementById('reports-table-body');
+      if (!list.length) {
+        tbody.innerHTML = '<tr><td colspan="6" style="text-align:center;padding:20px;">No farm inspection reports generated yet.</td></tr>';
+        return;
+      }
+
+      tbody.innerHTML = list.map(function(r) {
+        return '<tr>' +
+          '<td><strong>' + r.reference + '</strong></td>' +
+          '<td>' + AgriConsult.formatDate(r.visitDate) + '</td>' +
+          '<td>' + r.customerName + '<br><small>' + r.farmName + '</small></td>' +
+          '<td>' + r.enterprise + '</td>' +
+          '<td><span class="badge badge-CONFIRMED">' + r.status + '</span></td>' +
+          '<td><a class="action-btn-sm" href="/consultancy/reports/?ref=' + r.reference + '" target="_blank">View / Print</a></td>' +
+        '</tr>';
+      }).join('');
+    }
+
+    function renderCustomersTable() {
+      var list = AgriConsult.getCustomers();
+      var tbody = document.getElementById('customers-table-body');
+      if (!list.length) {
+        tbody.innerHTML = '<tr><td colspan="7" style="text-align:center;padding:20px;">No customer records accumulated yet.</td></tr>';
+        return;
+      }
+
+      tbody.innerHTML = list.map(function(c) {
+        return '<tr>' +
+          '<td><strong>' + c.name + '</strong></td>' +
+          '<td>' + c.phone + '</td>' +
+          '<td>' + (c.email || 'N/A') + '</td>' +
+          '<td>' + (c.location || 'N/A') + '</td>' +
+          '<td>' + (c.farmName || 'N/A') + '</td>' +
+          '<td>' + (c.interactionCount || 1) + '</td>' +
+          '<td>' + AgriConsult.formatDate(c.lastActive) + '</td>' +
+        '</tr>';
+      }).join('');
+    }
+
+    function renderServicesAdmin() {
+      var list = AgriConsult.getServices();
+      var container = document.getElementById('services-admin-list');
+      container.innerHTML = list.map(function(s, idx) {
+        return '<div style="background:#ffffff;border:1px solid var(--border);border-radius:8px;padding:16px;margin-bottom:12px;display:flex;justify-content:space-between;align-items:center;">' +
+          '<div>' +
+            '<strong>' + s.name + '</strong> (' + s.category + ')<br>' +
+            '<small style="color:var(--muted);">Pricing: ' + s.pricingType.toUpperCase() + ' (Base: ' + AgriConsult.formatMoney(s.basePrice) + ') • Delivery: ' + s.deliveryMethod + '</small>' +
+          '</div>' +
+          '<div>' +
+            '<button class="action-btn-sm" onclick="toggleServiceActive(' + idx + ')">' + (s.active !== false ? 'Active (Click to Deactivate)' : 'Inactive (Click to Activate)') + '</button>' +
+          '</div>' +
+        '</div>';
+      }).join('');
+    }
+
+    function toggleServiceActive(idx) {
+      var list = AgriConsult.getServices();
+      list[idx].active = !list[idx].active;
+      AgriConsult.saveServices(list);
+      renderServicesAdmin();
+    }
+
+    function loadSettingsForm() {
+      var s = AgriConsult.getSettings();
+      document.getElementById('set-company-name').value = s.companyName;
+      document.getElementById('set-tagline').value = s.tagline;
+      document.getElementById('set-founder-name').value = s.founderName;
+      document.getElementById('set-phone').value = s.primaryPhone;
+      document.getElementById('set-travel-rate').value = s.travelRatePerKm;
+      document.getElementById('set-currency').value = s.currency;
+      document.getElementById('set-service-area').value = s.serviceArea;
+      document.getElementById('set-hours').value = s.businessHours;
+      document.getElementById('set-reg-note').value = s.registrationNote;
+    }
+
+    function saveCompanySettings(e) {
+      e.preventDefault();
+      var s = AgriConsult.getSettings();
+      s.companyName = document.getElementById('set-company-name').value;
+      s.tagline = document.getElementById('set-tagline').value;
+      s.founderName = document.getElementById('set-founder-name').value;
+      s.primaryPhone = document.getElementById('set-phone').value;
+      s.travelRatePerKm = parseFloat(document.getElementById('set-travel-rate').value) || 0.65;
+      s.currency = document.getElementById('set-currency').value;
+      s.serviceArea = document.getElementById('set-service-area').value;
+      s.businessHours = document.getElementById('set-hours').value;
+      s.registrationNote = document.getElementById('set-reg-note').value;
+
+      AgriConsult.saveSettings(s);
+      alert('Operational settings saved successfully.');
+    }
+
+    function exportDataBackup() {
+      var data = AgriConsult.exportAllData();
+      var blob = new Blob([JSON.stringify(data, null, 2)], { type: 'application/json' });
+      var url = URL.createObjectURL(blob);
+      var a = document.createElement('a');
+      a.href = url;
+      a.download = 'agribase_consultancy_backup_' + new Date().toISOString().split('T')[0] + '.json';
+      a.click();
+    }
+
+    document.addEventListener('DOMContentLoaded', function() {
+      checkAdminSession();
+    });
+  </script>
+</body>
+</html>

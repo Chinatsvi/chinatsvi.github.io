@@ -1,0 +1,239 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1">
+  <meta name="theme-color" content="#1f4d2c">
+  <meta name="description" content="Book an online agricultural consultation with Enock Chinatsvi. Direct WhatsApp call or video meeting to review crops, pests, and farm plans.">
+  <title>Online Agricultural Consultations | D & C – AgriBase</title>
+  <link rel="stylesheet" href="/assets/site.css">
+  <link rel="stylesheet" href="/assets/consultancy.css">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link href="https://fonts.googleapis.com/css2?family=Fraunces:wght@600;700;900&family=Karla:wght@400;700;800&display=swap" rel="stylesheet">
+  <link rel="canonical" href="https://chinatsvi.github.io/consultancy/online-consultation/">
+</head>
+<body>
+  <div data-site-header></div>
+
+  <header class="page-hero">
+    <div class="container">
+      <div class="breadcrumb"><a href="/">Home</a> / <a href="/consultancy/">Consultancy</a> / Online Consultations</div>
+      <div class="eyebrow">Remote Agricultural Advisory</div>
+      <h1>Book an Online 1-on-1 Consultation</h1>
+      <p class="lead">Connect directly with our principal consultant via WhatsApp call, audio, or video meeting. Ideal for urgent crop diagnosis, reviewing soil tests, spray programmes, and seasonal enterprise planning.</p>
+    </div>
+  </header>
+
+  <main class="section">
+    <div class="container">
+      
+      <div class="consult-form-wrap">
+        
+        <!-- Success State View -->
+        <div id="online-success" style="display:none;text-align:center;padding:24px 10px;">
+          <div style="width:64px;height:64px;background:#dcfce7;color:#166534;border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:32px;margin:0 auto 18px;">✓</div>
+          <h2 style="color:var(--field-dark);margin-bottom:8px;">Consultation Request Received!</h2>
+          <p class="lead" style="margin-bottom:16px;">Appointment Reference: <strong id="res-online-ref" style="color:var(--soil);font-size:22px;letter-spacing:1px;"></strong></p>
+          
+          <div class="notice humility" style="text-align:left;margin-bottom:24px;">
+            <strong>Appointment Confirmation Process:</strong>
+            <p>Our consultant will review your requested time slot to ensure no scheduling conflicts. You will receive a direct confirmation via WhatsApp or email with the confirmed appointment time and meeting link/call details.</p>
+          </div>
+
+          <div style="background:var(--cream);padding:18px;border-radius:8px;border:1px solid var(--border);margin-bottom:24px;">
+            <p style="margin:0 0 10px;font-weight:700;">Confirm directly with the consultant on WhatsApp:</p>
+            <a id="whatsapp-online-link" href="#" target="_blank" rel="noopener" class="button" style="background:#25D366;color:#ffffff;display:inline-flex;align-items:center;gap:8px;">
+              <span>💬</span> Connect via WhatsApp
+            </a>
+          </div>
+
+          <div style="display:flex;gap:12px;justify-content:center;flex-wrap:wrap;">
+            <a class="button secondary" href="/consultancy/portal/">Track Consultation Status</a>
+            <a class="button secondary" href="/consultancy/">Back to Consultancy Home</a>
+          </div>
+        </div>
+
+        <!-- Request Form -->
+        <form id="online-consult-form" onsubmit="submitOnlineConsult(event)">
+          
+          <div style="border-bottom:2px solid var(--field-light);padding-bottom:12px;margin-bottom:20px;">
+            <h3 style="margin:0;font-size:20px;color:var(--field-dark);">1. Your Contact Details</h3>
+          </div>
+
+          <div class="form-row">
+            <div class="form-group">
+              <label for="online-name">Farmer Full Name <span class="required">*</span></label>
+              <input type="text" id="online-name" class="form-control" required placeholder="e.g. Farai Nyoni">
+            </div>
+            <div class="form-group">
+              <label for="online-phone">WhatsApp / Telephone Number <span class="required">*</span></label>
+              <input type="tel" id="online-phone" class="form-control" required placeholder="e.g. +263 77 123 4567">
+              <span class="form-hint">Used for conducting the call or sending meeting links.</span>
+            </div>
+          </div>
+
+          <div class="form-row">
+            <div class="form-group">
+              <label for="online-email">Email Address</label>
+              <input type="email" id="online-email" class="form-control" placeholder="e.g. farai@example.com">
+            </div>
+            <div class="form-group">
+              <label for="online-location">Country & Location <span class="required">*</span></label>
+              <input type="text" id="online-location" class="form-control" required placeholder="e.g. Mutare, Zimbabwe or Johannesburg, SA">
+            </div>
+          </div>
+
+          <div style="border-bottom:2px solid var(--field-light);padding-bottom:12px;margin:28px 0 20px;">
+            <h3 style="margin:0;font-size:20px;color:var(--field-dark);">2. Consultation Topic & Format</h3>
+          </div>
+
+          <div class="form-row">
+            <div class="form-group">
+              <label for="online-channel">Preferred Communication Method <span class="required">*</span></label>
+              <select id="online-channel" class="form-control" required>
+                <option value="WhatsApp Voice / Video Call" selected>WhatsApp Voice / Video Call</option>
+                <option value="Direct Mobile Phone Call">Direct Mobile Phone Call</option>
+                <option value="Google Meet Video Call">Google Meet Video Meeting</option>
+                <option value="Zoom Meeting">Zoom Meeting</option>
+              </select>
+            </div>
+            <div class="form-group">
+              <label for="online-category">Consultation Category <span class="required">*</span></label>
+              <select id="online-category" class="form-control" required>
+                <option value="Crop Health & Pest Diagnosis">Crop Health & Pest Diagnosis</option>
+                <option value="Soil Test Review & Fertiliser Plan">Soil Test Review & Fertiliser Plan</option>
+                <option value="Irrigation Scheduling & Water">Irrigation Scheduling & Water Management</option>
+                <option value="New Farm Enterprise Planning">New Farm Enterprise Planning</option>
+                <option value="Livestock & Poultry Management">Livestock & Poultry Management</option>
+                <option value="Other Agricultural Advisory">Other Agricultural Advisory</option>
+              </select>
+            </div>
+          </div>
+
+          <div class="form-row">
+            <div class="form-group">
+              <label for="online-crop">Crop or Livestock Involved</label>
+              <input type="text" id="online-crop" class="form-control" placeholder="e.g. Cabbage, Sweet Potatoes, Layers">
+            </div>
+            <div class="form-group">
+              <label for="online-timezone">Your Time Zone <span class="required">*</span></label>
+              <select id="online-timezone" class="form-control" required>
+                <option value="CAT (GMT+2) - Harare, Pretoria, Lusaka" selected>CAT (GMT+2) - Harare, Pretoria, Lusaka</option>
+                <option value="EAT (GMT+3) - Nairobi, Addis Ababa">EAT (GMT+3) - Nairobi, Addis Ababa</option>
+                <option value="WAT (GMT+1) - Lagos, Luanda">WAT (GMT+1) - Lagos, Luanda</option>
+                <option value="GMT/UTC - London, Accra">GMT/UTC - London, Accra</option>
+                <option value="Other Time Zone">Other Time Zone</option>
+              </select>
+            </div>
+          </div>
+
+          <div class="form-row">
+            <div class="form-group">
+              <label for="online-pref-date">Preferred Date <span class="required">*</span></label>
+              <input type="date" id="online-pref-date" class="form-control" required>
+            </div>
+            <div class="form-group">
+              <label for="online-pref-time">Preferred Time Slot <span class="required">*</span></label>
+              <select id="online-pref-time" class="form-control" required>
+                <option value="08:30 - 09:15 Morning">08:30 - 09:15 Morning</option>
+                <option value="10:00 - 10:45 Morning">10:00 - 10:45 Morning</option>
+                <option value="11:30 - 12:15 Midday">11:30 - 12:15 Midday</option>
+                <option value="14:00 - 14:45 Afternoon">14:00 - 14:45 Afternoon</option>
+                <option value="15:30 - 16:15 Afternoon">15:30 - 16:15 Afternoon</option>
+                <option value="17:00 - 17:45 Evening">17:00 - 17:45 Evening</option>
+              </select>
+            </div>
+          </div>
+
+          <div class="form-group">
+            <label for="online-description">Describe What You Want to Discuss <span class="required">*</span></label>
+            <textarea id="online-description" class="form-control" required placeholder="Outline your questions in advance so the consultant can prepare relevant data, dosage calculations, or disease references prior to our call."></textarea>
+          </div>
+
+          <div class="form-group" style="display:flex;align-items:center;gap:10px;">
+            <input type="checkbox" id="written-summary-opt" checked style="width:20px;height:20px;accent-color:var(--field);">
+            <label for="written-summary-opt" style="margin:0;cursor:pointer;">Include a written summary of action points following the consultation.</label>
+          </div>
+
+          <div class="notice humility" style="margin:20px 0;font-size:13px;">
+            <strong>Standard Consultation Fee:</strong> Standard 45-minute remote session fee is $20.00 USD (or local currency equivalent). Payment instructions are provided prior to confirmed appointment slot.
+          </div>
+
+          <div style="margin-top:24px;">
+            <button type="submit" id="online-submit-btn" class="button" style="width:100%;font-size:17px;padding:14px;">
+              Request Online Consultation →
+            </button>
+          </div>
+
+        </form>
+
+      </div>
+
+    </div>
+  </main>
+
+  <div data-site-footer></div>
+
+  <script src="/assets/consultancy.js"></script>
+  <script src="/assets/content.js"></script>
+  <script src="/assets/site.js"></script>
+  <script>
+    document.addEventListener('DOMContentLoaded', function() {
+      var d = new Date();
+      d.setDate(d.getDate() + 1);
+      var minDate = d.toISOString().split('T')[0];
+      var prefInput = document.getElementById('online-pref-date');
+      if (prefInput) prefInput.min = minDate;
+    });
+
+    function submitOnlineConsult(e) {
+      e.preventDefault();
+      var btn = document.getElementById('online-submit-btn');
+      btn.disabled = true;
+      btn.textContent = 'Submitting Request...';
+
+      var data = {
+        type: 'online-consultation',
+        farmerName: document.getElementById('online-name').value,
+        phone: document.getElementById('online-phone').value,
+        email: document.getElementById('online-email').value,
+        location: document.getElementById('online-location').value,
+        serviceName: document.getElementById('online-category').value,
+        cropOrEnterprise: document.getElementById('online-crop').value,
+        communicationMethod: document.getElementById('online-channel').value,
+        timeZone: document.getElementById('online-timezone').value,
+        preferredDate: document.getElementById('online-pref-date').value,
+        preferredTime: document.getElementById('online-pref-time').value,
+        description: document.getElementById('online-description').value,
+        writtenSummaryRequested: document.getElementById('written-summary-opt').checked
+      };
+
+      try {
+        var record = AgriConsult.saveBooking(data);
+        
+        document.getElementById('online-consult-form').style.display = 'none';
+        var successBox = document.getElementById('online-success');
+        document.getElementById('res-online-ref').textContent = record.reference;
+
+        var settings = AgriConsult.getSettings();
+        var waMsg = encodeURIComponent(
+          'Hello D & C – AgriBase, I have requested an online consultation.\n' +
+          'Ref: ' + record.reference + '\n' +
+          'Name: ' + record.farmerName + '\n' +
+          'Format: ' + record.communicationMethod + '\n' +
+          'Topic: ' + record.serviceName + '\n' +
+          'Date: ' + record.preferredDate + ' (' + record.preferredTime + ')'
+        );
+        document.getElementById('whatsapp-online-link').href = 'https://wa.me/' + settings.whatsappNumber + '?text=' + waMsg;
+
+        successBox.style.display = 'block';
+        window.scrollTo({ top: 100, behavior: 'smooth' });
+      } catch (err) {
+        alert('An error occurred. Please check your browser storage.');
+        btn.disabled = false;
+        btn.textContent = 'Request Online Consultation →';
+      }
+    }
+  </script>
+</body>
+</html>

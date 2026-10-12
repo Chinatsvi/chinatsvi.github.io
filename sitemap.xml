@@ -8,10 +8,17 @@
   <url><loc>https://chinatsvi.github.io/academy/</loc><changefreq>monthly</changefreq><priority>0.8</priority></url>
   <url><loc>https://chinatsvi.github.io/community/</loc><changefreq>monthly</changefreq><priority>0.8</priority></url>
   <url><loc>https://chinatsvi.github.io/faq/</loc><changefreq>monthly</changefreq><priority>0.8</priority></url>
-  <url><loc>https://chinatsvi.github.io/about/</loc><changefreq>yearly</changefreq><priority>0.5</priority></url>
-  <url><loc>https://chinatsvi.github.io/contact/</loc><changefreq>yearly</changefreq><priority>0.5</priority></url>
-  <url><loc>https://chinatsvi.github.io/privacy/</loc><changefreq>yearly</changefreq><priority>0.3</priority></url>
-  <url><loc>https://chinatsvi.github.io/terms/</loc><changefreq>yearly</changefreq><priority>0.3</priority></url>
+  <url><loc>https://chinatsvi.github.io/consultancy/</loc><lastmod>2026-10-12</lastmod><changefreq>weekly</changefreq><priority>0.95</priority></url>
+  <url><loc>https://chinatsvi.github.io/consultancy/services/</loc><lastmod>2026-10-12</lastmod><changefreq>weekly</changefreq><priority>0.9</priority></url>
+  <url><loc>https://chinatsvi.github.io/consultancy/ask/</loc><lastmod>2026-10-12</lastmod><changefreq>weekly</changefreq><priority>0.9</priority></url>
+  <url><loc>https://chinatsvi.github.io/consultancy/farm-visit/</loc><lastmod>2026-10-12</lastmod><changefreq>weekly</changefreq><priority>0.9</priority></url>
+  <url><loc>https://chinatsvi.github.io/consultancy/online-consultation/</loc><lastmod>2026-10-12</lastmod><changefreq>weekly</changefreq><priority>0.85</priority></url>
+  <url><loc>https://chinatsvi.github.io/consultancy/training/</loc><lastmod>2026-10-12</lastmod><changefreq>monthly</changefreq><priority>0.8</priority></url>
+  <url><loc>https://chinatsvi.github.io/consultancy/portal/</loc><changefreq>monthly</changefreq><priority>0.7</priority></url>
+  <url><loc>https://chinatsvi.github.io/about/</loc><lastmod>2026-10-12</lastmod><changefreq>monthly</changefreq><priority>0.7</priority></url>
+  <url><loc>https://chinatsvi.github.io/contact/</loc><lastmod>2026-10-12</lastmod><changefreq>monthly</changefreq><priority>0.7</priority></url>
+  <url><loc>https://chinatsvi.github.io/privacy/</loc><lastmod>2026-10-12</lastmod><changefreq>yearly</changefreq><priority>0.4</priority></url>
+  <url><loc>https://chinatsvi.github.io/terms/</loc><lastmod>2026-10-12</lastmod><changefreq>yearly</changefreq><priority>0.4</priority></url>
   <url><loc>https://chinatsvi.github.io/disclaimer/</loc><changefreq>yearly</changefreq><priority>0.3</priority></url>
   <url><loc>https://chinatsvi.github.io/calculators/plant-population.html</loc></url>
   <url><loc>https://chinatsvi.github.io/calculators/crop-spacing.html</loc></url>

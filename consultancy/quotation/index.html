@@ -1,0 +1,279 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1">
+  <meta name="theme-color" content="#1f4d2c">
+  <meta name="description" content="View and accept quotations from D & C – AgriBase Agricultural Consultancy. Clear breakdown of professional advisory fees and travel expenses.">
+  <title>Agricultural Consultancy Quotation | D & C – AgriBase</title>
+  <link rel="stylesheet" href="/assets/site.css">
+  <link rel="stylesheet" href="/assets/consultancy.css">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link href="https://fonts.googleapis.com/css2?family=Fraunces:wght@600;700;900&family=Karla:wght@400;700;800&display=swap" rel="stylesheet">
+  <link rel="canonical" href="https://chinatsvi.github.io/consultancy/quotation/">
+</head>
+<body>
+  <div data-site-header></div>
+
+  <header class="page-hero">
+    <div class="container">
+      <div class="breadcrumb"><a href="/">Home</a> / <a href="/consultancy/">Consultancy</a> / Quotation</div>
+      <div class="eyebrow">Itemized Cost Estimate</div>
+      <h1>Official Agricultural Consultancy Quotation</h1>
+      <p class="lead">Review your customized quotation for on-farm visits, technical assessments, or training programmes. We provide upfront, transparent cost breakdowns before any appointment is confirmed.</p>
+    </div>
+  </header>
+
+  <main class="section">
+    <div class="container">
+      
+      <!-- Lookup Quotation if not loaded via param -->
+      <div id="quote-search-bar" style="background:#ffffff;border:1px solid var(--border);border-radius:10px;padding:20px;max-width:800px;margin:0 auto 28px;text-align:center;">
+        <label for="quote-id-input" style="font-weight:700;margin-right:10px;">Enter Quotation Reference Number:</label>
+        <div style="display:inline-flex;gap:8px;flex-wrap:wrap;justify-content:center;margin-top:8px;">
+          <input type="text" id="quote-id-input" class="form-control" placeholder="e.g. QT-2610-ABCD" style="width:240px;text-transform:uppercase;">
+          <button class="button" onclick="loadQuotationByInput()">View Quotation →</button>
+        </div>
+      </div>
+
+      <!-- Main Quotation Sheet Display -->
+      <div id="quote-sheet-container" style="display:none;">
+        <div class="quote-sheet" id="printable-quote">
+          
+          <div class="quote-header">
+            <div>
+              <div style="font-family:var(--display);font-size:24px;font-weight:700;color:var(--field-dark);">D & C – AGRIBASE</div>
+              <div style="font-size:14px;color:var(--muted);max-width:320px;">Practical Agricultural Consultancy & Farm Advisory Services</div>
+              <div style="font-size:13px;color:var(--muted);margin-top:6px;">WhatsApp / Phone: +27 74 902 2044 | chinatsvieno@gmail.com</div>
+              <div style="font-size:12px;color:var(--soil);margin-top:4px;">*Preparatory status — official registration details will be published upon completion.</div>
+            </div>
+            <div style="text-align:right;">
+              <div style="font-size:20px;font-weight:800;color:var(--field);" id="q-status-badge">QUOTATION</div>
+              <div style="font-size:14px;font-weight:700;margin-top:6px;">Quote Ref: <span id="q-ref"></span></div>
+              <div style="font-size:13px;color:var(--muted);">Date: <span id="q-date"></span></div>
+              <div style="font-size:13px;color:var(--muted);">Valid Until: <span id="q-expiry"></span></div>
+            </div>
+          </div>
+
+          <!-- Farmer Details -->
+          <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(240px,1fr));gap:20px;background:var(--cream);padding:18px;border-radius:8px;margin-bottom:24px;">
+            <div>
+              <div style="font-size:12px;font-weight:700;text-transform:uppercase;color:var(--muted);">Client / Farmer:</div>
+              <div style="font-weight:700;font-size:16px;" id="q-client-name"></div>
+              <div style="font-size:14px;" id="q-client-phone"></div>
+              <div style="font-size:14px;" id="q-client-email"></div>
+            </div>
+            <div>
+              <div style="font-size:12px;font-weight:700;text-transform:uppercase;color:var(--muted);">Farm Location & Service:</div>
+              <div style="font-weight:700;font-size:15px;" id="q-client-farm"></div>
+              <div style="font-size:14px;" id="q-client-loc"></div>
+              <div style="font-size:13px;color:var(--field);font-weight:700;margin-top:4px;">Linked Request: <span id="q-linked-bkg"></span></div>
+            </div>
+          </div>
+
+          <!-- Line Items Table -->
+          <table style="width:100%;border-collapse:collapse;margin-bottom:20px;">
+            <thead>
+              <tr style="border-bottom:2px solid var(--border);text-align:left;font-size:14px;">
+                <th style="padding:10px 8px;">Description</th>
+                <th style="padding:10px 8px;text-align:center;">Qty / Distance</th>
+                <th style="padding:10px 8px;text-align:right;">Rate</th>
+                <th style="padding:10px 8px;text-align:right;">Amount</th>
+              </tr>
+            </thead>
+            <tbody id="q-items-body" style="font-size:14.5px;">
+              <!-- Dynamic line items -->
+            </tbody>
+          </table>
+
+          <!-- Total Calculation Box -->
+          <div class="quote-total-box">
+            <div>
+              <div style="font-size:13px;color:var(--muted);">Proposed Appointment Date:</div>
+              <div style="font-weight:700;font-size:15px;" id="q-proposed-date">To be finalized upon acceptance</div>
+            </div>
+            <div style="text-align:right;">
+              <div style="font-size:14px;color:var(--muted);">Total Quotation Amount:</div>
+              <div style="font-size:26px;font-weight:800;color:var(--field);" id="q-total-amount">$0.00 USD</div>
+            </div>
+          </div>
+
+          <!-- Payment Terms and Notes -->
+          <div style="margin-top:24px;border-top:1px dashed var(--border);padding-top:16px;font-size:13.5px;color:var(--muted);line-height:1.6;">
+            <strong>Payment Terms & Booking Conditions:</strong>
+            <p style="margin:4px 0 8px;" id="q-payment-terms"></p>
+            <strong>Consultant Notes:</strong>
+            <p style="margin:4px 0;" id="q-notes"></p>
+          </div>
+
+          <!-- Actions for Farmer (Accept/Decline/Print) -->
+          <div id="quote-action-panel" style="margin-top:28px;padding-top:20px;border-top:2px solid var(--border);display:flex;flex-wrap:wrap;gap:12px;justify-content:space-between;align-items:center;">
+            <div style="display:flex;gap:10px;">
+              <button class="button" style="background:#166534;color:#ffffff;" onclick="acceptCurrentQuote()">✓ Accept Quotation</button>
+              <button class="button secondary" onclick="declineCurrentQuote()">Decline Quotation</button>
+            </div>
+            <div>
+              <button class="button secondary" onclick="window.print()">🖨️ Print / Save PDF</button>
+            </div>
+          </div>
+
+          <div id="quote-status-msg" style="margin-top:16px;display:none;"></div>
+
+        </div>
+      </div>
+
+    </div>
+  </main>
+
+  <div data-site-footer></div>
+
+  <script src="/assets/consultancy.js"></script>
+  <script src="/assets/content.js"></script>
+  <script src="/assets/site.js"></script>
+  <script>
+    var currentQuote = null;
+
+    document.addEventListener('DOMContentLoaded', function() {
+      var params = new URLSearchParams(window.location.search);
+      var qRef = params.get('ref');
+      if (qRef) {
+        document.getElementById('quote-id-input').value = qRef;
+        loadQuotation(qRef);
+      }
+    });
+
+    function loadQuotationByInput() {
+      var val = (document.getElementById('quote-id-input').value || '').trim().toUpperCase();
+      if (!val) { alert('Please enter quotation reference number.'); return; }
+      loadQuotation(val);
+    }
+
+    function loadQuotation(ref) {
+      var quotations = AgriConsult.getQuotations();
+      var quote = quotations.find(function(q) { return q.reference === ref || q.id === ref; });
+
+      var container = document.getElementById('quote-sheet-container');
+      if (!quote) {
+        alert('Quotation "' + ref + '" not found in current device records. If sent from our office, please verify reference or contact us directly.');
+        container.style.display = 'none';
+        return;
+      }
+
+      currentQuote = quote;
+      container.style.display = 'block';
+
+      document.getElementById('q-ref').textContent = quote.reference;
+      document.getElementById('q-date').textContent = AgriConsult.formatDate(quote.createdAt);
+      document.getElementById('q-expiry').textContent = quote.expiryDate ? AgriConsult.formatDate(quote.expiryDate) : '14 Days from issuance';
+      document.getElementById('q-client-name').textContent = quote.farmerName || 'Farmer';
+      document.getElementById('q-client-phone').textContent = quote.phone || '';
+      document.getElementById('q-client-email').textContent = quote.email || '';
+      document.getElementById('q-client-farm').textContent = quote.farmName || 'Farm Property';
+      document.getElementById('q-client-loc').textContent = quote.farmLocation || '';
+      document.getElementById('q-linked-bkg').textContent = quote.bookingRef || 'None';
+      document.getElementById('q-proposed-date').textContent = quote.proposedDate || 'Subject to mutual confirmation';
+      document.getElementById('q-payment-terms').textContent = quote.paymentTerms || 'Advance deposit required before visit.';
+      document.getElementById('q-notes').textContent = quote.notes || 'None';
+      document.getElementById('q-total-amount').textContent = AgriConsult.formatMoney(quote.totalAmount, quote.currency);
+
+      var statusBadge = document.getElementById('q-status-badge');
+      statusBadge.textContent = 'STATUS: ' + quote.status;
+      if (quote.status === 'ACCEPTED') {
+        statusBadge.style.color = '#15803d';
+        document.getElementById('quote-action-panel').style.display = 'none';
+        showMsg('This quotation was ACCEPTED on ' + AgriConsult.formatDate(quote.acceptedDate) + '. Our consultant will contact you to finalize appointment logistics.', 'success');
+      } else if (quote.status === 'DECLINED') {
+        statusBadge.style.color = '#b91c1c';
+        document.getElementById('quote-action-panel').style.display = 'none';
+        showMsg('This quotation was marked DECLINED.', 'notice');
+      } else {
+        statusBadge.style.color = '#d97706';
+        document.getElementById('quote-action-panel').style.display = 'flex';
+      }
+
+      // Build line items
+      var tbody = document.getElementById('q-items-body');
+      var rows = '';
+
+      // Line 1: Professional Service Fee
+      rows += '<tr style="border-bottom:1px solid var(--border-light);">' +
+        '<td style="padding:10px 8px;"><strong>' + quote.serviceName + '</strong><br><small style="color:var(--muted);">In-field agronomic inspection, diagnostic testing & report</small></td>' +
+        '<td style="padding:10px 8px;text-align:center;">1 Service</td>' +
+        '<td style="padding:10px 8px;text-align:right;">' + AgriConsult.formatMoney(quote.serviceFee, quote.currency) + '</td>' +
+        '<td style="padding:10px 8px;text-align:right;">' + AgriConsult.formatMoney(quote.serviceFee, quote.currency) + '</td>' +
+      '</tr>';
+
+      // Line 2: Travel Expenses (if any)
+      if (quote.travelFee > 0 || quote.travelDistanceKm > 0) {
+        rows += '<tr style="border-bottom:1px solid var(--border-light);">' +
+          '<td style="padding:10px 8px;"><strong>Travel & Vehicle Transport Allowance</strong><br><small style="color:var(--muted);">Estimated round-trip mileage from operational center</small></td>' +
+          '<td style="padding:10px 8px;text-align:center;">' + (quote.travelDistanceKm ? quote.travelDistanceKm + ' km' : 'Flat allowance') + '</td>' +
+          '<td style="padding:10px 8px;text-align:right;">' + (quote.travelRate ? AgriConsult.formatMoney(quote.travelRate, quote.currency) + '/km' : '-') + '</td>' +
+          '<td style="padding:10px 8px;text-align:right;">' + AgriConsult.formatMoney(quote.travelFee, quote.currency) + '</td>' +
+        '</tr>';
+      }
+
+      // Line 3: Additional Charges (if any)
+      if (quote.additionalCharges > 0) {
+        rows += '<tr style="border-bottom:1px solid var(--border-light);">' +
+          '<td style="padding:10px 8px;"><strong>Additional Services / Specialist Testing</strong><br><small style="color:var(--muted);">' + (quote.additionalChargesDescription || 'Specialist field resources') + '</small></td>' +
+          '<td style="padding:10px 8px;text-align:center;">1</td>' +
+          '<td style="padding:10px 8px;text-align:right;">' + AgriConsult.formatMoney(quote.additionalCharges, quote.currency) + '</td>' +
+          '<td style="padding:10px 8px;text-align:right;">' + AgriConsult.formatMoney(quote.additionalCharges, quote.currency) + '</td>' +
+        '</tr>';
+      }
+
+      // Line 4: Discount (if any)
+      if (quote.discount > 0) {
+        rows += '<tr style="border-bottom:1px solid var(--border-light);color:#15803d;">' +
+          '<td style="padding:10px 8px;"><strong>Authorized Discount / Promotional Subsidy</strong></td>' +
+          '<td style="padding:10px 8px;text-align:center;">-</td>' +
+          '<td style="padding:10px 8px;text-align:right;">-</td>' +
+          '<td style="padding:10px 8px;text-align:right;">-' + AgriConsult.formatMoney(quote.discount, quote.currency) + '</td>' +
+        '</tr>';
+      }
+
+      tbody.innerHTML = rows;
+    }
+
+    function showMsg(text, type) {
+      var box = document.getElementById('quote-status-msg');
+      box.style.display = 'block';
+      box.className = 'notice ' + (type === 'success' ? '' : 'humility');
+      box.innerHTML = '<strong>' + text + '</strong>';
+    }
+
+    function acceptCurrentQuote() {
+      if (!currentQuote) return;
+      if (!confirm('Are you sure you wish to accept this quotation (' + currentQuote.reference + ') for ' + AgriConsult.formatMoney(currentQuote.totalAmount, currentQuote.currency) + '?')) return;
+
+      var updated = AgriConsult.updateQuotation(currentQuote.reference, {
+        status: 'ACCEPTED',
+        acceptedDate: new Date().toISOString()
+      });
+
+      if (updated && updated.bookingRef) {
+        AgriConsult.updateBooking(updated.bookingRef, {
+          status: 'AWAITING_PAYMENT'
+        });
+      }
+
+      loadQuotation(currentQuote.reference);
+      alert('Quotation accepted! Status updated.');
+    }
+
+    function declineCurrentQuote() {
+      if (!currentQuote) return;
+      var reason = prompt('Please enter a brief reason for declining (e.g. date no longer suitable, seeking revised travel fee):');
+      if (reason === null) return;
+
+      AgriConsult.updateQuotation(currentQuote.reference, {
+        status: 'DECLINED',
+        clientFeedback: reason
+      });
+
+      loadQuotation(currentQuote.reference);
+    }
+  </script>
+</body>
+</html>
