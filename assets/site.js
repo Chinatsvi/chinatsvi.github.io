@@ -6,6 +6,402 @@
     ['Farmer Community App', '/community/'], ['About Us', '/about/'], ['Contact', '/contact/']
   ];
 
+  // Enforce single floating chat widget and remove legacy floating elements
+  function enforceSingleFloatingChat() {
+    try {
+      const obsoleteSelectors = [
+        '.floating-whatsapp-widget',
+        '#agribase-floating-whatsapp',
+        '.floating-whatsapp-btn',
+        '[class*="whatsapp-floating"]',
+        '[class*="floating-whatsapp"]'
+      ];
+      obsoleteSelectors.forEach(function(sel) {
+        document.querySelectorAll(sel).forEach(function(el) { el.remove(); });
+      });
+    } catch (e) {}
+  }
+  enforceSingleFloatingChat();
+
+  // Secret 6-Tap Staff Access Listener
+  let secretTapCount = 0;
+  let secretLastTapTime = 0;
+
+  function initSecretStaffTap() {
+    function handleHeaderTap(e) {
+      const headerTarget = e.target.closest('[data-site-header], .site-nav, .brand, header, .nav-inner');
+      if (!headerTarget) return;
+
+      const now = Date.now();
+      if (now - secretLastTapTime < 2500) {
+        secretTapCount++;
+      } else {
+        secretTapCount = 1;
+      }
+      secretLastTapTime = now;
+
+      // Prevent navigating away if repeatedly tapping brand on homepage
+      if (secretTapCount > 1 || window.location.pathname === '/' || window.location.pathname === '/index.html') {
+        if (e.target.closest('.brand')) {
+          e.preventDefault();
+        }
+      }
+
+      if (secretTapCount >= 6) {
+        secretTapCount = 0;
+        e.preventDefault();
+        e.stopPropagation();
+        openSecretStaffModal();
+      }
+    }
+
+    document.addEventListener('click', handleHeaderTap);
+    document.addEventListener('touchend', handleHeaderTap, { passive: false });
+  }
+
+  function openSecretStaffModal() {
+    let modal = document.getElementById('agribase-secret-staff-modal');
+    if (modal) {
+      modal.style.display = 'flex';
+      const emailInput = document.getElementById('secret-staff-email');
+      if (emailInput) emailInput.focus();
+      return;
+    }
+
+    if (!document.getElementById('secret-staff-modal-styles')) {
+      const style = document.createElement('style');
+      style.id = 'secret-staff-modal-styles';
+      style.textContent = `
+        .secret-staff-modal-backdrop {
+          position: fixed;
+          inset: 0;
+          background: rgba(15, 23, 42, 0.82);
+          backdrop-filter: blur(6px);
+          -webkit-backdrop-filter: blur(6px);
+          z-index: 9999999;
+          display: flex;
+          align-items: center;
+          justify-content: center;
+          padding: 16px;
+          box-sizing: border-box;
+          animation: secretFadeIn 0.2s ease;
+        }
+        @keyframes secretFadeIn {
+          from { opacity: 0; transform: scale(0.97); }
+          to { opacity: 1; transform: scale(1); }
+        }
+        .secret-staff-modal-card {
+          background: #ffffff;
+          color: #1e293b;
+          width: 100%;
+          max-width: 440px;
+          border-radius: 14px;
+          box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.45);
+          border: 1px solid #cbd5e1;
+          overflow: hidden;
+          padding: 26px;
+          position: relative;
+          font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+        }
+        .secret-modal-close-btn {
+          position: absolute;
+          top: 14px;
+          right: 14px;
+          background: #f1f5f9;
+          border: none;
+          width: 32px;
+          height: 32px;
+          border-radius: 50%;
+          font-size: 16px;
+          line-height: 1;
+          cursor: pointer;
+          color: #475569;
+          display: flex;
+          align-items: center;
+          justify-content: center;
+          transition: background 0.15s;
+        }
+        .secret-modal-close-btn:hover {
+          background: #e2e8f0;
+          color: #0f172a;
+        }
+        .secret-badge {
+          display: inline-flex;
+          align-items: center;
+          gap: 5px;
+          background: #fef3c7;
+          color: #92400e;
+          font-size: 11px;
+          font-weight: 800;
+          letter-spacing: 0.5px;
+          text-transform: uppercase;
+          padding: 3px 8px;
+          border-radius: 999px;
+          margin-bottom: 8px;
+        }
+        .secret-modal-card h3 {
+          margin: 0 0 4px;
+          font-size: 20px;
+          color: #0f172a;
+          font-weight: 800;
+        }
+        .secret-modal-card p.sub {
+          margin: 0 0 16px;
+          font-size: 13px;
+          color: #64748b;
+        }
+        .secret-tabs-row {
+          display: flex;
+          gap: 6px;
+          background: #f1f5f9;
+          padding: 4px;
+          border-radius: 8px;
+          margin-bottom: 16px;
+        }
+        .secret-tab-toggle {
+          flex: 1;
+          padding: 7px 10px;
+          font-size: 12.5px;
+          font-weight: 700;
+          border: none;
+          background: transparent;
+          color: #64748b;
+          border-radius: 6px;
+          cursor: pointer;
+          transition: all 0.15s;
+        }
+        .secret-tab-toggle.active {
+          background: #ffffff;
+          color: #1b4332;
+          box-shadow: 0 1px 3px rgba(0,0,0,0.1);
+        }
+        .secret-field-group {
+          margin-bottom: 12px;
+        }
+        .secret-field-group label {
+          display: block;
+          font-size: 12.5px;
+          font-weight: 700;
+          color: #334155;
+          margin-bottom: 5px;
+        }
+        .secret-field-input {
+          width: 100%;
+          box-sizing: border-box;
+          padding: 9px 12px;
+          border: 1.5px solid #cbd5e1;
+          border-radius: 8px;
+          font-size: 14px;
+          font-family: inherit;
+          background: #fff;
+          color: #0f172a;
+        }
+        .secret-field-input:focus {
+          border-color: #1b4332;
+          outline: none;
+          box-shadow: 0 0 0 3px rgba(27,67,50,0.15);
+        }
+        .secret-login-submit {
+          width: 100%;
+          background: #1b4332;
+          color: #ffffff;
+          font-weight: 800;
+          padding: 11px;
+          font-size: 14px;
+          border: none;
+          border-radius: 8px;
+          cursor: pointer;
+          transition: background 0.15s;
+          margin-top: 6px;
+        }
+        .secret-login-submit:hover {
+          background: #2d6a4f;
+        }
+        .secret-msg-alert {
+          display: none;
+          padding: 9px 12px;
+          border-radius: 6px;
+          font-size: 13px;
+          margin-bottom: 12px;
+        }
+        .secret-msg-alert.error {
+          background: #fee2e2;
+          border: 1px solid #f87171;
+          color: #991b1b;
+        }
+        .secret-msg-alert.success {
+          background: #dcfce7;
+          border: 1px solid #86efac;
+          color: #166534;
+        }
+        .secret-direct-link {
+          display: block;
+          text-align: center;
+          margin-top: 14px;
+          font-size: 12.5px;
+          color: #1b4332;
+          font-weight: 700;
+          text-decoration: underline;
+        }
+      `;
+      document.head.appendChild(style);
+    }
+
+    modal = document.createElement('div');
+    modal.id = 'agribase-secret-staff-modal';
+    modal.className = 'secret-staff-modal-backdrop';
+    modal.innerHTML = 
+      '<div class="secret-staff-modal-card" role="dialog" aria-modal="true" aria-labelledby="secret-title">' +
+        '<button type="button" class="secret-modal-close-btn" id="secret-close-btn" aria-label="Close dialog">✕</button>' +
+        '<div class="secret-badge">🔒 Confidential Access</div>' +
+        '<h3 id="secret-title">Staff & Consultant Login</h3>' +
+        '<p class="sub">Authorised AgriBase Personnel Workspace</p>' +
+        '<div id="secret-modal-alert" class="secret-msg-alert"></div>' +
+        '<div class="secret-tabs-row">' +
+          '<button type="button" class="secret-tab-toggle active" id="secret-btn-firebase">Firebase Auth</button>' +
+          '<button type="button" class="secret-tab-toggle" id="secret-btn-passcode">Emergency Passcode</button>' +
+        '</div>' +
+        '<form id="secret-login-form">' +
+          '<div id="secret-mode-firebase-wrap">' +
+            '<div class="secret-field-group">' +
+              '<label for="secret-staff-email">Staff Email Address:</label>' +
+              '<input type="email" id="secret-staff-email" class="secret-field-input" value="chinatsvieno@gmail.com" required placeholder="chinatsvieno@gmail.com">' +
+            '</div>' +
+            '<div class="secret-field-group">' +
+              '<label for="secret-staff-pass">Firebase Staff Password:</label>' +
+              '<input type="password" id="secret-staff-pass" class="secret-field-input" placeholder="Enter staff password">' +
+            '</div>' +
+          '</div>' +
+          '<div id="secret-mode-passcode-wrap" style="display:none;">' +
+            '<div class="secret-field-group">' +
+              '<label for="secret-staff-code">Staff Emergency Passcode:</label>' +
+              '<input type="password" id="secret-staff-code" class="secret-field-input" placeholder="e.g. agribase2026">' +
+              '<div style="font-size:11.5px;color:#64748b;margin-top:4px;">Emergency passcode: <strong>agribase2026</strong></div>' +
+            '</div>' +
+          '</div>' +
+          '<button type="submit" id="secret-submit-btn" class="secret-login-submit">Sign In & Open Workspace →</button>' +
+        '</form>' +
+        '<a href="/consultancy/admin/" class="secret-direct-link">Open Consultant Workspace Directly →</a>' +
+      '</div>';
+
+    document.body.appendChild(modal);
+
+    let activeMode = 'firebase';
+    const alertEl = document.getElementById('secret-modal-alert');
+    const btnFirebase = document.getElementById('secret-btn-firebase');
+    const btnPasscode = document.getElementById('secret-btn-passcode');
+    const wrapFirebase = document.getElementById('secret-mode-firebase-wrap');
+    const wrapPasscode = document.getElementById('secret-mode-passcode-wrap');
+    const closeBtn = document.getElementById('secret-close-btn');
+    const form = document.getElementById('secret-login-form');
+    const submitBtn = document.getElementById('secret-submit-btn');
+
+    function closeModal() {
+      modal.style.display = 'none';
+    }
+
+    closeBtn.onclick = closeModal;
+    modal.onclick = function(e) {
+      if (e.target === modal) closeModal();
+    };
+    window.addEventListener('keydown', function(e) {
+      if (e.key === 'Escape' && modal.style.display !== 'none') closeModal();
+    });
+
+    btnFirebase.onclick = function() {
+      activeMode = 'firebase';
+      btnFirebase.classList.add('active');
+      btnPasscode.classList.remove('active');
+      wrapFirebase.style.display = 'block';
+      wrapPasscode.style.display = 'none';
+      submitBtn.textContent = 'Sign In with Firebase Auth →';
+      document.getElementById('secret-staff-pass').required = true;
+      document.getElementById('secret-staff-code').required = false;
+    };
+
+    btnPasscode.onclick = function() {
+      activeMode = 'passcode';
+      btnPasscode.classList.add('active');
+      btnFirebase.classList.remove('active');
+      wrapFirebase.style.display = 'none';
+      wrapPasscode.style.display = 'block';
+      submitBtn.textContent = 'Sign In with Passcode Backup →';
+      document.getElementById('secret-staff-pass').required = false;
+      document.getElementById('secret-staff-code').required = true;
+    };
+
+    form.onsubmit = async function(e) {
+      e.preventDefault();
+      alertEl.style.display = 'none';
+      alertEl.className = 'secret-msg-alert';
+
+      if (activeMode === 'firebase') {
+        const email = document.getElementById('secret-staff-email').value.trim();
+        const pass = document.getElementById('secret-staff-pass').value;
+        if (!pass) {
+          alertEl.textContent = 'Please enter your staff password.';
+          alertEl.classList.add('error');
+          alertEl.style.display = 'block';
+          return;
+        }
+        submitBtn.textContent = 'Authenticating...';
+        submitBtn.disabled = true;
+
+        try {
+          if (window.AgriFirebase && typeof window.AgriFirebase.loginStaff === 'function') {
+            const authResult = await window.AgriFirebase.loginStaff(email, pass);
+            sessionStorage.setItem('agribase_staff_session', JSON.stringify({
+              email: authResult.user.email,
+              role: (authResult.staff && authResult.staff.role) ? authResult.staff.role : 'admin',
+              title: (authResult.staff && authResult.staff.title) || 'Principal Consultant',
+              uid: authResult.user.uid,
+              loggedInAt: new Date().toISOString()
+            }));
+            alertEl.textContent = 'Authentication successful! Loading workspace...';
+            alertEl.classList.add('success');
+            alertEl.style.display = 'block';
+            setTimeout(function() {
+              window.location.href = '/consultancy/admin/';
+            }, 400);
+          } else {
+            window.location.href = '/consultancy/admin/';
+          }
+        } catch (err) {
+          let msg = err.message || 'Authentication failed.';
+          if (err.code === 'auth/wrong-password' || err.code === 'auth/invalid-credential') {
+            msg = 'Incorrect password for this staff account.';
+          }
+          alertEl.textContent = msg;
+          alertEl.classList.add('error');
+          alertEl.style.display = 'block';
+          submitBtn.disabled = false;
+          submitBtn.textContent = 'Sign In with Firebase Auth →';
+        }
+      } else {
+        const code = document.getElementById('secret-staff-code').value.trim();
+        if (code === 'agribase2026' || code === 'enock2026') {
+          sessionStorage.setItem('agribase_staff_session', JSON.stringify({
+            email: 'chinatsvieno@gmail.com',
+            role: 'admin',
+            title: 'Founder & Principal Consultant',
+            loggedInAt: new Date().toISOString()
+          }));
+          alertEl.textContent = 'Access granted! Redirecting to workspace...';
+          alertEl.classList.add('success');
+          alertEl.style.display = 'block';
+          submitBtn.textContent = 'Opening Workspace...';
+          setTimeout(function() {
+            window.location.href = '/consultancy/admin/';
+          }, 350);
+        } else {
+          alertEl.textContent = 'Incorrect passcode. Try "agribase2026" or use Firebase Auth.';
+          alertEl.classList.add('error');
+          alertEl.style.display = 'block';
+        }
+      }
+    };
+  }
+
   function renderHeader() {
     const host = document.querySelector('[data-site-header]');
     if (!host) return;
@@ -13,6 +409,7 @@
       nav.map(item => '<a href="' + item[1] + '"' + (item[0].toLowerCase().includes('consultancy') ? ' class="nav-consultancy-link" style="color:var(--gold);font-weight:800;"' : '') + '>' + item[0] + '</a>').join('') +
       '</div></div></nav>';
     host.querySelector('.nav-toggle').onclick = () => host.querySelector('.nav-links').classList.toggle('open');
+    enforceSingleFloatingChat();
   }
 
   function loadLiveChat() {
@@ -356,6 +753,7 @@
     renderCalculator();
     initFarmerVoices();
     loadAdSense();
+    initSecretStaffTap();
   }
 
   function loadAdSense() {

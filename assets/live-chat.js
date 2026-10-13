@@ -41,6 +41,12 @@
 
   // Initialize and inject Chat UI
   function initLiveChat() {
+    // Remove any legacy floating WhatsApp or duplicate widgets
+    try {
+      var obsolete = document.querySelectorAll('.floating-whatsapp-widget, #agribase-floating-whatsapp, [class*="whatsapp-floating"]');
+      obsolete.forEach(function(el) { el.remove(); });
+    } catch (e) {}
+
     // Avoid double injection
     if (document.getElementById('agribase-chat-widget-root')) return;
 
