@@ -82,12 +82,17 @@
 
   <div data-site-footer></div>
 
+  <!-- Firebase SDK (Compat) -->
+  <script src="https://www.gstatic.com/firebasejs/10.12.0/firebase-app-compat.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/10.12.0/firebase-auth-compat.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/10.12.0/firebase-firestore-compat.js"></script>
+  <script src="/assets/firebase-service.js"></script>
   <script src="/assets/consultancy.js"></script>
   <script src="/assets/content.js"></script>
   <script src="/assets/site.js"></script>
   <script>
-    function runPortalSearch() {
-      var query = (document.getElementById('portal-query').value || '').trim().toLowerCase();
+    async function runPortalSearch() {
+      var query = (document.getElementById('portal-query').value || '').trim();
       var cleanQueryPhone = query.replace(/[^0-9]/g, '');
       var resultsDiv = document.getElementById('portal-results');
 
@@ -96,23 +101,75 @@
         return;
       }
 
-      var enquiries = AgriConsult.getEnquiries().filter(function(e) {
-        var matchRef = e.reference.toLowerCase().includes(query);
-        var matchPhone = cleanQueryPhone && (e.phone || '').replace(/[^0-9]/g, '').includes(cleanQueryPhone);
-        return matchRef || matchPhone;
-      });
+      var enquiries = [];
+      var bookings = [];
+      var quotations = [];
+      var reports = (window.AgriConsult ? window.AgriConsult.getReports() : []);
 
-      var bookings = AgriConsult.getBookings().filter(function(b) {
-        var matchRef = b.reference.toLowerCase().includes(query);
-        var matchPhone = cleanQueryPhone && (b.phone || '').replace(/[^0-9]/g, '').includes(cleanQueryPhone);
-        return matchRef || matchPhone;
-      });
+      // 1. Try Live Firestore Lookup if online
+      if (window.AgriFirebase && window.AgriFirebase.init() && window.AgriFirebase.db) {
+        try {
+          var db = window.AgriFirebase.db;
+          var upperQuery = query.toUpperCase();
 
-      var quotations = AgriConsult.getQuotations().filter(function(q) {
-        var matchRef = q.reference.toLowerCase().includes(query);
-        var matchPhone = cleanQueryPhone && (q.phone || '').replace(/[^0-9]/g, '').includes(cleanQueryPhone);
-        return matchRef || matchPhone;
-      });
+          // Query farming_questions
+          var qSnap = await db.collection(window.AgriFirebase.collections.FARMING_QUESTIONS).where('reference', '==', upperQuery).get();
+          if (qSnap.empty && cleanQueryPhone) {
+            qSnap = await db.collection(window.AgriFirebase.collections.FARMING_QUESTIONS).where('phone', '==', query).get();
+          }
+          qSnap.forEach(function(doc) { enquiries.push({ id: doc.id, ...doc.data() }); });
+
+          // Query farm_visit_bookings
+          var vSnap = await db.collection(window.AgriFirebase.collections.FARM_VISIT_BOOKINGS).where('reference', '==', upperQuery).get();
+          if (vSnap.empty && cleanQueryPhone) {
+            vSnap = await db.collection(window.AgriFirebase.collections.FARM_VISIT_BOOKINGS).where('phone', '==', query).get();
+          }
+          vSnap.forEach(function(doc) { bookings.push({ id: doc.id, type: 'farm-visit', ...doc.data() }); });
+
+          // Query consultation_bookings
+          var cSnap = await db.collection(window.AgriFirebase.collections.CONSULTATION_BOOKINGS).where('reference', '==', upperQuery).get();
+          if (cSnap.empty && cleanQueryPhone) {
+            cSnap = await db.collection(window.AgriFirebase.collections.CONSULTATION_BOOKINGS).where('phone', '==', query).get();
+          }
+          cSnap.forEach(function(doc) { bookings.push({ id: doc.id, type: 'online-consultation', ...doc.data() }); });
+
+          // Query quotations
+          var qtSnap = await db.collection(window.AgriFirebase.collections.QUOTATIONS).where('reference', '==', upperQuery).get();
+          qtSnap.forEach(function(doc) { quotations.push({ id: doc.id, ...doc.data() }); });
+        } catch (err) {
+          console.warn('Firestore portal search error, relying on local records:', err);
+        }
+      }
+
+      // 2. Also merge LocalStorage records if not already in list
+      if (window.AgriConsult) {
+        var localEnq = window.AgriConsult.getEnquiries().filter(function(e) {
+          var matchRef = (e.reference || '').toLowerCase().includes(query.toLowerCase());
+          var matchPhone = cleanQueryPhone && (e.phone || '').replace(/[^0-9]/g, '').includes(cleanQueryPhone);
+          return matchRef || matchPhone;
+        });
+        localEnq.forEach(function(le) {
+          if (!enquiries.some(function(e) { return e.reference === le.reference; })) enquiries.push(le);
+        });
+
+        var localBkg = window.AgriConsult.getBookings().filter(function(b) {
+          var matchRef = (b.reference || '').toLowerCase().includes(query.toLowerCase());
+          var matchPhone = cleanQueryPhone && (b.phone || '').replace(/[^0-9]/g, '').includes(cleanQueryPhone);
+          return matchRef || matchPhone;
+        });
+        localBkg.forEach(function(lb) {
+          if (!bookings.some(function(b) { return b.reference === lb.reference; })) bookings.push(lb);
+        });
+
+        var localQt = window.AgriConsult.getQuotations().filter(function(q) {
+          var matchRef = (q.reference || '').toLowerCase().includes(query.toLowerCase());
+          var matchPhone = cleanQueryPhone && (q.phone || '').replace(/[^0-9]/g, '').includes(cleanQueryPhone);
+          return matchRef || matchPhone;
+        });
+        localQt.forEach(function(lq) {
+          if (!quotations.some(function(q) { return q.reference === lq.reference; })) quotations.push(lq);
+        });
+      }
 
       var reports = AgriConsult.getReports().filter(function(r) {
         var matchRef = r.reference.toLowerCase().includes(query);

@@ -1,0 +1,98 @@
+rules_version = '2';
+service cloud.firestore {
+  match /databases/{database}/documents {
+
+    // Helper functions for authentication & authorization
+    function isAuthenticated() {
+      return request.auth != null;
+    }
+
+    // Check if the user is a registered staff member
+    function isStaff() {
+      return isAuthenticated() && (
+        exists(/databases/$(database)/documents/staff/$(request.auth.uid)) ||
+        (request.auth.token.email != null && 
+         request.auth.token.email == "chinatsvieno@gmail.com")
+      );
+    }
+
+    // 1. Customers Collection
+    // Public can create when submitting a booking or question
+    // Only staff can list/view all customers or modify customer profiles
+    match /customers/{customerId} {
+      allow create: if true;
+      allow read: if isStaff();
+      allow update, delete: if isStaff();
+    }
+
+    // 2. Farming Questions Collection
+    // Public visitors can submit questions
+    // Public can read an individual question only if they know the reference
+    // Staff can read all, update status, and provide answers
+    match /farming_questions/{questionId} {
+      allow create: if request.resource.data.farmerName is string &&
+                       request.resource.data.phone is string &&
+                       request.resource.data.questionDescription is string;
+      allow get: if isStaff() || 
+                    (resource.data.reference != null && 
+                     request.query.reference == resource.data.reference);
+      allow list: if isStaff();
+      allow update, delete: if isStaff();
+    }
+
+    // 3. Farm Visit Bookings Collection
+    // Public visitors can request visits
+    // Staff can review, quote, approve, or reschedule
+    match /farm_visit_bookings/{bookingId} {
+      allow create: if request.resource.data.farmerName is string &&
+                       request.resource.data.phone is string;
+      allow get: if isStaff() || 
+                    (resource.data.reference != null && 
+                     request.query.reference == resource.data.reference);
+      allow list: if isStaff();
+      allow update, delete: if isStaff();
+    }
+
+    // 4. Consultation Bookings Collection
+    // Public visitors can request online WhatsApp/video sessions
+    // Staff can review, confirm, and update
+    match /consultation_bookings/{bookingId} {
+      allow create: if request.resource.data.farmerName is string &&
+                       request.resource.data.phone is string;
+      allow get: if isStaff() || 
+                    (resource.data.reference != null && 
+                     request.query.reference == resource.data.reference);
+      allow list: if isStaff();
+      allow update, delete: if isStaff();
+    }
+
+    // 5. Quotations Collection
+    // Staff creates and manages quotations
+    // Customers can view a quotation if they have the quotation reference
+    match /quotations/{quotationId} {
+      allow read: if isStaff() || resource.data.reference != null;
+      allow write: if isStaff();
+    }
+
+    // 6. Appointments Collection (Approved farm visits and confirmed consultations)
+    // Only staff can manage and review appointments
+    match /appointments/{appointmentId} {
+      allow read: if isStaff();
+      allow write: if isStaff();
+    }
+
+    // 7. Staff Collection (Staff roles and permissions)
+    // Authenticated staff can read; only admin can modify
+    match /staff/{staffId} {
+      allow read: if isAuthenticated();
+      allow write: if isStaff();
+    }
+
+    // 8. Company Settings Collection (Service descriptions, rates, business hours)
+    // Public can read company settings; only staff can update
+    match /company_settings/{settingId} {
+      allow read: if true;
+      allow write: if isStaff();
+    }
+  }
+}

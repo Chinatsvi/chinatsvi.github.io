@@ -188,6 +188,11 @@
 
   <div data-site-footer></div>
 
+  <!-- Firebase SDK (Compat) -->
+  <script src="https://www.gstatic.com/firebasejs/10.12.0/firebase-app-compat.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/10.12.0/firebase-auth-compat.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/10.12.0/firebase-firestore-compat.js"></script>
+  <script src="/assets/firebase-service.js"></script>
   <script src="/assets/consultancy.js"></script>
   <script src="/assets/content.js"></script>
   <script src="/assets/site.js"></script>
@@ -258,11 +263,11 @@
       }
     }
 
-    function submitFarmingQuestion(e) {
+    async function submitFarmingQuestion(e) {
       e.preventDefault();
       var btn = document.getElementById('submit-btn');
       btn.disabled = true;
-      btn.textContent = 'Submitting Enquiry...';
+      btn.textContent = 'Submitting Enquiry to Cloud Database...';
 
       var data = {
         farmerName: document.getElementById('farmer-name').value,
@@ -283,14 +288,19 @@
       };
 
       try {
-        var record = AgriConsult.saveEnquiry(data);
+        var record;
+        if (window.AgriFirebase && typeof window.AgriFirebase.submitFarmingQuestion === 'function') {
+          record = await window.AgriFirebase.submitFarmingQuestion(data);
+        } else {
+          record = AgriConsult.saveEnquiry(data);
+        }
         
         document.getElementById('farming-question-form').style.display = 'none';
         var successBox = document.getElementById('enquiry-success');
         document.getElementById('res-ref').textContent = record.reference;
 
         // WhatsApp direct link
-        var settings = AgriConsult.getSettings();
+        var settings = (window.AgriConsult ? window.AgriConsult.getSettings() : { whatsappNumber: '2774902204' });
         var waMsg = encodeURIComponent(
           'Hello D & C – AgriBase, I have submitted a farming question.\n' +
           'Ref: ' + record.reference + '\n' +
@@ -304,7 +314,8 @@
         successBox.style.display = 'block';
         window.scrollTo({ top: 100, behavior: 'smooth' });
       } catch (err) {
-        alert('An error occurred saving your enquiry. Please check your browser storage.');
+        console.error('Submission error:', err);
+        alert('An error occurred submitting your enquiry. Please check your network connection.');
         btn.disabled = false;
         btn.textContent = 'Submit Farming Enquiry →';
       }

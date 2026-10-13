@@ -214,6 +214,11 @@
 
   <div data-site-footer></div>
 
+  <!-- Firebase SDK (Compat) -->
+  <script src="https://www.gstatic.com/firebasejs/10.12.0/firebase-app-compat.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/10.12.0/firebase-auth-compat.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/10.12.0/firebase-firestore-compat.js"></script>
+  <script src="/assets/firebase-service.js"></script>
   <script src="/assets/consultancy.js"></script>
   <script src="/assets/content.js"></script>
   <script src="/assets/site.js"></script>
@@ -240,11 +245,11 @@
       // Optional UI enhancements
     }
 
-    function submitFarmVisit(e) {
+    async function submitFarmVisit(e) {
       e.preventDefault();
       var btn = document.getElementById('visit-submit-btn');
       btn.disabled = true;
-      btn.textContent = 'Submitting Request...';
+      btn.textContent = 'Submitting Request to Cloud Database...';
 
       var srvSelect = document.getElementById('visit-service');
       var srvName = srvSelect.options[srvSelect.selectedIndex].text;
@@ -274,13 +279,18 @@
       };
 
       try {
-        var record = AgriConsult.saveBooking(data);
+        var record;
+        if (window.AgriFirebase && typeof window.AgriFirebase.submitFarmVisitBooking === 'function') {
+          record = await window.AgriFirebase.submitFarmVisitBooking(data);
+        } else {
+          record = AgriConsult.saveBooking(data);
+        }
         
         document.getElementById('farm-visit-form').style.display = 'none';
         var successBox = document.getElementById('visit-success');
         document.getElementById('res-visit-ref').textContent = record.reference;
 
-        var settings = AgriConsult.getSettings();
+        var settings = (window.AgriConsult ? window.AgriConsult.getSettings() : { whatsappNumber: '2774902204' });
         var waMsg = encodeURIComponent(
           'Hello D & C – AgriBase, I have submitted a farm visit request.\n' +
           'Ref: ' + record.reference + '\n' +
@@ -295,7 +305,8 @@
         successBox.style.display = 'block';
         window.scrollTo({ top: 100, behavior: 'smooth' });
       } catch (err) {
-        alert('An error occurred submitting your request. Please check your browser storage.');
+        console.error('Submission error:', err);
+        alert('An error occurred submitting your request. Please check your network connection.');
         btn.disabled = false;
         btn.textContent = 'Submit Farm Visit Request →';
       }

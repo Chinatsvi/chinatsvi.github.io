@@ -67,29 +67,43 @@
 
   <!-- Admin Login Security Shield -->
   <div id="admin-auth-shield" style="display:block;min-height:70vh;padding:40px 16px;">
-    <div style="max-width:440px;margin:40px auto;background:#ffffff;border:1px solid var(--border);border-radius:12px;padding:32px;box-shadow:var(--shadow);">
+    <div style="max-width:460px;margin:40px auto;background:#ffffff;border:1px solid var(--border);border-radius:12px;padding:32px;box-shadow:var(--shadow);">
       <div style="text-align:center;margin-bottom:20px;">
         <div style="width:50px;height:50px;background:var(--field-light);color:var(--field);border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:24px;margin:0 auto 10px;">🔐</div>
         <h2 style="margin:0;font-size:22px;">Consultant Workspace</h2>
         <p style="margin:4px 0 0;font-size:13.5px;color:var(--muted);">D & C – AgriBase Operational Management</p>
       </div>
 
+      <div id="auth-error-alert" style="display:none;background:#fee2e2;border:1px solid #f87171;color:#991b1b;padding:12px;border-radius:8px;font-size:13.5px;margin-bottom:16px;"></div>
+
       <form id="admin-login-form" onsubmit="handleAdminLogin(event)">
-        <div class="form-group">
-          <label for="admin-role">Select Operational Role:</label>
-          <select id="admin-role" class="form-control">
-            <option value="principal">Founder & Principal Consultant (Enock Chinatsvi)</option>
-            <option value="assistant">Client Services & Operations Assistant</option>
-          </select>
+        
+        <div id="email-login-fields">
+          <div class="form-group">
+            <label for="admin-email">Staff Email Address:</label>
+            <input type="email" id="admin-email" class="form-control" required placeholder="e.g. chinatsvieno@gmail.com" value="chinatsvieno@gmail.com">
+          </div>
+
+          <div class="form-group">
+            <label for="admin-password">Firebase Staff Password:</label>
+            <input type="password" id="admin-password" class="form-control" required placeholder="Enter password">
+            <span class="form-hint">Authenticated via Google Firebase Authentication</span>
+          </div>
         </div>
 
-        <div class="form-group">
-          <label for="admin-passcode">Staff Access Passcode:</label>
-          <input type="password" id="admin-passcode" class="form-control" required placeholder="Enter security passcode">
-          <span class="form-hint">Default initial access code: <strong>agribase2026</strong></span>
+        <div id="passcode-login-fields" style="display:none;">
+          <div class="form-group">
+            <label for="admin-passcode">Staff Access Passcode:</label>
+            <input type="password" id="admin-passcode" class="form-control" placeholder="Enter emergency access passcode">
+            <span class="form-hint">Emergency initial code: <strong>agribase2026</strong></span>
+          </div>
         </div>
 
-        <button type="submit" class="button" style="width:100%;margin-top:10px;">Access Workspace →</button>
+        <button type="submit" id="admin-login-btn" class="button" style="width:100%;margin-top:10px;">Sign In with Firebase Auth →</button>
+
+        <div style="text-align:center;margin-top:14px;font-size:13px;">
+          <a href="#" id="toggle-auth-mode-btn" onclick="toggleAuthMode(event)" style="color:var(--field);font-weight:700;">Switch to Passcode Backup Mode</a>
+        </div>
       </form>
     </div>
   </div>
@@ -103,6 +117,7 @@
           <h1 style="font-size:28px;margin:0;">D & C – AgriBase Administration</h1>
           <div style="font-size:13.5px;color:var(--muted);margin-top:4px;">
             Logged in as: <strong id="current-user-role-label">Principal Consultant</strong> | 
+            <span id="current-user-email-label" style="color:var(--field);font-weight:700;">chinatsvieno@gmail.com</span> | 
             <a href="#" onclick="logoutAdmin()" style="color:#b91c1c;font-weight:700;">Sign Out</a>
           </div>
         </div>
@@ -119,11 +134,13 @@
         <!-- Navigation Tabs -->
         <div class="tabs-nav">
           <button class="tab-btn active" onclick="switchAdminTab('overview')">Overview</button>
-          <button class="tab-btn" onclick="switchAdminTab('enquiries')">Enquiries (<span id="tab-cnt-enq">0</span>)</button>
+          <button class="tab-btn" onclick="switchAdminTab('enquiries')">Farming Questions (<span id="tab-cnt-enq">0</span>)</button>
           <button class="tab-btn" onclick="switchAdminTab('bookings')">Bookings (<span id="tab-cnt-bkg">0</span>)</button>
           <button class="tab-btn" onclick="switchAdminTab('quotations')">Quotations (<span id="tab-cnt-qt">0</span>)</button>
+          <button class="tab-btn" onclick="switchAdminTab('appointments')">Appointments (<span id="tab-cnt-appt">0</span>)</button>
           <button class="tab-btn" onclick="switchAdminTab('reports')">Farm Reports</button>
           <button class="tab-btn" onclick="switchAdminTab('customers')">Customers</button>
+          <button class="tab-btn" onclick="switchAdminTab('staff')">Staff & Roles</button>
           <button class="tab-btn" onclick="switchAdminTab('services')">Services & Pricing</button>
           <button class="tab-btn" onclick="switchAdminTab('settings')">Company Settings</button>
         </div>
@@ -255,6 +272,38 @@
           </div>
         </div>
 
+        <!-- TAB: APPOINTMENTS (Firestore 'appointments' collection) -->
+        <div id="tab-appointments" class="admin-tab-pane" style="display:none;">
+          <div class="filter-bar">
+            <input type="text" id="filter-appt-search" class="form-control" placeholder="Search appointments..." oninput="renderAppointmentsTable()">
+            <select id="filter-appt-status" class="form-control" onchange="renderAppointmentsTable()">
+              <option value="all">All Appointment Statuses</option>
+              <option value="confirmed">Confirmed</option>
+              <option value="rescheduled">Rescheduled</option>
+              <option value="completed">Completed</option>
+              <option value="cancelled">Cancelled</option>
+            </select>
+          </div>
+          <div class="table-responsive">
+            <table class="admin-table">
+              <thead>
+                <tr>
+                  <th>Ref</th>
+                  <th>Booking Ref</th>
+                  <th>Farmer / Client</th>
+                  <th>Type</th>
+                  <th>Appointment Date & Time</th>
+                  <th>Location</th>
+                  <th>Assigned Consultant</th>
+                  <th>Status</th>
+                  <th>Actions</th>
+                </tr>
+              </thead>
+              <tbody id="appointments-table-body"></tbody>
+            </table>
+          </div>
+        </div>
+
         <!-- TAB: REPORTS -->
         <div id="tab-reports" class="admin-tab-pane" style="display:none;">
           <div class="filter-bar">
@@ -293,6 +342,34 @@
                 </tr>
               </thead>
               <tbody id="customers-table-body"></tbody>
+            </table>
+          </div>
+        </div>
+
+        <!-- TAB: STAFF (Firestore 'staff' collection) -->
+        <div id="tab-staff" class="admin-tab-pane" style="display:none;">
+          <div class="filter-bar" style="justify-content:space-between;">
+            <div>
+              <input type="text" id="filter-staff-search" class="form-control" placeholder="Search staff members..." oninput="renderStaffTable()">
+            </div>
+            <div>
+              <button class="button" onclick="openNewStaffModal()">+ Add Staff Account</button>
+            </div>
+          </div>
+          <div class="table-responsive">
+            <table class="admin-table">
+              <thead>
+                <tr>
+                  <th>Staff Member</th>
+                  <th>Email</th>
+                  <th>Role</th>
+                  <th>Designation / Title</th>
+                  <th>Status</th>
+                  <th>Permissions</th>
+                  <th>Actions</th>
+                </tr>
+              </thead>
+              <tbody id="staff-table-body"></tbody>
             </table>
           </div>
         </div>
@@ -376,46 +453,156 @@
 
   <div data-site-footer></div>
 
+  <!-- Firebase SDK (Compat) -->
+  <script src="https://www.gstatic.com/firebasejs/10.12.0/firebase-app-compat.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/10.12.0/firebase-auth-compat.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/10.12.0/firebase-firestore-compat.js"></script>
+  <script src="/assets/firebase-service.js"></script>
   <script src="/assets/consultancy.js"></script>
   <script src="/assets/content.js"></script>
   <script src="/assets/site.js"></script>
   <script>
-    var currentRole = 'principal';
+    var currentRole = 'admin';
+    var currentUserEmail = 'chinatsvieno@gmail.com';
+    var isPasscodeMode = false;
+    var cachedData = {
+      enquiries: [],
+      bookings: [],
+      quotations: [],
+      appointments: [],
+      customers: [],
+      staff: [],
+      reports: []
+    };
 
-    function handleAdminLogin(e) {
-      e.preventDefault();
-      var pass = document.getElementById('admin-passcode').value.trim();
-      var role = document.getElementById('admin-role').value;
+    function toggleAuthMode(e) {
+      if (e) e.preventDefault();
+      isPasscodeMode = !isPasscodeMode;
+      var emailFields = document.getElementById('email-login-fields');
+      var passFields = document.getElementById('passcode-login-fields');
+      var btn = document.getElementById('admin-login-btn');
+      var toggleBtn = document.getElementById('toggle-auth-mode-btn');
+      var err = document.getElementById('auth-error-alert');
+      if (err) err.style.display = 'none';
 
-      // Safe client side authentication for small founder & assistant team
-      if (pass === 'agribase2026' || pass === 'enock2026') {
-        currentRole = role;
-        AgriConsult.setAdminSession({ role: role, loggedInAt: new Date().toISOString() });
-        showAdminApp();
+      if (isPasscodeMode) {
+        emailFields.style.display = 'none';
+        passFields.style.display = 'block';
+        document.getElementById('admin-email').required = false;
+        document.getElementById('admin-password').required = false;
+        document.getElementById('admin-passcode').required = true;
+        btn.textContent = 'Sign In with Passcode Backup →';
+        toggleBtn.textContent = '← Switch to Firebase Email/Password Login';
       } else {
-        alert('Incorrect passcode. Please check your credentials.');
+        emailFields.style.display = 'block';
+        passFields.style.display = 'none';
+        document.getElementById('admin-email').required = true;
+        document.getElementById('admin-password').required = true;
+        document.getElementById('admin-passcode').required = false;
+        btn.textContent = 'Sign In with Firebase Auth →';
+        toggleBtn.textContent = 'Switch to Passcode Backup Mode';
+      }
+    }
+
+    async function handleAdminLogin(e) {
+      e.preventDefault();
+      var errAlert = document.getElementById('auth-error-alert');
+      errAlert.style.display = 'none';
+      var btn = document.getElementById('admin-login-btn');
+      btn.disabled = true;
+
+      if (!isPasscodeMode) {
+        // Mode 1: Firebase Authentication (Email / Password)
+        var email = document.getElementById('admin-email').value.trim();
+        var password = document.getElementById('admin-password').value;
+        btn.textContent = 'Authenticating with Firebase...';
+
+        try {
+          if (window.AgriFirebase && typeof window.AgriFirebase.loginStaff === 'function') {
+            var authResult = await window.AgriFirebase.loginStaff(email, password);
+            currentUserEmail = authResult.user.email;
+            currentRole = (authResult.staff && authResult.staff.role) ? authResult.staff.role : 'admin';
+            sessionStorage.setItem('agribase_staff_session', JSON.stringify({
+              email: currentUserEmail,
+              role: currentRole,
+              title: (authResult.staff && authResult.staff.title) || 'Consultant',
+              uid: authResult.user.uid,
+              loggedInAt: new Date().toISOString()
+            }));
+            showAdminApp();
+          } else {
+            throw new Error('Firebase service not initialized. Try passcode backup mode.');
+          }
+        } catch (err) {
+          console.error('Firebase Auth error:', err);
+          var msg = err.message || 'Login failed.';
+          if (err.code === 'auth/user-not-found') msg = 'No account found with this email. Please register in Firebase Authentication Console.';
+          if (err.code === 'auth/wrong-password' || err.code === 'auth/invalid-credential') msg = 'Invalid password for this staff account.';
+          if (err.code === 'auth/invalid-email') msg = 'Invalid email address format.';
+          errAlert.innerHTML = '<strong>Authentication Failed:</strong> ' + msg;
+          errAlert.style.display = 'block';
+          btn.disabled = false;
+          btn.textContent = 'Sign In with Firebase Auth →';
+        }
+      } else {
+        // Mode 2: Emergency Passcode Backup
+        var pass = document.getElementById('admin-passcode').value.trim();
+        if (pass === 'agribase2026' || pass === 'enock2026') {
+          currentRole = 'admin';
+          currentUserEmail = 'chinatsvieno@gmail.com (Passcode Mode)';
+          sessionStorage.setItem('agribase_staff_session', JSON.stringify({
+            email: 'chinatsvieno@gmail.com',
+            role: 'admin',
+            title: 'Founder & Principal Consultant',
+            loggedInAt: new Date().toISOString()
+          }));
+          showAdminApp();
+        } else {
+          errAlert.textContent = 'Incorrect access passcode. Please check your credentials.';
+          errAlert.style.display = 'block';
+          btn.disabled = false;
+          btn.textContent = 'Sign In with Passcode Backup →';
+        }
       }
     }
 
     function checkAdminSession() {
-      var sess = AgriConsult.getAdminSession();
-      if (sess) {
-        currentRole = sess.role;
+      var sessStr = sessionStorage.getItem('agribase_staff_session');
+      if (sessStr) {
+        try {
+          var sess = JSON.parse(sessStr);
+          currentRole = sess.role || 'admin';
+          currentUserEmail = sess.email || 'chinatsvieno@gmail.com';
+          showAdminApp();
+          return;
+        } catch (e) {}
+      }
+      var legacySess = AgriConsult.getAdminSession();
+      if (legacySess) {
+        currentRole = legacySess.role || 'admin';
         showAdminApp();
       }
     }
 
-    function logoutAdmin() {
+    async function logoutAdmin() {
+      if (window.AgriFirebase && typeof window.AgriFirebase.logoutStaff === 'function') {
+        try { await window.AgriFirebase.logoutStaff(); } catch (e) {}
+      }
       AgriConsult.clearAdminSession();
+      sessionStorage.removeItem('agribase_staff_session');
       document.getElementById('admin-app').style.display = 'none';
       document.getElementById('admin-auth-shield').style.display = 'block';
+      var btn = document.getElementById('admin-login-btn');
+      btn.disabled = false;
+      btn.textContent = isPasscodeMode ? 'Sign In with Passcode Backup →' : 'Sign In with Firebase Auth →';
     }
 
     function showAdminApp() {
       document.getElementById('admin-auth-shield').style.display = 'none';
       document.getElementById('admin-app').style.display = 'block';
       document.getElementById('current-user-role-label').textContent = 
-        currentRole === 'principal' ? 'Principal Consultant (Enock Chinatsvi)' : 'Operations Assistant';
+        (currentRole === 'admin' || currentRole === 'principal') ? 'Principal Consultant (Enock Chinatsvi)' : 'Operations Assistant';
+      document.getElementById('current-user-email-label').textContent = currentUserEmail;
       refreshAllData();
     }
 
@@ -423,33 +610,70 @@
       document.querySelectorAll('.tab-btn').forEach(function(btn) { btn.classList.remove('active'); });
       document.querySelectorAll('.admin-tab-pane').forEach(function(pane) { pane.style.display = 'none'; });
 
-      event.target.classList.add('active');
+      if (event && event.target && event.target.classList) {
+        event.target.classList.add('active');
+      }
       var target = document.getElementById('tab-' + tabName);
       if (target) target.style.display = 'block';
 
       if (tabName === 'enquiries') renderEnquiriesTable();
       if (tabName === 'bookings') renderBookingsTable();
       if (tabName === 'quotations') renderQuotationsTable();
+      if (tabName === 'appointments') renderAppointmentsTable();
       if (tabName === 'reports') renderReportsTable();
       if (tabName === 'customers') renderCustomersTable();
+      if (tabName === 'staff') renderStaffTable();
       if (tabName === 'services') renderServicesAdmin();
       if (tabName === 'settings') loadSettingsForm();
     }
 
-    function refreshAllData() {
-      var enqs = AgriConsult.getEnquiries();
-      var bkgs = AgriConsult.getBookings();
-      var qts = AgriConsult.getQuotations();
+    async function refreshAllData() {
+      // 1. Load from Firestore if online
+      if (window.AgriFirebase && window.AgriFirebase.init() && window.AgriFirebase.db) {
+        try {
+          var questions = await window.AgriFirebase.adminFetchCollection(window.AgriFirebase.collections.FARMING_QUESTIONS);
+          var visitBookings = await window.AgriFirebase.adminFetchCollection(window.AgriFirebase.collections.FARM_VISIT_BOOKINGS);
+          var consultBookings = await window.AgriFirebase.adminFetchCollection(window.AgriFirebase.collections.CONSULTATION_BOOKINGS);
+          var quotations = await window.AgriFirebase.adminFetchCollection(window.AgriFirebase.collections.QUOTATIONS);
+          var appointments = await window.AgriFirebase.adminFetchCollection(window.AgriFirebase.collections.APPOINTMENTS);
+          var customers = await window.AgriFirebase.adminFetchCollection(window.AgriFirebase.collections.CUSTOMERS);
+          var staff = await window.AgriFirebase.adminFetchCollection(window.AgriFirebase.collections.STAFF);
 
-      document.getElementById('tab-cnt-enq').textContent = enqs.length;
-      document.getElementById('tab-cnt-bkg').textContent = bkgs.length;
-      document.getElementById('tab-cnt-qt').textContent = qts.length;
+          cachedData.enquiries = questions;
+          cachedData.bookings = [
+            ...visitBookings.map(function(b) { return { ...b, type: 'farm-visit' }; }),
+            ...consultBookings.map(function(c) { return { ...c, type: 'online-consultation' }; })
+          ];
+          cachedData.quotations = quotations;
+          cachedData.appointments = appointments;
+          cachedData.customers = customers;
+          cachedData.staff = staff;
+        } catch (err) {
+          console.warn('Error fetching Firestore data, using local storage cache:', err);
+        }
+      }
 
-      // Stats
-      var newEnqs = enqs.filter(function(e) { return e.status === 'NEW'; }).length;
-      var pendingVisits = bkgs.filter(function(b) { return b.status === 'REQUEST_RECEIVED' || b.status === 'UNDER_REVIEW'; }).length;
-      var confirmed = bkgs.filter(function(b) { return b.status === 'CONFIRMED'; }).length;
-      var openQuotes = qts.filter(function(q) { return q.status === 'SENT'; }).length;
+      // Merge local fallback if empty
+      if (!cachedData.enquiries.length && window.AgriConsult) cachedData.enquiries = window.AgriConsult.getEnquiries();
+      if (!cachedData.bookings.length && window.AgriConsult) cachedData.bookings = window.AgriConsult.getBookings();
+      if (!cachedData.quotations.length && window.AgriConsult) cachedData.quotations = window.AgriConsult.getQuotations();
+      if (!cachedData.customers.length && window.AgriConsult) cachedData.customers = window.AgriConsult.getCustomers();
+      if (!cachedData.reports.length && window.AgriConsult) cachedData.reports = window.AgriConsult.getReports();
+
+      // Update counters in tabs
+      document.getElementById('tab-cnt-enq').textContent = cachedData.enquiries.length;
+      document.getElementById('tab-cnt-bkg').textContent = cachedData.bookings.length;
+      document.getElementById('tab-cnt-qt').textContent = cachedData.quotations.length;
+      var apptBadge = document.getElementById('tab-cnt-appt');
+      if (apptBadge) apptBadge.textContent = cachedData.appointments.length;
+      var staffBadge = document.getElementById('tab-cnt-staff');
+      if (staffBadge) staffBadge.textContent = cachedData.staff.length;
+
+      // Stats Counters
+      var newEnqs = cachedData.enquiries.filter(function(e) { return (e.status || '').toLowerCase() === 'new' || (e.status || '').toLowerCase() === 'pending'; }).length;
+      var pendingVisits = cachedData.bookings.filter(function(b) { return (b.status || '').toLowerCase().includes('request') || (b.status || '').toLowerCase().includes('pending'); }).length;
+      var confirmed = cachedData.appointments.length || cachedData.bookings.filter(function(b) { return (b.status || '').toLowerCase().includes('confirm') || (b.status || '').toLowerCase().includes('approved'); }).length;
+      var openQuotes = cachedData.quotations.filter(function(q) { return (q.status || '').toLowerCase() === 'sent' || (q.status || '').toLowerCase() === 'pending'; }).length;
 
       document.getElementById('stat-new-enquiries').textContent = newEnqs;
       document.getElementById('stat-pending-visits').textContent = pendingVisits;
@@ -457,7 +681,7 @@
       document.getElementById('stat-open-quotes').textContent = openQuotes;
 
       // Render Overview Quick Lists
-      renderOverviewLists(enqs, bkgs);
+      renderOverviewLists(cachedData.enquiries, cachedData.bookings);
     }
 
     function renderOverviewLists(enqs, bkgs) {
@@ -506,7 +730,8 @@
     }
 
     function openEnquiryModal(ref) {
-      var enquiry = AgriConsult.getEnquiries().find(function(e) { return e.reference === ref; });
+      var enquiry = (cachedData.enquiries && cachedData.enquiries.find(function(e) { return e.reference === ref || e.id === ref; })) ||
+                    (window.AgriConsult && window.AgriConsult.getEnquiries().find(function(e) { return e.reference === ref; }));
       if (!enquiry) return;
 
       var attachmentsHtml = '';
@@ -514,17 +739,17 @@
         attachmentsHtml = '<div style="margin-top:10px;"><strong>Attachments:</strong><div style="display:flex;gap:10px;margin-top:6px;flex-wrap:wrap;">' +
           enquiry.attachments.map(function(att) {
             return '<div style="background:var(--cream);padding:6px 10px;border-radius:4px;border:1px solid var(--border);font-size:12px;">' +
-              '📎 <a href="' + att.dataUrl + '" download="' + att.name + '" target="_blank">' + att.name + '</a>' +
+              '📎 <a href="' + (att.dataUrl || att.url || '#') + '" download="' + att.name + '" target="_blank">' + att.name + '</a>' +
             '</div>';
           }).join('') + '</div></div>';
       }
 
-      var html = '<h3 style="margin-top:0;">Enquiry Review: ' + enquiry.reference + '</h3>' +
+      var html = '<h3 style="margin-top:0;">Enquiry Review: ' + (enquiry.reference || enquiry.id) + '</h3>' +
         '<div style="font-size:14px;line-height:1.6;margin-bottom:16px;">' +
-          '<p><strong>Farmer:</strong> ' + enquiry.farmerName + ' | <strong>Phone:</strong> ' + enquiry.phone + ' | <strong>Email:</strong> ' + (enquiry.email || 'N/A') + '</p>' +
-          '<p><strong>Location:</strong> ' + enquiry.location + ', ' + enquiry.country + ' | <strong>Farm:</strong> ' + (enquiry.farmName || 'N/A') + '</p>' +
-          '<p><strong>Enterprise:</strong> ' + enquiry.cropOrLivestock + ' (' + enquiry.category + ')</p>' +
-          '<p><strong>Problem Description:</strong><br>' + enquiry.questionDescription + '</p>' +
+          '<p><strong>Farmer:</strong> ' + (enquiry.farmerName || enquiry.customerName) + ' | <strong>Phone:</strong> ' + enquiry.phone + ' | <strong>Email:</strong> ' + (enquiry.email || 'N/A') + '</p>' +
+          '<p><strong>Location:</strong> ' + enquiry.location + ', ' + (enquiry.country || 'Zimbabwe') + ' | <strong>Farm:</strong> ' + (enquiry.farmName || 'N/A') + '</p>' +
+          '<p><strong>Enterprise:</strong> ' + (enquiry.cropOrLivestock || enquiry.enterpriseType || 'Crop') + '</p>' +
+          '<p><strong>Problem Description:</strong><br>' + (enquiry.questionDescription || enquiry.description || '') + '</p>' +
           (enquiry.previousActions ? '<p><strong>Previous Actions:</strong> ' + enquiry.previousActions + '</p>' : '') +
           attachmentsHtml +
         '</div>' +
@@ -532,14 +757,14 @@
           '<div class="form-group">' +
             '<label>Status:</label>' +
             '<select id="modal-enq-status" class="form-control">' +
-              ['NEW','UNDER_REVIEW','AWAITING_INFO','ANSWERED','CLOSED'].map(function(st) {
-                return '<option value="' + st + '"' + (enquiry.status === st ? ' selected' : '') + '>' + st + '</option>';
+              ['pending','NEW','UNDER_REVIEW','under_review','AWAITING_INFO','answered','ANSWERED','closed','CLOSED'].filter(function(v, i, a) { return a.indexOf(v) === i; }).map(function(st) {
+                return '<option value="' + st + '"' + ((enquiry.status || '').toLowerCase() === st.toLowerCase() ? ' selected' : '') + '>' + st.toUpperCase() + '</option>';
               }).join('') +
             '</select>' +
           '</div>' +
           '<div class="form-group">' +
-            '<label>Official Agronomic Response (Sent to farmer):</label>' +
-            '<textarea id="modal-enq-response" class="form-control">' + (enquiry.officialResponse || '') + '</textarea>' +
+            '<label>Official Agronomic Response (Visible to farmer via Portal):</label>' +
+            '<textarea id="modal-enq-response" class="form-control" rows="4">' + (enquiry.officialResponse || '') + '</textarea>' +
           '</div>' +
           '<div class="form-group">' +
             '<label>Internal Consultant Notes:</label>' +
@@ -547,7 +772,7 @@
           '</div>' +
           '<div style="display:flex;gap:10px;justify-content:flex-end;">' +
             '<button class="button secondary" onclick="closeModal()">Cancel</button>' +
-            '<button class="button" onclick="saveEnquiryModalChanges(\'' + enquiry.reference + '\')">Save & Update Status</button>' +
+            '<button class="button" onclick="saveEnquiryModalChanges(\'' + (enquiry.reference || enquiry.id) + '\')">Save & Update Status</button>' +
           '</div>' +
         '</div>';
 
@@ -555,35 +780,51 @@
       document.getElementById('admin-detail-modal').classList.add('active');
     }
 
-    function saveEnquiryModalChanges(ref) {
+    async function saveEnquiryModalChanges(ref) {
       var status = document.getElementById('modal-enq-status').value;
       var response = document.getElementById('modal-enq-response').value;
       var notes = document.getElementById('modal-enq-notes').value;
 
-      AgriConsult.updateEnquiry(ref, {
+      var updates = {
         status: status,
         officialResponse: response,
         internalNotes: notes
-      });
+      };
+
+      var enquiry = (cachedData.enquiries && cachedData.enquiries.find(function(e) { return e.reference === ref || e.id === ref; }));
+      var docId = (enquiry && enquiry.id) ? enquiry.id : ref;
+
+      if (window.AgriFirebase && typeof window.AgriFirebase.adminUpdateRecord === 'function') {
+        try {
+          await window.AgriFirebase.adminUpdateRecord(window.AgriFirebase.collections.FARMING_QUESTIONS, docId, updates);
+        } catch (e) {
+          console.warn('Firebase question update error:', e);
+        }
+      }
+
+      if (window.AgriConsult) {
+        AgriConsult.updateEnquiry(ref, updates);
+      }
 
       closeModal();
-      refreshAllData();
+      await refreshAllData();
       renderEnquiriesTable();
-      alert('Enquiry updated successfully.');
+      alert('Farming Question record updated successfully.');
     }
 
     function openBookingModal(ref) {
-      var booking = AgriConsult.getBookings().find(function(b) { return b.reference === ref; });
+      var booking = (cachedData.bookings && cachedData.bookings.find(function(b) { return b.reference === ref || b.id === ref; })) ||
+                    (window.AgriConsult && window.AgriConsult.getBookings().find(function(b) { return b.reference === ref; }));
       if (!booking) return;
 
-      var html = '<h3 style="margin-top:0;">Booking Management: ' + booking.reference + '</h3>' +
+      var html = '<h3 style="margin-top:0;">Booking Management: ' + (booking.reference || booking.id) + '</h3>' +
         '<div style="font-size:14px;line-height:1.6;margin-bottom:16px;">' +
-          '<p><strong>Farmer:</strong> ' + booking.farmerName + ' | <strong>Phone:</strong> ' + booking.phone + '</p>' +
-          '<p><strong>Farm Location:</strong> ' + booking.farmAddress + ' (' + booking.district + ', ' + booking.nearestTown + ')</p>' +
-          '<p><strong>Service:</strong> ' + booking.serviceName + ' (' + booking.type + ')</p>' +
-          '<p><strong>Preferred Date:</strong> ' + booking.preferredDate + ' | <strong>Time:</strong> ' + booking.preferredTime + '</p>' +
-          '<p><strong>Directions / Access:</strong> ' + (booking.accessArrangements || 'None') + '</p>' +
-          '<p><strong>Challenges:</strong> ' + booking.description + '</p>' +
+          '<p><strong>Farmer:</strong> ' + (booking.farmerName || booking.customerName) + ' | <strong>Phone:</strong> ' + booking.phone + ' | <strong>Email:</strong> ' + (booking.email || 'N/A') + '</p>' +
+          '<p><strong>Location:</strong> ' + (booking.farmAddress || booking.location || booking.district || 'N/A') + '</p>' +
+          '<p><strong>Service:</strong> ' + (booking.serviceName || 'Consultancy') + ' (' + (booking.type || 'farm-visit') + ')</p>' +
+          '<p><strong>Preferred Date:</strong> ' + (booking.preferredDate || 'N/A') + ' | <strong>Time:</strong> ' + (booking.preferredTime || 'N/A') + '</p>' +
+          '<p><strong>Access / Details:</strong> ' + (booking.accessArrangements || 'None specified') + '</p>' +
+          '<p><strong>Challenges / Scope:</strong> ' + (booking.description || booking.reasonForVisit || 'None') + '</p>' +
           (booking.quotationRef ? '<p><strong>Linked Quotation:</strong> <a href="/consultancy/quotation/?ref=' + booking.quotationRef + '" target="_blank">' + booking.quotationRef + '</a></p>' : '') +
         '</div>' +
         '<div style="border-top:1.5px solid var(--border);padding-top:16px;">' +
@@ -591,14 +832,14 @@
             '<div class="form-group">' +
               '<label>Status:</label>' +
               '<select id="modal-bkg-status" class="form-control">' +
-                ['REQUEST_RECEIVED','UNDER_REVIEW','AWAITING_INFO','QUOTATION_PENDING','QUOTATION_SENT','AWAITING_PAYMENT','CONFIRMED','RESCHEDULED','COMPLETED','CANCELLED','DECLINED'].map(function(st) {
-                  return '<option value="' + st + '"' + (booking.status === st ? ' selected' : '') + '>' + st + '</option>';
+                ['pending','REQUEST_RECEIVED','UNDER_REVIEW','QUOTATION_PENDING','QUOTATION_SENT','CONFIRMED','approved','RESCHEDULED','COMPLETED','CANCELLED'].filter(function(v, i, a) { return a.indexOf(v) === i; }).map(function(st) {
+                  return '<option value="' + st + '"' + ((booking.status || '').toLowerCase() === st.toLowerCase() ? ' selected' : '') + '>' + st.toUpperCase() + '</option>';
                 }).join('') +
               '</select>' +
             '</div>' +
             '<div class="form-group">' +
               '<label>Confirmed Appointment Date:</label>' +
-              '<input type="date" id="modal-bkg-conf-date" class="form-control" value="' + (booking.confirmedDate || booking.preferredDate) + '">' +
+              '<input type="date" id="modal-bkg-conf-date" class="form-control" value="' + (booking.confirmedDate || booking.preferredDate || '') + '">' +
             '</div>' +
           '</div>' +
           '<div class="form-group">' +
@@ -607,11 +848,11 @@
           '</div>' +
           '<div style="display:flex;justify-content:space-between;flex-wrap:wrap;gap:10px;">' +
             '<div>' +
-              '<button class="button secondary" onclick="prepareQuoteFromBooking(\'' + booking.reference + '\')">Generate Quotation for this Visit →</button>' +
+              '<button class="button secondary" onclick="prepareQuoteFromBooking(\'' + (booking.reference || booking.id) + '\')">Generate Quotation for this Request →</button>' +
             '</div>' +
             '<div style="display:flex;gap:10px;">' +
               '<button class="button secondary" onclick="closeModal()">Close</button>' +
-              '<button class="button" onclick="saveBookingModalChanges(\'' + booking.reference + '\')">Save Booking</button>' +
+              '<button class="button" onclick="saveBookingModalChanges(\'' + (booking.reference || booking.id) + '\')">Save Booking</button>' +
             '</div>' +
           '</div>' +
         '</div>';
@@ -620,21 +861,46 @@
       document.getElementById('admin-detail-modal').classList.add('active');
     }
 
-    function saveBookingModalChanges(ref) {
+    async function saveBookingModalChanges(ref) {
       var status = document.getElementById('modal-bkg-status').value;
       var confDate = document.getElementById('modal-bkg-conf-date').value;
       var notes = document.getElementById('modal-bkg-notes').value;
 
-      AgriConsult.updateBooking(ref, {
+      var updates = {
         status: status,
         confirmedDate: confDate,
         internalNotes: notes
-      });
+      };
+
+      var booking = (cachedData.bookings && cachedData.bookings.find(function(b) { return b.reference === ref || b.id === ref; }));
+      var docId = (booking && booking.id) ? booking.id : ref;
+      var bkgCollection = (booking && booking.type === 'online-consultation') ? 
+        window.AgriFirebase.collections.CONSULTATION_BOOKINGS : window.AgriFirebase.collections.FARM_VISIT_BOOKINGS;
+
+      if (window.AgriFirebase && typeof window.AgriFirebase.adminUpdateRecord === 'function') {
+        try {
+          await window.AgriFirebase.adminUpdateRecord(bkgCollection, docId, updates);
+
+          // If confirmed or approved, automatically ensure appointment record exists
+          if ((status === 'CONFIRMED' || status === 'approved') && window.AgriFirebase.adminApproveAppointment && booking) {
+            await window.AgriFirebase.adminApproveAppointment(booking, {
+              date: confDate,
+              notes: notes
+            });
+          }
+        } catch (e) {
+          console.warn('Firebase booking update error:', e);
+        }
+      }
+
+      if (window.AgriConsult) {
+        AgriConsult.updateBooking(ref, updates);
+      }
 
       closeModal();
-      refreshAllData();
+      await refreshAllData();
       renderBookingsTable();
-      alert('Booking updated.');
+      alert('Booking record updated.');
     }
 
     function prepareQuoteFromBooking(bkgRef) {
@@ -644,16 +910,17 @@
 
     // Quotation Creation Modal
     function openNewQuotationModal(linkedBkgRef) {
-      var bkg = linkedBkgRef ? AgriConsult.getBookings().find(function(b) { return b.reference === linkedBkgRef; }) : null;
-      var settings = AgriConsult.getSettings();
+      var bkg = linkedBkgRef ? ((cachedData.bookings && cachedData.bookings.find(function(b) { return b.reference === linkedBkgRef || b.id === linkedBkgRef; })) ||
+                                (AgriConsult && AgriConsult.getBookings().find(function(b) { return b.reference === linkedBkgRef; }))) : null;
+      var settings = AgriConsult ? AgriConsult.getSettings() : { travelRatePerKm: 0.65 };
 
-      var defaultName = bkg ? bkg.farmerName : '';
+      var defaultName = bkg ? (bkg.farmerName || bkg.customerName) : '';
       var defaultPhone = bkg ? bkg.phone : '';
       var defaultEmail = bkg ? bkg.email : '';
       var defaultFarm = bkg ? bkg.farmName : '';
-      var defaultLoc = bkg ? (bkg.nearestTown || bkg.district || '') : '';
+      var defaultLoc = bkg ? (bkg.nearestTown || bkg.district || bkg.location || '') : '';
       var defaultService = bkg ? bkg.serviceName : 'On-Farm Crop Inspection & Agronomic Health Check';
-      var defaultDate = bkg ? bkg.preferredDate : '';
+      var defaultDate = bkg ? (bkg.confirmedDate || bkg.preferredDate) : '';
 
       var html = '<h3 style="margin-top:0;">Prepare Official Quotation</h3>' +
         '<form id="admin-create-quote-form" onsubmit="saveNewQuotation(event)">' +
@@ -701,7 +968,7 @@
           '<div class="form-row">' +
             '<div class="form-group">' +
               '<label>Travel Rate ($ per km):</label>' +
-              '<input type="number" step="0.05" id="q-modal-rate" class="form-control" value="' + settings.travelRatePerKm + '" oninput="calcQuotePreview()">' +
+              '<input type="number" step="0.05" id="q-modal-rate" class="form-control" value="' + (settings.travelRatePerKm || 0.65) + '" oninput="calcQuotePreview()">' +
             '</div>' +
             '<div class="form-group">' +
               '<label>Additional Charges / Tests ($):</label>' +
@@ -745,7 +1012,7 @@
       document.getElementById('q-modal-preview-total').textContent = '$' + total.toFixed(2) + ' USD';
     }
 
-    function saveNewQuotation(e) {
+    async function saveNewQuotation(e) {
       e.preventDefault();
       var fee = parseFloat(document.getElementById('q-modal-fee').value) || 0;
       var dist = parseFloat(document.getElementById('q-modal-dist').value) || 0;
@@ -770,11 +1037,21 @@
         paymentTerms: document.getElementById('q-modal-terms').value
       };
 
-      var quote = AgriConsult.saveQuotation(data);
+      if (window.AgriFirebase && typeof window.AgriFirebase.adminCreateQuotation === 'function') {
+        try {
+          await window.AgriFirebase.adminCreateQuotation(data);
+        } catch (err) {
+          console.warn('Firebase quotation write error:', err);
+        }
+      }
+
+      var quote = (window.AgriConsult && typeof window.AgriConsult.saveQuotation === 'function') ? 
+        AgriConsult.saveQuotation(data) : { reference: 'QT-' + Date.now() };
+
       closeModal();
-      refreshAllData();
+      await refreshAllData();
       renderQuotationsTable();
-      alert('Quotation ' + quote.reference + ' generated! You can now send it to the farmer.');
+      alert('Quotation ' + quote.reference + ' generated and saved to Firestore!');
     }
 
     // Report Creation Modal
@@ -858,15 +1135,16 @@
     function renderEnquiriesTable() {
       var query = (document.getElementById('filter-enq-search').value || '').toLowerCase();
       var status = document.getElementById('filter-enq-status').value;
-      var list = AgriConsult.getEnquiries();
+      var list = cachedData.enquiries.length ? cachedData.enquiries : (AgriConsult ? AgriConsult.getEnquiries() : []);
 
       var filtered = list.filter(function(e) {
-        var matchQ = (e.farmerName + e.phone + e.cropOrLivestock + e.reference).toLowerCase().includes(query);
-        var matchSt = (status === 'all' || e.status === status);
+        var matchQ = ((e.farmerName || e.customerName || '') + (e.phone || '') + (e.cropOrLivestock || '') + (e.reference || '')).toLowerCase().includes(query);
+        var matchSt = (status === 'all' || (e.status || '').toUpperCase() === status.toUpperCase());
         return matchQ && matchSt;
       });
 
       var tbody = document.getElementById('enquiries-table-body');
+      if (!tbody) return;
       if (!filtered.length) {
         tbody.innerHTML = '<tr><td colspan="7" style="text-align:center;padding:20px;">No enquiries found.</td></tr>';
         return;
@@ -874,13 +1152,13 @@
 
       tbody.innerHTML = filtered.map(function(e) {
         return '<tr>' +
-          '<td><strong>' + e.reference + '</strong></td>' +
-          '<td>' + AgriConsult.formatDate(e.createdAt) + '</td>' +
-          '<td>' + e.farmerName + '<br><small>' + e.phone + '</small></td>' +
-          '<td>' + e.location + '</td>' +
-          '<td>' + e.cropOrLivestock + '</td>' +
-          '<td><span class="badge badge-' + e.status + '">' + e.status + '</span></td>' +
-          '<td><button class="action-btn-sm" onclick="openEnquiryModal(\'' + e.reference + '\')">Review</button></td>' +
+          '<td><strong>' + (e.reference || e.id) + '</strong></td>' +
+          '<td>' + (e.createdAt ? new Date(e.createdAt).toLocaleDateString() : '-') + '</td>' +
+          '<td>' + (e.farmerName || e.customerName) + '<br><small>' + e.phone + '</small></td>' +
+          '<td>' + (e.location || 'Zimbabwe') + '</td>' +
+          '<td>' + (e.cropOrLivestock || e.enterpriseType || 'Crop') + '</td>' +
+          '<td><span class="badge badge-' + (e.status || 'NEW') + '">' + (e.status || 'NEW') + '</span></td>' +
+          '<td><button class="action-btn-sm" onclick="openEnquiryModal(\'' + (e.reference || e.id) + '\')">Review</button></td>' +
         '</tr>';
       }).join('');
     }
@@ -888,15 +1166,16 @@
     function renderBookingsTable() {
       var query = (document.getElementById('filter-bkg-search').value || '').toLowerCase();
       var status = document.getElementById('filter-bkg-status').value;
-      var list = AgriConsult.getBookings();
+      var list = cachedData.bookings.length ? cachedData.bookings : (AgriConsult ? AgriConsult.getBookings() : []);
 
       var filtered = list.filter(function(b) {
-        var matchQ = (b.farmerName + b.phone + b.serviceName + b.reference).toLowerCase().includes(query);
-        var matchSt = (status === 'all' || b.status === status);
+        var matchQ = ((b.farmerName || b.customerName || '') + (b.phone || '') + (b.serviceName || '') + (b.reference || '')).toLowerCase().includes(query);
+        var matchSt = (status === 'all' || (b.status || '').toUpperCase() === status.toUpperCase());
         return matchQ && matchSt;
       });
 
       var tbody = document.getElementById('bookings-table-body');
+      if (!tbody) return;
       if (!filtered.length) {
         tbody.innerHTML = '<tr><td colspan="8" style="text-align:center;padding:20px;">No bookings found.</td></tr>';
         return;
@@ -904,27 +1183,28 @@
 
       tbody.innerHTML = filtered.map(function(b) {
         return '<tr>' +
-          '<td><strong>' + b.reference + '</strong></td>' +
-          '<td>' + b.type + '</td>' +
-          '<td>' + b.farmerName + '<br><small>' + b.phone + '</small></td>' +
+          '<td><strong>' + (b.reference || b.id) + '</strong></td>' +
+          '<td>' + (b.type || 'farm-visit') + '</td>' +
+          '<td>' + (b.farmerName || b.customerName) + '<br><small>' + b.phone + '</small></td>' +
           '<td>' + (b.nearestTown || b.district || b.location || 'N/A') + '</td>' +
-          '<td>' + b.serviceName + '</td>' +
-          '<td>' + b.preferredDate + '</td>' +
-          '<td><span class="badge badge-' + b.status + '">' + b.status + '</span></td>' +
-          '<td><button class="action-btn-sm" onclick="openBookingModal(\'' + b.reference + '\')">Manage</button></td>' +
+          '<td>' + (b.serviceName || 'Consultation') + '</td>' +
+          '<td>' + (b.preferredDate || '-') + '</td>' +
+          '<td><span class="badge badge-' + (b.status || 'NEW') + '">' + (b.status || 'NEW') + '</span></td>' +
+          '<td><button class="action-btn-sm" onclick="openBookingModal(\'' + (b.reference || b.id) + '\')">Manage</button></td>' +
         '</tr>';
       }).join('');
     }
 
     function renderQuotationsTable() {
       var query = (document.getElementById('filter-qt-search').value || '').toLowerCase();
-      var list = AgriConsult.getQuotations();
+      var list = cachedData.quotations.length ? cachedData.quotations : (AgriConsult ? AgriConsult.getQuotations() : []);
 
       var filtered = list.filter(function(q) {
-        return (q.farmerName + q.phone + q.serviceName + q.reference).toLowerCase().includes(query);
+        return ((q.farmerName || q.customerName || '') + (q.phone || '') + (q.serviceName || '') + (q.reference || '')).toLowerCase().includes(query);
       });
 
       var tbody = document.getElementById('quotations-table-body');
+      if (!tbody) return;
       if (!filtered.length) {
         tbody.innerHTML = '<tr><td colspan="8" style="text-align:center;padding:20px;">No quotations found.</td></tr>';
         return;
@@ -932,24 +1212,271 @@
 
       tbody.innerHTML = filtered.map(function(q) {
         return '<tr>' +
-          '<td><strong>' + q.reference + '</strong></td>' +
-          '<td>' + AgriConsult.formatDate(q.createdAt) + '</td>' +
-          '<td>' + q.farmerName + '</td>' +
-          '<td>' + q.serviceName + '</td>' +
+          '<td><strong>' + (q.reference || q.id) + '</strong></td>' +
+          '<td>' + (q.createdAt ? new Date(q.createdAt).toLocaleDateString() : '-') + '</td>' +
+          '<td>' + (q.farmerName || q.customerName) + '</td>' +
+          '<td>' + (q.serviceName || 'Advisory') + '</td>' +
           '<td>' + (q.travelDistanceKm ? q.travelDistanceKm + ' km' : '-') + '</td>' +
-          '<td><strong>' + AgriConsult.formatMoney(q.totalAmount, q.currency) + '</strong></td>' +
-          '<td><span class="badge badge-' + (q.status === 'ACCEPTED' ? 'CONFIRMED' : 'QUOTATION_SENT') + '">' + q.status + '</span></td>' +
+          '<td><strong>$' + (parseFloat(q.totalAmount) || 0).toFixed(2) + ' ' + (q.currency || 'USD') + '</strong></td>' +
+          '<td><span class="badge badge-' + (q.status === 'ACCEPTED' ? 'CONFIRMED' : 'QUOTATION_SENT') + '">' + (q.status || 'SENT') + '</span></td>' +
           '<td>' +
-            '<a class="action-btn-sm" href="/consultancy/quotation/?ref=' + q.reference + '" target="_blank">View</a> ' +
-            '<a class="action-btn-sm" href="https://wa.me/' + (q.phone || '').replace(/[^0-9]/g, '') + '?text=' + encodeURIComponent('Hi ' + q.farmerName + ', your D & C AgriBase quotation ' + q.reference + ' is ready: https://chinatsvi.github.io/consultancy/quotation/?ref=' + q.reference) + '" target="_blank">WhatsApp</a>' +
+            '<a class="action-btn-sm" href="/consultancy/quotation/?ref=' + (q.reference || q.id) + '" target="_blank">View</a> ' +
+            '<a class="action-btn-sm" href="https://wa.me/' + (q.phone || '').replace(/[^0-9]/g, '') + '?text=' + encodeURIComponent('Hi ' + (q.farmerName || q.customerName) + ', your D & C AgriBase quotation ' + (q.reference || q.id) + ' is ready: https://chinatsvi.github.io/consultancy/quotation/?ref=' + (q.reference || q.id)) + '" target="_blank">WhatsApp</a>' +
           '</td>' +
         '</tr>';
       }).join('');
     }
 
+    // Render APPOINTMENTS collection table
+    function renderAppointmentsTable() {
+      var query = (document.getElementById('filter-appt-search').value || '').toLowerCase();
+      var status = document.getElementById('filter-appt-status').value;
+      var list = cachedData.appointments || [];
+
+      var filtered = list.filter(function(a) {
+        var matchQ = ((a.reference || '') + (a.bookingRef || '') + (a.customerName || '') + (a.phone || '') + (a.location || '')).toLowerCase().includes(query);
+        var matchSt = (status === 'all' || (a.status || '').toLowerCase() === status.toLowerCase());
+        return matchQ && matchSt;
+      });
+
+      var tbody = document.getElementById('appointments-table-body');
+      if (!tbody) return;
+      if (!filtered.length) {
+        tbody.innerHTML = '<tr><td colspan="9" style="text-align:center;padding:20px;">No appointments found in database.</td></tr>';
+        return;
+      }
+
+      tbody.innerHTML = filtered.map(function(a) {
+        var badgeCls = (a.status || '').toLowerCase() === 'confirmed' ? 'badge-CONFIRMED' : 'badge-NEW';
+        return '<tr>' +
+          '<td><strong>' + (a.reference || '-') + '</strong></td>' +
+          '<td>' + (a.bookingRef ? '<a href="javascript:void(0)" onclick="openBookingModal(\'' + a.bookingRef + '\')">' + a.bookingRef + '</a>' : '-') + '</td>' +
+          '<td><strong>' + (a.customerName || 'Farmer') + '</strong><br><small>' + (a.phone || '') + '</small></td>' +
+          '<td>' + (a.type || 'Farm Visit') + '</td>' +
+          '<td>' + (a.appointmentDate || '-') + (a.appointmentTime ? '<br><small>' + a.appointmentTime + '</small>' : '') + '</td>' +
+          '<td>' + (a.location || 'On-Farm') + '</td>' +
+          '<td>' + (a.assignedConsultant || 'Enock Chinatsvi') + '</td>' +
+          '<td><span class="badge ' + badgeCls + '">' + (a.status || 'Confirmed').toUpperCase() + '</span></td>' +
+          '<td>' +
+            '<button class="action-btn-sm" onclick="openAppointmentModal(\'' + (a.id || a.reference) + '\')">Update</button>' +
+          '</td>' +
+        '</tr>';
+      }).join('');
+    }
+
+    function openAppointmentModal(idOrRef) {
+      var appt = (cachedData.appointments || []).find(function(a) { return a.id === idOrRef || a.reference === idOrRef; });
+      if (!appt) return;
+
+      var html = '<h3 style="margin-top:0;">Manage Appointment: ' + (appt.reference || '') + '</h3>' +
+        '<div style="font-size:14px;line-height:1.6;margin-bottom:16px;">' +
+          '<p><strong>Client:</strong> ' + appt.customerName + ' | <strong>Phone:</strong> ' + appt.phone + '</p>' +
+          '<p><strong>Booking Ref:</strong> ' + (appt.bookingRef || 'N/A') + ' | <strong>Service Type:</strong> ' + appt.type + '</p>' +
+          '<p><strong>Current Date:</strong> ' + appt.appointmentDate + ' at ' + (appt.appointmentTime || '09:00 AM') + '</p>' +
+          '<p><strong>Location:</strong> ' + (appt.location || 'On-Farm') + '</p>' +
+        '</div>' +
+        '<div style="border-top:1.5px solid var(--border);padding-top:16px;">' +
+          '<div class="form-row">' +
+            '<div class="form-group">' +
+              '<label>Status:</label>' +
+              '<select id="modal-appt-status" class="form-control">' +
+                ['confirmed','rescheduled','completed','cancelled'].map(function(st) {
+                  return '<option value="' + st + '"' + ((appt.status || '').toLowerCase() === st ? ' selected' : '') + '>' + st.toUpperCase() + '</option>';
+                }).join('') +
+              '</select>' +
+            '</div>' +
+            '<div class="form-group">' +
+              '<label>Appointment Date:</label>' +
+              '<input type="date" id="modal-appt-date" class="form-control" value="' + (appt.appointmentDate || '') + '">' +
+            '</div>' +
+          '</div>' +
+          '<div class="form-row">' +
+            '<div class="form-group">' +
+              '<label>Assigned Consultant:</label>' +
+              '<input type="text" id="modal-appt-consultant" class="form-control" value="' + (appt.assignedConsultant || 'Enock Chinatsvi') + '">' +
+            '</div>' +
+            '<div class="form-group">' +
+              '<label>Time Slot:</label>' +
+              '<input type="text" id="modal-appt-time" class="form-control" value="' + (appt.appointmentTime || '09:00 AM') + '">' +
+            '</div>' +
+          '</div>' +
+          '<div class="form-group">' +
+            '<label>Consultant Notes / Debrief:</label>' +
+            '<textarea id="modal-appt-notes" class="form-control">' + (appt.notes || '') + '</textarea>' +
+          '</div>' +
+          '<div style="display:flex;gap:10px;justify-content:flex-end;">' +
+            '<button class="button secondary" onclick="closeModal()">Cancel</button>' +
+            '<button class="button" onclick="saveAppointmentModalChanges(\'' + (appt.id || appt.reference) + '\')">Save Appointment →</button>' +
+          '</div>' +
+        '</div>';
+
+      document.getElementById('modal-body-content').innerHTML = html;
+      document.getElementById('admin-detail-modal').classList.add('active');
+    }
+
+    async function saveAppointmentModalChanges(idOrRef) {
+      var appt = (cachedData.appointments || []).find(function(a) { return a.id === idOrRef || a.reference === idOrRef; });
+      if (!appt) return;
+
+      var status = document.getElementById('modal-appt-status').value;
+      var date = document.getElementById('modal-appt-date').value;
+      var consultant = document.getElementById('modal-appt-consultant').value;
+      var time = document.getElementById('modal-appt-time').value;
+      var notes = document.getElementById('modal-appt-notes').value;
+
+      var updates = {
+        status: status,
+        appointmentDate: date,
+        assignedConsultant: consultant,
+        appointmentTime: time,
+        notes: notes
+      };
+
+      if (window.AgriFirebase && typeof window.AgriFirebase.adminUpdateRecord === 'function') {
+        try {
+          await window.AgriFirebase.adminUpdateRecord(window.AgriFirebase.collections.APPOINTMENTS, appt.id || appt.reference, updates);
+        } catch (e) {
+          console.warn('Firebase appointment update error:', e);
+        }
+      }
+
+      Object.assign(appt, updates);
+      closeModal();
+      await refreshAllData();
+      renderAppointmentsTable();
+      alert('Appointment updated.');
+    }
+
+    // Render STAFF collection table
+    function renderStaffTable() {
+      var query = (document.getElementById('filter-staff-search').value || '').toLowerCase();
+      var list = cachedData.staff || [];
+
+      if (!list.length) {
+        list = [{
+          name: 'Enock Chinatsvi',
+          email: 'chinatsvieno@gmail.com',
+          role: 'admin',
+          title: 'Founder & Principal Consultant',
+          active: true,
+          permissions: ['read', 'write', 'admin']
+        }];
+      }
+
+      var filtered = list.filter(function(s) {
+        return ((s.name || '') + (s.email || '') + (s.role || '') + (s.title || '')).toLowerCase().includes(query);
+      });
+
+      var tbody = document.getElementById('staff-table-body');
+      if (!tbody) return;
+      if (!filtered.length) {
+        tbody.innerHTML = '<tr><td colspan="7" style="text-align:center;padding:20px;">No staff records found.</td></tr>';
+        return;
+      }
+
+      tbody.innerHTML = filtered.map(function(s) {
+        var statusBadge = s.active !== false ? '<span class="badge badge-CONFIRMED">Active</span>' : '<span class="badge badge-CLOSED">Inactive</span>';
+        var perms = Array.isArray(s.permissions) ? s.permissions.join(', ') : (s.permissions || 'read, write');
+        return '<tr>' +
+          '<td><strong>' + (s.name || 'Staff Member') + '</strong></td>' +
+          '<td>' + (s.email || '-') + '</td>' +
+          '<td><span class="badge badge-NEW">' + (s.role || 'consultant').toUpperCase() + '</span></td>' +
+          '<td>' + (s.title || 'Consultant') + '</td>' +
+          '<td>' + statusBadge + '</td>' +
+          '<td><small>' + perms + '</small></td>' +
+          '<td>' +
+            (s.email === 'chinatsvieno@gmail.com' ? '<small style="color:var(--muted);">Founder (Permanent)</small>' :
+             '<button class="action-btn-sm" onclick="toggleStaffStatus(\'' + (s.id || s.email) + '\')">' + (s.active !== false ? 'Deactivate' : 'Activate') + '</button>') +
+          '</td>' +
+        '</tr>';
+      }).join('');
+    }
+
+    function openNewStaffModal() {
+      var html = '<h3 style="margin-top:0;">Add Authorized Staff Member</h3>' +
+        '<p style="font-size:13px;color:var(--muted);margin-bottom:16px;">Create a team profile in Firestore. The staff member will then be able to log into this administration dashboard with their Firebase Authentication account.</p>' +
+        '<form id="admin-create-staff-form" onsubmit="saveNewStaffMember(event)">' +
+          '<div class="form-group">' +
+            '<label>Full Name:</label>' +
+            '<input type="text" id="staff-modal-name" class="form-control" required placeholder="e.g. Tendai Moyo">' +
+          '</div>' +
+          '<div class="form-group">' +
+            '<label>Email Address (Must match Firebase Auth login):</label>' +
+            '<input type="email" id="staff-modal-email" class="form-control" required placeholder="staff@agribase.co.zw">' +
+          '</div>' +
+          '<div class="form-row">' +
+            '<div class="form-group">' +
+              '<label>Role:</label>' +
+              '<select id="staff-modal-role" class="form-control">' +
+                '<option value="consultant">Consultant (Field inspections, advice)</option>' +
+                '<option value="assistant">Operations Assistant (Bookings, quotes)</option>' +
+                '<option value="admin">Administrator (Full control)</option>' +
+              '</select>' +
+            '</div>' +
+            '<div class="form-group">' +
+              '<label>Official Designation / Title:</label>' +
+              '<input type="text" id="staff-modal-title" class="form-control" value="Agronomic Field Officer">' +
+            '</div>' +
+          '</div>' +
+          '<div style="display:flex;gap:10px;justify-content:flex-end;margin-top:20px;">' +
+            '<button type="button" class="button secondary" onclick="closeModal()">Cancel</button>' +
+            '<button type="submit" class="button">Create Staff Profile →</button>' +
+          '</div>' +
+        '</form>';
+
+      document.getElementById('modal-body-content').innerHTML = html;
+      document.getElementById('admin-detail-modal').classList.add('active');
+    }
+
+    async function saveNewStaffMember(e) {
+      e.preventDefault();
+      var name = document.getElementById('staff-modal-name').value;
+      var email = document.getElementById('staff-modal-email').value;
+      var role = document.getElementById('staff-modal-role').value;
+      var title = document.getElementById('staff-modal-title').value;
+
+      var staffPayload = {
+        name: name,
+        email: email,
+        role: role,
+        title: title,
+        active: true,
+        permissions: role === 'admin' ? ['read', 'write', 'admin'] : ['read', 'write']
+      };
+
+      if (window.AgriFirebase && typeof window.AgriFirebase.adminAddStaff === 'function') {
+        try {
+          await window.AgriFirebase.adminAddStaff(staffPayload);
+        } catch (err) {
+          console.warn('Error saving staff to Firebase:', err);
+        }
+      }
+
+      cachedData.staff.push(staffPayload);
+      closeModal();
+      await refreshAllData();
+      renderStaffTable();
+      alert('Staff member profile created successfully. Ensure their login account is enabled in Firebase Authentication.');
+    }
+
+    async function toggleStaffStatus(idOrEmail) {
+      var staff = (cachedData.staff || []).find(function(s) { return s.id === idOrEmail || s.email === idOrEmail; });
+      if (!staff) return;
+      var nextState = (staff.active === false);
+      staff.active = nextState;
+
+      if (window.AgriFirebase && typeof window.AgriFirebase.adminUpdateRecord === 'function') {
+        try {
+          await window.AgriFirebase.adminUpdateRecord(window.AgriFirebase.collections.STAFF, staff.id || staff.email, { active: nextState });
+        } catch (e) {}
+      }
+      renderStaffTable();
+    }
+
     function renderReportsTable() {
-      var list = AgriConsult.getReports();
+      var list = AgriConsult ? AgriConsult.getReports() : [];
       var tbody = document.getElementById('reports-table-body');
+      if (!tbody) return;
       if (!list.length) {
         tbody.innerHTML = '<tr><td colspan="6" style="text-align:center;padding:20px;">No farm inspection reports generated yet.</td></tr>';
         return;
@@ -958,7 +1485,7 @@
       tbody.innerHTML = list.map(function(r) {
         return '<tr>' +
           '<td><strong>' + r.reference + '</strong></td>' +
-          '<td>' + AgriConsult.formatDate(r.visitDate) + '</td>' +
+          '<td>' + (AgriConsult ? AgriConsult.formatDate(r.visitDate) : r.visitDate) + '</td>' +
           '<td>' + r.customerName + '<br><small>' + r.farmName + '</small></td>' +
           '<td>' + r.enterprise + '</td>' +
           '<td><span class="badge badge-CONFIRMED">' + r.status + '</span></td>' +
@@ -968,8 +1495,9 @@
     }
 
     function renderCustomersTable() {
-      var list = AgriConsult.getCustomers();
+      var list = cachedData.customers.length ? cachedData.customers : (AgriConsult ? AgriConsult.getCustomers() : []);
       var tbody = document.getElementById('customers-table-body');
+      if (!tbody) return;
       if (!list.length) {
         tbody.innerHTML = '<tr><td colspan="7" style="text-align:center;padding:20px;">No customer records accumulated yet.</td></tr>';
         return;
@@ -977,25 +1505,26 @@
 
       tbody.innerHTML = list.map(function(c) {
         return '<tr>' +
-          '<td><strong>' + c.name + '</strong></td>' +
-          '<td>' + c.phone + '</td>' +
+          '<td><strong>' + (c.name || 'Customer') + '</strong></td>' +
+          '<td>' + (c.phone || '-') + '</td>' +
           '<td>' + (c.email || 'N/A') + '</td>' +
           '<td>' + (c.location || 'N/A') + '</td>' +
           '<td>' + (c.farmName || 'N/A') + '</td>' +
           '<td>' + (c.interactionCount || 1) + '</td>' +
-          '<td>' + AgriConsult.formatDate(c.lastActive) + '</td>' +
+          '<td>' + (c.lastActive ? new Date(c.lastActive).toLocaleDateString() : '-') + '</td>' +
         '</tr>';
       }).join('');
     }
 
     function renderServicesAdmin() {
-      var list = AgriConsult.getServices();
+      var list = AgriConsult ? AgriConsult.getServices() : [];
       var container = document.getElementById('services-admin-list');
+      if (!container) return;
       container.innerHTML = list.map(function(s, idx) {
         return '<div style="background:#ffffff;border:1px solid var(--border);border-radius:8px;padding:16px;margin-bottom:12px;display:flex;justify-content:space-between;align-items:center;">' +
           '<div>' +
             '<strong>' + s.name + '</strong> (' + s.category + ')<br>' +
-            '<small style="color:var(--muted);">Pricing: ' + s.pricingType.toUpperCase() + ' (Base: ' + AgriConsult.formatMoney(s.basePrice) + ') • Delivery: ' + s.deliveryMethod + '</small>' +
+            '<small style="color:var(--muted);">Pricing: ' + s.pricingType.toUpperCase() + ' (Base: ' + (AgriConsult ? AgriConsult.formatMoney(s.basePrice) : '$' + s.basePrice) + ') • Delivery: ' + s.deliveryMethod + '</small>' +
           '</div>' +
           '<div>' +
             '<button class="action-btn-sm" onclick="toggleServiceActive(' + idx + ')">' + (s.active !== false ? 'Active (Click to Deactivate)' : 'Inactive (Click to Activate)') + '</button>' +
@@ -1024,7 +1553,7 @@
       document.getElementById('set-reg-note').value = s.registrationNote;
     }
 
-    function saveCompanySettings(e) {
+    async function saveCompanySettings(e) {
       e.preventDefault();
       var s = AgriConsult.getSettings();
       s.companyName = document.getElementById('set-company-name').value;
@@ -1036,6 +1565,14 @@
       s.serviceArea = document.getElementById('set-service-area').value;
       s.businessHours = document.getElementById('set-hours').value;
       s.registrationNote = document.getElementById('set-reg-note').value;
+
+      if (window.AgriFirebase && typeof window.AgriFirebase.adminSaveCompanySettings === 'function') {
+        try {
+          await window.AgriFirebase.adminSaveCompanySettings(s);
+        } catch (err) {
+          console.warn('Firebase company settings save error:', err);
+        }
+      }
 
       AgriConsult.saveSettings(s);
       alert('Operational settings saved successfully.');
