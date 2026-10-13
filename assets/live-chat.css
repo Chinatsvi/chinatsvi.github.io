@@ -1,0 +1,431 @@
+/* D & C – AgriBase: In-App Live Chat System Styles */
+
+/* Floating Launchers Container */
+.agribase-floating-dock {
+  position: fixed;
+  bottom: 20px;
+  right: 20px;
+  z-index: 99999;
+  display: flex;
+  flex-direction: column;
+  align-items: flex-end;
+  gap: 10px;
+}
+
+/* Floating Live Chat Button */
+.floating-livechat-btn {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  background: #1b4332;
+  color: #ffffff;
+  border: 2px solid #eab308;
+  padding: 11px 18px;
+  border-radius: 50px;
+  box-shadow: 0 8px 24px rgba(27, 67, 50, 0.4);
+  font-weight: 700;
+  font-size: 14px;
+  cursor: pointer;
+  transition: transform 0.2s ease, box-shadow 0.2s ease, background 0.2s ease;
+  position: relative;
+  outline: none;
+  font-family: inherit;
+}
+
+.floating-livechat-btn:hover {
+  transform: translateY(-3px) scale(1.02);
+  background: #2d6a4f;
+  box-shadow: 0 12px 28px rgba(27, 67, 50, 0.55);
+}
+
+.chat-pulse-dot {
+  width: 10px;
+  height: 10px;
+  background: #22c55e;
+  border-radius: 50%;
+  display: inline-block;
+  box-shadow: 0 0 0 rgba(34, 197, 94, 0.4);
+  animation: chatPulse 2s infinite;
+}
+
+@keyframes chatPulse {
+  0% { box-shadow: 0 0 0 0 rgba(34, 197, 94, 0.7); }
+  70% { box-shadow: 0 0 0 10px rgba(34, 197, 94, 0); }
+  100% { box-shadow: 0 0 0 0 rgba(34, 197, 94, 0); }
+}
+
+.chat-btn-text {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  line-height: 1.2;
+}
+
+.chat-btn-text strong {
+  font-size: 13.5px;
+  color: #ffffff;
+}
+
+.chat-btn-text small {
+  font-size: 11px;
+  color: #fef08a;
+  font-weight: 600;
+}
+
+.chat-unread-badge {
+  position: absolute;
+  top: -6px;
+  right: -6px;
+  background: #ef4444;
+  color: #ffffff;
+  border-radius: 50%;
+  min-width: 22px;
+  height: 22px;
+  padding: 0 4px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 11px;
+  font-weight: 800;
+  border: 2px solid #ffffff;
+  box-shadow: 0 2px 6px rgba(0,0,0,0.3);
+}
+
+/* Chat Drawer Window */
+.agribase-chat-window {
+  position: fixed;
+  bottom: 84px;
+  right: 20px;
+  width: 370px;
+  max-width: calc(100vw - 32px);
+  height: 540px;
+  max-height: calc(100vh - 110px);
+  background: #ffffff;
+  border-radius: 16px;
+  box-shadow: 0 16px 48px rgba(0, 0, 0, 0.28);
+  display: flex;
+  flex-direction: column;
+  z-index: 100000;
+  overflow: hidden;
+  border: 1px solid #d1d5db;
+  transform: translateY(20px) scale(0.95);
+  opacity: 0;
+  pointer-events: none;
+  transition: transform 0.25s cubic-bezier(0.16, 1, 0.3, 1), opacity 0.25s ease;
+  font-family: inherit;
+}
+
+.agribase-chat-window.open {
+  transform: translateY(0) scale(1);
+  opacity: 1;
+  pointer-events: auto;
+}
+
+/* Chat Header */
+.agribase-chat-header {
+  background: #1b4332;
+  color: #ffffff;
+  padding: 14px 16px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  border-bottom: 2px solid #eab308;
+}
+
+.chat-header-profile {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.chat-header-avatar {
+  width: 40px;
+  height: 40px;
+  border-radius: 50%;
+  background: #eab308;
+  color: #1b4332;
+  font-weight: 800;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 16px;
+  border: 2px solid #ffffff;
+  flex-shrink: 0;
+}
+
+.chat-header-info {
+  display: flex;
+  flex-direction: column;
+  line-height: 1.25;
+}
+
+.chat-header-name {
+  font-weight: 800;
+  font-size: 14px;
+  color: #ffffff;
+}
+
+.chat-header-status {
+  font-size: 11px;
+  color: #a7f3d0;
+  display: flex;
+  align-items: center;
+  gap: 5px;
+}
+
+.chat-header-actions {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.chat-header-btn {
+  background: rgba(255, 255, 255, 0.15);
+  border: none;
+  color: #ffffff;
+  width: 30px;
+  height: 30px;
+  border-radius: 50%;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 15px;
+  transition: background 0.2s ease;
+}
+
+.chat-header-btn:hover {
+  background: rgba(255, 255, 255, 0.3);
+}
+
+/* Chat Body (Messages Stream) */
+.agribase-chat-body {
+  flex: 1;
+  overflow-y: auto;
+  padding: 16px;
+  background: #f8fafc;
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+.chat-intro-banner {
+  background: #ecfdf5;
+  border: 1px solid #a7f3d0;
+  border-radius: 10px;
+  padding: 12px;
+  font-size: 12px;
+  color: #065f46;
+  line-height: 1.45;
+  text-align: center;
+}
+
+.chat-intro-banner strong {
+  display: block;
+  font-size: 13px;
+  margin-bottom: 3px;
+  color: #047857;
+}
+
+/* Identification Bar (First time) */
+.chat-id-prompt {
+  background: #ffffff;
+  border: 1.5px solid #e2e8f0;
+  border-radius: 10px;
+  padding: 12px;
+  box-shadow: 0 4px 12px rgba(0,0,0,0.05);
+}
+
+.chat-id-prompt h4 {
+  margin: 0 0 6px 0;
+  font-size: 13px;
+  color: #1e293b;
+}
+
+.chat-id-prompt p {
+  margin: 0 0 10px 0;
+  font-size: 11.5px;
+  color: #64748b;
+  line-height: 1.35;
+}
+
+.chat-id-form {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.chat-id-input {
+  width: 100%;
+  padding: 8px 10px;
+  font-size: 12px;
+  border: 1px solid #cbd5e1;
+  border-radius: 6px;
+  outline: none;
+  box-sizing: border-box;
+}
+
+.chat-id-input:focus {
+  border-color: #2e7d32;
+}
+
+.chat-id-submit {
+  background: #2e7d32;
+  color: #ffffff;
+  border: none;
+  padding: 8px;
+  border-radius: 6px;
+  font-size: 12px;
+  font-weight: 700;
+  cursor: pointer;
+  transition: background 0.2s ease;
+}
+
+.chat-id-submit:hover {
+  background: #1b4332;
+}
+
+/* Chat Bubbles */
+.chat-msg {
+  display: flex;
+  flex-direction: column;
+  max-width: 82%;
+}
+
+.chat-msg.msg-admin {
+  align-self: flex-start;
+}
+
+.chat-msg.msg-customer {
+  align-self: flex-end;
+}
+
+.msg-bubble {
+  padding: 10px 14px;
+  border-radius: 14px;
+  font-size: 13px;
+  line-height: 1.45;
+  word-wrap: break-word;
+  box-shadow: 0 2px 6px rgba(0,0,0,0.04);
+}
+
+.msg-admin .msg-bubble {
+  background: #ffffff;
+  color: #1e293b;
+  border: 1px solid #e2e8f0;
+  border-bottom-left-radius: 4px;
+}
+
+.msg-customer .msg-bubble {
+  background: #2e7d32;
+  color: #ffffff;
+  border-bottom-right-radius: 4px;
+}
+
+.msg-meta {
+  font-size: 10px;
+  margin-top: 3px;
+  padding: 0 4px;
+}
+
+.msg-admin .msg-meta {
+  color: #64748b;
+}
+
+.msg-customer .msg-meta {
+  color: #94a3b8;
+  text-align: right;
+}
+
+/* Quick Topic Chips */
+.chat-quick-topics {
+  display: flex;
+  gap: 6px;
+  flex-wrap: wrap;
+  padding: 4px 0;
+}
+
+.chat-topic-chip {
+  background: #ffffff;
+  border: 1px solid #cbd5e1;
+  border-radius: 16px;
+  padding: 5px 10px;
+  font-size: 11px;
+  color: #334155;
+  cursor: pointer;
+  transition: background 0.15s ease, border-color 0.15s ease;
+}
+
+.chat-topic-chip:hover {
+  background: #f1f5f9;
+  border-color: #2e7d32;
+  color: #1b4332;
+}
+
+/* Chat Footer & Input */
+.agribase-chat-footer {
+  padding: 10px 14px;
+  background: #ffffff;
+  border-top: 1px solid #e2e8f0;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.chat-input-field {
+  flex: 1;
+  padding: 9px 12px;
+  border: 1px solid #cbd5e1;
+  border-radius: 20px;
+  font-size: 13px;
+  outline: none;
+  font-family: inherit;
+  transition: border-color 0.2s ease;
+  box-sizing: border-box;
+}
+
+.chat-input-field:focus {
+  border-color: #2e7d32;
+}
+
+.chat-send-btn {
+  background: #2e7d32;
+  color: #ffffff;
+  border: none;
+  width: 36px;
+  height: 36px;
+  border-radius: 50%;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 16px;
+  flex-shrink: 0;
+  transition: background 0.2s ease, transform 0.1s ease;
+}
+
+.chat-send-btn:hover {
+  background: #1b4332;
+  transform: scale(1.05);
+}
+
+.chat-send-btn:disabled {
+  background: #cbd5e1;
+  cursor: not-allowed;
+  transform: none;
+}
+
+@media (max-width: 600px) {
+  .agribase-chat-window {
+    width: 100vw;
+    height: 100vh;
+    max-width: 100vw;
+    max-height: 100vh;
+    bottom: 0;
+    right: 0;
+    border-radius: 0;
+  }
+  .chat-btn-text small {
+    display: none;
+  }
+}

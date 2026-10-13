@@ -18,6 +18,7 @@ The website connects directly to Google Cloud Firestore using the following 8 co
 | `appointments` | Confirmed/approved farm visits and consultations, assigned consultant, schedules. | None | Full management |
 | `staff` | Authorized staff team records, roles (`admin`, `consultant`, `assistant`), permissions. | None | Read all; only admin can add/edit |
 | `company_settings` | Configurable operational settings (rates, travel fee/km, currency, hours, founder name). | Read | Staff can update |
+| `conversations` | Real-time in-app chat threads and message history between farmers and Enock Chinatsvi. | Public initiate & send | Full live chat inbox & replies |
 
 ---
 
@@ -117,6 +118,16 @@ service cloud.firestore {
       allow read: if true;
       allow write: if isStaff();
     }
+
+    // 9. Real-Time In-App Chat Conversations
+    match /conversations/{conversationId} {
+      allow read, write: if true;
+
+      match /messages/{messageId} {
+        allow read, create: if true;
+        allow update, delete: if isStaff();
+      }
+    }
   }
 }
 ```
@@ -132,13 +143,21 @@ service cloud.firestore {
    - Auto-upsert into the `customers` collection.
    - Mirror locally for offline resilience.
 
-2. **Self-Service Farmer Tracking Portal (`/consultancy/portal/`):**
+2. **Real-Time In-App Live Chat Widget (Site-Wide):**
+   - Floating on all pages: provides a live chat drawer where visitors can chat directly with Enock Chinatsvi.
+   - Saves conversations and subcollection messages in real-time Firestore listeners (`onSnapshot`).
+   - Persistent visitor profile saved in browser storage.
+   - Direct switch to WhatsApp button integrated.
+
+3. **Self-Service Farmer Tracking Portal (`/consultancy/portal/`):**
    - Allows farmers to look up their submitted question or booking status safely by entering their reference code.
    - Shows status (e.g. `Under Review`, `Quotation Pending`, `Approved`, `Answered`) and official agronomic responses.
+   - Includes a direct "💬 Chat Live with Agronomist about this" button pre-populating their reference code!
 
-3. **Secure Admin Dashboard (`/consultancy/admin/`):**
+4. **Secure Admin Dashboard (`/consultancy/admin/`):**
    - Protected by Firebase Authentication (Email + Password).
    - Automatically recognizes `chinatsvieno@gmail.com` as Super Admin / Principal Consultant.
+   - Dedicated **Live Chat Inbox Tab**: streams real-time incoming messages from all website visitors, allows instant replies, and features canned agronomic quick-responses.
    - Displays live counters, incoming questions, bookings, quotations, and verified appointments.
    - Supports creating appointments upon approval, preparing mileage-calculated quotations, and managing team staff records.
    - Has emergency fallback passcode mode if internet connectivity is completely lost.

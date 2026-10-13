@@ -194,6 +194,7 @@
             '<p style="margin:4px 0;font-size:14px;color:var(--muted);">' + item.questionDescription.substring(0, 160) + '...</p>' +
             '<p style="font-size:12px;color:var(--muted);margin-top:6px;">Submitted: ' + AgriConsult.formatDate(item.createdAt) + '</p>' +
             (item.officialResponse ? '<div style="margin-top:10px;padding:10px;background:var(--cream);border-radius:6px;border-left:3px solid var(--field);"><strong>Consultant Response:</strong><p style="margin:4px 0 0;">' + item.officialResponse + '</p></div>' : '') +
+            '<div style="margin-top:12px;"><button class="button secondary" onclick="openChatForRef(\'' + item.reference + '\')" style="font-size:12px;padding:6px 12px;">💬 Chat Live with Agronomist about this Question →</button></div>' +
           '</div>';
         }).join('');
       }
@@ -214,6 +215,7 @@
             '<p style="margin:4px 0;"><strong>Preferred Date:</strong> ' + item.preferredDate + ' (' + (item.preferredTime || '') + ')</p>' +
             '<p style="margin:4px 0;font-size:14px;color:var(--muted);"><strong>Enterprise / Details:</strong> ' + (item.cropOrEnterprise || item.description.substring(0, 80)) + '</p>' +
             (quoteLink ? '<div style="margin-top:8px;">' + quoteLink + '</div>' : '') +
+            '<div style="margin-top:12px;"><button class="button secondary" onclick="openChatForRef(\'' + item.reference + '\')" style="font-size:12px;padding:6px 12px;">💬 Message Consultant regarding this Booking →</button></div>' +
           '</div>';
         }).join('');
       }
@@ -252,6 +254,19 @@
             '<div style="margin-top:10px;"><a class="button" href="/consultancy/reports/?ref=' + item.reference + '" style="font-size:13px;padding:6px 14px;">Open Full Report →</a></div>' +
           '</div>';
         }).join('');
+      }
+    }
+
+    function openChatForRef(ref) {
+      if (window.AgriLiveChat && typeof window.AgriLiveChat.toggle === 'function') {
+        window.AgriLiveChat.toggle();
+        setTimeout(function() {
+          var input = document.getElementById('agribase-chat-input');
+          if (input) {
+            input.value = 'Hi Enock, I have a question regarding my reference ' + ref + ': ';
+            input.focus();
+          }
+        }, 150);
       }
     }
   </script>

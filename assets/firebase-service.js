@@ -30,7 +30,8 @@
     QUOTATIONS: 'quotations',
     APPOINTMENTS: 'appointments',
     STAFF: 'staff',
-    COMPANY_SETTINGS: 'company_settings'
+    COMPANY_SETTINGS: 'company_settings',
+    CONVERSATIONS: 'conversations'
   };
 
   AgriFirebase.collections = COLLECTIONS;
@@ -630,6 +631,171 @@
     }
     if (window.AgriConsult) return window.AgriConsult.getSettings();
     return null;
+  };
+
+  // ==========================================
+  // REAL-TIME IN-APP CHAT & MESSAGING ENGINE
+  // ==========================================
+
+  // 1. Get or create a conversation thread for a visitor
+  AgriFirebase.getOrCreateConversation = async function(visitorData) {
+    var visitorId = visitorData.visitorId || ('vis_' + Math.random().toString(36).substring(2, 10));
+    var convId = 'conv_' + visitorId.replace(/[^a-zA-Z0-9_-]/g, '');
+    var timestamp = new Date().toISOString();
+
+    var convData = {
+      id: convId,
+      visitorId: visitorId,
+      customerName: (visitorData.name || 'Farmer').trim(),
+      customerPhone: (visitorData.phone || '').trim(),
+      customerEmail: (visitorData.email || '').trim(),
+      lastMessage: visitorData.initialMessage || 'Started conversation',
+      lastMessageTime: timestamp,
+      lastSender: 'customer',
+      unreadByAdmin: 1,
+      unreadByCustomer: 0,
+      status: 'active',
+      updatedAt: timestamp
+    };
+
+    if (AgriFirebase.init() && AgriFirebase.db) {
+      try {
+        var docRef = AgriFirebase.db.collection(COLLECTIONS.CONVERSATIONS).doc(convId);
+        var doc = await docRef.get();
+        if (doc.exists) {
+          var existing = doc.data();
+          var updates = { updatedAt: timestamp };
+          if (visitorData.name && visitorData.name !== 'Farmer') updates.customerName = visitorData.name;
+          if (visitorData.phone) updates.customerPhone = visitorData.phone;
+          if (visitorData.email) updates.customerEmail = visitorData.email;
+          await docRef.set(updates, { merge: true });
+          return { id: convId, ...existing, ...updates };
+        } else {
+          convData.createdAt = timestamp;
+          await docRef.set({
+            ...convData,
+            serverTimestamp: window.firebase.firestore.FieldValue.serverTimestamp()
+          });
+          return convData;
+        }
+      } catch (err) {
+        console.warn('Firestore getOrCreateConversation error:', err);
+      }
+    }
+
+    return convData;
+  };
+
+  // 2. Send a message inside a conversation thread
+  AgriFirebase.sendChatMessage = async function(conversationId, messageData) {
+    var timestamp = new Date().toISOString();
+    var sender = messageData.sender || 'customer'; // 'customer' or 'admin'
+    var text = (messageData.text || '').trim();
+    if (!text) return null;
+
+    var payload = {
+      conversationId: conversationId,
+      sender: sender,
+      senderName: messageData.senderName || (sender === 'admin' ? 'Enock Chinatsvi (Founder & Principal Consultant)' : 'Farmer'),
+      text: text,
+      timestamp: timestamp,
+      read: false
+    };
+
+    if (AgriFirebase.init() && AgriFirebase.db && conversationId) {
+      try {
+        // Add to subcollection messages
+        await AgriFirebase.db.collection(COLLECTIONS.CONVERSATIONS)
+          .doc(conversationId)
+          .collection('messages')
+          .add({
+            ...payload,
+            serverTimestamp: window.firebase.firestore.FieldValue.serverTimestamp()
+          });
+
+        // Update conversation summary
+        var updateSummary = {
+          lastMessage: text,
+          lastMessageTime: timestamp,
+          lastSender: sender,
+          updatedAt: timestamp,
+          status: 'active'
+        };
+
+        if (sender === 'customer') {
+          updateSummary.unreadByAdmin = window.firebase.firestore.FieldValue.increment(1);
+        } else {
+          updateSummary.unreadByCustomer = window.firebase.firestore.FieldValue.increment(1);
+        }
+
+        await AgriFirebase.db.collection(COLLECTIONS.CONVERSATIONS)
+          .doc(conversationId)
+          .update(updateSummary);
+
+      } catch (err) {
+        console.warn('Error sending chat message to Firestore:', err);
+      }
+    }
+
+    return payload;
+  };
+
+  // 3. Subscribe in real-time to messages for a specific conversation
+  AgriFirebase.subscribeToMessages = function(conversationId, onMessagesReceived) {
+    if (AgriFirebase.init() && AgriFirebase.db && conversationId) {
+      try {
+        return AgriFirebase.db.collection(COLLECTIONS.CONVERSATIONS)
+          .doc(conversationId)
+          .collection('messages')
+          .orderBy('timestamp', 'asc')
+          .onSnapshot(function(snapshot) {
+            var messages = [];
+            snapshot.forEach(function(doc) {
+              messages.push({ id: doc.id, ...doc.data() });
+            });
+            onMessagesReceived(messages);
+          }, function(error) {
+            console.warn('Messages snapshot listener error:', error);
+          });
+      } catch (e) {
+        console.warn('Could not attach messages snapshot listener:', e);
+      }
+    }
+    return null;
+  };
+
+  // 4. Subscribe in real-time to all conversations (for Admin Dashboard)
+  AgriFirebase.subscribeToAllConversations = function(onConversationsReceived) {
+    if (AgriFirebase.init() && AgriFirebase.db) {
+      try {
+        return AgriFirebase.db.collection(COLLECTIONS.CONVERSATIONS)
+          .orderBy('updatedAt', 'desc')
+          .onSnapshot(function(snapshot) {
+            var convs = [];
+            snapshot.forEach(function(doc) {
+              convs.push({ id: doc.id, ...doc.data() });
+            });
+            onConversationsReceived(convs);
+          }, function(error) {
+            console.warn('Conversations snapshot listener error:', error);
+          });
+      } catch (e) {
+        console.warn('Could not attach conversations snapshot listener:', e);
+      }
+    }
+    return null;
+  };
+
+  // 5. Mark conversation as read
+  AgriFirebase.markConversationAsRead = async function(conversationId, readerType) {
+    if (AgriFirebase.init() && AgriFirebase.db && conversationId) {
+      try {
+        var updates = {};
+        if (readerType === 'admin') updates.unreadByAdmin = 0;
+        if (readerType === 'customer') updates.unreadByCustomer = 0;
+        await AgriFirebase.db.collection(COLLECTIONS.CONVERSATIONS).doc(conversationId).update(updates);
+      } catch (e) {}
+    }
   };
 
   // Export to window

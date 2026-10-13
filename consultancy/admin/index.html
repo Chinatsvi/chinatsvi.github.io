@@ -134,6 +134,7 @@
         <!-- Navigation Tabs -->
         <div class="tabs-nav">
           <button class="tab-btn active" onclick="switchAdminTab('overview')">Overview</button>
+          <button class="tab-btn" onclick="switchAdminTab('chat')">💬 Live Chat (<span id="tab-cnt-chat">0</span>)</button>
           <button class="tab-btn" onclick="switchAdminTab('enquiries')">Farming Questions (<span id="tab-cnt-enq">0</span>)</button>
           <button class="tab-btn" onclick="switchAdminTab('bookings')">Bookings (<span id="tab-cnt-bkg">0</span>)</button>
           <button class="tab-btn" onclick="switchAdminTab('quotations')">Quotations (<span id="tab-cnt-qt">0</span>)</button>
@@ -180,6 +181,73 @@
               <h3 style="margin-top:0;font-size:18px;">Pending Visit Requests & Action Items</h3>
               <div id="overview-recent-bookings"></div>
             </div>
+          </div>
+        </div>
+
+        <!-- TAB: LIVE CHAT (Real-Time Bidirectional Messaging) -->
+        <div id="tab-chat" class="admin-tab-pane" style="display:none;">
+          <div style="display:grid;grid-template-columns:320px 1fr;gap:20px;height:720px;background:#ffffff;border:1px solid var(--border);border-radius:12px;overflow:hidden;box-shadow:0 4px 16px rgba(0,0,0,0.06);">
+            
+            <!-- Left Pane: Conversations List -->
+            <div style="border-right:1px solid var(--border);display:flex;flex-direction:column;background:#f8fafc;">
+              <div style="padding:16px;border-bottom:1px solid var(--border);background:#ffffff;">
+                <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:10px;">
+                  <strong style="font-size:15px;color:var(--field-dark);">Customer Chats</strong>
+                  <span id="admin-chat-live-status" style="font-size:11px;background:#dcfce7;color:#15803d;padding:2px 8px;border-radius:12px;font-weight:700;">🟢 Live Sync</span>
+                </div>
+                <input type="text" id="admin-chat-search" class="form-control" placeholder="Search conversations..." oninput="renderAdminConversations()" style="font-size:12.5px;padding:7px 10px;">
+              </div>
+
+              <!-- List of active conversations -->
+              <div id="admin-conversations-list" style="flex:1;overflow-y:auto;padding:8px 0;">
+                <p style="text-align:center;color:var(--muted);font-size:13px;padding:20px;">Listening for customer chats...</p>
+              </div>
+            </div>
+
+            <!-- Right Pane: Active Chat Conversation Thread -->
+            <div style="display:flex;flex-direction:column;background:#ffffff;" id="admin-chat-active-panel">
+              <div id="admin-chat-empty-state" style="flex:1;display:flex;align-items:center;justify-content:center;flex-direction:column;color:var(--muted);padding:40px;text-align:center;">
+                <span style="font-size:48px;margin-bottom:12px;">💬</span>
+                <strong style="font-size:16px;color:var(--field-dark);">Select a customer conversation</strong>
+                <p style="font-size:13px;max-width:380px;margin-top:6px;">Choose a farmer from the list on the left to start chatting in real-time, view their farm challenges, or send agricultural recommendations.</p>
+              </div>
+
+              <div id="admin-chat-thread-container" style="display:none;flex-direction:column;height:100%;">
+                <!-- Header -->
+                <div style="padding:12px 20px;border-bottom:1px solid var(--border);display:flex;justify-content:space-between;align-items:center;background:#f8fafc;">
+                  <div>
+                    <h3 id="admin-chat-client-name" style="margin:0;font-size:16px;color:var(--field-dark);">Farmer Name</h3>
+                    <div style="font-size:12px;color:var(--muted);margin-top:2px;">
+                      <span id="admin-chat-client-phone">+263...</span> • 
+                      <span id="admin-chat-client-email">Web Visitor</span>
+                    </div>
+                  </div>
+                  <div style="display:flex;gap:8px;">
+                    <a id="admin-chat-wa-link" href="#" target="_blank" class="action-btn-sm" style="background:#25D366;color:#ffffff;text-decoration:none;">📲 Open in WhatsApp</a>
+                    <button class="action-btn-sm" onclick="quoteFromChat()">+ Prepare Quote</button>
+                  </div>
+                </div>
+
+                <!-- Messages area -->
+                <div id="admin-chat-messages-box" style="flex:1;overflow-y:auto;padding:20px;background:#f8fafc;display:flex;flex-direction:column;gap:12px;"></div>
+
+                <!-- Quick Responses Pill Strip -->
+                <div style="padding:8px 16px;background:#f1f5f9;border-top:1px solid var(--border);display:flex;gap:6px;overflow-x:auto;">
+                  <button type="button" class="action-btn-sm" onclick="sendAdminCannedReply('Hello! What crop or livestock are you managing, and what symptoms or challenges are you observing?')">🌾 Ask crop & symptoms</button>
+                  <button type="button" class="action-btn-sm" onclick="sendAdminCannedReply('Could you send photographs of the affected crop or leaf undersides for accurate diagnosis?')">📸 Request photos</button>
+                  <button type="button" class="action-btn-sm" onclick="sendAdminCannedReply('I can schedule an on-farm diagnostic visit to inspect your field stand. What district or town is your farm located in?')">🚜 Propose farm visit</button>
+                  <button type="button" class="action-btn-sm" onclick="sendAdminCannedReply('Our fee for a comprehensive online telephone/WhatsApp consultation is $20 USD.')">💵 State online rate</button>
+                </div>
+
+                <!-- Admin Message Input -->
+                <form id="admin-chat-form" onsubmit="handleAdminSendMessage(event)" style="padding:14px 20px;border-top:1px solid var(--border);display:flex;gap:10px;background:#ffffff;">
+                  <input type="text" id="admin-chat-input" class="form-control" placeholder="Type your advice as Enock Chinatsvi (Founder & Principal Consultant)..." autocomplete="off" style="flex:1;">
+                  <button type="submit" class="button" style="padding:0 20px;">Send Reply ➤</button>
+                </form>
+              </div>
+
+            </div>
+
           </div>
         </div>
 
@@ -465,6 +533,8 @@
     var currentRole = 'admin';
     var currentUserEmail = 'chinatsvieno@gmail.com';
     var isPasscodeMode = false;
+    var activeChatConvId = null;
+    var activeChatMessagesUnsub = null;
     var cachedData = {
       enquiries: [],
       bookings: [],
@@ -472,7 +542,8 @@
       appointments: [],
       customers: [],
       staff: [],
-      reports: []
+      reports: [],
+      conversations: []
     };
 
     function toggleAuthMode(e) {
@@ -604,6 +675,7 @@
         (currentRole === 'admin' || currentRole === 'principal') ? 'Principal Consultant (Enock Chinatsvi)' : 'Operations Assistant';
       document.getElementById('current-user-email-label').textContent = currentUserEmail;
       refreshAllData();
+      initAdminChatListener();
     }
 
     function switchAdminTab(tabName) {
@@ -616,6 +688,7 @@
       var target = document.getElementById('tab-' + tabName);
       if (target) target.style.display = 'block';
 
+      if (tabName === 'chat') renderAdminConversations();
       if (tabName === 'enquiries') renderEnquiriesTable();
       if (tabName === 'bookings') renderBookingsTable();
       if (tabName === 'quotations') renderQuotationsTable();
@@ -1576,6 +1649,174 @@
 
       AgriConsult.saveSettings(s);
       alert('Operational settings saved successfully.');
+    }
+
+    // ==========================================
+    // ADMIN LIVE CHAT ENGINE
+    // ==========================================
+    function initAdminChatListener() {
+      if (window.AgriFirebase && typeof window.AgriFirebase.subscribeToAllConversations === 'function') {
+        window.AgriFirebase.subscribeToAllConversations(function(convs) {
+          cachedData.conversations = convs;
+          var totalUnread = convs.reduce(function(acc, c) { return acc + (c.unreadByAdmin || 0); }, 0);
+          var badge = document.getElementById('tab-cnt-chat');
+          if (badge) badge.textContent = totalUnread;
+
+          renderAdminConversations();
+
+          if (activeChatConvId) {
+            var activeConv = convs.find(function(c) { return c.id === activeChatConvId; });
+            if (activeConv) {
+              document.getElementById('admin-chat-client-name').textContent = activeConv.customerName || 'Farmer';
+              document.getElementById('admin-chat-client-phone').textContent = activeConv.customerPhone ? '📞 ' + activeConv.customerPhone : 'No phone specified';
+            }
+          }
+        });
+      }
+    }
+
+    function renderAdminConversations() {
+      var container = document.getElementById('admin-conversations-list');
+      if (!container) return;
+
+      var search = (document.getElementById('admin-chat-search') ? document.getElementById('admin-chat-search').value : '').toLowerCase();
+      var convs = (cachedData.conversations || []).filter(function(c) {
+        return ((c.customerName || '') + (c.customerPhone || '') + (c.lastMessage || '')).toLowerCase().includes(search);
+      });
+
+      if (!convs.length) {
+        container.innerHTML = '<p style="text-align:center;color:var(--muted);font-size:13px;padding:20px;">No chat conversations found.</p>';
+        return;
+      }
+
+      container.innerHTML = convs.map(function(c) {
+        var isSelected = (c.id === activeChatConvId);
+        var unreadBadge = (c.unreadByAdmin > 0) ? 
+          '<span style="background:#ef4444;color:#ffffff;font-size:10px;font-weight:800;padding:2px 6px;border-radius:10px;">' + c.unreadByAdmin + ' unread</span>' : '';
+        var timeStr = c.lastMessageTime ? new Date(c.lastMessageTime).toLocaleTimeString([], {hour:'2-digit', minute:'2-digit'}) : '';
+
+        return '<div onclick="selectAdminConversation(\'' + c.id + '\')" style="padding:12px 14px;border-bottom:1px solid var(--border);cursor:pointer;background:' + (isSelected ? '#ecfdf5' : '#ffffff') + ';border-left:' + (isSelected ? '4px solid #2e7d32' : '4px solid transparent') + ';transition:background 0.15s ease;">' +
+          '<div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:4px;">' +
+            '<strong style="font-size:13.5px;color:var(--field-dark);">' + (c.customerName || 'Farmer') + '</strong>' +
+            '<span style="font-size:11px;color:var(--muted);">' + timeStr + '</span>' +
+          '</div>' +
+          '<div style="display:flex;justify-content:space-between;align-items:center;">' +
+            '<div style="font-size:12px;color:#64748b;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;max-width:180px;">' +
+              (c.lastSender === 'admin' ? 'You: ' : '') + (c.lastMessage || 'No messages yet') +
+            '</div>' +
+            unreadBadge +
+          '</div>' +
+          (c.customerPhone ? '<div style="font-size:11px;color:var(--muted);margin-top:2px;">📞 ' + c.customerPhone + '</div>' : '') +
+        '</div>';
+      }).join('');
+    }
+
+    function selectAdminConversation(convId) {
+      activeChatConvId = convId;
+      var conv = (cachedData.conversations || []).find(function(c) { return c.id === convId; });
+      if (!conv) return;
+
+      document.getElementById('admin-chat-empty-state').style.display = 'none';
+      document.getElementById('admin-chat-thread-container').style.display = 'flex';
+
+      document.getElementById('admin-chat-client-name').textContent = conv.customerName || 'Farmer';
+      document.getElementById('admin-chat-client-phone').textContent = conv.customerPhone ? '📞 ' + conv.customerPhone : 'No phone specified';
+      document.getElementById('admin-chat-client-email').textContent = conv.customerEmail || 'Web Visitor';
+
+      var waLink = document.getElementById('admin-chat-wa-link');
+      if (conv.customerPhone) {
+        waLink.style.display = 'inline-block';
+        waLink.href = 'https://wa.me/' + conv.customerPhone.replace(/[^0-9]/g, '') + '?text=' + encodeURIComponent('Hi ' + (conv.customerName || '') + ', this is Enock Chinatsvi from D & C AgriBase following up on your message.');
+      } else {
+        waLink.style.display = 'none';
+      }
+
+      if (window.AgriFirebase && typeof window.AgriFirebase.markConversationAsRead === 'function') {
+        window.AgriFirebase.markConversationAsRead(convId, 'admin');
+      }
+
+      renderAdminConversations();
+
+      if (activeChatMessagesUnsub) activeChatMessagesUnsub();
+      if (window.AgriFirebase && typeof window.AgriFirebase.subscribeToMessages === 'function') {
+        activeChatMessagesUnsub = window.AgriFirebase.subscribeToMessages(convId, function(messages) {
+          renderAdminChatMessages(messages);
+        });
+      }
+
+      setTimeout(function() {
+        var input = document.getElementById('admin-chat-input');
+        if (input) input.focus();
+      }, 100);
+    }
+
+    function renderAdminChatMessages(messages) {
+      var box = document.getElementById('admin-chat-messages-box');
+      if (!box) return;
+
+      if (!messages || !messages.length) {
+        box.innerHTML = '<p style="text-align:center;color:var(--muted);font-size:13px;padding:30px;">No messages in this conversation yet. Send an opening message below.</p>';
+        return;
+      }
+
+      box.innerHTML = messages.map(function(m) {
+        var isAdmin = (m.sender === 'admin');
+        var timeStr = m.timestamp ? new Date(m.timestamp).toLocaleTimeString([], {hour:'2-digit', minute:'2-digit'}) : '';
+        return '<div style="display:flex;flex-direction:column;max-width:75%;align-self:' + (isAdmin ? 'flex-end' : 'flex-start') + ';">' +
+          '<div style="background:' + (isAdmin ? '#1b4332' : '#ffffff') + ';color:' + (isAdmin ? '#ffffff' : '#1e293b') + ';padding:10px 14px;border-radius:12px;border:' + (isAdmin ? 'none' : '1px solid var(--border)') + ';box-shadow:0 1px 4px rgba(0,0,0,0.05);font-size:13.5px;line-height:1.45;">' +
+            m.text +
+          '</div>' +
+          '<div style="font-size:10.5px;color:var(--muted);margin-top:3px;padding:0 4px;text-align:' + (isAdmin ? 'right' : 'left') + ';">' +
+            (isAdmin ? 'You (Enock)' : (m.senderName || 'Farmer')) + (timeStr ? ' • ' + timeStr : '') +
+          '</div>' +
+        '</div>';
+      }).join('');
+
+      box.scrollTop = box.scrollHeight;
+    }
+
+    async function handleAdminSendMessage(e) {
+      if (e) e.preventDefault();
+      var input = document.getElementById('admin-chat-input');
+      if (!input || !activeChatConvId) return;
+
+      var text = input.value.trim();
+      if (!text) return;
+
+      input.value = '';
+      try {
+        await window.AgriFirebase.sendChatMessage(activeChatConvId, {
+          sender: 'admin',
+          senderName: 'Enock Chinatsvi (Founder & Principal Consultant)',
+          text: text
+        });
+      } catch (err) {
+        console.warn('Error sending admin chat reply:', err);
+      }
+    }
+
+    function sendAdminCannedReply(text) {
+      var input = document.getElementById('admin-chat-input');
+      if (input) {
+        input.value = text;
+        input.focus();
+      }
+    }
+
+    function quoteFromChat() {
+      if (!activeChatConvId) return;
+      var conv = (cachedData.conversations || []).find(function(c) { return c.id === activeChatConvId; });
+      if (!conv) return;
+
+      openNewQuotationModal();
+      setTimeout(function() {
+        if (document.getElementById('q-modal-name') && conv.customerName) {
+          document.getElementById('q-modal-name').value = conv.customerName;
+        }
+        if (document.getElementById('q-modal-phone') && conv.customerPhone) {
+          document.getElementById('q-modal-phone').value = conv.customerPhone;
+        }
+      }, 100);
     }
 
     function exportDataBackup() {

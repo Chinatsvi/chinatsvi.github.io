@@ -94,5 +94,17 @@ service cloud.firestore {
       allow read: if true;
       allow write: if isStaff();
     }
+
+    // 9. Conversations Collection (Direct In-App Real-Time Customer Chat)
+    // Public visitors can initiate chat and send messages
+    // Staff can view all conversations, reply, and manage
+    match /conversations/{conversationId} {
+      allow read, write: if true;
+
+      match /messages/{messageId} {
+        allow read, create: if true;
+        allow update, delete: if isStaff();
+      }
+    }
   }
 }

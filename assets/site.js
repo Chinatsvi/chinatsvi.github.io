@@ -15,10 +15,52 @@
     host.querySelector('.nav-toggle').onclick = () => host.querySelector('.nav-links').classList.toggle('open');
   }
 
+  function loadLiveChat() {
+    if (window.location.pathname.indexOf('/consultancy/admin') !== -1) return;
+
+    if (!document.getElementById('agribase-live-chat-css')) {
+      var link = document.createElement('link');
+      link.id = 'agribase-live-chat-css';
+      link.rel = 'stylesheet';
+      link.href = '/assets/live-chat.css';
+      document.head.appendChild(link);
+    }
+
+    function loadScript(src, cb) {
+      var s = document.createElement('script');
+      s.src = src;
+      if (cb) s.onload = cb;
+      document.head.appendChild(s);
+    }
+
+    function initFirebaseAndChat() {
+      if (!window.AgriFirebase) {
+        loadScript('/assets/firebase-service.js', function() {
+          if (!window.AgriLiveChat) loadScript('/assets/live-chat.js');
+        });
+      } else {
+        if (!window.AgriLiveChat) loadScript('/assets/live-chat.js');
+      }
+    }
+
+    if (typeof window.firebase === 'undefined') {
+      loadScript('https://www.gstatic.com/firebasejs/10.12.0/firebase-app-compat.js', function() {
+        loadScript('https://www.gstatic.com/firebasejs/10.12.0/firebase-auth-compat.js', function() {
+          loadScript('https://www.gstatic.com/firebasejs/10.12.0/firebase-firestore-compat.js', function() {
+            initFirebaseAndChat();
+          });
+        });
+      });
+    } else {
+      initFirebaseAndChat();
+    }
+  }
+
   function renderFooter() {
     const host = document.querySelector('[data-site-footer]');
     if (!host) return;
     host.innerHTML = '<footer><div class="container footer-grid"><div><h3>D & C – AgriBase</h3><p>Practical agricultural consultancy, on-farm advisory services, training and digital farming tools powering the Farmer Community App.</p><p style="margin-top:6px;font-size:13px;color:rgba(255,255,255,0.75);">Founder & Principal Consultant: Enock Chinatsvi</p><div class="footer-visitor-strip"><span class="footer-live-dot"></span><span class="footer-visitor-label">Platform Visits:</span><a href="https://hits.sh/chinatsvi.github.io/" target="_blank" rel="noopener" title="Live platform traffic counter" class="footer-visitor-badge"><img src="https://hits.sh/chinatsvi.github.io.svg?label=Visitors&color=2e7d32&labelColor=1a3b2b" alt="AgriBase Real Visitor Counter" loading="eager"></a></div></div><div><h3>Consultancy</h3><a href="/consultancy/">Consultancy Home</a><a href="/consultancy/services/">Services Catalogue</a><a href="/consultancy/ask/">Ask Farming Question</a><a href="/consultancy/farm-visit/">Book Farm Visit</a><a href="/consultancy/online-consultation/">Online Consultations</a><a href="/consultancy/portal/">Track My Enquiry</a><a href="/consultancy/admin/">Consultant Workspace</a></div><div><h3>Farming Tools</h3><a href="/guides/">Farming Guides</a><a href="/calculators/">Farm Calculators</a><a href="/decision-tools/">Decision Tools</a><a href="/calendar/">Crop Calendar</a><a href="/community/">Farmer Community App</a></div><div><h3>Company & Trust</h3><a href="/about/">About Us</a><a href="/contact/">Contact & Bookings</a><a href="/privacy/">Privacy Policy</a><a href="/terms/">Terms & Advisory Disclaimer</a><a href="/disclaimer/">Disclaimer</a></div></div><div class="container copyright">&copy; 2026 D & C – AgriBase. Practical Agricultural Knowledge. Professional Advice. Better Farming Decisions.</div></footer><a href="https://wa.me/2774902204?text=Hello%20Enock%2C%20I%20am%20visiting%20AgriBase%20and%20need%20farming%20advice%20for%20my%20farm" class="floating-whatsapp-widget" target="_blank" rel="noopener" aria-label="Chat with Agronomist on WhatsApp"><span class="floating-whatsapp-icon">💬</span><span class="floating-whatsapp-text"><strong>Chat with Agronomist</strong><small>WhatsApp (+27 74 902 2044)</small></span></a>';
+    loadLiveChat();
   }
 
   function articleCards(items) {
