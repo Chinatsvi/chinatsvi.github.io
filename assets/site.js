@@ -297,13 +297,17 @@
         '<h3 id="secret-title">Staff & Consultant Login</h3>' +
         '<p class="sub">Authorised AgriBase Personnel Workspace</p>' +
         '<div id="secret-modal-alert" class="secret-msg-alert"></div>' +
-        '<button type="button" id="secret-btn-google" class="secret-google-btn">' +
-          '<svg width="18" height="18" viewBox="0 0 48 48"><path fill="#EA4335" d="M24 9.5c3.54 0 6.71 1.22 9.21 3.6l6.85-6.85C35.9 2.38 30.47 0 24 0 14.62 0 6.51 5.38 2.56 13.22l7.98 6.19C12.43 13.72 17.74 9.5 24 9.5z"/><path fill="#4285F4" d="M46.98 24.55c0-1.57-.15-3.09-.38-4.55H24v9.02h12.94c-.58 2.96-2.26 5.48-4.78 7.18l7.73 6c4.51-4.18 7.09-10.36 7.09-17.65z"/><path fill="#FBBC05" d="M10.53 28.59c-.48-1.45-.76-2.99-.76-4.59s.27-3.14.76-4.59l-7.98-6.19C.92 16.46 0 20.12 0 24c0 3.88.92 7.54 2.56 10.78l7.97-6.19z"/><path fill="#34A853" d="M24 48c6.48 0 11.93-2.13 15.89-5.81l-7.73-6c-2.15 1.45-4.92 2.3-8.16 2.3-6.26 0-11.57-4.22-13.46-9.91l-7.98 6.19C6.51 42.62 14.62 48 24 48z"/></svg>' +
-          '<span>Sign In with Google Account</span>' +
-        '</button>' +
+        '<div style="background:#f8fafc;border:1.5px solid #cbd5e1;border-radius:10px;padding:14px;margin-bottom:14px;">' +
+          '<label for="secret-google-pass" style="display:block;font-size:12px;font-weight:700;color:#334155;margin-bottom:4px;">Staff Security Password <span style="color:#b91c1c;">*</span>:</label>' +
+          '<input type="password" id="secret-google-pass" class="secret-field-input" placeholder="Enter staff password" style="margin-bottom:10px;">' +
+          '<button type="button" id="secret-btn-google" class="secret-google-btn" style="margin-bottom:0;">' +
+            '<svg width="18" height="18" viewBox="0 0 48 48"><path fill="#EA4335" d="M24 9.5c3.54 0 6.71 1.22 9.21 3.6l6.85-6.85C35.9 2.38 30.47 0 24 0 14.62 0 6.51 5.38 2.56 13.22l7.98 6.19C12.43 13.72 17.74 9.5 24 9.5z"/><path fill="#4285F4" d="M46.98 24.55c0-1.57-.15-3.09-.38-4.55H24v9.02h12.94c-.58 2.96-2.26 5.48-4.78 7.18l7.73 6c4.51-4.18 7.09-10.36 7.09-17.65z"/><path fill="#FBBC05" d="M10.53 28.59c-.48-1.45-.76-2.99-.76-4.59s.27-3.14.76-4.59l-7.98-6.19C.92 16.46 0 20.12 0 24c0 3.88.92 7.54 2.56 10.78l7.97-6.19z"/><path fill="#34A853" d="M24 48c6.48 0 11.93-2.13 15.89-5.81l-7.73-6c-2.15 1.45-4.92 2.3-8.16 2.3-6.26 0-11.57-4.22-13.46-9.91l-7.98 6.19C6.51 42.62 14.62 48 24 48z"/></svg>' +
+            '<span>Verify Password & Sign In with Google</span>' +
+          '</button>' +
+        '</div>' +
         '<div class="secret-divider"><span>or with credentials</span></div>' +
         '<div class="secret-tabs-row">' +
-          '<button type="button" class="secret-tab-toggle active" id="secret-btn-firebase">Firebase Auth</button>' +
+          '<button type="button" class="secret-tab-toggle active" id="secret-btn-firebase">Staff Credentials</button>' +
           '<button type="button" class="secret-tab-toggle" id="secret-btn-passcode">Emergency Passcode</button>' +
         '</div>' +
         '<form id="secret-login-form">' +
@@ -313,15 +317,15 @@
               '<input type="email" id="secret-staff-email" class="secret-field-input" value="chinatsvieno@gmail.com" required placeholder="chinatsvieno@gmail.com">' +
             '</div>' +
             '<div class="secret-field-group">' +
-              '<label for="secret-staff-pass">Firebase Staff Password:</label>' +
+              '<label for="secret-staff-pass">Staff Security Password:</label>' +
               '<input type="password" id="secret-staff-pass" class="secret-field-input" placeholder="Enter staff password">' +
             '</div>' +
           '</div>' +
           '<div id="secret-mode-passcode-wrap" style="display:none;">' +
             '<div class="secret-field-group">' +
               '<label for="secret-staff-code">Staff Emergency Passcode:</label>' +
-              '<input type="password" id="secret-staff-code" class="secret-field-input" placeholder="e.g. agribase2026">' +
-              '<div style="font-size:11.5px;color:#64748b;margin-top:4px;">Emergency passcode: <strong>agribase2026</strong></div>' +
+              '<input type="password" id="secret-staff-code" class="secret-field-input" placeholder="Enter staff password">' +
+              '<div style="font-size:11.5px;color:#64748b;margin-top:4px;">Master staff authorization required</div>' +
             '</div>' +
           '</div>' +
           '<button type="submit" id="secret-submit-btn" class="secret-login-submit">Sign In & Open Workspace →</button>' +
@@ -346,11 +350,27 @@
       btnGoogle.onclick = async function() {
         alertEl.style.display = 'none';
         alertEl.className = 'secret-msg-alert';
+
+        const gPassInput = document.getElementById('secret-google-pass');
+        let enteredPass = (gPassInput ? gPassInput.value : '').trim();
+        if (!enteredPass) {
+          const altPass = document.getElementById('secret-staff-pass');
+          if (altPass && altPass.value) enteredPass = altPass.value.trim();
+        }
+
+        if (!window.AgriFirebase || !window.AgriFirebase.isStaffAuthorizedPassword(enteredPass)) {
+          alertEl.innerHTML = '<strong>Access Denied:</strong> Please enter the staff security password (<strong>Chinatsvi Enock</strong>) to verify administrative privileges before signing in with Google.';
+          alertEl.classList.add('error');
+          alertEl.style.display = 'block';
+          if (gPassInput) gPassInput.focus();
+          return;
+        }
+
         btnGoogle.disabled = true;
         btnGoogle.innerHTML = 'Connecting to Google...';
         try {
           if (window.AgriFirebase && typeof window.AgriFirebase.loginStaffWithGoogle === 'function') {
-            const res = await window.AgriFirebase.loginStaffWithGoogle();
+            const res = await window.AgriFirebase.loginStaffWithGoogle(enteredPass);
             const staffName = (res.user && res.user.displayName) || (res.staff && res.staff.name) || 'Consultant';
             sessionStorage.setItem('agribase_staff_session', JSON.stringify({
               email: res.user.email,
@@ -360,6 +380,7 @@
               title: (res.staff && res.staff.title) || 'Principal Consultant',
               uid: res.user.uid,
               provider: 'google',
+              verifiedWithMasterKey: true,
               loggedInAt: new Date().toISOString()
             }));
             alertEl.textContent = 'Welcome ' + staffName + '! Opening workspace...';
@@ -373,7 +394,7 @@
           }
         } catch (err) {
           btnGoogle.disabled = false;
-          btnGoogle.innerHTML = '<svg width="18" height="18" viewBox="0 0 48 48"><path fill="#EA4335" d="M24 9.5c3.54 0 6.71 1.22 9.21 3.6l6.85-6.85C35.9 2.38 30.47 0 24 0 14.62 0 6.51 5.38 2.56 13.22l7.98 6.19C12.43 13.72 17.74 9.5 24 9.5z"/><path fill="#4285F4" d="M46.98 24.55c0-1.57-.15-3.09-.38-4.55H24v9.02h12.94c-.58 2.96-2.26 5.48-4.78 7.18l7.73 6c4.51-4.18 7.09-10.36 7.09-17.65z"/><path fill="#FBBC05" d="M10.53 28.59c-.48-1.45-.76-2.99-.76-4.59s.27-3.14.76-4.59l-7.98-6.19C.92 16.46 0 20.12 0 24c0 3.88.92 7.54 2.56 10.78l7.97-6.19z"/><path fill="#34A853" d="M24 48c6.48 0 11.93-2.13 15.89-5.81l-7.73-6c-2.15 1.45-4.92 2.3-8.16 2.3-6.26 0-11.57-4.22-13.46-9.91l-7.98 6.19C6.51 42.62 14.62 48 24 48z"/></svg> <span>Sign In with Google Account</span>';
+          btnGoogle.innerHTML = '<svg width="18" height="18" viewBox="0 0 48 48"><path fill="#EA4335" d="M24 9.5c3.54 0 6.71 1.22 9.21 3.6l6.85-6.85C35.9 2.38 30.47 0 24 0 14.62 0 6.51 5.38 2.56 13.22l7.98 6.19C12.43 13.72 17.74 9.5 24 9.5z"/><path fill="#4285F4" d="M46.98 24.55c0-1.57-.15-3.09-.38-4.55H24v9.02h12.94c-.58 2.96-2.26 5.48-4.78 7.18l7.73 6c4.51-4.18 7.09-10.36 7.09-17.65z"/><path fill="#FBBC05" d="M10.53 28.59c-.48-1.45-.76-2.99-.76-4.59s.27-3.14.76-4.59l-7.98-6.19C.92 16.46 0 20.12 0 24c0 3.88.92 7.54 2.56 10.78l7.97-6.19z"/><path fill="#34A853" d="M24 48c6.48 0 11.93-2.13 15.89-5.81l-7.73-6c-2.15 1.45-4.92 2.3-8.16 2.3-6.26 0-11.57-4.22-13.46-9.91l-7.98 6.19C6.51 42.62 14.62 48 24 48z"/></svg> <span>Verify Password & Sign In with Google</span>';
           let msg = err.message || 'Google sign-in failed.';
           if (err.code === 'auth/popup-closed-by-user') {
             msg = 'Google login window was closed before completing.';
@@ -403,7 +424,7 @@
       btnPasscode.classList.remove('active');
       wrapFirebase.style.display = 'block';
       wrapPasscode.style.display = 'none';
-      submitBtn.textContent = 'Sign In with Firebase Auth →';
+      submitBtn.textContent = 'Sign In with Staff Credentials →';
       document.getElementById('secret-staff-pass').required = true;
       document.getElementById('secret-staff-code').required = false;
     };
@@ -433,7 +454,7 @@
           alertEl.style.display = 'block';
           return;
         }
-        submitBtn.textContent = 'Authenticating...';
+        submitBtn.textContent = 'Authenticating staff...';
         submitBtn.disabled = true;
 
         try {
@@ -444,6 +465,7 @@
               role: (authResult.staff && authResult.staff.role) ? authResult.staff.role : 'admin',
               title: (authResult.staff && authResult.staff.title) || 'Principal Consultant',
               uid: authResult.user.uid,
+              verifiedWithMasterKey: true,
               loggedInAt: new Date().toISOString()
             }));
             alertEl.textContent = 'Authentication successful! Loading workspace...';
@@ -458,21 +480,22 @@
         } catch (err) {
           let msg = err.message || 'Authentication failed.';
           if (err.code === 'auth/wrong-password' || err.code === 'auth/invalid-credential') {
-            msg = 'Incorrect password for this staff account.';
+            msg = 'Incorrect password. Please enter the staff security password ("Chinatsvi Enock").';
           }
           alertEl.textContent = msg;
           alertEl.classList.add('error');
           alertEl.style.display = 'block';
           submitBtn.disabled = false;
-          submitBtn.textContent = 'Sign In with Firebase Auth →';
+          submitBtn.textContent = 'Sign In with Staff Credentials →';
         }
       } else {
         const code = document.getElementById('secret-staff-code').value.trim();
-        if (code === 'agribase2026' || code === 'enock2026') {
+        if (window.AgriFirebase && window.AgriFirebase.isStaffAuthorizedPassword(code)) {
           sessionStorage.setItem('agribase_staff_session', JSON.stringify({
             email: 'chinatsvieno@gmail.com',
             role: 'admin',
             title: 'Founder & Principal Consultant',
+            verifiedWithMasterKey: true,
             loggedInAt: new Date().toISOString()
           }));
           alertEl.textContent = 'Access granted! Redirecting to workspace...';
@@ -483,7 +506,7 @@
             window.location.href = '/consultancy/admin/';
           }, 350);
         } else {
-          alertEl.textContent = 'Incorrect passcode. Try "agribase2026" or use Firebase Auth.';
+          alertEl.textContent = 'Incorrect passcode. Please enter the staff security password ("Chinatsvi Enock").';
           alertEl.classList.add('error');
           alertEl.style.display = 'block';
         }

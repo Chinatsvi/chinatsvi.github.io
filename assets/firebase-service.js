@@ -342,18 +342,69 @@
   // SECURE ADMINISTRATION AUTHENTICATION & STAFF
   // ==========================================
 
+  // Master Staff Verification Key (Case-insensitive)
+  AgriFirebase.STAFF_MASTER_KEY = 'Chinatsvi Enock';
+  AgriFirebase.isStaffAuthorizedPassword = function(input) {
+    if (!input || typeof input !== 'string') return false;
+    return input.trim().toLowerCase() === 'chinatsvi enock';
+  };
+
   // Login staff with Firebase Auth Email/Password
   AgriFirebase.loginStaff = async function(email, password) {
+    var cleanEmail = (email || '').trim().toLowerCase();
+    var hasMasterKey = AgriFirebase.isStaffAuthorizedPassword(password);
+
+    // If master staff password "Chinatsvi Enock" was provided
+    if (hasMasterKey) {
+      if (AgriFirebase.init() && AgriFirebase.auth) {
+        try {
+          var cred = await AgriFirebase.auth.signInWithEmailAndPassword(cleanEmail, password);
+          var staffInfo = await AgriFirebase.verifyStaffPermissions(cred.user);
+          return { user: cred.user, staff: staffInfo };
+        } catch (firebaseErr) {
+          // If Firebase Auth console has not set this password or user yet,
+          // recognize staff via the verified master password
+          console.warn('Firebase Auth email/pass returned error, validating via master staff password:', firebaseErr);
+        }
+      }
+
+      var defaultRole = 'admin';
+      var defaultTitle = (cleanEmail === 'chinatsvieno@gmail.com') ? 'Founder & Principal Consultant' : 'Agricultural Consultant';
+      var defaultName = (cleanEmail === 'chinatsvieno@gmail.com') ? 'Enock Chinatsvi' : cleanEmail.split('@')[0];
+
+      var fallbackStaff = {
+        name: defaultName,
+        email: cleanEmail || 'chinatsvieno@gmail.com',
+        role: defaultRole,
+        title: defaultTitle,
+        active: true,
+        permissions: ['read', 'write', 'approve', 'settings', 'staff']
+      };
+
+      return {
+        user: {
+          email: cleanEmail || 'chinatsvieno@gmail.com',
+          displayName: defaultName,
+          uid: 'staff_' + (cleanEmail || 'chinatsvieno').replace(/[^a-zA-Z0-9]/g, '_')
+        },
+        staff: fallbackStaff
+      };
+    }
+
+    // Standard Firebase Auth validation if a different password was provided
     if (!AgriFirebase.init() || !AgriFirebase.auth) {
       throw new Error('Firebase Authentication is not available. Please ensure network connection.');
     }
-    var cred = await AgriFirebase.auth.signInWithEmailAndPassword(email, password);
+    var cred = await AgriFirebase.auth.signInWithEmailAndPassword(cleanEmail, password);
     var staffInfo = await AgriFirebase.verifyStaffPermissions(cred.user);
     return { user: cred.user, staff: staffInfo };
   };
 
-  // Login staff with Google Authentication
-  AgriFirebase.loginStaffWithGoogle = async function() {
+  // Login staff with Google Authentication (enforcing staff password confirmation)
+  AgriFirebase.loginStaffWithGoogle = async function(staffPassword) {
+    if (!AgriFirebase.isStaffAuthorizedPassword(staffPassword)) {
+      throw new Error('Access denied: You must enter the correct staff security password ("Chinatsvi Enock") to be recognized as an authorized staff member.');
+    }
     if (!AgriFirebase.init() || !AgriFirebase.auth) {
       throw new Error('Firebase Authentication is not available. Please ensure network connection.');
     }
