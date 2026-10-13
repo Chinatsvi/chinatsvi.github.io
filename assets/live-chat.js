@@ -220,13 +220,25 @@
       updateBadge();
     }
 
+    var lastAdmin = messages.slice().reverse().find(function(m) { return m.sender === 'admin'; });
+    if (lastAdmin && lastAdmin.senderName) {
+      var nameEl = document.querySelector('.chat-header-name');
+      if (nameEl) nameEl.textContent = lastAdmin.senderName;
+      if (lastAdmin.senderPhoto) {
+        var avEl = document.querySelector('.chat-header-avatar');
+        if (avEl) avEl.innerHTML = '<img src="' + escapeHtml(lastAdmin.senderPhoto) + '" alt="Avatar" style="width:100%;height:100%;border-radius:50%;object-fit:cover;">';
+      }
+    }
+
     var html = messages.map(function(m) {
       var isMe = (m.sender === 'customer');
       var timeStr = m.timestamp ? formatChatTime(m.timestamp) : '';
-      var senderLabel = isMe ? 'You' : (m.senderName || 'Enock Chinatsvi');
+      var senderLabel = isMe ? 'You' : (m.senderName || 'Enock Chinatsvi (Principal Consultant)');
+      var avatarImg = (!isMe && m.senderPhoto) ? 
+        '<img src="' + escapeHtml(m.senderPhoto) + '" alt="" style="width:18px;height:18px;border-radius:50%;object-fit:cover;vertical-align:middle;margin-right:4px;">' : '';
       return '<div class="chat-msg ' + (isMe ? 'msg-customer' : 'msg-admin') + '">' +
         '<div class="msg-bubble">' + escapeHtml(m.text) + '</div>' +
-        '<div class="msg-meta">' + senderLabel + (timeStr ? ' • ' + timeStr : '') + '</div>' +
+        '<div class="msg-meta">' + avatarImg + escapeHtml(senderLabel) + (timeStr ? ' • ' + timeStr : '') + '</div>' +
       '</div>';
     }).join('');
 

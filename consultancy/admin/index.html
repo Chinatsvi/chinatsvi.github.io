@@ -60,6 +60,120 @@
       background: var(--field);
       color: #fff;
     }
+
+    /* Responsive Live Chat Styles */
+    .admin-chat-container {
+      display: flex;
+      height: 720px;
+      max-height: calc(100vh - 170px);
+      min-height: 520px;
+      background: #ffffff;
+      border: 1px solid var(--border);
+      border-radius: 12px;
+      overflow: hidden;
+      box-shadow: 0 4px 16px rgba(0,0,0,0.06);
+      position: relative;
+    }
+    .admin-chat-list-col {
+      width: 340px;
+      min-width: 300px;
+      max-width: 380px;
+      border-right: 1px solid var(--border);
+      display: flex;
+      flex-direction: column;
+      background: #f8fafc;
+      height: 100%;
+      flex-shrink: 0;
+    }
+    .admin-chat-thread-col {
+      flex: 1;
+      min-width: 0;
+      display: flex;
+      flex-direction: column;
+      background: #ffffff;
+      height: 100%;
+      position: relative;
+    }
+    @media (max-width: 860px) {
+      .admin-chat-container {
+        height: calc(100vh - 140px);
+        min-height: 480px;
+      }
+      .admin-chat-list-col {
+        width: 100%;
+        max-width: 100%;
+        border-right: none;
+      }
+      .admin-chat-container.mobile-in-thread .admin-chat-list-col {
+        display: none !important;
+      }
+      .admin-chat-container.mobile-in-thread .admin-chat-thread-col {
+        display: flex !important;
+        width: 100%;
+      }
+      .admin-chat-container:not(.mobile-in-thread) .admin-chat-list-col {
+        display: flex !important;
+        width: 100%;
+      }
+      .admin-chat-container:not(.mobile-in-thread) .admin-chat-thread-col {
+        display: none !important;
+      }
+      #admin-chat-back-btn {
+        display: inline-flex !important;
+      }
+    }
+    .chat-bubble-row {
+      display: flex;
+      flex-direction: column;
+      max-width: 82%;
+    }
+    .chat-bubble-row.admin-row {
+      align-self: flex-end;
+    }
+    .chat-bubble-row.farmer-row {
+      align-self: flex-start;
+    }
+    .bubble-content {
+      padding: 10px 14px;
+      border-radius: 12px;
+      font-size: 13.5px;
+      line-height: 1.5;
+      white-space: pre-wrap;
+      word-break: break-word;
+    }
+    .bubble-content.admin-bubble {
+      background: #1b4332;
+      color: #ffffff;
+      border-bottom-right-radius: 3px;
+      box-shadow: 0 2px 6px rgba(27,67,50,0.2);
+    }
+    .bubble-content.farmer-bubble {
+      background: #ffffff;
+      color: #1e293b;
+      border: 1px solid var(--border);
+      border-bottom-left-radius: 3px;
+      box-shadow: 0 1px 4px rgba(0,0,0,0.05);
+    }
+    .bubble-meta {
+      font-size: 11px;
+      color: var(--muted);
+      margin-top: 3px;
+      padding: 0 4px;
+      display: flex;
+      align-items: center;
+      gap: 6px;
+    }
+    .admin-row .bubble-meta {
+      justify-content: flex-end;
+    }
+    .staff-badge {
+      font-weight: 700;
+      color: #1b4332;
+    }
+    .farmer-badge {
+      font-weight: 700;
+      color: #0f172a;
+    }
   </style>
 </head>
 <body>
@@ -75,6 +189,18 @@
       </div>
 
       <div id="auth-error-alert" style="display:none;background:#fee2e2;border:1px solid #f87171;color:#991b1b;padding:12px;border-radius:8px;font-size:13.5px;margin-bottom:16px;"></div>
+
+      <!-- Google Sign In Button -->
+      <button type="button" id="google-login-btn" onclick="handleGoogleAdminLogin()" class="button" style="width:100%;background:#ffffff;color:#1e293b;border:1.5px solid #cbd5e1;display:flex;align-items:center;justify-content:center;gap:10px;margin-bottom:14px;font-weight:700;box-shadow:0 1px 3px rgba(0,0,0,0.08);cursor:pointer;padding:11px 16px;">
+        <svg width="18" height="18" viewBox="0 0 24 24"><path fill="#4285F4" d="M22.56 12.25c0-.78-.07-1.53-.2-2.25H12v4.26h5.92c-.26 1.37-1.04 2.53-2.21 3.31v2.77h3.57c2.08-1.92 3.28-4.74 3.28-8.09z"/><path fill="#34A853" d="M12 23c2.97 0 5.46-.98 7.28-2.66l-3.57-2.77c-.98.66-2.23 1.06-3.71 1.06-2.86 0-5.29-1.93-6.16-4.53H2.18v2.84C3.99 20.53 7.7 23 12 23z"/><path fill="#FBBC05" d="M5.84 14.09c-.22-.66-.35-1.36-.35-2.09s.13-1.43.35-2.09V7.06H2.18C1.43 8.55 1 10.22 1 12s.43 3.45 1.18 4.94l2.85-2.22.81-.63z"/><path fill="#EA4335" d="M12 5.38c1.62 0 3.06.56 4.21 1.64l3.15-3.15C17.45 2.09 14.97 1 12 1 7.7 1 3.99 3.47 2.18 7.06l3.66 2.84c.87-2.6 3.3-4.52 6.16-4.52z"/></svg>
+        Sign In with Google Account
+      </button>
+
+      <div style="display:flex;align-items:center;text-align:center;margin:12px 0 16px;color:var(--muted);font-size:11px;font-weight:700;">
+        <div style="flex:1;border-bottom:1px solid var(--border);"></div>
+        <span style="padding:0 8px;letter-spacing:0.5px;">OR USE EMAIL / PASSWORD</span>
+        <div style="flex:1;border-bottom:1px solid var(--border);"></div>
+      </div>
 
       <form id="admin-login-form" onsubmit="handleAdminLogin(event)">
         
@@ -186,12 +312,12 @@
 
         <!-- TAB: LIVE CHAT (Real-Time Bidirectional Messaging) -->
         <div id="tab-chat" class="admin-tab-pane" style="display:none;">
-          <div style="display:grid;grid-template-columns:320px 1fr;gap:20px;height:720px;background:#ffffff;border:1px solid var(--border);border-radius:12px;overflow:hidden;box-shadow:0 4px 16px rgba(0,0,0,0.06);">
+          <div class="admin-chat-container" id="admin-chat-root-box">
             
             <!-- Left Pane: Conversations List -->
-            <div style="border-right:1px solid var(--border);display:flex;flex-direction:column;background:#f8fafc;">
-              <div style="padding:16px;border-bottom:1px solid var(--border);background:#ffffff;">
-                <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:10px;">
+            <div class="admin-chat-list-col" id="admin-chat-left-col">
+              <div style="padding:14px 16px;border-bottom:1px solid var(--border);background:#ffffff;">
+                <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:8px;">
                   <strong style="font-size:15px;color:var(--field-dark);">Customer Chats</strong>
                   <span id="admin-chat-live-status" style="font-size:11px;background:#dcfce7;color:#15803d;padding:2px 8px;border-radius:12px;font-weight:700;">🟢 Live Sync</span>
                 </div>
@@ -199,50 +325,66 @@
               </div>
 
               <!-- List of active conversations -->
-              <div id="admin-conversations-list" style="flex:1;overflow-y:auto;padding:8px 0;">
+              <div id="admin-conversations-list" style="flex:1;overflow-y:auto;padding:4px 0;">
                 <p style="text-align:center;color:var(--muted);font-size:13px;padding:20px;">Listening for customer chats...</p>
               </div>
             </div>
 
             <!-- Right Pane: Active Chat Conversation Thread -->
-            <div style="display:flex;flex-direction:column;background:#ffffff;" id="admin-chat-active-panel">
+            <div class="admin-chat-thread-col" id="admin-chat-active-panel">
               <div id="admin-chat-empty-state" style="flex:1;display:flex;align-items:center;justify-content:center;flex-direction:column;color:var(--muted);padding:40px;text-align:center;">
                 <span style="font-size:48px;margin-bottom:12px;">💬</span>
                 <strong style="font-size:16px;color:var(--field-dark);">Select a customer conversation</strong>
                 <p style="font-size:13px;max-width:380px;margin-top:6px;">Choose a farmer from the list on the left to start chatting in real-time, view their farm challenges, or send agricultural recommendations.</p>
               </div>
 
-              <div id="admin-chat-thread-container" style="display:none;flex-direction:column;height:100%;">
+              <div id="admin-chat-thread-container" style="display:none;flex-direction:column;height:100%;min-width:0;">
                 <!-- Header -->
-                <div style="padding:12px 20px;border-bottom:1px solid var(--border);display:flex;justify-content:space-between;align-items:center;background:#f8fafc;">
-                  <div>
-                    <h3 id="admin-chat-client-name" style="margin:0;font-size:16px;color:var(--field-dark);">Farmer Name</h3>
-                    <div style="font-size:12px;color:var(--muted);margin-top:2px;">
-                      <span id="admin-chat-client-phone">+263...</span> • 
-                      <span id="admin-chat-client-email">Web Visitor</span>
+                <div style="padding:12px 16px;border-bottom:1px solid var(--border);display:flex;justify-content:space-between;align-items:center;background:#f8fafc;flex-wrap:wrap;gap:8px;">
+                  <div style="display:flex;align-items:center;gap:10px;min-width:0;">
+                    <button type="button" class="action-btn-sm" onclick="exitMobileChatThread()" id="admin-chat-back-btn" style="display:none;background:#e2e8f0;font-weight:700;">← All Chats</button>
+                    <div style="width:36px;height:36px;border-radius:50%;background:var(--field-light);color:var(--field-dark);display:flex;align-items:center;justify-content:center;font-weight:800;font-size:14px;flex-shrink:0;" id="admin-chat-client-avatar">F</div>
+                    <div style="min-width:0;">
+                      <h3 id="admin-chat-client-name" style="margin:0;font-size:15px;color:var(--field-dark);white-space:nowrap;overflow:hidden;text-overflow:ellipsis;">Farmer Name</h3>
+                      <div style="font-size:12px;color:var(--muted);margin-top:1px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;">
+                        <span id="admin-chat-client-phone">+263...</span> • 
+                        <span id="admin-chat-client-email">Web Visitor</span>
+                      </div>
                     </div>
                   </div>
-                  <div style="display:flex;gap:8px;">
-                    <a id="admin-chat-wa-link" href="#" target="_blank" class="action-btn-sm" style="background:#25D366;color:#ffffff;text-decoration:none;">📲 Open in WhatsApp</a>
-                    <button class="action-btn-sm" onclick="quoteFromChat()">+ Prepare Quote</button>
+                  <div style="display:flex;gap:6px;flex-wrap:wrap;">
+                    <a id="admin-chat-wa-link" href="#" target="_blank" class="action-btn-sm" style="background:#25D366;color:#ffffff;text-decoration:none;">📲 WhatsApp</a>
+                    <button class="action-btn-sm" onclick="quoteFromChat()">+ Quote</button>
                   </div>
                 </div>
 
                 <!-- Messages area -->
-                <div id="admin-chat-messages-box" style="flex:1;overflow-y:auto;padding:20px;background:#f8fafc;display:flex;flex-direction:column;gap:12px;"></div>
+                <div id="admin-chat-messages-box" style="flex:1;overflow-y:auto;padding:16px 20px;background:#f8fafc;display:flex;flex-direction:column;gap:12px;"></div>
+
+                <!-- Staff Identity Pill Bar -->
+                <div id="admin-chat-identity-bar" style="padding:5px 14px;background:#f0fdf4;border-top:1px solid #bbf7d0;display:flex;align-items:center;justify-content:space-between;font-size:12px;color:#166534;">
+                  <div style="display:flex;align-items:center;gap:6px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;">
+                    <span>✍️</span>
+                    <span>Replying as: <strong id="admin-chat-sender-name-display">Enock Chinatsvi</strong> <span id="admin-chat-sender-role-display">(Principal Consultant)</span></span>
+                  </div>
+                  <button type="button" onclick="promptChangeStaffName()" style="background:none;border:none;color:#15803d;font-weight:700;cursor:pointer;text-decoration:underline;font-size:11.5px;flex-shrink:0;">Edit Name</button>
+                </div>
 
                 <!-- Quick Responses Pill Strip -->
-                <div style="padding:8px 16px;background:#f1f5f9;border-top:1px solid var(--border);display:flex;gap:6px;overflow-x:auto;">
-                  <button type="button" class="action-btn-sm" onclick="sendAdminCannedReply('Hello! What crop or livestock are you managing, and what symptoms or challenges are you observing?')">🌾 Ask crop & symptoms</button>
-                  <button type="button" class="action-btn-sm" onclick="sendAdminCannedReply('Could you send photographs of the affected crop or leaf undersides for accurate diagnosis?')">📸 Request photos</button>
-                  <button type="button" class="action-btn-sm" onclick="sendAdminCannedReply('I can schedule an on-farm diagnostic visit to inspect your field stand. What district or town is your farm located in?')">🚜 Propose farm visit</button>
-                  <button type="button" class="action-btn-sm" onclick="sendAdminCannedReply('Our fee for a comprehensive online telephone/WhatsApp consultation is $20 USD.')">💵 State online rate</button>
+                <div style="padding:6px 12px;background:#f1f5f9;border-top:1px solid var(--border);display:flex;gap:6px;overflow-x:auto;-webkit-overflow-scrolling:touch;">
+                  <button type="button" class="action-btn-sm" onclick="sendAdminCannedReply('Hello! What crop or livestock are you managing, and what specific symptoms or challenges are you observing?')">🌾 Ask crop symptoms</button>
+                  <button type="button" class="action-btn-sm" onclick="sendAdminCannedReply('Could you send close-up photographs of the affected leaves, stem, or field stand?')">📸 Request photos</button>
+                  <button type="button" class="action-btn-sm" onclick="sendAdminCannedReply('I can schedule an on-farm diagnostic inspection for your land. What district or town is your farm located in?')">🚜 Propose farm visit</button>
+                  <button type="button" class="action-btn-sm" onclick="sendAdminCannedReply('Have you recently tested your soil pH or applied basal fertiliser?')">🧪 Ask soil test</button>
                 </div>
 
                 <!-- Admin Message Input -->
-                <form id="admin-chat-form" onsubmit="handleAdminSendMessage(event)" style="padding:14px 20px;border-top:1px solid var(--border);display:flex;gap:10px;background:#ffffff;">
-                  <input type="text" id="admin-chat-input" class="form-control" placeholder="Type your advice as Enock Chinatsvi (Founder & Principal Consultant)..." autocomplete="off" style="flex:1;">
-                  <button type="submit" class="button" style="padding:0 20px;">Send Reply ➤</button>
+                <form id="admin-chat-form" onsubmit="handleAdminSendMessage(event)" style="padding:10px 14px;border-top:1px solid var(--border);display:flex;gap:8px;background:#ffffff;align-items:flex-end;">
+                  <textarea id="admin-chat-input" class="form-control" rows="2" placeholder="Type agricultural advice, pesticide rates, or diagnosis... (Press Enter to send, Shift+Enter for new line)" style="flex:1;resize:none;font-family:inherit;font-size:13.5px;line-height:1.45;padding:8px 12px;border-radius:8px;"></textarea>
+                  <button type="submit" id="admin-chat-send-btn" class="button" style="height:44px;padding:0 18px;display:inline-flex;align-items:center;gap:6px;font-weight:800;white-space:nowrap;">
+                    <span>Send</span>
+                    <span>➤</span>
+                  </button>
                 </form>
               </div>
 
@@ -532,9 +674,13 @@
   <script>
     var currentRole = 'admin';
     var currentUserEmail = 'chinatsvieno@gmail.com';
+    var currentStaffName = 'Enock Chinatsvi';
+    var currentStaffRoleTitle = 'Founder & Principal Agricultural Consultant';
+    var currentStaffPhoto = '';
     var isPasscodeMode = false;
     var activeChatConvId = null;
     var activeChatMessagesUnsub = null;
+    var currentChatMessagesCache = [];
     var cachedData = {
       enquiries: [],
       bookings: [],
@@ -575,6 +721,47 @@
       }
     }
 
+    async function handleGoogleAdminLogin() {
+      var errAlert = document.getElementById('auth-error-alert');
+      if (errAlert) errAlert.style.display = 'none';
+      var btn = document.getElementById('google-login-btn');
+      btn.disabled = true;
+      btn.textContent = 'Connecting Google Account...';
+
+      try {
+        if (window.AgriFirebase && typeof window.AgriFirebase.loginStaffWithGoogle === 'function') {
+          var authResult = await window.AgriFirebase.loginStaffWithGoogle();
+          currentUserEmail = authResult.user.email;
+          currentRole = (authResult.staff && authResult.staff.role) ? authResult.staff.role : 'admin';
+          currentStaffName = authResult.user.displayName || (authResult.staff && authResult.staff.name) || 'Enock Chinatsvi';
+          currentStaffRoleTitle = (authResult.staff && authResult.staff.title) || 'Principal Agricultural Consultant';
+          currentStaffPhoto = authResult.user.photoURL || '';
+
+          sessionStorage.setItem('agribase_staff_session', JSON.stringify({
+            email: currentUserEmail,
+            name: currentStaffName,
+            displayName: currentStaffName,
+            role: currentRole,
+            title: currentStaffRoleTitle,
+            photoURL: currentStaffPhoto,
+            uid: authResult.user.uid,
+            loggedInAt: new Date().toISOString()
+          }));
+          showAdminApp();
+        } else {
+          throw new Error('Google Authentication service not ready.');
+        }
+      } catch (err) {
+        console.error('Google Auth error:', err);
+        if (errAlert) {
+          errAlert.innerHTML = '<strong>Google Login Failed:</strong> ' + (err.message || 'Please check your connection or use Email/Password.');
+          errAlert.style.display = 'block';
+        }
+        btn.disabled = false;
+        btn.innerHTML = '<svg width="18" height="18" viewBox="0 0 24 24"><path fill="#4285F4" d="M22.56 12.25c0-.78-.07-1.53-.2-2.25H12v4.26h5.92c-.26 1.37-1.04 2.53-2.21 3.31v2.77h3.57c2.08-1.92 3.28-4.74 3.28-8.09z"/><path fill="#34A853" d="M12 23c2.97 0 5.46-.98 7.28-2.66l-3.57-2.77c-.98.66-2.23 1.06-3.71 1.06-2.86 0-5.29-1.93-6.16-4.53H2.18v2.84C3.99 20.53 7.7 23 12 23z"/><path fill="#FBBC05" d="M5.84 14.09c-.22-.66-.35-1.36-.35-2.09s.13-1.43.35-2.09V7.06H2.18C1.43 8.55 1 10.22 1 12s.43 3.45 1.18 4.94l2.85-2.22.81-.63z"/><path fill="#EA4335" d="M12 5.38c1.62 0 3.06.56 4.21 1.64l3.15-3.15C17.45 2.09 14.97 1 12 1 7.7 1 3.99 3.47 2.18 7.06l3.66 2.84c.87-2.6 3.3-4.52 6.16-4.52z"/></svg> Sign In with Google Account';
+      }
+    }
+
     async function handleAdminLogin(e) {
       e.preventDefault();
       var errAlert = document.getElementById('auth-error-alert');
@@ -593,10 +780,17 @@
             var authResult = await window.AgriFirebase.loginStaff(email, password);
             currentUserEmail = authResult.user.email;
             currentRole = (authResult.staff && authResult.staff.role) ? authResult.staff.role : 'admin';
+            currentStaffName = authResult.user.displayName || (authResult.staff && authResult.staff.name) || 'Enock Chinatsvi';
+            currentStaffRoleTitle = (authResult.staff && authResult.staff.title) || 'Principal Agricultural Consultant';
+            currentStaffPhoto = authResult.user.photoURL || '';
+
             sessionStorage.setItem('agribase_staff_session', JSON.stringify({
               email: currentUserEmail,
+              name: currentStaffName,
+              displayName: currentStaffName,
               role: currentRole,
-              title: (authResult.staff && authResult.staff.title) || 'Consultant',
+              title: currentStaffRoleTitle,
+              photoURL: currentStaffPhoto,
               uid: authResult.user.uid,
               loggedInAt: new Date().toISOString()
             }));
@@ -620,9 +814,13 @@
         var pass = document.getElementById('admin-passcode').value.trim();
         if (pass === 'agribase2026' || pass === 'enock2026') {
           currentRole = 'admin';
-          currentUserEmail = 'chinatsvieno@gmail.com (Passcode Mode)';
+          currentUserEmail = 'chinatsvieno@gmail.com';
+          currentStaffName = 'Enock Chinatsvi';
+          currentStaffRoleTitle = 'Founder & Principal Agricultural Consultant';
           sessionStorage.setItem('agribase_staff_session', JSON.stringify({
             email: 'chinatsvieno@gmail.com',
+            name: 'Enock Chinatsvi',
+            displayName: 'Enock Chinatsvi',
             role: 'admin',
             title: 'Founder & Principal Consultant',
             loggedInAt: new Date().toISOString()
@@ -644,6 +842,9 @@
           var sess = JSON.parse(sessStr);
           currentRole = sess.role || 'admin';
           currentUserEmail = sess.email || 'chinatsvieno@gmail.com';
+          currentStaffName = sess.displayName || sess.name || 'Enock Chinatsvi';
+          currentStaffRoleTitle = sess.title || 'Principal Agricultural Consultant';
+          currentStaffPhoto = sess.photoURL || '';
           showAdminApp();
           return;
         } catch (e) {}
@@ -671,11 +872,20 @@
     function showAdminApp() {
       document.getElementById('admin-auth-shield').style.display = 'none';
       document.getElementById('admin-app').style.display = 'block';
-      document.getElementById('current-user-role-label').textContent = 
-        (currentRole === 'admin' || currentRole === 'principal') ? 'Principal Consultant (Enock Chinatsvi)' : 'Operations Assistant';
+
+      if (window.AgriFirebase && typeof window.AgriFirebase.getCurrentStaffProfile === 'function') {
+        var sp = window.AgriFirebase.getCurrentStaffProfile();
+        if (sp.displayName) currentStaffName = sp.displayName;
+        else if (sp.name && sp.name !== 'Enock Chinatsvi') currentStaffName = sp.name;
+        if (sp.title) currentStaffRoleTitle = sp.title;
+        if (sp.photoURL) currentStaffPhoto = sp.photoURL;
+      }
+
+      document.getElementById('current-user-role-label').textContent = currentStaffName + ' (' + currentStaffRoleTitle + ')';
       document.getElementById('current-user-email-label').textContent = currentUserEmail;
       refreshAllData();
       initAdminChatListener();
+      updateStaffChatIdentityBar();
     }
 
     function switchAdminTab(tabName) {
@@ -843,8 +1053,9 @@
             '<label>Internal Consultant Notes:</label>' +
             '<textarea id="modal-enq-notes" class="form-control">' + (enquiry.internalNotes || '') + '</textarea>' +
           '</div>' +
-          '<div style="display:flex;gap:10px;justify-content:flex-end;">' +
+          '<div style="display:flex;gap:10px;justify-content:flex-end;flex-wrap:wrap;">' +
             '<button class="button secondary" onclick="closeModal()">Cancel</button>' +
+            '<button type="button" class="button" style="background:var(--field);color:#ffffff;" onclick="openLiveChatForEnquiry(\'' + (enquiry.reference || enquiry.id) + '\')">💬 Reply in Live Chat →</button>' +
             '<button class="button" onclick="saveEnquiryModalChanges(\'' + (enquiry.reference || enquiry.id) + '\')">Save & Update Status</button>' +
           '</div>' +
         '</div>';
@@ -1231,7 +1442,7 @@
           '<td>' + (e.location || 'Zimbabwe') + '</td>' +
           '<td>' + (e.cropOrLivestock || e.enterpriseType || 'Crop') + '</td>' +
           '<td><span class="badge badge-' + (e.status || 'NEW') + '">' + (e.status || 'NEW') + '</span></td>' +
-          '<td><button class="action-btn-sm" onclick="openEnquiryModal(\'' + (e.reference || e.id) + '\')">Review</button></td>' +
+          '<td><button class="action-btn-sm" onclick="openEnquiryModal(\'' + (e.reference || e.id) + '\')">Review</button> <button class="action-btn-sm" style="background:#2e7d32;color:#ffffff;" onclick="openLiveChatForEnquiry(\'' + (e.reference || e.id) + '\')">💬 Chat</button></td>' +
         '</tr>';
       }).join('');
     }
@@ -1654,6 +1865,42 @@
     // ==========================================
     // ADMIN LIVE CHAT ENGINE
     // ==========================================
+    function escapeHtml(str) {
+      if (!str) return '';
+      return String(str)
+        .replace(/&/g, '&amp;')
+        .replace(/</g, '&lt;')
+        .replace(/>/g, '&gt;')
+        .replace(/"/g, '&quot;')
+        .replace(/'/g, '&#039;');
+    }
+
+    function updateStaffChatIdentityBar() {
+      var nameEl = document.getElementById('admin-chat-sender-name-display');
+      var roleEl = document.getElementById('admin-chat-sender-role-display');
+      if (nameEl) nameEl.textContent = currentStaffName;
+      if (roleEl) roleEl.textContent = '(' + currentStaffRoleTitle + ')';
+
+      var input = document.getElementById('admin-chat-input');
+      if (input) {
+        input.placeholder = 'Type agricultural advice as ' + currentStaffName + '... (Press Enter to send, Shift+Enter for new line)';
+      }
+    }
+
+    function promptChangeStaffName() {
+      var newName = prompt('Enter the staff name to display when chatting with farmers (from your Google account or title):', currentStaffName);
+      if (newName && newName.trim()) {
+        currentStaffName = newName.trim();
+        var sess = {};
+        try { sess = JSON.parse(sessionStorage.getItem('agribase_staff_session') || '{}'); } catch(e) {}
+        sess.name = currentStaffName;
+        sess.displayName = currentStaffName;
+        sessionStorage.setItem('agribase_staff_session', JSON.stringify(sess));
+        updateStaffChatIdentityBar();
+        document.getElementById('current-user-role-label').textContent = currentStaffName + ' (' + currentStaffRoleTitle + ')';
+      }
+    }
+
     function initAdminChatListener() {
       if (window.AgriFirebase && typeof window.AgriFirebase.subscribeToAllConversations === 'function') {
         window.AgriFirebase.subscribeToAllConversations(function(convs) {
@@ -1669,6 +1916,7 @@
             if (activeConv) {
               document.getElementById('admin-chat-client-name').textContent = activeConv.customerName || 'Farmer';
               document.getElementById('admin-chat-client-phone').textContent = activeConv.customerPhone ? '📞 ' + activeConv.customerPhone : 'No phone specified';
+              document.getElementById('admin-chat-client-email').textContent = activeConv.customerEmail || 'Web Visitor';
             }
           }
         });
@@ -1685,28 +1933,32 @@
       });
 
       if (!convs.length) {
-        container.innerHTML = '<p style="text-align:center;color:var(--muted);font-size:13px;padding:20px;">No chat conversations found.</p>';
+        container.innerHTML = '<p style="text-align:center;color:var(--muted);font-size:13px;padding:24px 16px;">No conversations yet. Active inquiries will appear here automatically.</p>';
         return;
       }
 
       container.innerHTML = convs.map(function(c) {
         var isSelected = (c.id === activeChatConvId);
         var unreadBadge = (c.unreadByAdmin > 0) ? 
-          '<span style="background:#ef4444;color:#ffffff;font-size:10px;font-weight:800;padding:2px 6px;border-radius:10px;">' + c.unreadByAdmin + ' unread</span>' : '';
+          '<span style="background:#ef4444;color:#ffffff;font-size:10.5px;font-weight:800;padding:2px 7px;border-radius:10px;">' + c.unreadByAdmin + ' new</span>' : '';
         var timeStr = c.lastMessageTime ? new Date(c.lastMessageTime).toLocaleTimeString([], {hour:'2-digit', minute:'2-digit'}) : '';
+        var initial = (c.customerName || 'F').charAt(0).toUpperCase();
 
-        return '<div onclick="selectAdminConversation(\'' + c.id + '\')" style="padding:12px 14px;border-bottom:1px solid var(--border);cursor:pointer;background:' + (isSelected ? '#ecfdf5' : '#ffffff') + ';border-left:' + (isSelected ? '4px solid #2e7d32' : '4px solid transparent') + ';transition:background 0.15s ease;">' +
-          '<div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:4px;">' +
-            '<strong style="font-size:13.5px;color:var(--field-dark);">' + (c.customerName || 'Farmer') + '</strong>' +
-            '<span style="font-size:11px;color:var(--muted);">' + timeStr + '</span>' +
-          '</div>' +
-          '<div style="display:flex;justify-content:space-between;align-items:center;">' +
-            '<div style="font-size:12px;color:#64748b;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;max-width:180px;">' +
-              (c.lastSender === 'admin' ? 'You: ' : '') + (c.lastMessage || 'No messages yet') +
+        return '<div onclick="selectAdminConversation(\'' + c.id + '\')" style="padding:11px 14px;border-bottom:1px solid var(--border);cursor:pointer;background:' + (isSelected ? '#ecfdf5' : '#ffffff') + ';border-left:' + (isSelected ? '4px solid #2e7d32' : '4px solid transparent') + ';transition:background 0.15s ease;display:flex;gap:10px;align-items:center;">' +
+          '<div style="width:38px;height:38px;border-radius:50%;background:' + (isSelected ? '#2e7d32' : '#e2e8f0') + ';color:' + (isSelected ? '#ffffff' : '#334155') + ';display:flex;align-items:center;justify-content:center;font-weight:800;font-size:14px;flex-shrink:0;">' + initial + '</div>' +
+          '<div style="flex:1;min-width:0;">' +
+            '<div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:2px;">' +
+              '<strong style="font-size:13.5px;color:var(--field-dark);white-space:nowrap;overflow:hidden;text-overflow:ellipsis;">' + (c.customerName || 'Farmer') + '</strong>' +
+              '<span style="font-size:11px;color:var(--muted);flex-shrink:0;margin-left:6px;">' + timeStr + '</span>' +
             '</div>' +
-            unreadBadge +
+            '<div style="display:flex;justify-content:space-between;align-items:center;">' +
+              '<div style="font-size:12px;color:#64748b;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;max-width:180px;">' +
+                (c.lastSender === 'admin' ? '<span style="color:#2e7d32;font-weight:700;">You: </span>' : '') + (c.lastMessage || 'No messages yet') +
+              '</div>' +
+              unreadBadge +
+            '</div>' +
+            (c.customerPhone ? '<div style="font-size:11px;color:var(--muted);margin-top:2px;">📞 ' + c.customerPhone + '</div>' : '') +
           '</div>' +
-          (c.customerPhone ? '<div style="font-size:11px;color:var(--muted);margin-top:2px;">📞 ' + c.customerPhone + '</div>' : '') +
         '</div>';
       }).join('');
     }
@@ -1716,20 +1968,27 @@
       var conv = (cachedData.conversations || []).find(function(c) { return c.id === convId; });
       if (!conv) return;
 
+      var rootBox = document.getElementById('admin-chat-root-box');
+      if (rootBox) rootBox.classList.add('mobile-in-thread');
+
       document.getElementById('admin-chat-empty-state').style.display = 'none';
       document.getElementById('admin-chat-thread-container').style.display = 'flex';
 
       document.getElementById('admin-chat-client-name').textContent = conv.customerName || 'Farmer';
       document.getElementById('admin-chat-client-phone').textContent = conv.customerPhone ? '📞 ' + conv.customerPhone : 'No phone specified';
       document.getElementById('admin-chat-client-email').textContent = conv.customerEmail || 'Web Visitor';
+      var avatarEl = document.getElementById('admin-chat-client-avatar');
+      if (avatarEl) avatarEl.textContent = (conv.customerName || 'F').charAt(0).toUpperCase();
 
       var waLink = document.getElementById('admin-chat-wa-link');
       if (conv.customerPhone) {
         waLink.style.display = 'inline-block';
-        waLink.href = 'https://wa.me/' + conv.customerPhone.replace(/[^0-9]/g, '') + '?text=' + encodeURIComponent('Hi ' + (conv.customerName || '') + ', this is Enock Chinatsvi from D & C AgriBase following up on your message.');
+        waLink.href = 'https://wa.me/' + conv.customerPhone.replace(/[^0-9]/g, '') + '?text=' + encodeURIComponent('Hi ' + (conv.customerName || '') + ', this is ' + currentStaffName + ' from D & C AgriBase following up on your enquiry.');
       } else {
         waLink.style.display = 'none';
       }
+
+      updateStaffChatIdentityBar();
 
       if (window.AgriFirebase && typeof window.AgriFirebase.markConversationAsRead === 'function') {
         window.AgriFirebase.markConversationAsRead(convId, 'admin');
@@ -1740,14 +1999,20 @@
       if (activeChatMessagesUnsub) activeChatMessagesUnsub();
       if (window.AgriFirebase && typeof window.AgriFirebase.subscribeToMessages === 'function') {
         activeChatMessagesUnsub = window.AgriFirebase.subscribeToMessages(convId, function(messages) {
-          renderAdminChatMessages(messages);
+          currentChatMessagesCache = messages || [];
+          renderAdminChatMessages(currentChatMessagesCache);
         });
       }
 
       setTimeout(function() {
         var input = document.getElementById('admin-chat-input');
         if (input) input.focus();
-      }, 100);
+      }, 120);
+    }
+
+    function exitMobileChatThread() {
+      var rootBox = document.getElementById('admin-chat-root-box');
+      if (rootBox) rootBox.classList.remove('mobile-in-thread');
     }
 
     function renderAdminChatMessages(messages) {
@@ -1755,19 +2020,26 @@
       if (!box) return;
 
       if (!messages || !messages.length) {
-        box.innerHTML = '<p style="text-align:center;color:var(--muted);font-size:13px;padding:30px;">No messages in this conversation yet. Send an opening message below.</p>';
+        box.innerHTML = '<div style="text-align:center;color:var(--muted);font-size:13.5px;padding:36px 16px;">' +
+          '<span style="font-size:32px;display:block;margin-bottom:8px;">🌾</span>' +
+          'No messages yet in this conversation.<br>Start typing agricultural advice or choose a quick response below.</div>';
         return;
       }
 
       box.innerHTML = messages.map(function(m) {
         var isAdmin = (m.sender === 'admin');
         var timeStr = m.timestamp ? new Date(m.timestamp).toLocaleTimeString([], {hour:'2-digit', minute:'2-digit'}) : '';
-        return '<div style="display:flex;flex-direction:column;max-width:75%;align-self:' + (isAdmin ? 'flex-end' : 'flex-start') + ';">' +
-          '<div style="background:' + (isAdmin ? '#1b4332' : '#ffffff') + ';color:' + (isAdmin ? '#ffffff' : '#1e293b') + ';padding:10px 14px;border-radius:12px;border:' + (isAdmin ? 'none' : '1px solid var(--border)') + ';box-shadow:0 1px 4px rgba(0,0,0,0.05);font-size:13.5px;line-height:1.45;">' +
-            m.text +
+        var senderTitle = isAdmin ? (m.senderName || currentStaffName) : (m.senderName || 'Farmer');
+        var statusTick = m.optimistic ? '<span style="color:#f59e0b;font-size:10px;">⏳ sending...</span>' : '<span style="color:#10b981;">✓</span>';
+
+        return '<div class="chat-bubble-row ' + (isAdmin ? 'admin-row' : 'farmer-row') + '">' +
+          '<div class="bubble-content ' + (isAdmin ? 'admin-bubble' : 'farmer-bubble') + '">' +
+            escapeHtml(m.text) +
           '</div>' +
-          '<div style="font-size:10.5px;color:var(--muted);margin-top:3px;padding:0 4px;text-align:' + (isAdmin ? 'right' : 'left') + ';">' +
-            (isAdmin ? 'You (Enock)' : (m.senderName || 'Farmer')) + (timeStr ? ' • ' + timeStr : '') +
+          '<div class="bubble-meta">' +
+            (isAdmin ? 
+              ('<span class="staff-badge">🌿 ' + escapeHtml(senderTitle) + '</span> ' + statusTick + (timeStr ? ' <span class="msg-time">• ' + timeStr + '</span>' : '')) :
+              ('<span class="farmer-badge">👤 ' + escapeHtml(senderTitle) + '</span>' + (timeStr ? ' <span class="msg-time">• ' + timeStr : '') + '</span>')) +
           '</div>' +
         '</div>';
       }).join('');
@@ -1784,15 +2056,37 @@
       if (!text) return;
 
       input.value = '';
+
+      // Optimistic instant UI update
+      var tempMsg = {
+        sender: 'admin',
+        senderName: currentStaffName,
+        senderRole: currentStaffRoleTitle,
+        senderPhoto: currentStaffPhoto,
+        senderEmail: currentUserEmail,
+        text: text,
+        timestamp: new Date().toISOString(),
+        optimistic: true
+      };
+      currentChatMessagesCache.push(tempMsg);
+      renderAdminChatMessages(currentChatMessagesCache);
+
       try {
         await window.AgriFirebase.sendChatMessage(activeChatConvId, {
           sender: 'admin',
-          senderName: 'Enock Chinatsvi (Founder & Principal Consultant)',
+          senderName: currentStaffName,
+          senderRole: currentStaffRoleTitle,
+          senderPhoto: currentStaffPhoto,
+          senderEmail: currentUserEmail,
           text: text
         });
       } catch (err) {
         console.warn('Error sending admin chat reply:', err);
       }
+
+      setTimeout(function() {
+        if (input) input.focus();
+      }, 50);
     }
 
     function sendAdminCannedReply(text) {
@@ -1800,6 +2094,34 @@
       if (input) {
         input.value = text;
         input.focus();
+      }
+    }
+
+    async function openLiveChatForEnquiry(ref) {
+      var enquiry = (cachedData.enquiries && cachedData.enquiries.find(function(e) { return e.reference === ref || e.id === ref; }));
+      if (!enquiry) return;
+      closeModal();
+      switchAdminTab('chat');
+
+      // Check if conversation already exists for this phone or customer name
+      var existing = (cachedData.conversations || []).find(function(c) {
+        return (enquiry.phone && c.customerPhone === enquiry.phone) ||
+               (enquiry.farmerName && c.customerName === enquiry.farmerName);
+      });
+
+      if (existing) {
+        selectAdminConversation(existing.id);
+      } else {
+        if (window.AgriFirebase && typeof window.AgriFirebase.getOrCreateConversation === 'function') {
+          var newConv = await window.AgriFirebase.getOrCreateConversation({
+            name: enquiry.farmerName || enquiry.customerName || 'Farmer',
+            phone: enquiry.phone || '',
+            email: enquiry.email || '',
+            initialMessage: 'Enquiry [' + (enquiry.reference || ref) + ']: ' + (enquiry.cropOrLivestock || 'Crop') + ' - ' + (enquiry.questionDescription || '')
+          });
+          await refreshAllData();
+          selectAdminConversation(newConv.id);
+        }
       }
     }
 
@@ -1831,6 +2153,15 @@
 
     document.addEventListener('DOMContentLoaded', function() {
       checkAdminSession();
+      var chatInput = document.getElementById('admin-chat-input');
+      if (chatInput) {
+        chatInput.addEventListener('keydown', function(e) {
+          if (e.key === 'Enter' && !e.shiftKey) {
+            e.preventDefault();
+            handleAdminSendMessage(e);
+          }
+        });
+      }
     });
   </script>
 </body>

@@ -217,6 +217,46 @@
         .secret-login-submit:hover {
           background: #2d6a4f;
         }
+        .secret-google-btn {
+          width: 100%;
+          background: #ffffff;
+          color: #1e293b;
+          font-weight: 700;
+          padding: 10px 14px;
+          font-size: 13.5px;
+          border: 1.5px solid #cbd5e1;
+          border-radius: 8px;
+          cursor: pointer;
+          display: flex;
+          align-items: center;
+          justify-content: center;
+          gap: 10px;
+          margin-bottom: 14px;
+          transition: all 0.15s ease;
+        }
+        .secret-google-btn:hover {
+          background: #f8fafc;
+          border-color: #94a3b8;
+          box-shadow: 0 2px 6px rgba(0,0,0,0.06);
+        }
+        .secret-divider {
+          display: flex;
+          align-items: center;
+          text-align: center;
+          margin-bottom: 14px;
+          color: #94a3b8;
+          font-size: 11.5px;
+          font-weight: 600;
+          text-transform: uppercase;
+          letter-spacing: 0.5px;
+        }
+        .secret-divider::before, .secret-divider::after {
+          content: '';
+          flex: 1;
+          border-bottom: 1px solid #e2e8f0;
+        }
+        .secret-divider::before { margin-right: 10px; }
+        .secret-divider::after { margin-left: 10px; }
         .secret-msg-alert {
           display: none;
           padding: 9px 12px;
@@ -257,6 +297,11 @@
         '<h3 id="secret-title">Staff & Consultant Login</h3>' +
         '<p class="sub">Authorised AgriBase Personnel Workspace</p>' +
         '<div id="secret-modal-alert" class="secret-msg-alert"></div>' +
+        '<button type="button" id="secret-btn-google" class="secret-google-btn">' +
+          '<svg width="18" height="18" viewBox="0 0 48 48"><path fill="#EA4335" d="M24 9.5c3.54 0 6.71 1.22 9.21 3.6l6.85-6.85C35.9 2.38 30.47 0 24 0 14.62 0 6.51 5.38 2.56 13.22l7.98 6.19C12.43 13.72 17.74 9.5 24 9.5z"/><path fill="#4285F4" d="M46.98 24.55c0-1.57-.15-3.09-.38-4.55H24v9.02h12.94c-.58 2.96-2.26 5.48-4.78 7.18l7.73 6c4.51-4.18 7.09-10.36 7.09-17.65z"/><path fill="#FBBC05" d="M10.53 28.59c-.48-1.45-.76-2.99-.76-4.59s.27-3.14.76-4.59l-7.98-6.19C.92 16.46 0 20.12 0 24c0 3.88.92 7.54 2.56 10.78l7.97-6.19z"/><path fill="#34A853" d="M24 48c6.48 0 11.93-2.13 15.89-5.81l-7.73-6c-2.15 1.45-4.92 2.3-8.16 2.3-6.26 0-11.57-4.22-13.46-9.91l-7.98 6.19C6.51 42.62 14.62 48 24 48z"/></svg>' +
+          '<span>Sign In with Google Account</span>' +
+        '</button>' +
+        '<div class="secret-divider"><span>or with credentials</span></div>' +
         '<div class="secret-tabs-row">' +
           '<button type="button" class="secret-tab-toggle active" id="secret-btn-firebase">Firebase Auth</button>' +
           '<button type="button" class="secret-tab-toggle" id="secret-btn-passcode">Emergency Passcode</button>' +
@@ -288,6 +333,7 @@
 
     let activeMode = 'firebase';
     const alertEl = document.getElementById('secret-modal-alert');
+    const btnGoogle = document.getElementById('secret-btn-google');
     const btnFirebase = document.getElementById('secret-btn-firebase');
     const btnPasscode = document.getElementById('secret-btn-passcode');
     const wrapFirebase = document.getElementById('secret-mode-firebase-wrap');
@@ -295,6 +341,49 @@
     const closeBtn = document.getElementById('secret-close-btn');
     const form = document.getElementById('secret-login-form');
     const submitBtn = document.getElementById('secret-submit-btn');
+
+    if (btnGoogle) {
+      btnGoogle.onclick = async function() {
+        alertEl.style.display = 'none';
+        alertEl.className = 'secret-msg-alert';
+        btnGoogle.disabled = true;
+        btnGoogle.innerHTML = 'Connecting to Google...';
+        try {
+          if (window.AgriFirebase && typeof window.AgriFirebase.loginStaffWithGoogle === 'function') {
+            const res = await window.AgriFirebase.loginStaffWithGoogle();
+            const staffName = (res.user && res.user.displayName) || (res.staff && res.staff.name) || 'Consultant';
+            sessionStorage.setItem('agribase_staff_session', JSON.stringify({
+              email: res.user.email,
+              name: staffName,
+              photoURL: (res.user && res.user.photoURL) || '',
+              role: (res.staff && res.staff.role) || 'admin',
+              title: (res.staff && res.staff.title) || 'Principal Consultant',
+              uid: res.user.uid,
+              provider: 'google',
+              loggedInAt: new Date().toISOString()
+            }));
+            alertEl.textContent = 'Welcome ' + staffName + '! Opening workspace...';
+            alertEl.classList.add('success');
+            alertEl.style.display = 'block';
+            setTimeout(function() {
+              window.location.href = '/consultancy/admin/';
+            }, 350);
+          } else {
+            window.location.href = '/consultancy/admin/';
+          }
+        } catch (err) {
+          btnGoogle.disabled = false;
+          btnGoogle.innerHTML = '<svg width="18" height="18" viewBox="0 0 48 48"><path fill="#EA4335" d="M24 9.5c3.54 0 6.71 1.22 9.21 3.6l6.85-6.85C35.9 2.38 30.47 0 24 0 14.62 0 6.51 5.38 2.56 13.22l7.98 6.19C12.43 13.72 17.74 9.5 24 9.5z"/><path fill="#4285F4" d="M46.98 24.55c0-1.57-.15-3.09-.38-4.55H24v9.02h12.94c-.58 2.96-2.26 5.48-4.78 7.18l7.73 6c4.51-4.18 7.09-10.36 7.09-17.65z"/><path fill="#FBBC05" d="M10.53 28.59c-.48-1.45-.76-2.99-.76-4.59s.27-3.14.76-4.59l-7.98-6.19C.92 16.46 0 20.12 0 24c0 3.88.92 7.54 2.56 10.78l7.97-6.19z"/><path fill="#34A853" d="M24 48c6.48 0 11.93-2.13 15.89-5.81l-7.73-6c-2.15 1.45-4.92 2.3-8.16 2.3-6.26 0-11.57-4.22-13.46-9.91l-7.98 6.19C6.51 42.62 14.62 48 24 48z"/></svg> <span>Sign In with Google Account</span>';
+          let msg = err.message || 'Google sign-in failed.';
+          if (err.code === 'auth/popup-closed-by-user') {
+            msg = 'Google login window was closed before completing.';
+          }
+          alertEl.textContent = msg;
+          alertEl.classList.add('error');
+          alertEl.style.display = 'block';
+        }
+      };
+    }
 
     function closeModal() {
       modal.style.display = 'none';

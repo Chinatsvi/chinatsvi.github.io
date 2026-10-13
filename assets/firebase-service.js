@@ -352,6 +352,21 @@
     return { user: cred.user, staff: staffInfo };
   };
 
+  // Login staff with Google Authentication
+  AgriFirebase.loginStaffWithGoogle = async function() {
+    if (!AgriFirebase.init() || !AgriFirebase.auth) {
+      throw new Error('Firebase Authentication is not available. Please ensure network connection.');
+    }
+    var provider = new window.firebase.auth.GoogleAuthProvider();
+    provider.setCustomParameters({ prompt: 'select_account' });
+    var cred = await AgriFirebase.auth.signInWithPopup(provider);
+    var staffInfo = await AgriFirebase.verifyStaffPermissions(cred.user);
+    if (cred.user.displayName && staffInfo) {
+      staffInfo.name = cred.user.displayName;
+    }
+    return { user: cred.user, staff: staffInfo };
+  };
+
   // Logout staff
   AgriFirebase.logoutStaff = async function() {
     if (AgriFirebase.auth) {
@@ -364,14 +379,17 @@
   AgriFirebase.verifyStaffPermissions = async function(user) {
     if (!user) return null;
     var userEmail = (user.email || '').toLowerCase().trim();
+    var googleDisplayName = user.displayName || '';
+    var googlePhoto = user.photoURL || '';
 
     // Default Super Admin: Enock Chinatsvi (Founder)
     if (userEmail === 'chinatsvieno@gmail.com') {
       var founderStaff = {
-        name: 'Enock Chinatsvi',
+        name: googleDisplayName || 'Enock Chinatsvi',
         email: userEmail,
         role: 'admin',
         title: 'Founder & Principal Agricultural Consultant',
+        photoURL: googlePhoto,
         active: true,
         permissions: ['read', 'write', 'approve', 'settings', 'staff']
       };
@@ -686,6 +704,40 @@
     return convData;
   };
 
+  // Helper: Retrieve active staff profile, prioritizing Google account display name
+  AgriFirebase.getCurrentStaffProfile = function() {
+    var profile = {
+      name: 'Enock Chinatsvi',
+      displayName: 'Enock Chinatsvi',
+      email: 'chinatsvieno@gmail.com',
+      role: 'admin',
+      title: 'Founder & Principal Agricultural Consultant',
+      photoURL: ''
+    };
+
+    if (AgriFirebase.auth && AgriFirebase.auth.currentUser) {
+      var u = AgriFirebase.auth.currentUser;
+      if (u.displayName) {
+        profile.name = u.displayName;
+        profile.displayName = u.displayName;
+      }
+      if (u.email) profile.email = u.email;
+      if (u.photoURL) profile.photoURL = u.photoURL;
+    }
+
+    try {
+      var sess = JSON.parse(sessionStorage.getItem('agribase_staff_session') || '{}');
+      if (sess.name) profile.name = sess.name;
+      if (sess.displayName) profile.displayName = sess.displayName;
+      if (sess.email) profile.email = sess.email;
+      if (sess.role) profile.role = sess.role;
+      if (sess.title) profile.title = sess.title;
+      if (sess.photoURL) profile.photoURL = sess.photoURL;
+    } catch (e) {}
+
+    return profile;
+  };
+
   // 2. Send a message inside a conversation thread
   AgriFirebase.sendChatMessage = async function(conversationId, messageData) {
     var timestamp = new Date().toISOString();
@@ -693,10 +745,16 @@
     var text = (messageData.text || '').trim();
     if (!text) return null;
 
+    var staffProfile = AgriFirebase.getCurrentStaffProfile();
+    var defaultSenderName = (sender === 'admin') ? (staffProfile.displayName || staffProfile.name || 'Enock Chinatsvi') : 'Farmer';
+
     var payload = {
       conversationId: conversationId,
       sender: sender,
-      senderName: messageData.senderName || (sender === 'admin' ? 'Enock Chinatsvi (Founder & Principal Consultant)' : 'Farmer'),
+      senderName: messageData.senderName || defaultSenderName,
+      senderRole: messageData.senderRole || (sender === 'admin' ? (staffProfile.title || 'AgriBase Consultant') : ''),
+      senderPhoto: messageData.senderPhoto || (sender === 'admin' ? (staffProfile.photoURL || '') : ''),
+      senderEmail: messageData.senderEmail || (sender === 'admin' ? staffProfile.email : ''),
       text: text,
       timestamp: timestamp,
       read: false
