@@ -208,7 +208,7 @@
           '<div class="msg-bubble">' +
             'Hello! I am Enock Chinatsvi. Please describe your crop or livestock question, or specify what farming challenge you are facing right now.' +
           '</div>' +
-          '<div class="msg-meta">Enock Chinatsvi • Just now</div>' +
+          '<div class="msg-meta">Enock Chinatsvi • ' + formatChatTime(new Date()) + '</div>' +
         '</div>';
       return;
     }
@@ -259,8 +259,15 @@
 
   function formatChatTime(ts) {
     try {
-      var d = new Date(ts);
-      return d.toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' });
+      var d = (ts && typeof ts.toDate === 'function') ? ts.toDate() : new Date(ts);
+      if (isNaN(d.getTime())) return '';
+      return d.toLocaleString([], {
+        year: 'numeric',
+        month: 'short',
+        day: 'numeric',
+        hour: '2-digit',
+        minute: '2-digit'
+      });
     } catch (e) {
       return '';
     }

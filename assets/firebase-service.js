@@ -832,6 +832,10 @@
         };
 
         if (sender === 'customer') {
+          var customerName = (messageData.senderName || '').trim();
+          if (customerName && !/^(farmer|customer|web visitor)$/i.test(customerName)) {
+            updateSummary.customerName = customerName;
+          }
           updateSummary.unreadByAdmin = window.firebase.firestore.FieldValue.increment(1);
         } else {
           updateSummary.unreadByCustomer = window.firebase.firestore.FieldValue.increment(1);
