@@ -147,7 +147,7 @@
             <div>
               <div class="help-card-price-strip">
                 <span class="help-card-price-label">Cost:</span>
-                <span class="help-card-price-value">From $60.00</span>
+                <span class="help-card-price-value">From $5.00</span>
                 <small style="color:var(--muted);font-size:12px;">+ $0.65/km travel</small>
               </div>
               <a class="button primary-action" href="/consultancy/farm-visit/" style="width:100%;text-align:center;">Book a Farm Visit →</a>
@@ -278,7 +278,7 @@
               <p class="pricing-tier-desc">Scheduled 45-minute deep-dive session via WhatsApp call or video with our principal consultant.</p>
               <div class="pricing-price-box" style="background:#ffffff;border:1.5px solid var(--field);">
                 <div class="pricing-amount" style="font-size:24px;color:var(--field);">Accessible & Tailored</div>
-                <div class="pricing-subtitle">Low-Cost Agronomic Call • No Hidden Charges</div>
+                <div class="pricing-subtitle">$5 per 45-minute call • No Hidden Charges</div>
               </div>
               <ul class="pricing-checklist">
                 <li><span class="icon-ok">✓</span> Direct 45-minute discussion with Enock Chinatsvi</li>
@@ -299,7 +299,7 @@
               <h3 class="pricing-tier-name">Soil & Fertiliser Programme</h3>
               <p class="pricing-tier-desc">Custom basal, topdressing, and fertigation schedule tailored to your exact soil and target yield.</p>
               <div class="pricing-price-box">
-                <div class="pricing-amount">$40.00</div>
+                <div class="pricing-amount">$10.00</div>
                 <div class="pricing-subtitle">Flat Fee • Comprehensive Plan</div>
               </div>
               <ul class="pricing-checklist">
@@ -311,7 +311,7 @@
               </ul>
             </div>
             <div>
-              <a class="button secondary" href="/consultancy/farm-visit/?service=srv-soil-fert" style="width:100%;text-align:center;">Order Fertiliser Plan ($40) →</a>
+              <a class="button secondary" href="/consultancy/farm-visit/?service=srv-soil-fert" style="width:100%;text-align:center;">Order Fertiliser Plan ($10) →</a>
             </div>
           </article>
 
@@ -321,7 +321,7 @@
               <h3 class="pricing-tier-name">On-Farm Physical Inspection</h3>
               <p class="pricing-tier-desc">Comprehensive on-site physical field audit for commercial growers, horticulture, and farms.</p>
               <div class="pricing-price-box">
-                <div class="pricing-amount">From $60.00</div>
+                <div class="pricing-amount">From $5.00</div>
                 <div class="pricing-subtitle">+ Transparent Travel ($0.65/km)</div>
               </div>
               <ul class="pricing-checklist">
@@ -343,7 +343,7 @@
               <h3 class="pricing-tier-name">Agribusiness Feasibility & Plan</h3>
               <p class="pricing-tier-desc">Enterprise gross margin budgets, cashflow timelines, and rotational planning for new ventures.</p>
               <div class="pricing-price-box">
-                <div class="pricing-amount">$120.00</div>
+                <div class="pricing-amount">$20.00</div>
                 <div class="pricing-subtitle">Complete Financial & Cropping Model</div>
               </div>
               <ul class="pricing-checklist">
@@ -355,7 +355,7 @@
               </ul>
             </div>
             <div>
-              <a class="button secondary" href="/consultancy/farm-visit/?service=srv-farm-planning" style="width:100%;text-align:center;">Request Enterprise Plan ($120) →</a>
+              <a class="button secondary" href="/consultancy/farm-visit/?service=srv-farm-planning" style="width:100%;text-align:center;">Request Enterprise Plan ($20) →</a>
             </div>
           </article>
 
@@ -382,9 +382,9 @@
               <h4>✅ The AgriBase Investment</h4>
               <ul class="roi-list">
                 <li>✔️ <strong>Ask a Farming Question:</strong> Free ($0.00) early problem diagnosis</li>
-                <li>✔️ <strong>1-on-1 Consultation:</strong> Just $20 for tailored guidance that prevents input waste</li>
-                <li>✔️ <strong>Soil Programme:</strong> $40 to calibrate fertilizer exactly to target yield</li>
-                <li>✔️ <strong>Farm Visit:</strong> From $60 for an in-field audit with verified travel</li>
+                <li>✔️ <strong>1-on-1 Consultation:</strong> Just $5 for tailored guidance that prevents input waste</li>
+                <li>✔️ <strong>Soil Programme:</strong> $10 to calibrate fertilizer exactly to target yield</li>
+                <li>✔️ <strong>Farm Visit:</strong> From $5 for an in-field audit with verified travel</li>
                 <li style="margin-top:10px;font-weight:800;color:#86efac;border-top:1px dashed rgba(255,255,255,0.2);padding-top:8px;">Net Farmer Benefit: Saves 10x to 30x the consultation fee in prevented losses</li>
               </ul>
             </div>
@@ -406,9 +406,9 @@
                 <select id="calc-service" class="form-control" onchange="updateCostEstimator()">
                   <option value="question" selected>🌱 Ask a Farming Question ($0 - Free Initial Review)</option>
                   <option value="online">📱 1-on-1 Online Consultation (Tailored Advisory)</option>
-                  <option value="soil">🧪 Soil Fertility & Fertiliser Programme ($40 Flat Fee)</option>
-                  <option value="visit">🚜 On-Farm Physical Inspection (From $60 Base + Mileage)</option>
-                  <option value="plan">📊 Whole-Farm Enterprise Plan ($120 Flat Fee)</option>
+                  <option value="soil">🧪 Soil Fertility & Fertiliser Programme ($10 Flat Fee)</option>
+                  <option value="visit">🚜 On-Farm Physical Inspection (From $5 Base + Mileage)</option>
+                  <option value="plan">📊 Whole-Farm Enterprise Plan ($20 Flat Fee)</option>
                 </select>
               </div>
 
@@ -455,20 +455,20 @@
               serviceName = 'Ask Farming Question';
               targetUrl = '/consultancy/ask/';
             } else if (service === 'online') {
-              baseFee = 20;
+              baseFee = 5;
               serviceName = '1-on-1 Online Consultation';
               targetUrl = '/consultancy/online-consultation/';
             } else if (service === 'soil') {
-              baseFee = 40;
+              baseFee = 10;
               serviceName = 'Soil & Fertiliser Programme';
               targetUrl = '/consultancy/farm-visit/?service=srv-soil-fert';
             } else if (service === 'visit') {
-              baseFee = 60;
+              baseFee = 5;
               isVisit = true;
               serviceName = 'On-Farm Inspection';
               targetUrl = '/consultancy/farm-visit/';
             } else if (service === 'plan') {
-              baseFee = 120;
+              baseFee = 20;
               serviceName = 'Whole Farm Enterprise Plan';
               targetUrl = '/consultancy/farm-visit/?service=srv-farm-planning';
             }

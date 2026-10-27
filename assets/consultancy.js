@@ -25,7 +25,7 @@
     currency: 'USD',
     currencySymbol: '$',
     travelRatePerKm: 0.65, // in currency units per km (e.g. $0.65/km)
-    baseCalloutFee: 25.00,
+    baseCalloutFee: 5.00,
     serviceArea: 'Mashonaland East, West, Central, Harare, Midlands & surrounding agricultural districts (Cross-border advisory available online)',
     businessHours: 'Monday – Saturday: 07:30 – 17:30 (CAT / GMT+2)',
     communityAppUrl: 'https://www.mediafire.com/file/mg78viqjikkerc1/farmers.v1.0.1.apk/file',
@@ -46,7 +46,7 @@
       deliveryMethod: 'Physical farm visit',
       duration: '2 - 4 hours on-site',
       pricingType: 'quote', // 'free', 'fixed', 'quote'
-      basePrice: 60.00,
+      basePrice: 5.00,
       requiresAdvancePayment: true,
       reportIncluded: true,
       followUpIncluded: true,
@@ -63,7 +63,7 @@
       deliveryMethod: 'Online or Farm Visit',
       duration: 'Written programme + 45 min consultation',
       pricingType: 'fixed',
-      basePrice: 40.00,
+      basePrice: 10.00,
       requiresAdvancePayment: true,
       reportIncluded: true,
       followUpIncluded: true,
@@ -80,7 +80,7 @@
       deliveryMethod: 'Farm Visit or Online Urgent Review',
       duration: '1.5 - 3 hours on-site or 40 min online',
       pricingType: 'quote',
-      basePrice: 50.00,
+      basePrice: 5.00,
       requiresAdvancePayment: false,
       reportIncluded: true,
       followUpIncluded: true,
@@ -97,7 +97,7 @@
       deliveryMethod: 'Physical farm visit',
       duration: 'Half-day audit',
       pricingType: 'quote',
-      basePrice: 75.00,
+      basePrice: 5.00,
       requiresAdvancePayment: true,
       reportIncluded: true,
       followUpIncluded: true,
@@ -114,7 +114,7 @@
       deliveryMethod: 'WhatsApp Call / Video / Phone',
       duration: '45 minutes',
       pricingType: 'fixed',
-      basePrice: 20.00,
+      basePrice: 5.00,
       requiresAdvancePayment: true,
       reportIncluded: true,
       followUpIncluded: true,
@@ -148,7 +148,7 @@
       deliveryMethod: 'Online or Farm Visit',
       duration: '2 - 3 hours',
       pricingType: 'quote',
-      basePrice: 50.00,
+      basePrice: 5.00,
       requiresAdvancePayment: false,
       reportIncluded: true,
       followUpIncluded: true,
@@ -165,7 +165,7 @@
       deliveryMethod: 'Farm Visit & Remote Planning',
       duration: '1-day on-site + Full Planning Document',
       pricingType: 'quote',
-      basePrice: 120.00,
+      basePrice: 20.00,
       requiresAdvancePayment: true,
       reportIncluded: true,
       followUpIncluded: true,
@@ -182,7 +182,7 @@
       deliveryMethod: 'Online or In-Person Session',
       duration: 'Comprehensive Financial Model + 2 Sessions',
       pricingType: 'quote',
-      basePrice: 150.00,
+      basePrice: 20.00,
       requiresAdvancePayment: true,
       reportIncluded: true,
       followUpIncluded: true,
@@ -199,7 +199,7 @@
       deliveryMethod: 'On-Farm Workshop',
       duration: 'Full Day Workshop (Up to 12 participants)',
       pricingType: 'quote',
-      basePrice: 200.00,
+      basePrice: 20.00,
       requiresAdvancePayment: true,
       reportIncluded: true,
       followUpIncluded: true,
@@ -259,6 +259,10 @@
       setStorage(KEYS.SETTINGS, DEFAULT_SETTINGS);
       return JSON.parse(JSON.stringify(DEFAULT_SETTINGS));
     }
+    if (stored.baseCalloutFee === 25.00) {
+      stored.baseCalloutFee = DEFAULT_SETTINGS.baseCalloutFee;
+      setStorage(KEYS.SETTINGS, stored);
+    }
     // Merge any missing defaults
     for (var k in DEFAULT_SETTINGS) {
       if (stored[k] === undefined) stored[k] = DEFAULT_SETTINGS[k];
@@ -277,6 +281,30 @@
     if (!stored || !stored.length) {
       setStorage(KEYS.SERVICES, DEFAULT_SERVICES);
       stored = JSON.parse(JSON.stringify(DEFAULT_SERVICES));
+    } else {
+      var previousDefaultPrices = {
+        'srv-crop-inspect': 60.00,
+        'srv-soil-fert': 40.00,
+        'srv-pest-disease': 50.00,
+        'srv-irrigation': 75.00,
+        'srv-online-consult': 20.00,
+        'srv-livestock': 50.00,
+        'srv-farm-planning': 120.00,
+        'srv-agribusiness': 150.00,
+        'srv-training': 200.00
+      };
+      var pricesUpdated = false;
+      stored.forEach(function(service) {
+        var oldDefaultPrice = previousDefaultPrices[service.id];
+        var currentDefault = DEFAULT_SERVICES.find(function(defaultService) {
+          return defaultService.id === service.id;
+        });
+        if (oldDefaultPrice !== undefined && currentDefault && service.basePrice === oldDefaultPrice) {
+          service.basePrice = currentDefault.basePrice;
+          pricesUpdated = true;
+        }
+      });
+      if (pricesUpdated) setStorage(KEYS.SERVICES, stored);
     }
     if (onlyActive) {
       return stored.filter(function(s) { return s.active !== false; });
